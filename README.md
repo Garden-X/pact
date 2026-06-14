@@ -1,4 +1,4 @@
-# PACT 02
+# PACT
 
 **PACT** means **Protocol for Agent Coordination and Tasks**.
 
