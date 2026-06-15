@@ -101,6 +101,11 @@ If an agent runtime only auto-discovers a root-level or vendor-specific
 instruction file, that file should point agents to
 `/ai/pact/agents/AGENTS.md` instead of duplicating PACT rules.
 
+Root-level `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `CODEX.md`,
+`.cursor/rules/*`, `.windsurfrules`, and similar files are legacy discovery
+bridges for agent-runtime compatibility. They are not the canonical PACT rule
+location.
+
 During installation, create or update native agent instruction bridge files
 when the target project or agent runtime expects them. Examples include
 project-root `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, or another owner-selected
@@ -243,6 +248,8 @@ EXAMPLE
       equivalent in role to native agent configuration files.
 - [ ] Native agent instruction bridge files exist when required by the target
       agent runtime, and they point to `/ai/pact/agents/AGENTS.md`.
+- [ ] Native or vendor-specific bridge files are treated as legacy discovery
+      bridges, not as competing PACT rule authorities.
 - [ ] Existing native or vendor-specific agent instruction files were inspected
       and either synchronized with PACT or reported as conflicts.
 - [ ] `/ai/pact/templates/*.tpl.md` contains the required PACT templates.

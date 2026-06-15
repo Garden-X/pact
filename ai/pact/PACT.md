@@ -61,6 +61,12 @@ binding PACT maintenance instruction, equivalent in role to native agent
 configuration files such as `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, or other
 agent setup files.
 
+Root-level or vendor-specific files such as `AGENTS.md`, `CLAUDE.md`,
+`GEMINI.md`, `CODEX.md`, `.cursor/rules/*`, and `.windsurfrules` are legacy
+discovery bridges for runtimes that cannot automatically find
+`/ai/pact/agents/AGENTS.md`. They should point to the canonical PACT file
+instead of duplicating or replacing it.
+
 SPARC package folder:
 
 ```txt

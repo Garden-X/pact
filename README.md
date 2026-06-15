@@ -66,6 +66,12 @@ package.
 install notes, workflow, hooks, agent rules, state, scripts, adapters, cache,
 and maintenance templates.
 
+The canonical PACT agent rule file is `ai/pact/agents/AGENTS.md`.
+Root-level or vendor-specific files such as `AGENTS.md`, `CLAUDE.md`,
+`GEMINI.md`, `CODEX.md`, `.cursor/rules/*`, and `.windsurfrules` are legacy
+discovery bridges for agent runtimes. They should point to the canonical PACT
+file instead of duplicating or replacing it.
+
 `ai/docs/` is reserved for SPARC-generated human-readable project truth for
 the actual project being developed. It is intentionally empty in this package.
 

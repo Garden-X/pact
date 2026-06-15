@@ -37,6 +37,14 @@ Compatibility:
 - PACT-managed installations mount SPARC-generated live project-truth docs at
   `/ai/docs`.
 
+## License And Notice
+
+PACT package identity, license, notice, and attribution obligations are defined
+by the repository license and notice files.
+
+Changing file routes, bridge filenames, or package layout does not remove
+license or notice obligations for PACT-derived packages.
+
 ## Agent OS Root
 
 The Agent OS root is:
@@ -293,6 +301,12 @@ state.tpl.md            -> /ai/pact/context/state/STATE.md
 
 Scripts and adapters are freeform support artifacts in this package. They do
 not have canonical template mappings unless a project defines local ones.
+
+Root-level and vendor-specific agent instruction files such as `AGENTS.md`,
+`CLAUDE.md`, `GEMINI.md`, `CODEX.md`, `.cursor/rules/*`, and `.windsurfrules`
+are legacy discovery bridges when created by an installer. They should point to
+`/ai/pact/agents/AGENTS.md`; they are not generated PACT targets and are not
+separate PACT rule authorities.
 
 ## Startup Sequence
 

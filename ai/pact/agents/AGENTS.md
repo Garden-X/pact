@@ -7,7 +7,7 @@ canonical_location: /ai/pact/agents/AGENTS.md
 layer: PACT / agent orientation
 status: canonical
 generated_from: /ai/pact/templates/agents.tpl.md
-generated_from_version: 1.3
+generated_from_version: 1.4
 content_status: current-data
 purpose: Orient agents inside the `/ai` container and keep SPARC project truth separate from PACT project maintenance.
 
@@ -26,6 +26,10 @@ root `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, or other agent setup files.
 
 When a native agent configuration file exists, it should point agents to this
 file instead of duplicating PACT rules.
+
+Root-level and vendor-specific instruction files are legacy discovery bridges.
+They exist so older or vendor-specific agent runtimes can find the canonical
+PACT rules. They are not separate PACT authorities.
 
 ## Instruction Sync
 

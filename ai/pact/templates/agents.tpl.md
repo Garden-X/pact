@@ -3,7 +3,7 @@
 ## META
 
 name: agents.tpl.md
-version: 1.3
+version: 1.4
 type: pact maintenance template
 for: AGENTS.md
 
@@ -24,6 +24,9 @@ It is equivalent in role to native agent instruction files such as `AGENTS.md`,
 
 It tells agents how to keep PACT agent rules synchronized with native or
 vendor-specific agent instruction files.
+
+It treats root-level and vendor-specific agent instruction files as legacy
+discovery bridges, not as competing PACT rule authorities.
 
 ## FOR
 
@@ -46,6 +49,8 @@ Use this template when creating or changing the general rules for all agents.
   native agent instruction or configuration files;
 - require agents to discover native or vendor-specific agent instruction files
   when installing or changing agent rules;
+- identify root-level and vendor-specific agent instruction files as legacy
+  discovery bridges kept for backward compatibility with agent runtimes;
 - require native or vendor-specific agent instruction files to point to
   `/ai/pact/agents/AGENTS.md` instead of duplicating PACT rules by default;
 - require agents to expose conflicts when another agent instruction file
@@ -115,6 +120,10 @@ root `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, or other agent setup files.
 
 When a native agent configuration file exists, it should point agents to this
 file instead of duplicating PACT rules.
+
+Root-level and vendor-specific instruction files are legacy discovery bridges.
+They exist so older or vendor-specific agent runtimes can find the canonical
+PACT rules. They are not separate PACT authorities.
 
 ## Instruction Sync
 
