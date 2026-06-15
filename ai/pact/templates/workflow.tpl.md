@@ -3,7 +3,7 @@
 ## META
 
 name: workflow.tpl.md
-version: 1.0
+version: 1.3
 type: pact maintenance template
 for: WORKFLOW.md
 
@@ -35,10 +35,12 @@ Use this template when creating or changing the canonical PACT workflow.
 - define valid `LOGIC-DRAFT.md` and `TASKS.md` statuses or link to their
   state files;
 - define how active task `task_phase` maps to `STATE.md` status;
+- define cleanup, draft abandonment, next draft cycle start, and valid state
+  combinations;
 - require tasks to derive from `LOGIC-DRAFT.md`, not directly from shapes;
 - register hooks and script usage in `WORKFLOW.md`;
 - keep invariant PACT files discoverable with relative Markdown links;
-- point project-truth changes to SPARC;
+- define when project-truth changes must pass through SPARC;
 - keep PACT maintenance changes inside `/ai/pact`.
 
 `WORKFLOW.md` must not:
@@ -63,7 +65,14 @@ purpose: Define how agents maintain project work without bypassing SPARC project
 
 ## Lifecycle
 
-IDEAS.md -> SHAPE -> LOGIC-DRAFT.md -> TASKS.md -> STATE.md -> execution -> validation -> cleanup.
+shape
+-> LOGIC-DRAFT.md
+-> TASKS.md
+-> STATE.md
+-> execution
+-> validation
+-> project truth update through SPARC when needed
+-> cleanup
 
 ## Startup
 
@@ -89,6 +98,17 @@ Task IDs follow `PACT-YYYYMMDD-NNN`.
 
 Project truth changes are handled through SPARC.
 PACT maintenance changes stay in `/ai/pact`.
+
+## Cleanup
+
+Move completed work to Done, clear `STATE.md`, release reservations, record
+validation, and keep or supersede `LOGIC-DRAFT.md` according to the next
+selected draft. To abandon a draft, resolve active state and cancel or complete
+pending tasks before marking `LOGIC-DRAFT.md` superseded.
+
+To start the next draft after completed work, preserve the completed cycle's
+summary and validation evidence, then replace `LOGIC-DRAFT.md`, reset
+`TASKS.md`, and transfer at most one new task into `STATE.md`.
 
 Related:
 

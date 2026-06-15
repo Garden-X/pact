@@ -1,6 +1,6 @@
 # Protocol for Agent Coordination and Tasks
 
-> Version: 02 draft
+> Version: draft
 > Status: refined specification package
 > Purpose: project maintenance for AI-assisted development
 
@@ -16,6 +16,15 @@ Source repositories:
 
 - PACT: [Garden-X/pact](https://github.com/Garden-X/pact)
 - SPARC: [Garden-X/sparc](https://github.com/Garden-X/sparc)
+
+Compatibility:
+
+- PACT expects a SPARC `01.00`-compatible project-truth binding or newer.
+- In a PACT-installed Agent OS, SPARC-generated live project-truth docs are
+  mounted under `/ai/docs`.
+- If an attached SPARC package describes its generated docs root as `/docs`,
+  treat that as the SPARC docs root and mount it to `/ai/docs` for this PACT
+  installation unless the owner selects a different binding.
 
 Core distinction:
 
@@ -47,6 +56,11 @@ Agent orientation entry file:
 /ai/pact/agents/AGENTS.md
 ```
 
+`/ai/pact/agents/AGENTS.md` is an agent rules file. Agents must treat it as
+binding PACT maintenance instruction, equivalent in role to native agent
+configuration files such as `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, or other
+agent setup files.
+
 SPARC package folder:
 
 ```txt
@@ -63,6 +77,26 @@ If SPARC is attached as a binding outside `/ai/sparc`, read `SPARC.md` at that
 binding root before creating or changing project-truth docs.
 
 The surrounding `/ai` folder is the AI-related container folder.
+
+## Operating Terms
+
+The `/ai` folder may be called the Agent OS root. In this specification, Agent
+OS means the `/ai` container viewed as the operating environment for agents.
+
+A SPARC binding is the resolved project-truth root that contains `SPARC.md`.
+It may be the `/ai/sparc` directory, a symlink, a submodule, a copied package,
+or another owner-provided directory. Operationally, the binding root is the
+directory where agents must read `SPARC.md` before creating or changing
+project-truth docs.
+
+A generated target file is a PACT maintenance file governed by a template
+mapping.
+
+An installed target file is a generated target file that exists on disk in the
+project.
+
+A seed target file is an installed target file shipped with this specification
+package in its initial state.
 
 ## System Boundaries
 
@@ -195,10 +229,24 @@ template mapping.
 
 Templates are not generated files.
 
-In this specification package, generated target files are metadata/current-data
-seeds.
+`PACT.md`, `PACT-MANIFEST.md`, and `INSTALL.md` are specification-level files.
+They are maintained by the specification author or maintainer, not generated
+from templates.
 
-Seed target files must not copy template rules or examples.
+In this specification package, generated target files may be active followable
+target files or seeds with one of these `content_status` values:
+
+| content_status | Meaning |
+|---|---|
+| `metadata-only` | The seed identifies the target file but does not include generated body content. |
+| `current-data` | The target contains current package data or followable package rules that agents may read directly. |
+| `current-state` | The seed contains current package state values for the state lifecycle. |
+
+Metadata-only seed target files must not copy template rules or examples.
+
+Active generated target files such as `AGENTS.md` and `WORKFLOW.md` may ship
+with followable content when agents need a live entry point before project
+installation logic runs.
 
 When a real project requests a generated target file, create or update the
 whole target file from the matching template.
@@ -213,8 +261,8 @@ PACT files must remain usable as a plain Markdown wiki-core.
 Core Markdown files must have stable filenames, clear headings, and relative
 Markdown links from the package index in [PACT-MANIFEST.md](PACT-MANIFEST.md).
 
-Obsidian-style wiki links are optional. They are not required for PACT
-authority, portability, or agent parsing.
+Wiki-style links are optional. They are not required for PACT authority,
+portability, or agent parsing.
 
 ## Workflow Lifecycle
 
@@ -230,6 +278,9 @@ shape
 -> project truth update through SPARC when needed
 -> cleanup
 ```
+
+`IDEAS.md` may inform work before or during shaping, but ideas are not a
+required lifecycle start and do not create tasks directly.
 
 Shapes capture early reasoning.
 
@@ -289,7 +340,67 @@ blocked
 handoff
 ```
 
+Valid state combinations:
+
+| LOGIC-DRAFT.md | TASKS.md | STATE.md | Meaning |
+|---|---|---|---|
+| `none-selected` | `no-active-draft` | `clear` | No selected maintenance draft exists. |
+| `selected` | `no-active-draft` | `clear` | Draft selected; tasks not created yet. |
+| `selected` | `active-draft` | `clear` | Tasks exist; no task is active. |
+| `selected` | `active-draft` | `active` | Exactly one task is being executed. |
+| `selected` | `active-draft` | `blocked` | Exactly one task is blocked. |
+| `selected` | `active-draft` | `handoff` | Exactly one task is prepared for handoff. |
+| `selected` | `complete` | `clear` | Draft tasks are complete. |
+| `superseded` | `no-active-draft` | `clear` | Old draft is retained as a replaced record. |
+
+Invalid combinations include:
+
+- `STATE.md` active, blocked, or handoff without `TASKS.md` set to
+  `active-draft`;
+- `TASKS.md` set to `active-draft` while `LOGIC-DRAFT.md` is `none-selected`;
+- `LOGIC-DRAFT.md` set to `superseded` while any task remains active, blocked,
+  handoff, or pending.
+
+Draft abandonment is a cleanup path. To supersede a selected draft before all
+tasks are complete, first resolve any active, blocked, or handoff state, then
+complete or explicitly cancel every pending task in `TASKS.md`. Canceled tasks
+must move out of Pending and record the cancellation reason. After no active or
+pending task remains, set `TASKS.md` to `no-active-draft`, set `STATE.md` to
+`clear`, and set `LOGIC-DRAFT.md` to `superseded`.
+
+Starting a next draft cycle is allowed when `STATE.md` is `clear` and the
+previous `TASKS.md` cycle is `complete`. Before replacing `LOGIC-DRAFT.md` or
+resetting `TASKS.md`, preserve the completed cycle's summary and validation
+evidence in `TASKS.md` Done, a SPARC daily log, or both. Then write the new
+selected logic into `LOGIC-DRAFT.md`, reset `TASKS.md` for the new draft, and
+transfer at most one task into `STATE.md`.
+
+`STATE.md` is a project-level active-task mutex. Multiple pending tasks may
+exist in `TASKS.md`, but only one task may be transferred into `STATE.md` at a
+time. A second agent must wait, help unblock the active task, or receive owner
+approval for a separate coordination scope.
+
 SPARC-generated docs are updated only when project truth changes.
+
+The project-truth update step activates when completed work changes or reveals
+accepted behavior, architecture, contracts, persistent decisions, documentation
+structure, or other durable project meaning. It does not activate for transient
+PACT bookkeeping, cache changes, task movement, or future ideas that have not
+become accepted project truth.
+
+Cleanup completes the maintenance cycle:
+
+- move completed work from `TASKS.md` Pending to Done;
+- set `STATE.md` to `clear` and `active_task` to `none`;
+- release file reservations recorded in `STATE.md`;
+- record validation evidence or a reason validation was not possible in the
+  completed task entry, the relevant SPARC daily log, or both;
+- set `TASKS.md` to `complete` when no pending tasks remain;
+- keep supporting shape files unless the owner asks for removal;
+- clear disposable cache when it is no longer useful;
+- leave `LOGIC-DRAFT.md` as `selected` for traceability, set it to
+  `superseded` when replaced, or reset it to `none-selected` when the selected
+  logic is intentionally cleared.
 
 ## PACT Template Discipline
 
@@ -319,6 +430,43 @@ EXAMPLE
 `RULES` defines required and forbidden content.
 
 `EXAMPLE` shows a compact valid target file or fragment.
+
+## Target META Blocks
+
+Generated PACT target files should start with a Markdown title followed by a
+`## META` block.
+
+Required META fields for all PACT target files:
+
+- `name`;
+- `canonical_location`;
+- `layer`;
+- `status`.
+
+Required META fields for seed target files and recommended fields for any
+target that needs template-origin tracking:
+
+- `generated_from`;
+- `generated_from_version`;
+- `content_status`.
+
+Optional META fields may be added when the target needs them. Current optional
+fields include:
+
+- `active_task` for `STATE.md`;
+- `purpose` for full generated files or template examples;
+
+Template files use their own META schema:
+
+- `name`;
+- `version`;
+- `type`;
+- `for`.
+
+Template `version` identifies the template contract. Increment it when a
+template changes target rules, required fields, lifecycle behavior, or examples
+in a way that may change generated target files. Pure typo or formatting fixes
+may keep the same version.
 
 ## Hooks
 
@@ -358,6 +506,13 @@ Cache lives in:
 ```
 
 Scripts and adapters support PACT. They do not govern SPARC project truth.
+
+Scripts and adapters are freeform support artifacts unless a project defines a
+local convention for them. There is no canonical `script.tpl.md` or
+`adapter.tpl.md` in this package.
+
+When a hook depends on a script or adapter, register the relationship in the
+hook file and in [workflow/WORKFLOW.md](workflow/WORKFLOW.md).
 
 Cache is disposable and must not contain irreplaceable decisions.
 

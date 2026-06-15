@@ -3,7 +3,7 @@
 ## META
 
 name: state.tpl.md
-version: 1.0
+version: 1.1
 type: pact maintenance template
 for: STATE.md
 
@@ -132,8 +132,15 @@ Handoff must record status and notes needed by the next agent or session.
 ```md
 # STATE.md
 
+## META
+
+name: STATE.md
+canonical_location: /ai/pact/context/state/STATE.md
+layer: PACT / context / state
 status: active
 active_task: PACT-YYYYMMDD-001
+generated_from: /ai/pact/templates/state.tpl.md
+content_status: current-state
 
 ## Active Task
 

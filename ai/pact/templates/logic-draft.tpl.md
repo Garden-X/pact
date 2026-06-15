@@ -3,7 +3,7 @@
 ## META
 
 name: logic-draft.tpl.md
-version: 1.0
+version: 1.2
 type: pact maintenance template
 for: LOGIC-DRAFT.md
 
@@ -51,6 +51,11 @@ Status meanings:
 - `selected` means selected maintenance logic may be split into tasks.
 - `superseded` means the draft was replaced by a newer selected draft.
 
+When status is `none-selected`, `LOGIC-DRAFT.md` may use a compact `## CURRENT`
+stub with empty values such as `selected_logic: none`. When status is
+`selected`, use full content sections such as `## Selected Logic`,
+`## Source / Evidence`, `## Decisions`, and `## Constraints`.
+
 `LOGIC-DRAFT.md` must not:
 
 - contain accepted project truth;
@@ -67,7 +72,14 @@ Tasks must not derive directly from `IDEAS.md`.
 ```md
 # LOGIC-DRAFT.md
 
+## META
+
+name: LOGIC-DRAFT.md
+canonical_location: /ai/pact/context/state/LOGIC-DRAFT.md
+layer: PACT / context / state
 status: selected
+generated_from: /ai/pact/templates/logic-draft.tpl.md
+content_status: current-state
 
 ## Selected Logic
 

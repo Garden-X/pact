@@ -3,13 +3,13 @@
 ## META
 
 name: agents.tpl.md
-version: 1.0
+version: 1.3
 type: pact maintenance template
 for: AGENTS.md
 
 ## WHAT
 
-`AGENTS.md` is the canonical agent-facing orientation file for PACT.
+`AGENTS.md` is the canonical agent-facing rules and orientation file for PACT.
 
 It tells agents how to locate SPARC, PACT, docs, raw material, workflow, state,
 and templates.
@@ -18,6 +18,12 @@ It states that agents must follow PACT for project maintenance and SPARC for
 project truth.
 
 It names the required lookup folders and entry files for PACT and SPARC.
+
+It is equivalent in role to native agent instruction files such as `AGENTS.md`,
+`CLAUDE.md`, `GEMINI.md`, or other agent setup files.
+
+It tells agents how to keep PACT agent rules synchronized with native or
+vendor-specific agent instruction files.
 
 ## FOR
 
@@ -34,6 +40,18 @@ Use this template when creating or changing the general rules for all agents.
 `AGENTS.md` must:
 
 - define the SPARC project-truth and PACT project-maintenance boundary;
+- state that `AGENTS.md` is a binding agent rules file, not optional
+  documentation;
+- state that agent runtimes should treat `AGENTS.md` as equivalent in role to
+  native agent instruction or configuration files;
+- require agents to discover native or vendor-specific agent instruction files
+  when installing or changing agent rules;
+- require native or vendor-specific agent instruction files to point to
+  `/ai/pact/agents/AGENTS.md` instead of duplicating PACT rules by default;
+- require agents to expose conflicts when another agent instruction file
+  contradicts PACT authority;
+- require agents to keep bridge files synchronized when PACT agent rule
+  location or authority changes;
 - state that agents must follow generated PACT target files for project
   maintenance after those files are created or updated from templates;
 - state that agents must follow SPARC for project truth when project truth is
@@ -86,6 +104,37 @@ purpose: Orient agents inside the `/ai` container and keep SPARC project truth s
 
 SPARC purpose = project truth.
 PACT purpose = project maintenance.
+
+## Agent Rule Authority
+
+`/ai/pact/agents/AGENTS.md` is an agent rules file, not optional
+documentation.
+
+Treat this file as equivalent in role to native agent instruction files such as
+root `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, or other agent setup files.
+
+When a native agent configuration file exists, it should point agents to this
+file instead of duplicating PACT rules.
+
+## Instruction Sync
+
+When installing or changing agent rules, inspect native or vendor-specific
+agent instruction files in the project, such as root `AGENTS.md`, `CLAUDE.md`,
+`GEMINI.md`, `CODEX.md`, `.cursor/rules/*`, `.windsurfrules`, or other
+owner-selected agent setup files.
+
+Those files should stay minimal and point agents to
+`/ai/pact/agents/AGENTS.md` for PACT maintenance rules.
+
+Do not duplicate the full PACT rule set into multiple agent instruction files
+unless the owner explicitly asks for duplication.
+
+If another agent instruction file contradicts PACT authority, expose the
+conflict before acting and update the bridge only with owner approval when the
+conflict changes behavior.
+
+When this file's location, authority, or required startup path changes,
+synchronize the bridge files that point agents here.
 
 Agents must follow PACT for project maintenance.
 
@@ -141,16 +190,11 @@ pattern.
 
 ## Startup
 
-Read this file, then `/ai/pact/PACT.md`, `PACT-MANIFEST.md`, `WORKFLOW.md`,
-`IDEAS.md`, and `STATE.md`.
+Follow the canonical startup sequence in
+[../PACT-MANIFEST.md](../PACT-MANIFEST.md).
 
-Locate the SPARC folder or binding root and read `SPARC.md` before creating or
-changing project-truth docs.
-
-If `STATE.md` is active, blocked, or handoff, continue, unblock, or hand off
-that task.
-
-If `STATE.md` is clear, read `TASKS.md`.
+Resolve the SPARC folder or binding root and read `SPARC.md` before creating
+or changing project-truth docs.
 
 ## Ideas
 

@@ -22,6 +22,10 @@ how agents maintain the project while work is happening.
 - PACT: [Garden-X/pact](https://github.com/Garden-X/pact)
 - SPARC: [Garden-X/sparc](https://github.com/Garden-X/sparc)
 
+PACT expects a SPARC `01.00`-compatible project-truth binding or newer. In a
+PACT-managed Agent OS, SPARC-generated live project-truth docs are mounted
+under `/ai/docs`.
+
 ## Why PACT Exists
 
 AI-assisted projects need more than code and documentation. They need a shared
@@ -88,12 +92,12 @@ empty in this package.
 
 PACT is a plain Markdown wiki-core package.
 
-The repository root may be opened as an Obsidian vault or any Markdown
-knowledge base. The `.obsidian` folder provides reader configuration only.
-PACT authority remains in the Markdown files.
+The repository root may be opened in any Markdown knowledge base or editor.
+Local reader configuration remains untracked. PACT authority remains in the
+Markdown files.
 
 Use [ai/pact/PACT-MANIFEST.md](ai/pact/PACT-MANIFEST.md) as the package index
-when navigating the vault.
+when navigating the package.
 
 ## PACT Maintenance Templates
 
@@ -115,12 +119,12 @@ agent, or state files themselves.
 apply them to generated target files, but agents must not edit, rename, delete,
 or create template files during normal PACT operation.
 
-In this specification package, generated target files are metadata/current-data
-seeds. They must not copy template rules. Full generated bodies come from the
-matching template when a real project requests that file to be created or
-updated.
+In this specification package, generated target files may be active followable
+targets or seeds with `metadata-only`, `current-data`, or `current-state`
+content status. `AGENTS.md` and `WORKFLOW.md` ship as canonical current-data
+entry points so agents can start without generating their own rules first.
 
-PACT templates follow a SPARC-like structure:
+PACT templates follow a similar sectioned structure:
 
 ```txt
 META

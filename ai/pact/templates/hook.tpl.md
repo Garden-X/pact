@@ -3,7 +3,7 @@
 ## META
 
 name: hook.tpl.md
-version: 1.0
+version: 1.1
 type: pact maintenance template
 for: agent hook files
 
@@ -64,6 +64,7 @@ A hook file must not:
 ## META
 
 name: ValidateBeforeCompletion
+canonical_location: /ai/pact/agents/hooks/ValidateBeforeCompletion.md
 layer: PACT / agent hook
 status: draft
 

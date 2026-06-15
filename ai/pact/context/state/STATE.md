@@ -8,6 +8,7 @@ layer: PACT / context / state
 status: clear
 active_task: none
 generated_from: /ai/pact/templates/state.tpl.md
+generated_from_version: 1.1
 content_status: current-state
 
 ## Active Task

@@ -7,6 +7,7 @@ canonical_location: /ai/pact/agents/NICKNAMES.md
 layer: PACT / agent preferences
 status: seed
 generated_from: /ai/pact/templates/agent-nicknames.tpl.md
+generated_from_version: 1.0
 content_status: current-data
 
 ## CURRENT

@@ -3,7 +3,7 @@
 ## META
 
 name: tasks.tpl.md
-version: 1.0
+version: 1.3
 type: pact maintenance template
 for: TASKS.md
 
@@ -34,6 +34,9 @@ Use this template when creating or resetting the PACT task list.
 - never derive tasks directly from shape files;
 - keep pending and done tasks separate;
 - move active work into `STATE.md`;
+- move canceled tasks out of Pending with an explicit cancellation note;
+- record validation evidence or a reason validation was not possible when a
+  task moves to Done;
 - link related invariant PACT files with relative Markdown links;
 - keep task entries compact and traceable.
 
@@ -71,7 +74,14 @@ PACT-YYYYMMDD-NNN
 ```md
 # TASKS.md
 
+## META
+
+name: TASKS.md
+canonical_location: /ai/pact/context/state/TASKS.md
+layer: PACT / context / state
 status: active-draft
+generated_from: /ai/pact/templates/tasks.tpl.md
+content_status: current-state
 
 ## Pending
 

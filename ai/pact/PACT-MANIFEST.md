@@ -1,6 +1,6 @@
 # PACT-MANIFEST
 
-> For: PACT 02 package
+> For: PACT package
 > Status: canonical package manifest
 > Purpose: describe the installed PACT maintenance environment
 
@@ -31,6 +31,12 @@ Source repositories:
 - PACT: [Garden-X/pact](https://github.com/Garden-X/pact)
 - SPARC: [Garden-X/sparc](https://github.com/Garden-X/sparc)
 
+Compatibility:
+
+- PACT expects a SPARC `01.00`-compatible project-truth binding or newer.
+- PACT-managed installations mount SPARC-generated live project-truth docs at
+  `/ai/docs`.
+
 ## Agent OS Root
 
 The Agent OS root is:
@@ -39,8 +45,9 @@ The Agent OS root is:
 /ai
 ```
 
-`/ai` is the AI-related container folder. It separates project truth, project
-maintenance, package standards, and raw evidence.
+Agent OS means the `/ai` container viewed as the operating environment for
+agents. It separates project truth, project maintenance, package standards, and
+raw evidence.
 
 Recommended structure:
 
@@ -58,6 +65,8 @@ Recommended structure:
 
 `/ai/sparc` is reserved for the SPARC package or binding used by PACT.
 
+A SPARC binding is the resolved project-truth root that contains `SPARC.md`.
+
 SPARC source repository:
 
 ```txt
@@ -67,6 +76,10 @@ https://github.com/Garden-X/sparc
 This specification package tracks it as an empty folder.
 
 SPARC governs project-truth contracts and the structure of SPARC-generated docs.
+
+If an attached SPARC package describes generated docs under `/docs`, interpret
+that path as the SPARC docs root and mount it to `/ai/docs` for this PACT
+installation unless the owner selects a different binding.
 
 SPARC entry file:
 
@@ -181,7 +194,7 @@ This package leaves `/ai/raw` empty.
 ## Wiki-Core Index
 
 PACT core files are plain Markdown notes and should be navigable in Markdown
-readers, GitHub, Obsidian, and other wiki-like tools.
+readers, GitHub, and other wiki-like tools.
 
 Core package files:
 
@@ -211,18 +224,22 @@ PACT maintenance templates:
 - [templates/tasks.tpl.md](templates/tasks.tpl.md)
 - [templates/state.tpl.md](templates/state.tpl.md)
 
-The repository root may include `.obsidian` reader configuration so the package
-can be opened as a vault. That configuration does not create PACT authority.
+Local reader configuration does not create PACT authority and should remain
+untracked.
 
 ## Generated Targets And Templates
 
 The wiki-core index lists package docs, generated target files, and templates.
 
-In this specification package, generated target files are metadata/current-data
-seeds.
+`PACT.md`, `PACT-MANIFEST.md`, and `INSTALL.md` are specification-level files.
+They are not generated target files and do not have template mappings.
+
+In this specification package, generated target files may be active followable
+targets or seeds with `metadata-only`, `current-data`, or `current-state`
+content status.
 
 In a real project, agents follow generated target files after those files are
-created or updated from templates.
+created, updated, or shipped with active followable content.
 
 Templates in `/ai/pact/templates` are used to create or update those installed
 generated target files.
@@ -243,9 +260,12 @@ Generated files are the target files in the mapping below.
 
 Templates are not generated files.
 
-Seed target files must not copy template rules or examples.
+Metadata-only seed target files must not copy template rules or examples.
 
 Rules and full target examples stay in `/ai/pact/templates/*.tpl.md`.
+
+Active generated target files such as `AGENTS.md` and `WORKFLOW.md` may ship
+with followable content when they are needed as immediate agent entry points.
 
 When a real project requests a generated target file, create or update the
 whole target file from the matching template.
@@ -270,6 +290,9 @@ logic-draft.tpl.md      -> /ai/pact/context/state/LOGIC-DRAFT.md
 tasks.tpl.md            -> /ai/pact/context/state/TASKS.md
 state.tpl.md            -> /ai/pact/context/state/STATE.md
 ```
+
+Scripts and adapters are freeform support artifacts in this package. They do
+not have canonical template mappings unless a project defines local ones.
 
 ## Startup Sequence
 

@@ -1,12 +1,15 @@
 # PACT INSTALL
 
-> For: PACT 02
+> For: PACT
 > Purpose: install or verify the PACT project-maintenance layer
 
 ## Purpose
 
 Installation means creating or verifying the PACT maintenance environment under
 `/ai/pact` and binding SPARC when project-truth docs are needed.
+
+When this package is copied into a target project repository, `/ai` means the
+target project's `ai/` folder.
 
 Core distinction:
 
@@ -17,14 +20,119 @@ PACT purpose  = project maintenance.
 
 Installing PACT does not create project-truth docs by itself.
 
+## Source Repositories
+
+- PACT: [Garden-X/pact](https://github.com/Garden-X/pact)
+- SPARC: [Garden-X/sparc](https://github.com/Garden-X/sparc)
+
+Compatibility:
+
+- PACT expects a SPARC `01.00`-compatible project-truth binding or newer.
+- PACT-managed installations mount SPARC-generated live project-truth docs at
+  `/ai/docs`.
+
+When an agent is asked to run or apply this `INSTALL.md`, treat this file as an
+installation procedure for the target project, not only as reading material.
+
 ## SPARC Binding
 
 `/ai/sparc` is reserved for the SPARC package or binding used by PACT.
 
 This specification package tracks `/ai/sparc` as an empty folder.
 
+A SPARC binding is the resolved project-truth root that contains `SPARC.md`.
+
 Before creating or changing project-truth docs, attach or resolve a real SPARC
 package or compatible project-truth binding.
+
+## SPARC Bootstrap
+
+Install the latest available SPARC package into `/ai/sparc` during PACT
+installation unless the owner explicitly selects another SPARC binding.
+
+Latest SPARC means the current `HEAD` of the SPARC repository default branch,
+or an owner-selected tag, branch, or commit when the owner pins one.
+
+If `/ai/sparc` is missing, empty, or contains only a package placeholder such as
+`.gitkeep`, initialize it from:
+
+```txt
+https://github.com/Garden-X/sparc.git
+```
+
+Repo-relative command pattern:
+
+```sh
+git clone --depth 1 https://github.com/Garden-X/sparc.git ai/sparc
+```
+
+Remove the `.gitkeep` placeholder before cloning.
+
+If `/ai/sparc` is already a Git checkout of the SPARC repository, fetch the
+default branch and update only by fast-forward. Do not overwrite local SPARC
+changes.
+
+Repo-relative update pattern:
+
+```sh
+git -C ai/sparc pull --ff-only
+```
+
+If `/ai/sparc` is non-empty and is not a SPARC checkout, treat it as an
+owner-provided binding and verify that `SPARC.md` exists at its root.
+
+If the attached SPARC package describes its generated docs root as `/docs`,
+treat that as the SPARC docs root and mount it to `/ai/docs` in this PACT
+installation unless the owner selects a different docs root.
+
+If network access is unavailable, leave `/ai/sparc` unresolved, record the
+blocker, and do not create project-truth docs until SPARC is attached.
+
+## Agent Rules Installation
+
+`/ai/pact/agents/AGENTS.md` is an agent rules file. Agents must treat it as
+binding PACT maintenance instruction, not as optional documentation.
+
+Treat `/ai/pact/agents/AGENTS.md` as the same class of instruction file as
+native agent configuration files such as `AGENTS.md`, `CLAUDE.md`,
+`GEMINI.md`, or equivalent agent setup files.
+
+If an agent runtime only auto-discovers a root-level or vendor-specific
+instruction file, that file should point agents to
+`/ai/pact/agents/AGENTS.md` instead of duplicating PACT rules.
+
+During installation, create or update native agent instruction bridge files
+when the target project or agent runtime expects them. Examples include
+project-root `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, or another owner-selected
+agent configuration file.
+
+When native or vendor-specific agent instruction files already exist, inspect
+them before writing bridge content. Preserve owner-specific instructions that
+do not conflict with PACT. If they contradict `/ai/pact/agents/AGENTS.md`,
+report the conflict instead of silently merging or overwriting rules.
+
+Bridge files should be minimal. Recommended bridge content:
+
+```md
+# Agent Instructions
+
+Follow `/ai/pact/agents/AGENTS.md` for PACT maintenance rules before starting
+work in this project.
+```
+
+If `/ai/pact/agents/AGENTS.md` is a `metadata-only` seed, generate the active
+rules file from `/ai/pact/templates/agents.tpl.md` during installation before
+agent work begins.
+
+If `/ai/pact/workflow/WORKFLOW.md` is a `metadata-only` seed, generate the
+active workflow file from `/ai/pact/templates/workflow.tpl.md` during
+installation before agent work begins.
+
+If `AGENTS.md` or `WORKFLOW.md` is already shipped with `content_status:
+current-data` and `status: canonical`, agents may follow it directly.
+
+Generated active files must keep their `generated_from` and
+`generated_from_version` META fields so later template drift can be detected.
 
 ## Required PACT Package
 
@@ -95,8 +203,10 @@ Use the matching template before creating or changing generated target files:
 - tasks;
 - active state.
 
-In this specification package, generated target files are metadata/current-data
-seeds. They must not copy template rules or examples.
+In this specification package, generated target files may be active followable
+targets or seeds with `metadata-only`, `current-data`, or `current-state`
+content status. Metadata-only seed files must not copy template rules or
+examples.
 
 PACT templates must follow:
 
@@ -111,13 +221,34 @@ EXAMPLE
 ## Validation Checklist
 
 - [ ] `/ai/sparc/` exists as the reserved SPARC folder.
+- [ ] `/ai/sparc/` is initialized from the latest SPARC repository default
+      branch, or an owner-selected SPARC binding is documented.
+- [ ] If `/ai/sparc/` or another binding root contains a SPARC package,
+      `SPARC.md` exists at that root.
+- [ ] The attached SPARC binding is `01.00`-compatible or newer.
+- [ ] SPARC-generated live project-truth docs are mounted at `/ai/docs`.
 - [ ] `/ai/pact/PACT.md` exists.
 - [ ] `/ai/pact/PACT-MANIFEST.md` exists.
 - [ ] `/ai/pact/workflow/WORKFLOW.md` exists.
 - [ ] `/ai/pact/agents/AGENTS.md` exists.
+- [ ] `/ai/pact/agents/AGENTS.md` has been generated from
+      `agents.tpl.md` if it was installed as a `metadata-only` seed, or is
+      already shipped as `status: canonical` with `content_status:
+      current-data`.
+- [ ] `/ai/pact/workflow/WORKFLOW.md` has been generated from
+      `workflow.tpl.md` if it was installed as a `metadata-only` seed, or is
+      already shipped as `status: canonical` with `content_status:
+      current-data`.
+- [ ] Agents treat `/ai/pact/agents/AGENTS.md` as a binding agent rules file
+      equivalent in role to native agent configuration files.
+- [ ] Native agent instruction bridge files exist when required by the target
+      agent runtime, and they point to `/ai/pact/agents/AGENTS.md`.
+- [ ] Existing native or vendor-specific agent instruction files were inspected
+      and either synchronized with PACT or reported as conflicts.
 - [ ] `/ai/pact/templates/*.tpl.md` contains the required PACT templates.
 - [ ] Agents treat `/ai/pact/templates/*.tpl.md` as immutable.
-- [ ] Generated target files contain metadata/current data only.
+- [ ] Generated target files use valid `content_status` values and contain no
+      accepted project truth.
 - [ ] `/ai/pact/context/IDEAS.md` exists.
 - [ ] `/ai/pact/templates/ideas.tpl.md` exists.
 - [ ] `/ai/pact/templates/shape.tpl.md` exists.
@@ -128,7 +259,7 @@ EXAMPLE
 - [ ] `/ai/raw` contains no accepted project truth.
 - [ ] PACT core Markdown links resolve from `PACT-MANIFEST.md` when checked by
       a Markdown link checker or opened in a Markdown wiki reader.
-- [ ] The repository root can be opened as a Markdown wiki or Obsidian vault.
+- [ ] The repository root can be opened as a Markdown wiki or editor workspace.
 - [ ] Hooks that use scripts expose those scripts through hook files and
       `WORKFLOW.md`.
 

@@ -7,6 +7,7 @@ canonical_location: /ai/pact/context/state/LOGIC-DRAFT.md
 layer: PACT / context / state
 status: none-selected
 generated_from: /ai/pact/templates/logic-draft.tpl.md
+generated_from_version: 1.2
 content_status: current-state
 
 ## CURRENT
