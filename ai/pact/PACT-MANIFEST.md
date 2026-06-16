@@ -221,6 +221,7 @@ PACT maintenance templates:
 
 - [templates/workflow.tpl.md](templates/workflow.tpl.md)
 - [templates/hook.tpl.md](templates/hook.tpl.md)
+- [templates/cache-run.tpl.md](templates/cache-run.tpl.md)
 - [templates/agents.tpl.md](templates/agents.tpl.md)
 - [templates/agent-nicknames.tpl.md](templates/agent-nicknames.tpl.md)
 - [templates/skill.tpl.md](templates/skill.tpl.md)
@@ -249,14 +250,15 @@ content status.
 In a real project, agents follow generated target files after those files are
 created, updated, or shipped with active followable content.
 
-Templates in `/ai/pact/templates` are used to create or update those installed
-generated target files.
+Templates in `/ai/pact/templates` are used to create or update installed
+generated target files and templated cache artifacts.
 
 Templates do not replace the installed files they describe.
 
 `*.tpl.md` files are immutable template contracts.
 
-Agents may read templates and apply their rules to generated target files.
+Agents may read templates and apply their rules to generated target files and
+templated cache artifacts.
 
 Agents must not edit, rename, delete, or create template files during normal
 PACT operation.
@@ -264,7 +266,8 @@ PACT operation.
 If a template is missing or appears incorrect, agents must report the issue and
 request template-maintainer action instead of changing the template.
 
-Generated files are the target files in the mapping below.
+Generated files and templated cache artifacts are the target paths in the
+mapping below.
 
 Templates are not generated files.
 
@@ -278,15 +281,16 @@ with followable content when they are needed as immediate agent entry points.
 When a real project requests a generated target file, create or update the
 whole target file from the matching template.
 
-When changing a generated PACT target file, use the mapping below to choose the
-matching template, apply the template rules, and write the result to the target
-path.
+When changing a generated PACT target file or creating a templated cache
+artifact, use the mapping below to choose the matching template, apply the
+template rules, and write the result to the target path.
 
 ## Template Mappings
 
 ```txt
 workflow.tpl.md         -> /ai/pact/workflow/WORKFLOW.md
 hook.tpl.md             -> /ai/pact/agents/hooks/[Hook].md
+cache-run.tpl.md        -> /ai/pact/cache/runs/YYYY-MM-DDTHH-MM-SSZ--slug/CACHE.md
 agents.tpl.md           -> /ai/pact/agents/AGENTS.md
 agent-nicknames.tpl.md  -> /ai/pact/agents/NICKNAMES.md
 skill.tpl.md            -> /ai/pact/agents/skills/[Skill].md
@@ -301,6 +305,9 @@ state.tpl.md            -> /ai/pact/context/state/STATE.md
 
 Scripts and adapters are freeform support artifacts in this package. They do
 not have canonical template mappings unless a project defines local ones.
+
+Cache-run manifests are templated cache artifacts. They are not installed
+generated PACT target files and do not use `content_status`.
 
 Root-level and vendor-specific agent instruction files such as `AGENTS.md`,
 `CLAUDE.md`, `GEMINI.md`, `CODEX.md`, `.cursor/rules/*`, and `.windsurfrules`
@@ -330,6 +337,10 @@ Default agent startup:
 11. If state is active, blocked, or handoff, resume, unblock, or hand off the
    active task.
 12. If state is clear, read `/ai/pact/context/state/TASKS.md`.
+13. At work-session start, follow cache rules in
+   `/ai/pact/workflow/WORKFLOW.md`: inspect the latest cache run, create or
+   refresh `/ai/pact/cache/runs/YYYY-MM-DDTHH-MM-SSZ--slug/CACHE.md` from
+   `/ai/pact/templates/cache-run.tpl.md`, and record the current input basis.
 
 ## Non-Goals
 

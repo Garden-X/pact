@@ -7,7 +7,7 @@ canonical_location: /ai/pact/agents/AGENTS.md
 layer: PACT / agent orientation
 status: canonical
 generated_from: /ai/pact/templates/agents.tpl.md
-generated_from_version: 1.4
+generated_from_version: 2.0
 content_status: current-data
 purpose: Orient agents inside the `/ai` container and keep SPARC project truth separate from PACT project maintenance.
 
@@ -132,6 +132,46 @@ Shape files use `YYYY-MM-DD-[Shape-Slug].shape.md`.
 
 Shapes may inform `LOGIC-DRAFT.md`, but tasks must not derive directly from
 shape files.
+
+## Cache
+
+Cache lives in `/ai/pact/cache`.
+
+Use cache only for temporary session memory while working on an addon, a new
+logic addition, or another active task.
+
+Create cache by task run:
+
+```txt
+/ai/pact/cache/runs/YYYY-MM-DDTHH-MM-SSZ--slug/
+```
+
+Retained cache runs live under `/ai/pact/cache/retained/`. Do not create
+topic cache folders such as `cache/sparc`, `cache/pact`, or `cache/docs`.
+
+`CACHE.md` is the manifest, index, and pointer file for one cache run. It
+should be created from `../templates/cache-run.tpl.md`. It does not replace
+the folders that hold cache artifacts.
+
+When creating `CACHE.md`, record the input basis: user prompts or owner
+instructions, internet search queries and source pointers, `STATE.md`,
+`TASKS.md`, input data, any `/ai/raw` example or dataset references, and any
+other file, dataset, or project references outside `/ai/raw` needed to solve
+the task.
+
+Cache may hold session-scoped working material such as `raw-data/`, chunks,
+retrieval notes, RAG artifacts, sandbox outputs, validation artifacts, and
+decomposition traces.
+
+Cache must not hold accepted project truth, permanent PACT instructions,
+durable raw evidence that belongs in `/ai/raw`, project docs that belong in
+`/ai/docs`, secrets, credentials, or hidden memory.
+
+Distinguish cache `raw-data/` from `/ai/raw`. Cache `raw-data/` is disposable
+session input. `/ai/raw` is the durable raw/evidence area outside cache.
+
+Follow `WORKFLOW.md` for cache session refresh, previous-cache comparison,
+promotion, retention, and cleanup.
 
 ## Wiki-Core Navigation
 

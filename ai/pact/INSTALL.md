@@ -181,11 +181,13 @@ PACT installation does not populate `/ai/raw`.
 
 ## PACT Maintenance Templates
 
-PACT templates are used when maintaining generated PACT target files.
+PACT templates are used when maintaining generated PACT target files and
+templated cache artifacts.
 
 `*.tpl.md` files are immutable template contracts.
 
-Agents may read templates and apply them to generated target files.
+Agents may read templates and apply them to generated target files or cache
+artifacts.
 
 Agents must not edit, rename, delete, or create template files during normal
 PACT operation.
@@ -193,10 +195,12 @@ PACT operation.
 If a template is missing or appears incorrect, agents must report the issue and
 request template-maintainer action instead of changing the template.
 
-Use the matching template before creating or changing generated target files:
+Use the matching template before creating or changing generated target files or
+templated cache artifacts:
 
 - workflow files;
 - hook files;
+- cache-run manifests;
 - skill files;
 - agent rules;
 - nickname files;
@@ -253,6 +257,7 @@ EXAMPLE
 - [ ] Existing native or vendor-specific agent instruction files were inspected
       and either synchronized with PACT or reported as conflicts.
 - [ ] `/ai/pact/templates/*.tpl.md` contains the required PACT templates.
+- [ ] `/ai/pact/templates/cache-run.tpl.md` exists.
 - [ ] Agents treat `/ai/pact/templates/*.tpl.md` as immutable.
 - [ ] Generated target files use valid `content_status` values and contain no
       accepted project truth.

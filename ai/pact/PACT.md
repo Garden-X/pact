@@ -412,10 +412,10 @@ Cleanup completes the maintenance cycle:
 
 PACT templates are maintenance templates. They keep PACT files consistent when
 developers ask for hooks, workflow changes, agent changes, worker files, soul
-files, nickname changes, or state model changes.
+files, nickname changes, cache-run manifests, or state model changes.
 
 PACT templates are immutable for agents. Agents operate on generated target
-files only.
+files and templated cache artifacts, not on template files themselves.
 
 PACT templates follow this structure:
 
@@ -491,6 +491,10 @@ Hooks are registered in [workflow/WORKFLOW.md](workflow/WORKFLOW.md).
 
 `hook.tpl.md` governs one individual hook file.
 
+`cache-run.tpl.md` governs `CACHE.md` manifests for individual cache runs.
+`CACHE.md` files are templated cache artifacts, not installed generated PACT
+target files, and follow the cache-run template's META shape.
+
 ## Adapters, Scripts, And Cache
 
 Scripts live in:
@@ -521,6 +525,74 @@ When a hook depends on a script or adapter, register the relationship in the
 hook file and in [workflow/WORKFLOW.md](workflow/WORKFLOW.md).
 
 Cache is disposable and must not contain irreplaceable decisions.
+
+## Cache Lifecycle
+
+Cache is temporary session memory for work on an addon, a new logic addition,
+or another active maintenance task.
+
+Cache is organized by task run, not by topic. Topic-oriented cache folders are
+forbidden because they become uncontrolled alternate documentation. Topics
+belong in SPARC-generated docs or PACT target files after promotion.
+
+Cache runs live under:
+
+```txt
+/ai/pact/cache/runs/YYYY-MM-DDTHH-MM-SSZ--slug/
+```
+
+Retained cache runs live under:
+
+```txt
+/ai/pact/cache/retained/YYYY-MM-DDTHH-MM-SSZ--slug/
+```
+
+Each cache run may contain a `CACHE.md` manifest plus run-local folders such
+as:
+
+```txt
+CACHE.md
+raw-data/
+chunks/
+summaries/
+retrieval/
+rag/
+rlm/
+validation/
+artifacts/
+promote/
+tmp/
+```
+
+`CACHE.md` is the manifest, index, and pointer file for one cache run. It
+does not replace the cache-run folders and should not contain all cached
+material inline. Create `CACHE.md` from
+[templates/cache-run.tpl.md](templates/cache-run.tpl.md).
+
+`CACHE.md` must record the cache input basis: user prompts or owner
+instructions, internet search queries and source pointers, task state, input
+data, `/ai/raw` references when used, and other local file, dataset, project,
+or repository references when they inform the task.
+
+`raw-data/` inside a cache run is not `/ai/raw`. Cache `raw-data/` is
+session-scoped and disposable. `/ai/raw` is the durable raw/evidence area
+outside cache for source material that must survive cache cleanup, such as
+cloned Git projects, whole projects selected for transformation, or datasets
+for processing.
+
+Cache must not contain accepted project truth, hidden memory, secrets,
+credentials, permanent instructions, irreplaceable raw evidence, or durable
+decisions. If material would be lost by deleting cache, it belongs somewhere
+else before cleanup.
+
+Cache session refresh, previous-cache comparison, promotion, retention, and
+cleanup are workflow behavior and are defined in
+[workflow/WORKFLOW.md](workflow/WORKFLOW.md).
+
+Agents may use external reasoning, recursive decomposition, or sandbox
+libraries as implementation support only when the license and owner policy
+allow it. Their intermediate outputs are still cache. They do not become PACT
+authority or SPARC project truth until promoted through the proper files.
 
 ## Forbidden Mixing
 
