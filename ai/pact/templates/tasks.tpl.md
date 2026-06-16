@@ -3,7 +3,7 @@
 ## META
 
 name: tasks.tpl.md
-version: 1.3
+version: 1.4
 type: pact maintenance template
 for: TASKS.md
 
@@ -34,7 +34,11 @@ Use this template when creating or resetting the PACT task list.
 - never derive tasks directly from shape files;
 - keep pending and done tasks separate;
 - move active work into `STATE.md`;
+- remove a transferred task from Pending when it becomes the active task in
+  `STATE.md`;
 - move canceled tasks out of Pending with an explicit cancellation note;
+- require each task entry to include an id, a short action/outcome, trace back
+  to `LOGIC-DRAFT.md`, and a validation expectation;
 - record validation evidence or a reason validation was not possible when a
   task moves to Done;
 - link related invariant PACT files with relative Markdown links;
@@ -86,11 +90,20 @@ content_status: current-state
 ## Pending
 
 - [ ] PACT-YYYYMMDD-001 - Create the requested hook file.
+  trace: LOGIC-DRAFT.md / Decisions
+  outcome: Hook file exists at the selected path.
+  validation: Inspect hook file and confirm workflow registration.
 - [ ] PACT-YYYYMMDD-002 - Validate template consistency.
+  trace: LOGIC-DRAFT.md / Constraints
+  outcome: Target files match their governing templates.
+  validation: Run `git diff --check` and inspect generated_from versions.
 
 ## Done
 
-None.
+- PACT-YYYYMMDD-000 - Example completed task.
+  trace: LOGIC-DRAFT.md / Selected Logic
+  outcome: Example outcome.
+  validation: Evidence or reason validation was not possible.
 
 Related:
 

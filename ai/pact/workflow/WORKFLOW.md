@@ -7,7 +7,7 @@ canonical_location: /ai/pact/workflow/WORKFLOW.md
 layer: PACT / workflow
 status: canonical
 generated_from: /ai/pact/templates/workflow.tpl.md
-generated_from_version: 1.8
+generated_from_version: 1.9
 content_status: current-data
 purpose: Define how agents maintain project work without bypassing SPARC project truth.
 
@@ -37,6 +37,25 @@ Valid `TASKS.md` statuses are `no-active-draft`, `active-draft`, and
 Valid `STATE.md` statuses are `clear`, `active`, `blocked`, and `handoff`.
 
 Task IDs follow `PACT-YYYYMMDD-NNN`.
+
+## Decomposition
+
+Decomposition is allowed only when `LOGIC-DRAFT.md` has `status: selected`.
+
+Tasks are created from the selected logic, decisions, constraints, and
+source/evidence in `LOGIC-DRAFT.md`.
+
+`IDEAS.md` and shape files may provide trace context, but tasks must not derive
+directly from them.
+
+Each task must be atomic, verifiable, and describe a clear outcome. If one task
+has multiple independent outcomes, split it before adding it to `TASKS.md`.
+
+When a task transfers into `STATE.md`, remove it from `TASKS.md` Pending so
+active work is not duplicated.
+
+When a task completes, move it to `TASKS.md` Done with validation evidence or a
+reason validation was not possible, then clear `STATE.md`.
 
 ## Hooks
 

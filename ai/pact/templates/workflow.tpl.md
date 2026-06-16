@@ -3,7 +3,7 @@
 ## META
 
 name: workflow.tpl.md
-version: 1.8
+version: 1.9
 type: pact maintenance template
 for: WORKFLOW.md
 
@@ -34,6 +34,8 @@ Use this template when creating or changing the canonical PACT workflow.
 - define valid `STATE.md` top-level statuses;
 - define valid `LOGIC-DRAFT.md` and `TASKS.md` statuses or link to their
   state files;
+- define the decomposition contract from selected `LOGIC-DRAFT.md` content to
+  atomic, verifiable `TASKS.md` entries and one active `STATE.md` task;
 - define how active task `task_phase` maps to `STATE.md` status;
 - define cleanup, draft abandonment, next draft cycle start, and valid state
   combinations;
@@ -92,6 +94,25 @@ Valid `TASKS.md` statuses are `no-active-draft`, `active-draft`, and
 Valid `STATE.md` statuses are `clear`, `active`, `blocked`, and `handoff`.
 
 Task IDs follow `PACT-YYYYMMDD-NNN`.
+
+## Decomposition
+
+Decomposition is allowed only when `LOGIC-DRAFT.md` has `status: selected`.
+
+Tasks are created from the selected logic, decisions, constraints, and
+source/evidence in `LOGIC-DRAFT.md`.
+
+`IDEAS.md` and shape files may provide trace context, but tasks must not derive
+directly from them.
+
+Each task must be atomic, verifiable, and describe a clear outcome. If one task
+has multiple independent outcomes, split it before adding it to `TASKS.md`.
+
+When a task transfers into `STATE.md`, remove it from `TASKS.md` Pending so
+active work is not duplicated.
+
+When a task completes, move it to `TASKS.md` Done with validation evidence or a
+reason validation was not possible, then clear `STATE.md`.
 
 ## Hooks
 
