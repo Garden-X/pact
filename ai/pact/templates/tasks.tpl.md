@@ -3,9 +3,10 @@
 ## META
 
 name: tasks.tpl.md
-version: 1.4
 type: pact maintenance template
 for: TASKS.md
+updated: 2026-06-17 03:55:16 UTC+00:00
+version: 1.4
 
 ## WHAT
 
@@ -86,6 +87,8 @@ layer: PACT / context / state
 status: active-draft
 generated_from: /ai/pact/templates/tasks.tpl.md
 content_status: current-state
+updated: YYYY-MM-DD HH:mm:ss UTC+00:00
+
 
 ## Pending
 

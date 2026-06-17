@@ -3,9 +3,10 @@
 ## META
 
 name: ideas.tpl.md
-version: 1.0
 type: pact maintenance template
 for: IDEAS.md
+updated: 2026-06-17 03:55:16 UTC+00:00
+version: 1.0
 
 ## WHAT
 
@@ -77,6 +78,8 @@ canonical_location: /ai/pact/context/IDEAS.md
 layer: PACT / context / future ideas
 status: empty
 purpose: Record future project ideas for agents and souls without turning them into shapes, selected logic, tasks, or active state.
+updated: YYYY-MM-DD HH:mm:ss UTC+00:00
+
 
 ## Future Ideas
 

@@ -3,9 +3,10 @@
 ## META
 
 name: sub-agent.tpl.md
-version: 1.0
 type: pact maintenance template
 for: worker sub-agent files
+updated: 2026-06-17 03:55:16 UTC+00:00
+version: 1.0
 
 ## WHAT
 
@@ -68,6 +69,7 @@ name: StructureAuditor
 canonical_location: /ai/pact/agents/workers/StructureAuditor.md
 layer: PACT / worker
 status: draft
+updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 
 ## PURPOSE
 

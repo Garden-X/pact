@@ -3,9 +3,10 @@
 ## META
 
 name: shape.tpl.md
-version: 1.0
 type: pact maintenance template
 for: shape files
+updated: 2026-06-17 03:55:16 UTC+00:00
+version: 1.0
 
 ## WHAT
 
@@ -85,6 +86,8 @@ name: State-Status-Model
 canonical_location: /ai/pact/context/shapes/2026-06-15-State-Status-Model.shape.md
 layer: PACT / shape
 status: draft
+updated: YYYY-MM-DD HH:mm:ss UTC+00:00
+
 
 ## QUESTION
 

@@ -7,9 +7,10 @@ canonical_location: /ai/pact/agents/AGENTS.md
 layer: PACT / agent orientation
 status: canonical
 generated_from: /ai/pact/templates/agents.tpl.md
-generated_from_version: 2.0
+generated_from_version: 2.2
 content_status: current-data
 purpose: Orient agents inside the `/ai` container and keep SPARC project truth separate from PACT project maintenance.
+updated: 2026-06-17 03:55:16 UTC+00:00
 
 ## Core Distinction
 
@@ -57,6 +58,62 @@ Agents must follow SPARC for project truth.
 
 If PACT maintenance state conflicts with SPARC project truth, expose the
 conflict before acting.
+
+## Update Stamps
+
+Maintained PACT Markdown files use a privacy-safe freshness stamp:
+
+```txt
+updated: YYYY-MM-DD HH:mm:ss UTC+00:00
+```
+
+Refresh `updated` when meaningful Markdown content changes. Do not use local
+timezone names, IANA timezone names, city names, or other location-bearing
+timezone labels.
+
+## Project Truth Discipline
+
+Owner instructions may authorize work, but accepted project truth belongs in
+the responsible SPARC live contract under `/ai/docs`.
+
+PACT files coordinate maintenance. They must not become the durable source for
+app behavior, structure, data shape, design rules, platform rules, or accepted
+change history.
+
+If owner instructions, PACT state, SPARC docs, project companion files, or
+native agent instruction files conflict, expose the conflict before acting.
+
+Do not silently rewrite canonical docs. Update the responsible live contract
+for the truth that changed, and keep PACT changes inside `/ai/pact`.
+
+## Schema Work
+
+When work touches persistence, migrations, data contracts, dataset schemas,
+public schema views, or cross-application data references, read the relevant
+SPARC schema contract:
+
+```txt
+<docs-root>/<app-name-en>/schema/SCHEMA.md
+```
+
+In the standard PACT Agent OS layout, `<docs-root>` is `/ai/docs`.
+
+PACT may track the task, cache, validation, and handoff. It does not own
+accepted schema truth.
+
+## Companion Contracts And Examples
+
+Projects may include companion files identified by type or naming pattern, such
+as `*contract*.*`, `*plan*.md`, `*schema*.*`, `*sample*.*`, or
+`*snapshot*.*`; local planning contracts; strict examples; payload samples; or
+schema samples.
+
+Read those files when relevant, but do not treat them as SPARC core contracts
+or let them silently override SPARC project truth.
+
+Examples and reference folders are evidence. Do not resend or copy full
+examples, large schemas, or datasets by default. Pass the relevant slice needed
+for the current step unless the owner asks for the full material.
 
 ## Lookup Entries
 

@@ -3,9 +3,10 @@
 ## META
 
 name: state.tpl.md
-version: 1.1
 type: pact maintenance template
 for: STATE.md
+updated: 2026-06-17 03:55:16 UTC+00:00
+version: 1.1
 
 ## WHAT
 
@@ -141,6 +142,7 @@ status: active
 active_task: PACT-YYYYMMDD-001
 generated_from: /ai/pact/templates/state.tpl.md
 content_status: current-state
+updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 
 ## Active Task
 
@@ -148,7 +150,7 @@ content_status: current-state
     request: Create the requested hook file.
     task_phase: working
     actor: Codex
-    created_at: YYYY-MM-DD HH:mm:ss timezone
+    created_at: YYYY-MM-DD HH:mm:ss UTC+00:00
     source:
       idea: null
       shape: null

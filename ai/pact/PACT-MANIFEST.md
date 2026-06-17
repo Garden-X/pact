@@ -3,6 +3,7 @@
 > For: PACT package
 > Status: canonical package manifest
 > Purpose: describe the installed PACT maintenance environment
+> Updated: 2026-06-17 03:55:16 UTC+00:00
 
 ## Purpose
 
@@ -33,7 +34,7 @@ Source repositories:
 
 Compatibility:
 
-- PACT expects a SPARC `01.00`-compatible project-truth binding or newer.
+- PACT expects a SPARC `01.02`-compatible project-truth binding or newer.
 - PACT-managed installations mount SPARC-generated live project-truth docs at
   `/ai/docs`.
 
@@ -83,7 +84,8 @@ https://github.com/Garden-X/sparc
 
 This specification package tracks it as an empty folder.
 
-SPARC governs project-truth contracts and the structure of SPARC-generated docs.
+SPARC governs project-truth contracts and the structure of SPARC-generated docs,
+including app schema contracts when the attached SPARC binding provides them.
 
 If an attached SPARC package describes generated docs under `/docs`, interpret
 that path as the SPARC docs root and mount it to `/ai/docs` for this PACT
@@ -148,6 +150,12 @@ PACT templates govern:
 
 `/ai/docs` is reserved for SPARC-generated human-readable project truth for the
 actual project being developed.
+
+In SPARC `01.02`-compatible bindings, app data-shape truth lives at:
+
+```txt
+/ai/docs/<app-name-en>/schema/SCHEMA.md
+```
 
 It must not contain:
 
@@ -278,6 +286,15 @@ Rules and full target examples stay in `/ai/pact/templates/*.tpl.md`.
 Active generated target files such as `AGENTS.md` and `WORKFLOW.md` may ship
 with followable content when they are needed as immediate agent entry points.
 
+Maintained PACT Markdown files must expose a privacy-safe freshness stamp:
+
+```txt
+updated: YYYY-MM-DD HH:mm:ss UTC+00:00
+```
+
+Refresh `updated` only when meaningful Markdown content changes. Version fields
+remain compatibility and template-drift markers.
+
 When a real project requests a generated target file, create or update the
 whole target file from the matching template.
 
@@ -333,11 +350,15 @@ Default agent startup:
    changing project-truth docs.
 9. If a real project is attached, read SPARC-generated project truth in
    `/ai/docs`.
-10. Read `/ai/pact/context/state/STATE.md`.
-11. If state is active, blocked, or handoff, resume, unblock, or hand off the
+10. If work touches persistence, migrations, data contracts, dataset schemas,
+    public schema views, or cross-service data references, read the relevant
+    `<docs-root>/<app-name-en>/schema/SCHEMA.md`; in the standard Agent OS
+    layout this is `/ai/docs/<app-name-en>/schema/SCHEMA.md`.
+11. Read `/ai/pact/context/state/STATE.md`.
+12. If state is active, blocked, or handoff, resume, unblock, or hand off the
    active task.
-12. If state is clear, read `/ai/pact/context/state/TASKS.md`.
-13. At work-session start, follow cache rules in
+13. If state is clear, read `/ai/pact/context/state/TASKS.md`.
+14. At work-session start, follow cache rules in
    `/ai/pact/workflow/WORKFLOW.md`: inspect the latest cache run, create or
    refresh `/ai/pact/cache/runs/YYYY-MM-DDTHH-MM-SSZ--slug/CACHE.md` from
    `/ai/pact/templates/cache-run.tpl.md`, and record the current input basis.
@@ -349,6 +370,7 @@ This manifest must not define:
 - project business logic;
 - accepted project truth;
 - app structure;
+- app schema or data-shape truth;
 - design tokens;
 - runtime implementation code;
 - hidden memory.

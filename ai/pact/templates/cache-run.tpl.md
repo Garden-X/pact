@@ -3,9 +3,10 @@
 ## META
 
 name: cache-run.tpl.md
-version: 1.0
 type: pact maintenance template
 for: CACHE.md
+updated: 2026-06-17 03:55:16 UTC+00:00
+version: 1.0
 
 ## WHAT
 

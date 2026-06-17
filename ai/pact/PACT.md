@@ -1,6 +1,7 @@
 # Protocol for Agent Coordination and Tasks
 
 > Version: draft
+> Updated: 2026-06-17 03:55:16 UTC+00:00
 > Status: refined specification package
 > Purpose: project maintenance for AI-assisted development
 
@@ -19,7 +20,7 @@ Source repositories:
 
 Compatibility:
 
-- PACT expects a SPARC `01.00`-compatible project-truth binding or newer.
+- PACT expects a SPARC `01.02`-compatible project-truth binding or newer.
 - In a PACT-installed Agent OS, SPARC-generated live project-truth docs are
   mounted under `/ai/docs`.
 - If an attached SPARC package describes its generated docs root as `/docs`,
@@ -166,6 +167,7 @@ PACT must not define:
 - accepted project truth that belongs in SPARC-generated docs;
 - permanent app behavior;
 - permanent app structure;
+- permanent app schema or data-shape rules;
 - permanent design rules;
 - platform invariants;
 - business logic;
@@ -388,11 +390,24 @@ approval for a separate coordination scope.
 
 SPARC-generated docs are updated only when project truth changes.
 
+When work touches persistence, migrations, data contracts, dataset schemas,
+public schema views, or cross-service data references, the relevant SPARC
+schema contract is the project-truth target:
+
+```txt
+<docs-root>/<app-name-en>/schema/SCHEMA.md
+```
+
+In the standard PACT Agent OS layout, `<docs-root>` is `/ai/docs`.
+
+PACT may coordinate the work and record maintenance state, but PACT files do
+not own accepted schema truth.
+
 The project-truth update step activates when completed work changes or reveals
 accepted behavior, architecture, contracts, persistent decisions, documentation
-structure, or other durable project meaning. It does not activate for transient
-PACT bookkeeping, cache changes, task movement, or future ideas that have not
-become accepted project truth.
+structure, schema/data shape, data references, or other durable project
+meaning. It does not activate for transient PACT bookkeeping, cache changes,
+task movement, or future ideas that have not become accepted project truth.
 
 Cleanup completes the maintenance cycle:
 
@@ -462,17 +477,52 @@ fields include:
 - `active_task` for `STATE.md`;
 - `purpose` for full generated files or template examples;
 
+Generated target META fields keep `updated` as the final field.
+
 Template files use their own META schema:
 
 - `name`;
-- `version`;
 - `type`;
-- `for`.
+- `for`;
+- `updated`;
+- `version`.
+
+Template META fields use this order:
+
+```txt
+name
+type
+...
+for
+updated
+version
+```
+
+The final three fields are always `for`, `updated`, and `version` in that
+order. Additional template metadata, when needed, belongs between `type` and
+`for`.
 
 Template `version` identifies the template contract. Increment it when a
 template changes target rules, required fields, lifecycle behavior, or examples
 in a way that may change generated target files. Pure typo or formatting fixes
 may keep the same version.
+
+`updated` is the human-readable freshness signal for maintained PACT Markdown
+files. Use this format:
+
+```txt
+updated: YYYY-MM-DD HH:mm:ss UTC+00:00
+```
+
+Refresh `updated` when a meaningful Markdown content change is made. Do not
+refresh it for mirror-only, sync-only, or file metadata changes.
+
+Use only `UTC+00:00`. Do not write local timezone names, IANA timezone names,
+city names, or other location-bearing timezone labels into package metadata.
+
+Version fields remain compatibility and template-drift markers. They are
+secondary to `updated` when a human needs to know which file was touched most
+recently.
 
 ## Hooks
 

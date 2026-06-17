@@ -3,9 +3,10 @@
 ## META
 
 name: hook.tpl.md
-version: 1.1
 type: pact maintenance template
 for: agent hook files
+updated: 2026-06-17 03:55:16 UTC+00:00
+version: 1.1
 
 ## WHAT
 
@@ -67,6 +68,8 @@ name: ValidateBeforeCompletion
 canonical_location: /ai/pact/agents/hooks/ValidateBeforeCompletion.md
 layer: PACT / agent hook
 status: draft
+updated: YYYY-MM-DD HH:mm:ss UTC+00:00
+
 
 ## TRIGGER
 

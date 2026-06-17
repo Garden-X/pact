@@ -3,9 +3,10 @@
 ## META
 
 name: agent-soul.tpl.md
-version: 1.0
 type: pact maintenance template
 for: agent soul files
+updated: 2026-06-17 03:55:16 UTC+00:00
+version: 1.0
 
 ## WHAT
 
@@ -93,6 +94,8 @@ soul_slug: Pryklad
 canonical_location: /ai/pact/agents/souls/ExampleAI-Pryklad.md
 layer: PACT / agent soul
 status: draft
+updated: YYYY-MM-DD HH:mm:ss UTC+00:00
+
 
 ## STYLE
 

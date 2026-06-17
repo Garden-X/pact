@@ -3,9 +3,10 @@
 ## META
 
 name: logic-draft.tpl.md
-version: 1.2
 type: pact maintenance template
 for: LOGIC-DRAFT.md
+updated: 2026-06-17 03:55:16 UTC+00:00
+version: 1.2
 
 ## WHAT
 
@@ -80,6 +81,8 @@ layer: PACT / context / state
 status: selected
 generated_from: /ai/pact/templates/logic-draft.tpl.md
 content_status: current-state
+updated: YYYY-MM-DD HH:mm:ss UTC+00:00
+
 
 ## Selected Logic
 

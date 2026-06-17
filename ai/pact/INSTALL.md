@@ -2,6 +2,7 @@
 
 > For: PACT
 > Purpose: install or verify the PACT project-maintenance layer
+> Updated: 2026-06-17 03:55:16 UTC+00:00
 
 ## Purpose
 
@@ -27,7 +28,7 @@ Installing PACT does not create project-truth docs by itself.
 
 Compatibility:
 
-- PACT expects a SPARC `01.00`-compatible project-truth binding or newer.
+- PACT expects a SPARC `01.02`-compatible project-truth binding or newer.
 - PACT-managed installations mount SPARC-generated live project-truth docs at
   `/ai/docs`.
 
@@ -43,7 +44,12 @@ This specification package tracks `/ai/sparc` as an empty folder.
 A SPARC binding is the resolved project-truth root that contains `SPARC.md`.
 
 Before creating or changing project-truth docs, attach or resolve a real SPARC
-package or compatible project-truth binding.
+package or compatible project-truth binding. Data-shape work requires the
+attached binding to provide the SPARC schema contract:
+
+```txt
+<docs-root>/<app-name-en>/schema/SCHEMA.md
+```
 
 ## SPARC Bootstrap
 
@@ -139,6 +145,16 @@ current-data` and `status: canonical`, agents may follow it directly.
 Generated active files must keep their `generated_from` and
 `generated_from_version` META fields so later template drift can be detected.
 
+Maintained PACT Markdown files must include a privacy-safe update stamp:
+
+```txt
+updated: YYYY-MM-DD HH:mm:ss UTC+00:00
+```
+
+Refresh `updated` when meaningful Markdown content changes. Do not use local
+timezone names, IANA timezone names, city names, or other location-bearing
+timezone labels.
+
 ## Required PACT Package
 
 Verify that `/ai/pact` contains:
@@ -172,6 +188,12 @@ cache/
 
 `/ai/docs` is reserved for SPARC-generated project truth for the actual target
 project.
+
+In SPARC `01.02`-compatible bindings, app data-shape truth is expected at:
+
+```txt
+/ai/docs/<app-name-en>/schema/SCHEMA.md
+```
 
 PACT installation does not populate `/ai/docs`.
 
@@ -234,8 +256,11 @@ EXAMPLE
       branch, or an owner-selected SPARC binding is documented.
 - [ ] If `/ai/sparc/` or another binding root contains a SPARC package,
       `SPARC.md` exists at that root.
-- [ ] The attached SPARC binding is `01.00`-compatible or newer.
+- [ ] The attached SPARC binding is `01.02`-compatible or newer.
 - [ ] SPARC-generated live project-truth docs are mounted at `/ai/docs`.
+- [ ] Schema-affecting work can resolve the relevant
+      `/ai/docs/<app-name-en>/schema/SCHEMA.md` file, or the missing schema
+      contract is recorded as a SPARC gap before implementation proceeds.
 - [ ] `/ai/pact/PACT.md` exists.
 - [ ] `/ai/pact/PACT-MANIFEST.md` exists.
 - [ ] `/ai/pact/workflow/WORKFLOW.md` exists.

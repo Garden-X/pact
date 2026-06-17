@@ -3,9 +3,10 @@
 ## META
 
 name: workflow.tpl.md
-version: 1.9
 type: pact maintenance template
 for: WORKFLOW.md
+updated: 2026-06-17 03:55:16 UTC+00:00
+version: 2.0
 
 ## WHAT
 
@@ -45,6 +46,8 @@ Use this template when creating or changing the canonical PACT workflow.
 - register hooks and script usage in `WORKFLOW.md`;
 - keep invariant PACT files discoverable with relative Markdown links;
 - define when project-truth changes must pass through SPARC;
+- route data-shape, persistence, migration, dataset schema, public schema
+  view, and cross-service data-reference changes through SPARC `SCHEMA.md`;
 - keep PACT maintenance changes inside `/ai/pact`.
 
 `WORKFLOW.md` must not:
@@ -67,6 +70,7 @@ canonical_location: /ai/pact/workflow/WORKFLOW.md
 layer: PACT / workflow
 status: canonical
 purpose: Define how agents maintain project work without bypassing SPARC project truth.
+updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 
 ## Lifecycle
 
@@ -122,6 +126,32 @@ reason validation was not possible, then clear `STATE.md`.
 
 Project truth changes are handled through SPARC.
 PACT maintenance changes stay in `/ai/pact`.
+
+When maintained PACT Markdown content changes, refresh that file's privacy-safe
+freshness stamp:
+
+```txt
+updated: YYYY-MM-DD HH:mm:ss UTC+00:00
+```
+
+Do not refresh `updated` for mirror-only or sync-only changes.
+
+## Project Truth Updates
+
+Completed work changes SPARC project truth when it changes or reveals accepted
+behavior, structure, schema/data shape, data references, design rules, platform
+rules, or accepted change history.
+
+When completed work touches persistence, migrations, data contracts, dataset
+schemas, public schema views, or cross-application data references, update or
+verify the relevant SPARC schema contract before cleanup:
+
+```txt
+<docs-root>/<app-name-en>/schema/SCHEMA.md
+```
+
+If the relevant schema contract is missing, record the missing contract as a
+SPARC gap instead of storing schema truth in PACT state.
 
 ## Cache
 

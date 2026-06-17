@@ -3,9 +3,10 @@
 ## META
 
 name: skill.tpl.md
-version: 1.0
 type: pact maintenance template
 for: agent skill files
+updated: 2026-06-17 03:55:16 UTC+00:00
+version: 1.0
 
 ## WHAT
 
@@ -70,6 +71,7 @@ name: StructureReview
 canonical_location: /ai/pact/agents/skills/StructureReview.md
 layer: PACT / agent skill
 status: draft
+updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 
 ## PURPOSE
 
