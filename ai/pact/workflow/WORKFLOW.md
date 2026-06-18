@@ -7,10 +7,10 @@ canonical_location: /ai/pact/workflow/WORKFLOW.md
 layer: PACT / workflow
 status: canonical
 generated_from: /ai/pact/templates/workflow.tpl.md
-generated_from_version: 2.0
+generated_from_version: 2.3
 content_status: current-data
 purpose: Define how agents maintain project work without bypassing SPARC project truth.
-updated: 2026-06-17 03:55:16 UTC+00:00
+updated: 2026-06-17 23:51:46 UTC+00:00
 
 ## Lifecycle
 
@@ -82,16 +82,33 @@ Completed work changes SPARC project truth when it changes or reveals accepted
 behavior, structure, schema/data shape, data references, design rules, platform
 rules, or accepted change history.
 
-When completed work touches persistence, migrations, data contracts, dataset
-schemas, public schema views, or cross-application data references, update or
-verify the relevant SPARC schema contract before cleanup:
+In SPARC `01.03`-compatible bindings, route accepted project truth through
+these live contracts:
 
-```txt
-<docs-root>/<app-name-en>/schema/SCHEMA.md
-```
+| Truth category | SPARC live contract | Governing template |
+|---|---|---|
+| behavior | `<docs-root>/<app-name-en>/logic/LOGIC.md` | `app-logic.tpl.md` |
+| structure, inventory, attached parts | `<docs-root>/<app-name-en>/map/MAP.md` | `app-map.tpl.md` |
+| schema, data shape, data references | `<docs-root>/<app-name-en>/schema/SCHEMA.ts` | `app-schema.tpl.md` |
+| design rules | `<docs-root>/<app-name-en>/design/DESIGN.md` | `design.tpl.md` |
+| platform rules | `<docs-root>/PLATFORM-LOGIC.md` | `platform-logic.tpl.md` |
+| accepted change history | `<docs-root>/<app-name-en>/changes/LOG.md`; daily request logs use `<docs-root>/<app-name-en>/changes/daily/YYYY-MM-DD.log.md` | `app-log.tpl.md` |
 
-If the relevant schema contract is missing, record the missing contract as a
-SPARC gap instead of storing schema truth in PACT state.
+In the standard PACT Agent OS layout, `<docs-root>` is `/ai/docs`.
+
+Use the governing SPARC template when creating, updating, validating, or
+resolving gaps in a live contract. For schema work, that template is
+`app-schema.tpl.md`.
+
+When behavior work routed through `LOGIC.md` creates or changes entities,
+fields, relations, dataset views, data references, or cross-application
+references, update or verify `SCHEMA.ts` in the same project-truth update
+cycle. When behavior work changes app structure, modules, integrations,
+extension points, routes, or contract topology, update or verify `MAP.md` in
+the same cycle.
+
+If the relevant SPARC contract is missing, record the missing contract as a
+SPARC gap instead of storing project truth in PACT state.
 
 ## Cache
 

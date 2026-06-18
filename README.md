@@ -1,6 +1,6 @@
 # PACT
 
-updated: 2026-06-17 03:55:16 UTC+00:00
+updated: 2026-06-17 23:39:24 UTC+00:00
 
 **PACT** means **Protocol for Agent Coordination and Tasks**.
 
@@ -24,8 +24,8 @@ how agents maintain the project while work is happening.
 - PACT: [Garden-X/pact](https://github.com/Garden-X/pact)
 - SPARC: [Garden-X/sparc](https://github.com/Garden-X/sparc)
 
-PACT expects a SPARC `01.02`-compatible project-truth binding or newer. In a
-PACT-managed Agent OS, SPARC-generated live project-truth docs are mounted
+PACT expects a SPARC `01.03`-compatible project-truth binding or newer. In a
+PACT-managed Agent OS, SPARC-generated live project-truth files are mounted
 under `/ai/docs`.
 
 ## Why PACT Exists
@@ -142,8 +142,9 @@ RULES
 EXAMPLE
 ```
 
-SPARC templates govern project-truth files in `/ai/docs`, including app schema
-contracts when the attached SPARC binding provides them.
+SPARC templates govern project-truth files in `/ai/docs`, including behavior,
+structure, schema, design, platform, and change-history contracts when the
+attached SPARC binding provides them.
 PACT templates govern project-maintenance files in `/ai/pact`.
 
 ## Start Reading

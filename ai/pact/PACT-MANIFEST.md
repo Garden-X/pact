@@ -3,7 +3,7 @@
 > For: PACT package
 > Status: canonical package manifest
 > Purpose: describe the installed PACT maintenance environment
-> Updated: 2026-06-17 03:55:16 UTC+00:00
+> Updated: 2026-06-17 23:39:24 UTC+00:00
 
 ## Purpose
 
@@ -15,7 +15,7 @@ It answers:
 What is /ai for?
 Where does SPARC live?
 Where does PACT live?
-Where do project-truth docs live?
+Where do project-truth files live?
 Where does raw evidence live?
 Where are agents, workflow, hooks, ideas, state, templates, scripts, adapters, and cache?
 ```
@@ -34,8 +34,8 @@ Source repositories:
 
 Compatibility:
 
-- PACT expects a SPARC `01.02`-compatible project-truth binding or newer.
-- PACT-managed installations mount SPARC-generated live project-truth docs at
+- PACT expects a SPARC `01.03`-compatible project-truth binding or newer.
+- PACT-managed installations mount SPARC-generated live project-truth files at
   `/ai/docs`.
 
 ## License And Notice
@@ -84,8 +84,9 @@ https://github.com/Garden-X/sparc
 
 This specification package tracks it as an empty folder.
 
-SPARC governs project-truth contracts and the structure of SPARC-generated docs,
-including app schema contracts when the attached SPARC binding provides them.
+SPARC governs project-truth contracts and the structure of SPARC-generated project-truth files,
+including behavior, structure, schema, design, platform, and change-history
+contracts when the attached SPARC binding provides them.
 
 If an attached SPARC package describes generated docs under `/docs`, interpret
 that path as the SPARC docs root and mount it to `/ai/docs` for this PACT
@@ -98,7 +99,7 @@ SPARC.md
 ```
 
 Read `SPARC.md` at the SPARC package folder or attached binding root before
-creating or changing project-truth docs.
+creating or changing project-truth files.
 
 SPARC templates govern:
 
@@ -151,11 +152,19 @@ PACT templates govern:
 `/ai/docs` is reserved for SPARC-generated human-readable project truth for the
 actual project being developed.
 
-In SPARC `01.02`-compatible bindings, app data-shape truth lives at:
+In SPARC `01.03`-compatible bindings, accepted project truth routes through
+these live contracts:
 
-```txt
-/ai/docs/<app-name-en>/schema/SCHEMA.md
-```
+| Truth category | SPARC live contract | Governing template |
+|---|---|---|
+| behavior | `<docs-root>/<app-name-en>/logic/LOGIC.md` | `app-logic.tpl.md` |
+| structure, inventory, attached parts | `<docs-root>/<app-name-en>/map/MAP.md` | `app-map.tpl.md` |
+| schema, data shape, data references | `<docs-root>/<app-name-en>/schema/SCHEMA.ts` | `app-schema.tpl.md` |
+| design rules | `<docs-root>/<app-name-en>/design/DESIGN.md` | `design.tpl.md` |
+| platform rules | `<docs-root>/PLATFORM-LOGIC.md` | `platform-logic.tpl.md` |
+| accepted change history | `<docs-root>/<app-name-en>/changes/LOG.md`; daily request logs use `<docs-root>/<app-name-en>/changes/daily/YYYY-MM-DD.log.md` | `app-log.tpl.md` |
+
+In the standard PACT Agent OS layout, `<docs-root>` is `/ai/docs`.
 
 It must not contain:
 
@@ -347,13 +356,11 @@ Default agent startup:
 7. Locate the SPARC folder or attached binding root when project truth is
    needed.
 8. Read `SPARC.md` at the SPARC folder or binding root before creating or
-   changing project-truth docs.
+   changing project-truth files.
 9. If a real project is attached, read SPARC-generated project truth in
    `/ai/docs`.
-10. If work touches persistence, migrations, data contracts, dataset schemas,
-    public schema views, or cross-service data references, read the relevant
-    `<docs-root>/<app-name-en>/schema/SCHEMA.md`; in the standard Agent OS
-    layout this is `/ai/docs/<app-name-en>/schema/SCHEMA.md`.
+10. If work changes accepted project truth, route the change through the
+    relevant SPARC live contract in `/ai/docs` using the truth map above.
 11. Read `/ai/pact/context/state/STATE.md`.
 12. If state is active, blocked, or handoff, resume, unblock, or hand off the
    active task.

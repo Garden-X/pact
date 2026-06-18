@@ -2,12 +2,12 @@
 
 > For: PACT
 > Purpose: install or verify the PACT project-maintenance layer
-> Updated: 2026-06-17 03:55:16 UTC+00:00
+> Updated: 2026-06-17 23:39:24 UTC+00:00
 
 ## Purpose
 
 Installation means creating or verifying the PACT maintenance environment under
-`/ai/pact` and binding SPARC when project-truth docs are needed.
+`/ai/pact` and binding SPARC when project-truth files are needed.
 
 When this package is copied into a target project repository, `/ai` means the
 target project's `ai/` folder.
@@ -19,7 +19,7 @@ SPARC purpose = project truth.
 PACT purpose  = project maintenance.
 ```
 
-Installing PACT does not create project-truth docs by itself.
+Installing PACT does not create project-truth files by itself.
 
 ## Source Repositories
 
@@ -28,8 +28,8 @@ Installing PACT does not create project-truth docs by itself.
 
 Compatibility:
 
-- PACT expects a SPARC `01.02`-compatible project-truth binding or newer.
-- PACT-managed installations mount SPARC-generated live project-truth docs at
+- PACT expects a SPARC `01.03`-compatible project-truth binding or newer.
+- PACT-managed installations mount SPARC-generated live project-truth files at
   `/ai/docs`.
 
 When an agent is asked to run or apply this `INSTALL.md`, treat this file as an
@@ -43,13 +43,18 @@ This specification package tracks `/ai/sparc` as an empty folder.
 
 A SPARC binding is the resolved project-truth root that contains `SPARC.md`.
 
-Before creating or changing project-truth docs, attach or resolve a real SPARC
-package or compatible project-truth binding. Data-shape work requires the
-attached binding to provide the SPARC schema contract:
+Before creating or changing project-truth files, attach or resolve a real SPARC
+package or compatible project-truth binding. In SPARC `01.03`-compatible
+bindings, accepted project truth routes through these live contracts:
 
-```txt
-<docs-root>/<app-name-en>/schema/SCHEMA.md
-```
+| Truth category | SPARC live contract | Governing template |
+|---|---|---|
+| behavior | `<docs-root>/<app-name-en>/logic/LOGIC.md` | `app-logic.tpl.md` |
+| structure, inventory, attached parts | `<docs-root>/<app-name-en>/map/MAP.md` | `app-map.tpl.md` |
+| schema, data shape, data references | `<docs-root>/<app-name-en>/schema/SCHEMA.ts` | `app-schema.tpl.md` |
+| design rules | `<docs-root>/<app-name-en>/design/DESIGN.md` | `design.tpl.md` |
+| platform rules | `<docs-root>/PLATFORM-LOGIC.md` | `platform-logic.tpl.md` |
+| accepted change history | `<docs-root>/<app-name-en>/changes/LOG.md`; daily request logs use `<docs-root>/<app-name-en>/changes/daily/YYYY-MM-DD.log.md` | `app-log.tpl.md` |
 
 ## SPARC Bootstrap
 
@@ -92,7 +97,7 @@ treat that as the SPARC docs root and mount it to `/ai/docs` in this PACT
 installation unless the owner selects a different docs root.
 
 If network access is unavailable, leave `/ai/sparc` unresolved, record the
-blocker, and do not create project-truth docs until SPARC is attached.
+blocker, and do not create project-truth files until SPARC is attached.
 
 ## Agent Rules Installation
 
@@ -189,11 +194,8 @@ cache/
 `/ai/docs` is reserved for SPARC-generated project truth for the actual target
 project.
 
-In SPARC `01.02`-compatible bindings, app data-shape truth is expected at:
-
-```txt
-/ai/docs/<app-name-en>/schema/SCHEMA.md
-```
+In the standard PACT Agent OS layout, `<docs-root>` in SPARC live-contract
+paths is `/ai/docs`.
 
 PACT installation does not populate `/ai/docs`.
 
@@ -256,11 +258,11 @@ EXAMPLE
       branch, or an owner-selected SPARC binding is documented.
 - [ ] If `/ai/sparc/` or another binding root contains a SPARC package,
       `SPARC.md` exists at that root.
-- [ ] The attached SPARC binding is `01.02`-compatible or newer.
-- [ ] SPARC-generated live project-truth docs are mounted at `/ai/docs`.
-- [ ] Schema-affecting work can resolve the relevant
-      `/ai/docs/<app-name-en>/schema/SCHEMA.md` file, or the missing schema
-      contract is recorded as a SPARC gap before implementation proceeds.
+- [ ] The attached SPARC binding is `01.03`-compatible or newer.
+- [ ] SPARC-generated live project-truth files are mounted at `/ai/docs`.
+- [ ] Project-truth work can resolve the relevant SPARC live contract from
+      the truth map above, or the missing contract is recorded as a SPARC gap
+      before implementation proceeds.
 - [ ] `/ai/pact/PACT.md` exists.
 - [ ] `/ai/pact/PACT-MANIFEST.md` exists.
 - [ ] `/ai/pact/workflow/WORKFLOW.md` exists.

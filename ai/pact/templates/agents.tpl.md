@@ -5,8 +5,8 @@
 name: agents.tpl.md
 type: pact maintenance template
 for: AGENTS.md
-updated: 2026-06-17 03:55:16 UTC+00:00
-version: 2.2
+updated: 2026-06-17 23:51:46 UTC+00:00
+version: 2.5
 
 ## WHAT
 
@@ -29,9 +29,12 @@ vendor-specific agent instruction files.
 It treats root-level and vendor-specific agent instruction files as legacy
 discovery bridges, not as competing PACT rule authorities.
 
-It tells agents how to route data-shape work through SPARC `SCHEMA.md` and how
-to treat project companion contracts and examples without importing
-project-specific policy into PACT core.
+It tells agents how to route project-truth work through the responsible SPARC
+live contract and governing template, including typed schema work through
+`SCHEMA.ts` and `app-schema.tpl.md`.
+
+It tells agents how to treat project companion contracts and examples without
+importing project-specific policy into PACT core.
 
 ## FOR
 
@@ -66,8 +69,9 @@ Use this template when creating or changing the general rules for all agents.
   maintenance after those files are created or updated from templates;
 - state that agents must follow SPARC for project truth when project truth is
   needed;
-- require schema-affecting work to read the relevant SPARC
-  `<docs-root>/<app-name-en>/schema/SCHEMA.md` contract;
+- require project-truth work to use the SPARC truth map for behavior,
+  structure, schema/data shape, design, platform, and accepted history
+  contracts;
 - require agents to expose conflicts between owner instructions, PACT
   maintenance state, SPARC project truth, and project companion files before
   acting;
@@ -201,17 +205,40 @@ native agent instruction files conflict, expose the conflict before acting.
 Do not silently rewrite canonical docs. Update the responsible live contract
 for the truth that changed, and keep PACT changes inside `/ai/pact`.
 
+In SPARC `01.03`-compatible bindings, route accepted project truth through
+these live contracts:
+
+| Truth category | SPARC live contract | Governing template |
+|---|---|---|
+| behavior | `<docs-root>/<app-name-en>/logic/LOGIC.md` | `app-logic.tpl.md` |
+| structure, inventory, attached parts | `<docs-root>/<app-name-en>/map/MAP.md` | `app-map.tpl.md` |
+| schema, data shape, data references | `<docs-root>/<app-name-en>/schema/SCHEMA.ts` | `app-schema.tpl.md` |
+| design rules | `<docs-root>/<app-name-en>/design/DESIGN.md` | `design.tpl.md` |
+| platform rules | `<docs-root>/PLATFORM-LOGIC.md` | `platform-logic.tpl.md` |
+| accepted change history | `<docs-root>/<app-name-en>/changes/LOG.md`; daily request logs use `<docs-root>/<app-name-en>/changes/daily/YYYY-MM-DD.log.md` | `app-log.tpl.md` |
+
+In the standard PACT Agent OS layout, `<docs-root>` is `/ai/docs`.
+
+Use the governing SPARC template when creating, updating, validating, or
+resolving gaps in a live contract. For schema work, that template is
+`app-schema.tpl.md`.
+
+When behavior work routed through `LOGIC.md` creates or changes entities,
+fields, relations, dataset views, data references, or cross-application
+references, update or verify `SCHEMA.ts` in the same project-truth update
+cycle. When behavior work changes app structure, modules, integrations,
+extension points, routes, or contract topology, update or verify `MAP.md` in
+the same cycle.
+
 ## Schema Work
 
 When work touches persistence, migrations, data contracts, dataset schemas,
 public schema views, or cross-application data references, read the relevant
-SPARC schema contract:
+SPARC typed schema contract:
 
 ```txt
-<docs-root>/<app-name-en>/schema/SCHEMA.md
+<docs-root>/<app-name-en>/schema/SCHEMA.ts
 ```
-
-In the standard PACT Agent OS layout, `<docs-root>` is `/ai/docs`.
 
 PACT may track the task, cache, validation, and handoff. It does not own
 accepted schema truth.
@@ -266,7 +293,7 @@ SPARC.md
 ```
 
 Read `SPARC.md` at the SPARC folder or binding root before creating or changing
-project-truth docs.
+project-truth files.
 
 ## File Naming
 
@@ -281,7 +308,7 @@ Follow the canonical startup sequence in
 [../PACT-MANIFEST.md](../PACT-MANIFEST.md).
 
 Resolve the SPARC folder or binding root and read `SPARC.md` before creating
-or changing project-truth docs.
+or changing project-truth files.
 
 ## Ideas
 

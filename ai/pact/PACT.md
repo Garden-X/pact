@@ -1,7 +1,7 @@
 # Protocol for Agent Coordination and Tasks
 
 > Version: draft
-> Updated: 2026-06-17 03:55:16 UTC+00:00
+> Updated: 2026-06-17 23:51:46 UTC+00:00
 > Status: refined specification package
 > Purpose: project maintenance for AI-assisted development
 
@@ -20,8 +20,8 @@ Source repositories:
 
 Compatibility:
 
-- PACT expects a SPARC `01.02`-compatible project-truth binding or newer.
-- In a PACT-installed Agent OS, SPARC-generated live project-truth docs are
+- PACT expects a SPARC `01.03`-compatible project-truth binding or newer.
+- In a PACT-installed Agent OS, SPARC-generated live project-truth files are
   mounted under `/ai/docs`.
 - If an attached SPARC package describes its generated docs root as `/docs`,
   treat that as the SPARC docs root and mount it to `/ai/docs` for this PACT
@@ -81,7 +81,7 @@ SPARC.md
 ```
 
 If SPARC is attached as a binding outside `/ai/sparc`, read `SPARC.md` at that
-binding root before creating or changing project-truth docs.
+binding root before creating or changing project-truth files.
 
 The surrounding `/ai` folder is the AI-related container folder.
 
@@ -94,7 +94,7 @@ A SPARC binding is the resolved project-truth root that contains `SPARC.md`.
 It may be the `/ai/sparc` directory, a symlink, a submodule, a copied package,
 or another owner-provided directory. Operationally, the binding root is the
 directory where agents must read `SPARC.md` before creating or changing
-project-truth docs.
+project-truth files.
 
 A generated target file is a PACT maintenance file governed by a template
 mapping.
@@ -164,7 +164,7 @@ PACT may define:
 
 PACT must not define:
 
-- accepted project truth that belongs in SPARC-generated docs;
+- accepted project truth that belongs in SPARC-generated project-truth files;
 - permanent app behavior;
 - permanent app structure;
 - permanent app schema or data-shape rules;
@@ -388,20 +388,38 @@ exist in `TASKS.md`, but only one task may be transferred into `STATE.md` at a
 time. A second agent must wait, help unblock the active task, or receive owner
 approval for a separate coordination scope.
 
-SPARC-generated docs are updated only when project truth changes.
+SPARC-generated project-truth files are updated only when project truth changes.
 
-When work touches persistence, migrations, data contracts, dataset schemas,
-public schema views, or cross-service data references, the relevant SPARC
-schema contract is the project-truth target:
+In SPARC `01.03`-compatible bindings, accepted project truth routes through
+these live contracts:
 
-```txt
-<docs-root>/<app-name-en>/schema/SCHEMA.md
-```
+| Truth category | SPARC live contract | Governing template |
+|---|---|---|
+| behavior | `<docs-root>/<app-name-en>/logic/LOGIC.md` | `app-logic.tpl.md` |
+| structure, inventory, attached parts | `<docs-root>/<app-name-en>/map/MAP.md` | `app-map.tpl.md` |
+| schema, data shape, data references | `<docs-root>/<app-name-en>/schema/SCHEMA.ts` | `app-schema.tpl.md` |
+| design rules | `<docs-root>/<app-name-en>/design/DESIGN.md` | `design.tpl.md` |
+| platform rules | `<docs-root>/PLATFORM-LOGIC.md` | `platform-logic.tpl.md` |
+| accepted change history | `<docs-root>/<app-name-en>/changes/LOG.md`; daily request logs use `<docs-root>/<app-name-en>/changes/daily/YYYY-MM-DD.log.md` | `app-log.tpl.md` |
 
 In the standard PACT Agent OS layout, `<docs-root>` is `/ai/docs`.
 
+Use the governing SPARC template when creating, updating, validating, or
+resolving gaps in a live contract. For schema work, that template is
+`app-schema.tpl.md`.
+
+When behavior work routed through `LOGIC.md` creates or changes entities,
+fields, relations, dataset views, data references, or cross-application
+references, update or verify `SCHEMA.ts` in the same project-truth update
+cycle. When behavior work changes app structure, modules, integrations,
+extension points, routes, or contract topology, update or verify `MAP.md` in
+the same cycle.
+
+If the relevant SPARC contract is missing, record the missing contract as a
+SPARC gap instead of storing project truth in PACT state.
+
 PACT may coordinate the work and record maintenance state, but PACT files do
-not own accepted schema truth.
+not own accepted project truth.
 
 The project-truth update step activates when completed work changes or reveals
 accepted behavior, architecture, contracts, persistent decisions, documentation
@@ -583,7 +601,7 @@ or another active maintenance task.
 
 Cache is organized by task run, not by topic. Topic-oriented cache folders are
 forbidden because they become uncontrolled alternate documentation. Topics
-belong in SPARC-generated docs or PACT target files after promotion.
+belong in SPARC-generated project-truth files or PACT target files after promotion.
 
 Cache runs live under:
 
