@@ -5,8 +5,8 @@
 name: logic-draft.tpl.md
 type: pact maintenance template
 for: LOGIC-DRAFT.md
-updated: 2026-06-17 03:55:16 UTC+00:00
-version: 1.2
+updated: 2026-07-08 09:24:00 UTC+00:00
+version: 1.3
 
 ## WHAT
 
@@ -80,6 +80,7 @@ canonical_location: /ai/pact/context/state/LOGIC-DRAFT.md
 layer: PACT / context / state
 status: selected
 generated_from: /ai/pact/templates/logic-draft.tpl.md
+generated_from_version: 1.3
 content_status: current-state
 updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 

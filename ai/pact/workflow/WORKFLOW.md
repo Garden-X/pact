@@ -7,10 +7,10 @@ canonical_location: /ai/pact/workflow/WORKFLOW.md
 layer: PACT / workflow
 status: canonical
 generated_from: /ai/pact/templates/workflow.tpl.md
-generated_from_version: 2.3
+generated_from_version: 2.5
 content_status: current-data
 purpose: Define how agents maintain project work without bypassing SPARC project truth.
-updated: 2026-06-17 23:51:46 UTC+00:00
+updated: 2026-07-08 09:38:38 UTC+00:00
 
 ## Lifecycle
 
@@ -75,6 +75,51 @@ updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 ```
 
 Do not refresh `updated` for mirror-only or sync-only changes.
+
+## Skill Log
+
+skill_log: none
+
+The skill log records skill update events: a reusable skill was created,
+updated, improved, extracted, or deprecated. It never records ordinary skill
+use or ordinary task execution.
+
+To enable skill update logging, declare the artifact path:
+
+```txt
+skill_log: /ai/pact/agents/skills/SKILL-LOG.md
+```
+
+Write a skill update entry only when both gates are true:
+
+1. The attached SPARC binding declares `runtime_mode: debug`. If the binding
+   declares `production`, declares nothing, or cannot declare a runtime mode,
+   do not write.
+2. `skill_log` above declares an artifact path. If it is `none` or missing,
+   do not write, even in debug mode.
+
+Do not create the skill log file automatically. Create it only when
+`skill_log` declares it and the first loggable event happens.
+
+Skill update entries use this format. Times use `UTC+00:00`:
+
+```md
+## YYYY-MM-DD HH:mm — Skill Update
+
+- Event Type: skill_update
+- Skill Class: host_skill | pact_skill
+- Skill Host: host runtime name, or `none` for a pact_skill
+- Skill Name:
+- Skill File:
+- Change Type: created | updated | improved | extracted | deprecated
+- Trigger:
+- Improvement:
+- Affected Workflow:
+```
+
+The skill log is a debug-only PACT diagnostic. It is not project truth, not
+project documentation, and must not be written in production mode or into
+`/ai/docs`.
 
 ## Project Truth Updates
 

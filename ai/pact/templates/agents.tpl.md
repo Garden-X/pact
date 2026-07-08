@@ -5,8 +5,8 @@
 name: agents.tpl.md
 type: pact maintenance template
 for: AGENTS.md
-updated: 2026-06-17 23:51:46 UTC+00:00
-version: 2.5
+updated: 2026-07-08 09:38:38 UTC+00:00
+version: 2.7
 
 ## WHAT
 
@@ -99,6 +99,8 @@ Use this template when creating or changing the general rules for all agents.
 - identify cache location, input-basis requirements, forbidden cache contents,
   and the workflow/template files that govern cache operation;
 - link to agent skills when agent orientation, souls, or workers use skills;
+- distinguish `host_skill` from `pact_skill` and point skill update logging to
+  the `WORKFLOW.md` skill log rule;
 - distinguish identity-level soul files from role-level worker files;
 - define how remembered what/how behavior becomes a skill, soul update, worker
   update, all-souls rule, or hook;
@@ -128,6 +130,9 @@ name: AGENTS.md
 canonical_location: /ai/pact/agents/AGENTS.md
 layer: PACT / agent orientation
 status: canonical
+generated_from: /ai/pact/templates/agents.tpl.md
+generated_from_version: 2.7
+content_status: current-data
 purpose: Orient agents inside the `/ai` container and keep SPARC project truth separate from PACT project maintenance.
 updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 
@@ -382,6 +387,13 @@ If agent orientation, soul files, or worker files use skills, link the skill
 files from the files that use them:
 
 - `/ai/pact/agents/skills/StructureReview.md`
+
+Skills are `host_skill` (owned by the agent host, IDE, or runtime, outside
+`/ai/pact`) or `pact_skill` (owner-added or PACT-extracted, under
+`/ai/pact/agents/skills`).
+
+Skill update logging is debug-only and governed by the `## Skill Log` rule in
+`WORKFLOW.md`. Never write skill update entries in production mode.
 
 When the owner asks to remember what or how to do something, classify the
 scope before writing files. Ask whether it is for the current soul, all souls,

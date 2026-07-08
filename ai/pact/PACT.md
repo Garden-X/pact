@@ -1,7 +1,7 @@
 # Protocol for Agent Coordination and Tasks
 
 > Version: draft
-> Updated: 2026-06-17 23:51:46 UTC+00:00
+> Updated: 2026-07-08 09:38:38 UTC+00:00
 > Status: refined specification package
 > Purpose: project maintenance for AI-assisted development
 
@@ -493,7 +493,7 @@ Optional META fields may be added when the target needs them. Current optional
 fields include:
 
 - `active_task` for `STATE.md`;
-- `purpose` for full generated files or template examples;
+- `purpose` for full generated files or template examples.
 
 Generated target META fields keep `updated` as the final field.
 
@@ -562,6 +562,52 @@ Hooks are registered in [workflow/WORKFLOW.md](workflow/WORKFLOW.md).
 `cache-run.tpl.md` governs `CACHE.md` manifests for individual cache runs.
 `CACHE.md` files are templated cache artifacts, not installed generated PACT
 target files, and follow the cache-run template's META shape.
+
+## Skill Classes
+
+PACT distinguishes two skill classes.
+
+A `host_skill` is a skill owned by the agent host, IDE, or runtime, stored in
+that host's own skill directory. Host skills live outside `/ai/pact` and are
+not PACT files.
+
+A `pact_skill` is a skill created by the owner, downloaded by the owner, or
+extracted by PACT during maintenance work. PACT skills live under
+`/ai/pact/agents/skills` and follow `skill.tpl.md`.
+
+## Skill Update Logging
+
+Skill update logging is debug-only PACT maintenance observability. It records
+skill update events: a reusable skill was created, updated, improved,
+extracted, or deprecated. It never records ordinary skill use or ordinary task
+execution.
+
+The skill log is a PACT diagnostic artifact. It is not project truth, not
+project documentation, and must not live in `/ai/docs`.
+
+Recommended skill log path:
+
+```txt
+/ai/pact/agents/skills/SKILL-LOG.md
+```
+
+PACT may write skill update entries only when both gates are true:
+
+1. The attached SPARC binding declares `runtime_mode: debug`. SPARC `01.04`
+   and newer declare the runtime mode in `PLATFORM-LOGIC.md`. If the binding
+   declares `production`, declares nothing, or cannot declare a runtime mode,
+   the mode is `production`.
+2. `WORKFLOW.md` declares the skill log artifact in its `## Skill Log`
+   section.
+
+If either gate is missing, unclear, or false, PACT must not write skill update
+entries.
+
+PACT must not create the skill log file automatically. It is created only when
+`WORKFLOW.md` declares it and the first loggable event happens.
+
+The skill update entry format and gate rule are defined in
+[workflow/WORKFLOW.md](workflow/WORKFLOW.md).
 
 ## Adapters, Scripts, And Cache
 

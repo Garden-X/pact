@@ -7,10 +7,10 @@ canonical_location: /ai/pact/agents/AGENTS.md
 layer: PACT / agent orientation
 status: canonical
 generated_from: /ai/pact/templates/agents.tpl.md
-generated_from_version: 2.5
+generated_from_version: 2.7
 content_status: current-data
 purpose: Orient agents inside the `/ai` container and keep SPARC project truth separate from PACT project maintenance.
-updated: 2026-06-17 23:51:46 UTC+00:00
+updated: 2026-07-08 09:38:38 UTC+00:00
 
 ## Core Distinction
 
@@ -263,6 +263,13 @@ If agent orientation, soul files, or worker files use skills, link the skill
 files from the files that use them:
 
 - `/ai/pact/agents/skills/StructureReview.md`
+
+Skills are `host_skill` (owned by the agent host, IDE, or runtime, outside
+`/ai/pact`) or `pact_skill` (owner-added or PACT-extracted, under
+`/ai/pact/agents/skills`).
+
+Skill update logging is debug-only and governed by the `## Skill Log` rule in
+`WORKFLOW.md`. Never write skill update entries in production mode.
 
 When the owner asks to remember what or how to do something, classify the scope
 before writing files. Ask whether it is for the current soul, all souls, a

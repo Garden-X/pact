@@ -5,8 +5,8 @@
 name: agent-nicknames.tpl.md
 type: pact maintenance template
 for: NICKNAMES.md
-updated: 2026-06-17 03:55:16 UTC+00:00
-version: 1.0
+updated: 2026-07-08 09:24:00 UTC+00:00
+version: 1.1
 
 ## WHAT
 
@@ -69,6 +69,9 @@ name: NICKNAMES.md
 canonical_location: /ai/pact/agents/NICKNAMES.md
 layer: PACT / agent preferences
 status: owner preference source
+generated_from: /ai/pact/templates/agent-nicknames.tpl.md
+generated_from_version: 1.1
+content_status: current-data
 purpose: Record conversational nicknames and stable soul-file slugs for agent systems without creating project truth.
 updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 

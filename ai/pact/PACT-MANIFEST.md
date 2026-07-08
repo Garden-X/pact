@@ -3,7 +3,7 @@
 > For: PACT package
 > Status: canonical package manifest
 > Purpose: describe the installed PACT maintenance environment
-> Updated: 2026-06-17 23:39:24 UTC+00:00
+> Updated: 2026-07-08 09:38:38 UTC+00:00
 
 ## Purpose
 
@@ -331,6 +331,10 @@ state.tpl.md            -> /ai/pact/context/state/STATE.md
 
 Scripts and adapters are freeform support artifacts in this package. They do
 not have canonical template mappings unless a project defines local ones.
+
+`SKILL-LOG.md` is an optional debug-only diagnostic artifact governed by the
+`## Skill Log` rule in [workflow/WORKFLOW.md](workflow/WORKFLOW.md). It has no
+template mapping and must never be created automatically.
 
 Cache-run manifests are templated cache artifacts. They are not installed
 generated PACT target files and do not use `content_status`.

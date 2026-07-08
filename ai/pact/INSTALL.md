@@ -2,7 +2,7 @@
 
 > For: PACT
 > Purpose: install or verify the PACT project-maintenance layer
-> Updated: 2026-06-17 23:39:24 UTC+00:00
+> Updated: 2026-07-08 09:38:38 UTC+00:00
 
 ## Purpose
 
@@ -294,6 +294,8 @@ EXAMPLE
 - [ ] `/ai/pact/context/state/LOGIC-DRAFT.md` exists.
 - [ ] `/ai/pact/context/state/TASKS.md` exists.
 - [ ] `/ai/pact/context/state/STATE.md` exists.
+- [ ] No skill log exists unless the attached SPARC binding declares
+      `runtime_mode: debug` and `WORKFLOW.md` declares the skill log artifact.
 - [ ] `/ai/docs` contains no PACT files.
 - [ ] `/ai/raw` contains no accepted project truth.
 - [ ] PACT core Markdown links resolve from `PACT-MANIFEST.md` when checked by

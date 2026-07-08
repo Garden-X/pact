@@ -5,8 +5,8 @@
 name: state.tpl.md
 type: pact maintenance template
 for: STATE.md
-updated: 2026-06-17 03:55:16 UTC+00:00
-version: 1.1
+updated: 2026-07-08 09:24:00 UTC+00:00
+version: 1.2
 
 ## WHAT
 
@@ -141,6 +141,7 @@ layer: PACT / context / state
 status: active
 active_task: PACT-YYYYMMDD-001
 generated_from: /ai/pact/templates/state.tpl.md
+generated_from_version: 1.2
 content_status: current-state
 updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 

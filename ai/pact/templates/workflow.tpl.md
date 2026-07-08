@@ -5,8 +5,8 @@
 name: workflow.tpl.md
 type: pact maintenance template
 for: WORKFLOW.md
-updated: 2026-06-17 23:51:46 UTC+00:00
-version: 2.3
+updated: 2026-07-08 09:38:38 UTC+00:00
+version: 2.5
 
 ## WHAT
 
@@ -44,6 +44,10 @@ Use this template when creating or changing the canonical PACT workflow.
   input-basis references, promotion, retention, and deletion rules;
 - require tasks to derive from `LOGIC-DRAFT.md`, not directly from shapes;
 - register hooks and script usage in `WORKFLOW.md`;
+- define the skill log gate: skill update entries require SPARC
+  `runtime_mode: debug` and a skill log artifact declared in `WORKFLOW.md`;
+- define the skill update entry format and forbid automatic skill log
+  creation;
 - keep invariant PACT files discoverable with relative Markdown links;
 - define when project-truth changes must pass through SPARC;
 - route behavior, structure, schema/data shape, design, platform, and accepted
@@ -70,6 +74,9 @@ name: WORKFLOW.md
 canonical_location: /ai/pact/workflow/WORKFLOW.md
 layer: PACT / workflow
 status: canonical
+generated_from: /ai/pact/templates/workflow.tpl.md
+generated_from_version: 2.5
+content_status: current-data
 purpose: Define how agents maintain project work without bypassing SPARC project truth.
 updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 
@@ -136,6 +143,51 @@ updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 ```
 
 Do not refresh `updated` for mirror-only or sync-only changes.
+
+## Skill Log
+
+skill_log: none
+
+The skill log records skill update events: a reusable skill was created,
+updated, improved, extracted, or deprecated. It never records ordinary skill
+use or ordinary task execution.
+
+To enable skill update logging, declare the artifact path:
+
+```txt
+skill_log: /ai/pact/agents/skills/SKILL-LOG.md
+```
+
+Write a skill update entry only when both gates are true:
+
+1. The attached SPARC binding declares `runtime_mode: debug`. If the binding
+   declares `production`, declares nothing, or cannot declare a runtime mode,
+   do not write.
+2. `skill_log` above declares an artifact path. If it is `none` or missing,
+   do not write, even in debug mode.
+
+Do not create the skill log file automatically. Create it only when
+`skill_log` declares it and the first loggable event happens.
+
+Skill update entries use this format. Times use `UTC+00:00`:
+
+```md
+## YYYY-MM-DD HH:mm — Skill Update
+
+- Event Type: skill_update
+- Skill Class: host_skill | pact_skill
+- Skill Host: host runtime name, or `none` for a pact_skill
+- Skill Name:
+- Skill File:
+- Change Type: created | updated | improved | extracted | deprecated
+- Trigger:
+- Improvement:
+- Affected Workflow:
+```
+
+The skill log is a debug-only PACT diagnostic. It is not project truth, not
+project documentation, and must not be written in production mode or into
+`/ai/docs`.
 
 ## Project Truth Updates
 
