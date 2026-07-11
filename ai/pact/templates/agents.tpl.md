@@ -5,8 +5,8 @@
 name: agents.tpl.md
 type: pact maintenance template
 for: AGENTS.md
-updated: 2026-07-08 09:38:38 UTC+00:00
-version: 2.7
+updated: 2026-07-11 10:13:59 UTC+00:00
+version: 2.8
 
 ## WHAT
 
@@ -101,6 +101,8 @@ Use this template when creating or changing the general rules for all agents.
 - link to agent skills when agent orientation, souls, or workers use skills;
 - distinguish `host_skill` from `pact_skill` and point skill update logging to
   the `WORKFLOW.md` skill log rule;
+- name project engineering conventions as a `pact_skill`, canonically
+  `Code-Conventions.md`, rather than as agent rules or project truth;
 - distinguish identity-level soul files from role-level worker files;
 - define how remembered what/how behavior becomes a skill, soul update, worker
   update, all-souls rule, or hook;
@@ -131,7 +133,7 @@ canonical_location: /ai/pact/agents/AGENTS.md
 layer: PACT / agent orientation
 status: canonical
 generated_from: /ai/pact/templates/agents.tpl.md
-generated_from_version: 2.7
+generated_from_version: 2.8
 content_status: current-data
 purpose: Orient agents inside the `/ai` container and keep SPARC project truth separate from PACT project maintenance.
 updated: YYYY-MM-DD HH:mm:ss UTC+00:00
@@ -394,6 +396,10 @@ Skills are `host_skill` (owned by the agent host, IDE, or runtime, outside
 
 Skill update logging is debug-only and governed by the `## Skill Log` rule in
 `WORKFLOW.md`. Never write skill update entries in production mode.
+
+Project engineering conventions, such as code style, file-chunking limits, and
+docs-first sequencing, are recorded as a `pact_skill`, canonically
+`Code-Conventions.md`, not as agent rules or project truth.
 
 When the owner asks to remember what or how to do something, classify the
 scope before writing files. Ask whether it is for the current soul, all souls,

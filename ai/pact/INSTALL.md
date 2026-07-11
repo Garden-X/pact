@@ -2,7 +2,7 @@
 
 > For: PACT
 > Purpose: install or verify the PACT project-maintenance layer
-> Updated: 2026-07-08 09:38:38 UTC+00:00
+> Updated: 2026-07-11 10:13:59 UTC+00:00
 
 ## Purpose
 
@@ -64,6 +64,13 @@ installation unless the owner explicitly selects another SPARC binding.
 Latest SPARC means the current `HEAD` of the SPARC repository default branch,
 or an owner-selected tag, branch, or commit when the owner pins one.
 
+An owner-provided local SPARC package is a first-class binding source. When the
+owner declares a local clone or working tree, such as `C:\!DEV\2026\sparc`, as
+the source of truth, copy or reference that package instead of cloning from
+GitHub. This is the correct path when the machine is offline or when the local
+package is intentionally ahead of the published repository. Verify `SPARC.md`
+exists at the provided root and record the package version.
+
 If `/ai/sparc` is missing, empty, or contains only a package placeholder such as
 `.gitkeep`, initialize it from:
 
@@ -96,8 +103,14 @@ If the attached SPARC package describes its generated docs root as `/docs`,
 treat that as the SPARC docs root and mount it to `/ai/docs` in this PACT
 installation unless the owner selects a different docs root.
 
-If network access is unavailable, leave `/ai/sparc` unresolved, record the
-blocker, and do not create project-truth files until SPARC is attached.
+If network access is unavailable and no local SPARC package is provided, leave
+`/ai/sparc` unresolved, record the blocker, and do not create project-truth
+files until SPARC is attached.
+
+Record the resolved binding choice during installation: the binding source
+(GitHub clone, local package path, or owner-provided directory), the resolved
+root, and the SPARC package version. A later reader must be able to tell which
+SPARC the project was bound to without guessing.
 
 ## Agent Rules Installation
 
@@ -234,7 +247,8 @@ templated cache artifacts:
 - shape files;
 - draft logic;
 - tasks;
-- active state.
+- active state;
+- file guard, when the owner opts in.
 
 In this specification package, generated target files may be active followable
 targets or seeds with `metadata-only`, `current-data`, or `current-state`
@@ -296,6 +310,8 @@ EXAMPLE
 - [ ] `/ai/pact/context/state/STATE.md` exists.
 - [ ] No skill log exists unless the attached SPARC binding declares
       `runtime_mode: debug` and `WORKFLOW.md` declares the skill log artifact.
+- [ ] No `FILE-GUARD.md` exists unless the owner opted in and `WORKFLOW.md`
+      declares it in its `## File Guard` section.
 - [ ] `/ai/docs` contains no PACT files.
 - [ ] `/ai/raw` contains no accepted project truth.
 - [ ] PACT core Markdown links resolve from `PACT-MANIFEST.md` when checked by

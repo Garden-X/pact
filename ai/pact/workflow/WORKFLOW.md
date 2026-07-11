@@ -7,10 +7,10 @@ canonical_location: /ai/pact/workflow/WORKFLOW.md
 layer: PACT / workflow
 status: canonical
 generated_from: /ai/pact/templates/workflow.tpl.md
-generated_from_version: 2.5
+generated_from_version: 2.6
 content_status: current-data
 purpose: Define how agents maintain project work without bypassing SPARC project truth.
-updated: 2026-07-08 09:38:38 UTC+00:00
+updated: 2026-07-11 10:13:59 UTC+00:00
 
 ## Lifecycle
 
@@ -60,9 +60,15 @@ reason validation was not possible, then clear `STATE.md`.
 
 ## Hooks
 
-| Hook | File | Trigger | Scripts | Status |
-|---|---|---|---|---|
-| None | None | None | None | None |
+| Hook | Class | File | Trigger | Scripts | Status |
+|---|---|---|---|---|---|
+| None | None | None | None | None | None |
+
+`Class` is `pact_hook` (Markdown workflow extension point owned by PACT) or
+`host_hook` (a hook owned by the agent host, IDE, or runtime). Host hooks are
+governed by the host; register them here for visibility only. When a host hook
+and a PACT hook share a trigger, expose the overlap here rather than assuming
+one wins.
 
 Project truth changes are handled through SPARC.
 PACT maintenance changes stay in `/ai/pact`.
@@ -120,6 +126,36 @@ Skill update entries use this format. Times use `UTC+00:00`:
 The skill log is a debug-only PACT diagnostic. It is not project truth, not
 project documentation, and must not be written in production mode or into
 `/ai/docs`.
+
+## File Guard
+
+file_guard: none
+
+The file guard is an optional allowed-operations ledger for the whole project.
+It declares which files agents may read, modify, create, delete, or treat as
+an aggregator entry point across tasks, generalizing the per-task reservations
+in `STATE.md`.
+
+To enable it, create `FILE-GUARD.md` from `../templates/file-guard.tpl.md` and
+declare its path here:
+
+```txt
+file_guard: /ai/pact/workflow/FILE-GUARD.md
+```
+
+The guard has three modes, declared inside `FILE-GUARD.md`:
+
+- `strict`: unlisted paths are read-only; a disallowed write must not proceed.
+- `warn`: writes proceed, but violations are recorded in the current daily log.
+- `off`: the guard is inert.
+
+Precedence: current owner instruction overrides the guard; the guard overrides
+per-task `STATE.md` reservations. The guard governs PACT write discipline only
+and never overrides SPARC live-contract authority.
+
+Do not create `FILE-GUARD.md` automatically. Create it only when the owner asks
+and `file_guard` above declares it. When `file_guard` is `none`, there is no
+guard and ordinary per-task reservations apply.
 
 ## Project Truth Updates
 

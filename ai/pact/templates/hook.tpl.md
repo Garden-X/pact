@@ -5,8 +5,8 @@
 name: hook.tpl.md
 type: pact maintenance template
 for: agent hook files
-updated: 2026-06-17 03:55:16 UTC+00:00
-version: 1.1
+updated: 2026-07-11 10:13:59 UTC+00:00
+version: 1.2
 
 ## WHAT
 
@@ -16,6 +16,19 @@ Hooks describe when the extension point runs, what it reads, what it may do,
 what it writes, and how failure is handled.
 
 Hooks are registered in `WORKFLOW.md`.
+
+Hooks have two classes, mirroring the skill classes:
+
+- `pact_hook` is a Markdown workflow extension point owned by PACT, defined by
+  this template and registered in `WORKFLOW.md`. This is the default.
+- `host_hook` is a hook owned by the agent host, IDE, or runtime, such as a
+  Claude Code `settings.json` hook. Host hooks are governed by the host, not
+  by PACT. PACT does not define their behavior; it only records them in
+  `WORKFLOW.md` for visibility and to note any interaction with PACT
+  maintenance.
+
+When a `host_hook` and a `pact_hook` would act on the same trigger, expose the
+overlap in `WORKFLOW.md` instead of assuming one silently wins.
 
 ## FOR
 
@@ -32,6 +45,7 @@ Use this template when creating or changing a PACT agent hook.
 A hook file must contain:
 
 - hook name;
+- `class`: `pact_hook` or `host_hook` (default `pact_hook` when omitted);
 - trigger;
 - inputs;
 - allowed action;
@@ -67,6 +81,7 @@ A hook file must not:
 name: ValidateBeforeCompletion
 canonical_location: /ai/pact/agents/hooks/ValidateBeforeCompletion.md
 layer: PACT / agent hook
+class: pact_hook
 status: draft
 updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 

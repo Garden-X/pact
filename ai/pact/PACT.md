@@ -1,7 +1,7 @@
 # Protocol for Agent Coordination and Tasks
 
 > Version: draft
-> Updated: 2026-07-08 09:38:38 UTC+00:00
+> Updated: 2026-07-11 10:13:59 UTC+00:00
 > Status: refined specification package
 > Purpose: project maintenance for AI-assisted development
 
@@ -557,7 +557,42 @@ Hooks are PACT maintenance files. They do not define project truth.
 
 Hooks are registered in [workflow/WORKFLOW.md](workflow/WORKFLOW.md).
 
+Hooks have two classes: `pact_hook`, a Markdown workflow extension point owned
+by PACT, and `host_hook`, a hook owned by the agent host, IDE, or runtime.
+Host hooks are governed by the host and are registered in `WORKFLOW.md` for
+visibility only.
+
 `hook.tpl.md` governs one individual hook file.
+
+## File Guard
+
+The file guard is an optional, opt-in allowed-operations ledger for the whole
+project. It declares which files or path patterns agents may `read`, `modify`,
+`create`, `delete`, or treat as an `aggregator` entry point, generalizing the
+per-task file reservations in `STATE.md` into a standing write-discipline
+surface.
+
+Recommended path:
+
+```txt
+/ai/pact/workflow/FILE-GUARD.md
+```
+
+The guard is created from `file-guard.tpl.md` only when the owner asks for it
+and `WORKFLOW.md` declares it in its `## File Guard` section. It is never
+created automatically.
+
+It declares one `mode`: `strict` (unlisted paths are read-only; a disallowed
+write must not proceed), `warn` (writes proceed but violations are recorded in
+the daily log), or `off` (inert).
+
+Precedence is owner instruction, then the guard, then per-task `STATE.md`
+reservations. The guard governs PACT write discipline only. It does not change
+SPARC authority and must not block a project-truth update the owner has
+authorized.
+
+The skill log gate and file guard are defined in
+[workflow/WORKFLOW.md](workflow/WORKFLOW.md).
 
 `cache-run.tpl.md` governs `CACHE.md` manifests for individual cache runs.
 `CACHE.md` files are templated cache artifacts, not installed generated PACT
@@ -574,6 +609,19 @@ not PACT files.
 A `pact_skill` is a skill created by the owner, downloaded by the owner, or
 extracted by PACT during maintenance work. PACT skills live under
 `/ai/pact/agents/skills` and follow `skill.tpl.md`.
+
+### Conventions Skill
+
+Project engineering conventions, such as code-style rules, file-chunking
+limits, aggregator-entry-point discipline, and docs-first sequencing, are
+maintenance discipline, not project truth and not package-canonical agent
+rules. They are recorded as a `pact_skill`.
+
+The canonical pattern is a skill named `Code-Conventions.md` under
+`/ai/pact/agents/skills`, following `skill.tpl.md`, and linked from the files
+that rely on it, such as `TASKS.md` context or a worker file. A conventions
+skill states discipline; it does not override `AGENTS.md`, `WORKFLOW.md`, or
+SPARC project truth.
 
 ## Skill Update Logging
 
@@ -717,3 +765,8 @@ Do not place SPARC-generated project truth in `/ai/pact`.
 Do not place raw source material in `/ai/docs` or `/ai/pact`.
 
 Do not treat cache as source of truth.
+
+Do not place application runtime data in `/ai`. Data an app generates at
+runtime stays in application territory. PACT may coordinate work on it and
+SPARC contracts its shape and lifecycle, but the generated files are not PACT
+state, cache, raw evidence, or project truth.

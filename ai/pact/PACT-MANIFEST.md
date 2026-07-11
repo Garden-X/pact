@@ -3,7 +3,7 @@
 > For: PACT package
 > Status: canonical package manifest
 > Purpose: describe the installed PACT maintenance environment
-> Updated: 2026-07-08 09:38:38 UTC+00:00
+> Updated: 2026-07-11 10:13:59 UTC+00:00
 
 ## Purpose
 
@@ -249,6 +249,7 @@ PACT maintenance templates:
 - [templates/logic-draft.tpl.md](templates/logic-draft.tpl.md)
 - [templates/tasks.tpl.md](templates/tasks.tpl.md)
 - [templates/state.tpl.md](templates/state.tpl.md)
+- [templates/file-guard.tpl.md](templates/file-guard.tpl.md)
 
 Local reader configuration does not create PACT authority and should remain
 untracked.
@@ -327,6 +328,7 @@ shape.tpl.md            -> /ai/pact/context/shapes/YYYY-MM-DD-[Shape-Slug].shape
 logic-draft.tpl.md      -> /ai/pact/context/state/LOGIC-DRAFT.md
 tasks.tpl.md            -> /ai/pact/context/state/TASKS.md
 state.tpl.md            -> /ai/pact/context/state/STATE.md
+file-guard.tpl.md       -> /ai/pact/workflow/FILE-GUARD.md
 ```
 
 Scripts and adapters are freeform support artifacts in this package. They do
