@@ -1,7 +1,7 @@
 # Protocol for Agent Coordination and Tasks
 
 > Version: draft
-> Updated: 2026-07-11 10:13:59 UTC+00:00
+> Updated: 2026-07-12 18:15:00 UTC+00:00
 > Status: refined specification package
 > Purpose: project maintenance for AI-assisted development
 
@@ -538,6 +538,16 @@ refresh it for mirror-only, sync-only, or file metadata changes.
 Use only `UTC+00:00`. Do not write local timezone names, IANA timezone names,
 city names, or other location-bearing timezone labels into package metadata.
 
+Stamps must reflect true UTC, not an assumed-correct local clock. Machines in
+one project can drift (dual-boot RTC skew, wrong timezone, unsynced hosts).
+Before writing date-bearing stamps or filenames, verify the local clock
+against a trusted network time source at least once per session. On skew
+beyond tolerance, stamp from the verified source and report the skew to the
+owner; the system clock itself is owner territory. When verification is
+impossible, the affected entry must say so instead of silently trusting the
+clock. The canonical procedure is the `Time-Normalization.md` skill (see
+Skill Classes).
+
 Version fields remain compatibility and template-drift markers. They are
 secondary to `updated` when a human needs to know which file was touched most
 recently.
@@ -622,6 +632,16 @@ The canonical pattern is a skill named `Code-Conventions.md` under
 that rely on it, such as `TASKS.md` context or a worker file. A conventions
 skill states discipline; it does not override `AGENTS.md`, `WORKFLOW.md`, or
 SPARC project truth.
+
+### Time-Normalization Skill
+
+Verified-UTC stamping (see Target META Blocks) has a canonical `pact_skill`:
+`Time-Normalization.md` under `/ai/pact/agents/skills`, following
+`skill.tpl.md`. This specification package ships it as a seed. It defines the
+verification sources, the per-session tolerance, the skew and no-network
+behavior, and the annotation format. It governs timestamps in maintained
+files only; it never changes system clocks and never rewrites historical
+stamps.
 
 ## Skill Update Logging
 

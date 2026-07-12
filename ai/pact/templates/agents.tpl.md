@@ -5,8 +5,8 @@
 name: agents.tpl.md
 type: pact maintenance template
 for: AGENTS.md
-updated: 2026-07-11 10:13:59 UTC+00:00
-version: 2.8
+updated: 2026-07-12 18:15:00 UTC+00:00
+version: 2.9
 
 ## WHAT
 
@@ -103,6 +103,10 @@ Use this template when creating or changing the general rules for all agents.
   the `WORKFLOW.md` skill log rule;
 - name project engineering conventions as a `pact_skill`, canonically
   `Code-Conventions.md`, rather than as agent rules or project truth;
+- require verified-UTC stamping per the canonical `Time-Normalization.md`
+  skill: check the local clock against a trusted network source at least
+  once per session before writing stamps or date-bearing filenames, and
+  annotate entries when verification was impossible;
 - distinguish identity-level soul files from role-level worker files;
 - define how remembered what/how behavior becomes a skill, soul update, worker
   update, all-souls rule, or hook;
@@ -196,6 +200,12 @@ updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 Refresh `updated` when meaningful Markdown content changes. Do not use local
 timezone names, IANA timezone names, city names, or other location-bearing
 timezone labels.
+
+Stamps must come from a verified UTC source: check the local clock against a
+trusted network time source at least once per session before stamping. On
+skew, stamp from the verified source and report to the owner; when
+verification is impossible, the affected entry must say so. Procedure:
+[skills/Time-Normalization.md](skills/Time-Normalization.md).
 
 ## Project Truth Discipline
 

@@ -7,10 +7,10 @@ canonical_location: /ai/pact/agents/AGENTS.md
 layer: PACT / agent orientation
 status: canonical
 generated_from: /ai/pact/templates/agents.tpl.md
-generated_from_version: 2.8
+generated_from_version: 2.9
 content_status: current-data
 purpose: Orient agents inside the `/ai` container and keep SPARC project truth separate from PACT project maintenance.
-updated: 2026-07-11 10:13:59 UTC+00:00
+updated: 2026-07-12 18:15:00 UTC+00:00
 
 ## Core Distinction
 
@@ -70,6 +70,12 @@ updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 Refresh `updated` when meaningful Markdown content changes. Do not use local
 timezone names, IANA timezone names, city names, or other location-bearing
 timezone labels.
+
+Stamps must come from a verified UTC source: check the local clock against a
+trusted network time source at least once per session before stamping. On
+skew, stamp from the verified source and report to the owner; when
+verification is impossible, the affected entry must say so. Procedure:
+[skills/Time-Normalization.md](skills/Time-Normalization.md).
 
 ## Project Truth Discipline
 
