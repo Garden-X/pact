@@ -7,10 +7,10 @@ canonical_location: /ai/pact/workflow/WORKFLOW.md
 layer: PACT / workflow
 status: canonical
 generated_from: /ai/pact/templates/workflow.tpl.md
-generated_from_version: 2.6
+generated_from_version: 2.7
 content_status: current-data
 purpose: Define how agents maintain project work without bypassing SPARC project truth.
-updated: 2026-07-11 10:13:59 UTC+00:00
+updated: 2026-10-08 08:40:00 UTC+00:00
 
 ## Lifecycle
 
@@ -55,14 +55,127 @@ has multiple independent outcomes, split it before adding it to `TASKS.md`.
 When a task transfers into `STATE.md`, remove it from `TASKS.md` Pending so
 active work is not duplicated.
 
+By default one task is active in `STATE.md` at a time. Several tasks may be
+active at once only under the parallel-worker rule in `## Execution Hierarchy`.
+
 When a task completes, move it to `TASKS.md` Done with validation evidence or a
-reason validation was not possible, then clear `STATE.md`.
+reason validation was not possible, then remove it from `STATE.md`. `STATE.md`
+returns to `clear` when no active task remains.
+
+## Execution Hierarchy
+
+Every project that installs or syncs PACT inherits this hierarchy. It defines
+who plans, who executes, and who accepts work. The declared fields below are
+defaults; a project may override a value in place.
+
+Declared fields:
+
+```txt
+primary_model: opus
+coordinator_model: sonnet
+coordinator_effort: high
+worker_model: haiku
+worker_effort: medium
+heartbeat_primary: 23m
+heartbeat_coordinator: 11m
+default_branch: main
+gate_branch_pattern: gate/<id>
+keep_alive_registry: none
+heavy_work: sequential
+ram_threshold_gb: 5
+```
+
+Model fields name capability tiers. A host that lacks a named model uses its
+closest equivalent tier and tells the owner once. `keep_alive_registry` is
+`none` or the path of the project's service and port registry.
+
+Tiers:
+
+| Tier | Does | Does not |
+|---|---|---|
+| primary | selects the shape and the `LOGIC-DRAFT.md` for the gate; reviews only gate validation and PACT and SPARC records; runs the full acceptance suite; fast-forwards `gate/<id>` into `default_branch`; closes the gate | write product code; micromanage slices |
+| coordinator | decomposes the selected draft into atomic `TASKS.md` entries; transfers tasks into `STATE.md`; writes self-contained worker briefs; reviews every worker diff; checks PACT and SPARC conformance; may fix worker errors; prepares the records; commits and pushes every slice to `gate/<id>` | run the full acceptance suite; push or merge `default_branch`; force-push; skip hooks; deploy |
+| worker | executes exactly one atomic task from its brief; reports the diff | write to version control; widen scope; guess when the brief is ambiguous |
+
+A worker that finds its brief ambiguous or contradicted by the code stops and
+reports the question. Many worker errors mean the brief was unclear: the
+coordinator sharpens the brief, re-dispatches, and records per slice how many
+worker results needed a coordinator fix.
+
+Gate and slice:
+
+- A gate is one selected `LOGIC-DRAFT.md` cycle, from selection to acceptance.
+- A slice is a coherent, validated commit that carries its own records. Each
+  slice stands on its own: it is complete, tested, and pushed to
+  `gate_branch_pattern`.
+- The coordinator creates `gate/<id>` from `default_branch` on the first slice
+  and fetches before each slice to read new commits from the owner or other
+  agents. If `default_branch` moves, the coordinator merges it into the gate
+  branch instead of rewriting pushed history.
+- The primary closes the gate by fast-forwarding the gate branch into
+  `default_branch` after the full acceptance suite passes and the records are
+  reviewed. Only the primary writes to `default_branch`.
+- Design questions the owner has delegated are decided by the coordinator and
+  recorded in the project's decision log; they do not block the gate.
+
+Parallel workers:
+
+- Several `STATE.md` tasks may be active at once only when all of these hold:
+  one coordinator owns the set; each task is held by a distinct worker; the
+  tasks' `reservations` are pairwise disjoint; no task in the set builds or
+  runs tests.
+- A task that builds or tests, or whose reservations overlap another active
+  task, runs alone.
+- Without a coordinator, or in a second agent's scope, the single-task
+  `STATE.md` mutex applies.
+
+Conformance:
+
+- PACT and SPARC conformance is mandatory at every tier. The coordinator puts
+  the applicable PACT and SPARC rules into every worker brief.
+- Every slice updates its records in the same commit: `TASKS.md`, `STATE.md`,
+  the daily log, and the SPARC live contracts the change touches. A slice
+  without its records is not done.
+- The primary reviews the gate by its records. A gate with stale or missing
+  records is not accepted, regardless of test results.
+
+Resources:
+
+- Heavy work (builds, test suites, checks that need a running service) runs
+  strictly one at a time, as `heavy_work` declares.
+- Before heavy work, check free memory against `ram_threshold_gb` and state the
+  measured value. If the host kills a run for low memory, do not restart it;
+  report to the primary.
+
+Keep-alive:
+
+- When `keep_alive_registry` is declared, services run only on ports registered
+  there, each in its own long-lived window. They never run as session
+  background tasks and never on ad-hoc ports.
+- Agents never stop or restart those windows. A new service is registered
+  before its first start. If a registered service is down, the coordinator
+  reports to the primary, who restarts it.
+- When `keep_alive_registry` is `none`, no registry rule applies.
+
+Heartbeats:
+
+- Heartbeats are host hooks that keep the tiers in contact. Register them in
+  `## Hooks` as `host_hook` rows, one for the primary at `heartbeat_primary`
+  and one for the coordinator at `heartbeat_coordinator`.
+- The primary heartbeat fetches the gate branch, reads only the record changes
+  in pushed slices, flags gaps to the coordinator, and starts acceptance when
+  the coordinator reports the gate ready.
+- The coordinator heartbeat asks for a one-line status: current slice, workers
+  running, last pushed commit, free memory.
+- Routine heartbeats are quiet. Report to the owner only milestones, failures,
+  and decisions.
 
 ## Hooks
 
 | Hook | Class | File | Trigger | Scripts | Status |
 |---|---|---|---|---|---|
-| None | None | None | None | None | None |
+| PrimaryHeartbeat | host_hook | host-owned | every `heartbeat_primary` | None | active |
+| CoordinatorHeartbeat | host_hook | host-owned | every `heartbeat_coordinator` | None | active |
 
 `Class` is `pact_hook` (Markdown workflow extension point owned by PACT) or
 `host_hook` (a hook owned by the agent host, IDE, or runtime). Host hooks are
@@ -269,7 +382,9 @@ tasks before marking `LOGIC-DRAFT.md` superseded.
 
 To start the next draft after completed work, preserve the completed cycle's
 summary and validation evidence, then replace `LOGIC-DRAFT.md`, reset
-`TASKS.md`, and transfer at most one new task into `STATE.md`.
+`TASKS.md`, and transfer at most one new task into `STATE.md`, or a set of
+parallel worker tasks that satisfies the Execution Hierarchy parallel-worker
+rule.
 
 Related:
 

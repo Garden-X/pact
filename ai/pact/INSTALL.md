@@ -2,7 +2,7 @@
 
 > For: PACT
 > Purpose: install or verify the PACT project-maintenance layer
-> Updated: 2026-07-11 10:13:59 UTC+00:00
+> Updated: 2026-10-08 08:40:00 UTC+00:00
 
 ## Purpose
 
@@ -289,10 +289,20 @@ EXAMPLE
       `workflow.tpl.md` if it was installed as a `metadata-only` seed, or is
       already shipped as `status: canonical` with `content_status:
       current-data`.
+- [ ] `/ai/pact/workflow/WORKFLOW.md` declares a `## Execution Hierarchy`
+      section with the declared fields (`primary_model`, `coordinator_model`,
+      `worker_model`, `heartbeat_primary`, `heartbeat_coordinator`,
+      `gate_branch_pattern`, `keep_alive_registry`, `heavy_work`,
+      `ram_threshold_gb`) and registers the primary and coordinator
+      heartbeats as `host_hook` rows in its `## Hooks` table.
+- [ ] `/ai/pact/agents/AGENTS.md` contains an `## Execution Hierarchy` pointer
+      section to `WORKFLOW.md`.
 - [ ] Agents treat `/ai/pact/agents/AGENTS.md` as a binding agent rules file
       equivalent in role to native agent configuration files.
 - [ ] Native agent instruction bridge files exist when required by the target
       agent runtime, and they point to `/ai/pact/agents/AGENTS.md`.
+- [ ] Bridge files such as `CLAUDE.md` point to `/ai/pact/agents/AGENTS.md`,
+      so the Execution Hierarchy reaches agents that read only the bridge.
 - [ ] Native or vendor-specific bridge files are treated as legacy discovery
       bridges, not as competing PACT rule authorities.
 - [ ] Existing native or vendor-specific agent instruction files were inspected
@@ -319,6 +329,24 @@ EXAMPLE
 - [ ] The repository root can be opened as a Markdown wiki or editor workspace.
 - [ ] Hooks that use scripts expose those scripts through hook files and
       `WORKFLOW.md`.
+
+## Sync Existing Installations
+
+A project that installed PACT earlier is synced by comparing its generated
+files with the current templates.
+
+- If `/ai/pact/workflow/WORKFLOW.md` has no `## Execution Hierarchy` section, or
+  its `generated_from_version` is older than the `version` of
+  `workflow.tpl.md`, regenerate it from the template.
+- Keep the project's own hook rows, declared field overrides (such as
+  `skill_log`, `file_guard`, and any Execution Hierarchy values), and local
+  rules. Take new structure and rules from the template and re-apply the
+  project's own content on top.
+- Do the same for `AGENTS.md` and any other generated file whose
+  `generated_from_version` is older than its template, then synchronize bridge
+  files as described in Agent Rules Installation.
+- Record the sync in the project's logs. Refresh `updated` only on files whose
+  Markdown content meaningfully changed.
 
 ## Forbidden Content
 

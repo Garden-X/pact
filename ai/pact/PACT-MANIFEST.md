@@ -3,7 +3,7 @@
 > For: PACT package
 > Status: canonical package manifest
 > Purpose: describe the installed PACT maintenance environment
-> Updated: 2026-07-11 10:13:59 UTC+00:00
+> Updated: 2026-10-08 08:40:00 UTC+00:00
 
 ## Purpose
 
@@ -126,6 +126,8 @@ PACT entry file:
 PACT governs:
 
 - workflow;
+- the execution hierarchy (primary, coordinator, worker) declared in
+  [workflow/WORKFLOW.md](workflow/WORKFLOW.md);
 - hooks;
 - agent rules;
 - skills;
@@ -308,6 +310,11 @@ remain compatibility and template-drift markers.
 When a real project requests a generated target file, create or update the
 whole target file from the matching template.
 
+A generated target whose `generated_from_version` is older than its template's
+`version` is out of sync. Sync it as described in [INSTALL.md](INSTALL.md)
+under Sync Existing Installations; for `WORKFLOW.md` this brings in the
+Execution Hierarchy.
+
 When changing a generated PACT target file or creating a templated cache
 artifact, use the mapping below to choose the matching template, apply the
 template rules, and write the result to the target path.
@@ -357,7 +364,8 @@ Default agent startup:
 2. Read `/ai/pact/agents/AGENTS.md`.
 3. Read `/ai/pact/PACT.md`.
 4. Read `/ai/pact/PACT-MANIFEST.md`.
-5. Read `/ai/pact/workflow/WORKFLOW.md`.
+5. Read `/ai/pact/workflow/WORKFLOW.md`, including its `## Execution
+   Hierarchy` section.
 6. Read `/ai/pact/context/IDEAS.md` for future project ideas.
 7. Locate the SPARC folder or attached binding root when project truth is
    needed.

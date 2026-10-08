@@ -7,10 +7,10 @@ canonical_location: /ai/pact/agents/AGENTS.md
 layer: PACT / agent orientation
 status: canonical
 generated_from: /ai/pact/templates/agents.tpl.md
-generated_from_version: 2.9
+generated_from_version: 3.0
 content_status: current-data
 purpose: Orient agents inside the `/ai` container and keep SPARC project truth separate from PACT project maintenance.
-updated: 2026-07-12 18:15:00 UTC+00:00
+updated: 2026-10-08 08:40:00 UTC+00:00
 
 ## Core Distinction
 
@@ -288,6 +288,13 @@ worker, or a hook when scope is unclear.
 If the remembered behavior is a lifecycle trigger or executable helper, update
 `WORKFLOW.md` and create or update a hook under `/ai/pact/agents/hooks` when
 needed.
+
+## Execution Hierarchy
+
+Work runs through the primary, coordinator, and worker tiers defined in the
+`## Execution Hierarchy` section of
+[../workflow/WORKFLOW.md](../workflow/WORKFLOW.md). Read that section at
+startup and act in the tier your task assigns. This file does not restate it.
 
 ## Hooks
 

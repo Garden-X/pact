@@ -1,7 +1,7 @@
 # Protocol for Agent Coordination and Tasks
 
 > Version: draft
-> Updated: 2026-07-12 18:15:00 UTC+00:00
+> Updated: 2026-10-08 08:40:00 UTC+00:00
 > Status: refined specification package
 > Purpose: project maintenance for AI-assisted development
 
@@ -355,9 +355,9 @@ Valid state combinations:
 | `none-selected` | `no-active-draft` | `clear` | No selected maintenance draft exists. |
 | `selected` | `no-active-draft` | `clear` | Draft selected; tasks not created yet. |
 | `selected` | `active-draft` | `clear` | Tasks exist; no task is active. |
-| `selected` | `active-draft` | `active` | Exactly one task is being executed. |
-| `selected` | `active-draft` | `blocked` | Exactly one task is blocked. |
-| `selected` | `active-draft` | `handoff` | Exactly one task is prepared for handoff. |
+| `selected` | `active-draft` | `active` | Exactly one task is being executed, or a parallel worker set is being executed. |
+| `selected` | `active-draft` | `blocked` | Exactly one task is blocked, or no task in a parallel worker set can proceed. |
+| `selected` | `active-draft` | `handoff` | Exactly one task is prepared for handoff, or a parallel worker set is prepared for handoff. |
 | `selected` | `complete` | `clear` | Draft tasks are complete. |
 | `superseded` | `no-active-draft` | `clear` | Old draft is retained as a replaced record. |
 
@@ -381,11 +381,16 @@ previous `TASKS.md` cycle is `complete`. Before replacing `LOGIC-DRAFT.md` or
 resetting `TASKS.md`, preserve the completed cycle's summary and validation
 evidence in `TASKS.md` Done, a SPARC daily log, or both. Then write the new
 selected logic into `LOGIC-DRAFT.md`, reset `TASKS.md` for the new draft, and
-transfer at most one task into `STATE.md`.
+transfer at most one task into `STATE.md`, or a parallel worker set as defined
+below.
 
 `STATE.md` is a project-level active-task mutex. Multiple pending tasks may
 exist in `TASKS.md`, but only one task may be transferred into `STATE.md` at a
-time. A second agent must wait, help unblock the active task, or receive owner
+time. The one exception is a parallel worker set under the Execution Hierarchy:
+several tasks may be active together only when one coordinator owns them, each
+is held by a distinct worker, their reservations are pairwise disjoint, and
+none builds or runs tests. The set as a whole holds the mutex. A second agent
+outside the set must wait, help unblock an active task, or receive owner
 approval for a separate coordination scope.
 
 SPARC-generated project-truth files are updated only when project truth changes.
@@ -440,6 +445,38 @@ Cleanup completes the maintenance cycle:
 - leave `LOGIC-DRAFT.md` as `selected` for traceability, set it to
   `superseded` when replaced, or reset it to `none-selected` when the selected
   logic is intentionally cleared.
+
+## Execution Hierarchy
+
+Every project that installs or syncs PACT runs its work through a three-tier
+execution hierarchy:
+
+- the primary selects the shape and `LOGIC-DRAFT.md`, reviews gate validation
+  and the PACT and SPARC records, runs the full acceptance suite, and
+  fast-forwards the gate branch into the default branch;
+- the coordinator decomposes the selected draft into atomic tasks, briefs
+  workers, reviews their diffs, checks PACT and SPARC conformance, and pushes
+  every slice to the gate branch;
+- the worker executes exactly one atomic task and writes nothing to version
+  control.
+
+A gate is one selected `LOGIC-DRAFT.md` cycle. A slice is a coherent,
+validated commit that carries its own records. A slice without its records is
+not done, and a gate with stale records is not accepted regardless of tests.
+
+The hierarchy is part of the generated workflow, not an add-on. It is defined
+in the `## Execution Hierarchy` section of
+[workflow/WORKFLOW.md](workflow/WORKFLOW.md), governed by
+[templates/workflow.tpl.md](templates/workflow.tpl.md) (version 2.7 and
+newer). Its declared fields (models, heartbeat intervals, gate branch pattern,
+keep-alive registry, heavy-work policy, memory threshold) carry defaults that a
+project may override in place. Heartbeats are host hooks registered in the
+`## Hooks` table of `WORKFLOW.md`. Agents learn the hierarchy from the pointer
+section in [agents/AGENTS.md](agents/AGENTS.md); sub-agent roles that realize a
+tier follow [templates/sub-agent.tpl.md](templates/sub-agent.tpl.md).
+
+Installations created before this section existed are brought in line as
+described in [INSTALL.md](INSTALL.md), under Sync Existing Installations.
 
 ## PACT Template Discipline
 
@@ -570,7 +607,8 @@ Hooks are registered in [workflow/WORKFLOW.md](workflow/WORKFLOW.md).
 Hooks have two classes: `pact_hook`, a Markdown workflow extension point owned
 by PACT, and `host_hook`, a hook owned by the agent host, IDE, or runtime.
 Host hooks are governed by the host and are registered in `WORKFLOW.md` for
-visibility only.
+visibility only. The Execution Hierarchy heartbeats are host hooks of this
+kind.
 
 `hook.tpl.md` governs one individual hook file.
 
