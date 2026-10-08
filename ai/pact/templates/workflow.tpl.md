@@ -5,7 +5,7 @@
 name: workflow.tpl.md
 type: pact maintenance template
 for: WORKFLOW.md
-updated: 2026-10-08 08:40:00 UTC+00:00
+updated: 2026-10-08 08:42:00 UTC+00:00
 version: 2.7
 
 ## WHAT
@@ -194,7 +194,8 @@ Gate and slice:
   branch instead of rewriting pushed history.
 - The primary closes the gate by fast-forwarding the gate branch into
   `default_branch` after the full acceptance suite passes and the records are
-  reviewed. Only the primary writes to `default_branch`.
+  reviewed. Among agents, only the primary writes to `default_branch`; the
+  owner may commit directly, and agents fetch and read those commits.
 - Design questions the owner has delegated are decided by the coordinator and
   recorded in the project's decision log; they do not block the gate.
 
