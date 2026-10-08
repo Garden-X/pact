@@ -5,8 +5,8 @@
 name: state.tpl.md
 type: pact maintenance template
 for: STATE.md
-updated: 2026-07-08 09:24:00 UTC+00:00
-version: 1.2
+updated: 2026-10-08 08:40:00 UTC+00:00
+version: 1.3
 
 ## WHAT
 
@@ -30,8 +30,8 @@ Use this template when creating or resetting the active state file.
 `STATE.md` must:
 
 - use one valid top-level status;
-- map active work back to one task from `TASKS.md`;
-- own the structured active task object;
+- map each active task back to one task from `TASKS.md`;
+- own the structured active task objects;
 - record task id, request, task phase, actor, source, affected files,
   reservations, validation, retry, and handoff;
 - link related invariant PACT files with relative Markdown links;
@@ -49,11 +49,14 @@ handoff
 Status meanings:
 
 - `clear` means no active task exists.
-- `active` means exactly one task is being executed.
+- `active` means exactly one task is being executed; in a parallel worker set,
+  at least one task is being executed.
 - `blocked` means exactly one active task exists but cannot proceed without
-  owner input, missing access, or an external condition.
+  owner input, missing access, or an external condition; in a parallel worker
+  set, no task can proceed and at least one is blocked.
 - `handoff` means exactly one active task is prepared for another agent or
-  session to continue.
+  session to continue; in a parallel worker set, no task can proceed or is
+  blocked and the remaining tasks are prepared for handoff.
 
 `done` is not a valid `STATE.md` status. Completed tasks move to `TASKS.md`
 Done and `STATE.md` returns to `clear`.
@@ -69,14 +72,34 @@ When `STATE.md` is `active`, `blocked`, or `handoff`:
 - exactly one active task block must be present;
 - the same task must not remain pending in `TASKS.md`.
 
-`STATE.md` owns the active task object.
+Parallel worker set. The single-task rule above is the default. Several active
+task blocks may be present only under the parallel-worker rule of the
+`## Execution Hierarchy` in `WORKFLOW.md`:
 
-The active task object must include:
+- `active_task` lists every active task id, separated by commas;
+- exactly one active task block must be present per listed id;
+- every block records `coordinator`, the one coordinator that owns the set,
+  and `actor`, the distinct worker that holds the task;
+- reservations across all blocks must be pairwise disjoint;
+- no task in the set builds or runs tests;
+- the top-level status is `active` while any task is in `transferred`,
+  `working`, or `validating`; otherwise `blocked` while any task is in
+  `blocked`; otherwise `handoff`;
+- a completed task leaves the set and moves to `TASKS.md` Done, and `STATE.md`
+  returns to `clear` when the set is empty.
+
+A second coordinator or agent outside the set must wait, help unblock a task,
+or receive owner approval for a separate coordination scope.
+
+`STATE.md` owns the active task objects.
+
+Each active task object must include:
 
 - `id`;
 - `request`;
 - `task_phase`;
 - `actor`;
+- `coordinator`, required only for a task in a parallel worker set;
 - `created_at` or equivalent timestamp when known;
 - `source`;
 - `affected_files`;
@@ -110,8 +133,11 @@ Task phase maps to top-level `STATE.md` status as follows:
 | `blocked` | `blocked` |
 | `handoff` | `handoff` |
 
+For a parallel worker set, apply this mapping per task, then derive the
+top-level status as stated above.
+
 Planned tasks stay in `TASKS.md` Pending. Completed tasks move to `TASKS.md`
-Done and `STATE.md` returns to `clear`.
+Done and `STATE.md` returns to `clear` when no active task remains.
 
 Validation must record method, result, and evidence or a reason.
 
@@ -141,7 +167,7 @@ layer: PACT / context / state
 status: active
 active_task: PACT-YYYYMMDD-001
 generated_from: /ai/pact/templates/state.tpl.md
-generated_from_version: 1.2
+generated_from_version: 1.3
 content_status: current-state
 updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 

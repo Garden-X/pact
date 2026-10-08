@@ -5,8 +5,8 @@
 name: agents.tpl.md
 type: pact maintenance template
 for: AGENTS.md
-updated: 2026-07-12 18:15:00 UTC+00:00
-version: 2.9
+updated: 2026-10-08 08:40:00 UTC+00:00
+version: 3.0
 
 ## WHAT
 
@@ -111,6 +111,9 @@ Use this template when creating or changing the general rules for all agents.
 - define how remembered what/how behavior becomes a skill, soul update, worker
   update, all-souls rule, or hook;
 - list hooks and script usage when hooks are registered;
+- contain a short `## Execution Hierarchy` section that points to the
+  `## Execution Hierarchy` section of `WORKFLOW.md` as the single definition of
+  the primary, coordinator, and worker tiers, without duplicating it;
 - keep invariant PACT files discoverable with relative Markdown links;
 - point to the wiki-core index in `PACT-MANIFEST.md`;
 - explain template use for PACT maintenance;
@@ -137,7 +140,7 @@ canonical_location: /ai/pact/agents/AGENTS.md
 layer: PACT / agent orientation
 status: canonical
 generated_from: /ai/pact/templates/agents.tpl.md
-generated_from_version: 2.8
+generated_from_version: 3.0
 content_status: current-data
 purpose: Orient agents inside the `/ai` container and keep SPARC project truth separate from PACT project maintenance.
 updated: YYYY-MM-DD HH:mm:ss UTC+00:00
@@ -418,6 +421,13 @@ a worker, or a hook when scope is unclear.
 If the remembered behavior is a lifecycle trigger or executable helper, update
 `WORKFLOW.md` and create or update a hook under `/ai/pact/agents/hooks` when
 needed.
+
+## Execution Hierarchy
+
+Work runs through the primary, coordinator, and worker tiers defined in the
+`## Execution Hierarchy` section of
+[../workflow/WORKFLOW.md](../workflow/WORKFLOW.md). Read that section at
+startup and act in the tier your task assigns. This file does not restate it.
 
 ## Hooks
 

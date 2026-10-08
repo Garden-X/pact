@@ -5,8 +5,8 @@
 name: tasks.tpl.md
 type: pact maintenance template
 for: TASKS.md
-updated: 2026-07-08 09:24:00 UTC+00:00
-version: 1.5
+updated: 2026-10-08 08:40:00 UTC+00:00
+version: 1.6
 
 ## WHAT
 
@@ -35,8 +35,12 @@ Use this template when creating or resetting the PACT task list.
 - never derive tasks directly from shape files;
 - keep pending and done tasks separate;
 - move active work into `STATE.md`;
-- remove a transferred task from Pending when it becomes the active task in
-  `STATE.md`;
+- remove a transferred task from Pending when it becomes an active task in
+  `STATE.md`; several tasks may be transferred at once only as a parallel
+  worker set under the `## Execution Hierarchy` rule in `WORKFLOW.md`;
+- allow an optional `files:` line on a task entry listing the paths the task
+  is expected to touch, so a coordinator can show that reservations are
+  disjoint before a parallel transfer;
 - move canceled tasks out of Pending with an explicit cancellation note;
 - require each task entry to include an id, a short action/outcome, trace back
   to `LOGIC-DRAFT.md`, and a validation expectation;
@@ -86,7 +90,7 @@ canonical_location: /ai/pact/context/state/TASKS.md
 layer: PACT / context / state
 status: active-draft
 generated_from: /ai/pact/templates/tasks.tpl.md
-generated_from_version: 1.5
+generated_from_version: 1.6
 content_status: current-state
 updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 
@@ -96,6 +100,7 @@ updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 - [ ] PACT-YYYYMMDD-001 - Create the requested hook file.
   trace: LOGIC-DRAFT.md / Decisions
   outcome: Hook file exists at the selected path.
+  files: /ai/pact/agents/hooks/Example.md
   validation: Inspect hook file and confirm workflow registration.
 - [ ] PACT-YYYYMMDD-002 - Validate template consistency.
   trace: LOGIC-DRAFT.md / Constraints
