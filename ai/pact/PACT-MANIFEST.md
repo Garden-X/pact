@@ -3,7 +3,7 @@
 > For: PACT package
 > Status: canonical package manifest
 > Purpose: describe the installed PACT maintenance environment
-> Updated: 2026-10-08 08:40:00 UTC+00:00
+> Updated: 2026-10-08 17:05:00 UTC+00:00
 
 ## Purpose
 
@@ -128,7 +128,7 @@ PACT governs:
 - workflow;
 - the execution hierarchy (primary, coordinator, worker) declared in
   [workflow/WORKFLOW.md](workflow/WORKFLOW.md);
-- hooks;
+- hooks (the package ships `SliceRecordsCheck`);
 - agent rules;
 - skills;
 - nicknames;
@@ -314,6 +314,12 @@ A generated target whose `generated_from_version` is older than its template's
 `version` is out of sync. Sync it as described in [INSTALL.md](INSTALL.md)
 under Sync Existing Installations; for `WORKFLOW.md` this brings in the
 Execution Hierarchy.
+
+Change record: `workflow.tpl.md` 2.8 adds the "Work optimization" subsection to
+the Execution Hierarchy (test first, routing, records before push, pin rule,
+measurement; field `worker_fix_target`) and registers the `SliceRecordsCheck`
+hook. `sub-agent.tpl.md` 1.2 adds the worker test-first obligation. Generated
+files older than these versions sync as described above.
 
 When changing a generated PACT target file or creating a templated cache
 artifact, use the mapping below to choose the matching template, apply the

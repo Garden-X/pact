@@ -2,7 +2,7 @@
 
 > For: PACT
 > Purpose: install or verify the PACT project-maintenance layer
-> Updated: 2026-10-08 08:40:00 UTC+00:00
+> Updated: 2026-10-08 17:05:00 UTC+00:00
 
 ## Purpose
 
@@ -295,6 +295,13 @@ EXAMPLE
       `gate_branch_pattern`, `keep_alive_registry`, `heavy_work`,
       `ram_threshold_gb`) and registers the primary and coordinator
       heartbeats as `host_hook` rows in its `## Hooks` table.
+- [ ] `/ai/pact/workflow/WORKFLOW.md` is generated from `workflow.tpl.md`
+      version 2.8 or newer: its `## Execution Hierarchy` section contains the
+      "Work optimization" subsection (test first, routing, records before push,
+      pin rule, measurement) and the declared field `worker_fix_target`, and its
+      `## Hooks` table registers `SliceRecordsCheck` as a `pact_hook` row.
+- [ ] `/ai/pact/agents/hooks/SliceRecordsCheck.md` exists and follows
+      `hook.tpl.md`.
 - [ ] `/ai/pact/agents/AGENTS.md` contains an `## Execution Hierarchy` pointer
       section to `WORKFLOW.md`.
 - [ ] Agents treat `/ai/pact/agents/AGENTS.md` as a binding agent rules file
@@ -342,6 +349,13 @@ files with the current templates.
   `skill_log`, `file_guard`, and any Execution Hierarchy values), and local
   rules. Take new structure and rules from the template and re-apply the
   project's own content on top.
+- Version 2.8 of `workflow.tpl.md` adds the "Work optimization" subsection and
+  the `worker_fix_target` field to `## Execution Hierarchy`, and registers the
+  `SliceRecordsCheck` hook. When syncing from an older version, regenerate
+  `WORKFLOW.md`, copy `SliceRecordsCheck.md` to `/ai/pact/agents/hooks/` from
+  this package, keep the project's own `worker_fix_target` override if it has
+  one, and refresh worker files created from `sub-agent.tpl.md` older than
+  version 1.2 so they carry the test-first obligation.
 - Do the same for `AGENTS.md` and any other generated file whose
   `generated_from_version` is older than its template, then synchronize bridge
   files as described in Agent Rules Installation.

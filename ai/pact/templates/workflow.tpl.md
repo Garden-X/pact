@@ -5,8 +5,8 @@
 name: workflow.tpl.md
 type: pact maintenance template
 for: WORKFLOW.md
-updated: 2026-10-08 08:42:00 UTC+00:00
-version: 2.7
+updated: 2026-10-08 17:05:00 UTC+00:00
+version: 2.8
 
 ## WHAT
 
@@ -45,6 +45,10 @@ Use this template when creating or changing the canonical PACT workflow.
   conformance at every tier, the parallel-worker rule, resource discipline, and
   the keep-alive rule;
 - register hierarchy heartbeats in the `## Hooks` table as `host_hook` rows;
+- define, inside the `## Execution Hierarchy` section, a "Work optimization"
+  subsection with five rules (test first, routing, records before push, pin
+  rule, measurement) and the declared field `worker_fix_target`, and register
+  the `SliceRecordsCheck` hook (`pact_hook`) in the `## Hooks` table;
 - define how active task `task_phase` maps to `STATE.md` status;
 - define cleanup, draft abandonment, next draft cycle start, and valid state
   combinations;
@@ -87,7 +91,7 @@ canonical_location: /ai/pact/workflow/WORKFLOW.md
 layer: PACT / workflow
 status: canonical
 generated_from: /ai/pact/templates/workflow.tpl.md
-generated_from_version: 2.7
+generated_from_version: 2.8
 content_status: current-data
 purpose: Define how agents maintain project work without bypassing SPARC project truth.
 updated: YYYY-MM-DD HH:mm:ss UTC+00:00
@@ -163,6 +167,7 @@ gate_branch_pattern: gate/<id>
 keep_alive_registry: none
 heavy_work: sequential
 ram_threshold_gb: 5
+worker_fix_target: 30%
 ```
 
 Model fields name capability tiers. A host that lacks a named model uses its
@@ -220,6 +225,38 @@ Conformance:
 - The primary reviews the gate by its records. A gate with stale or missing
   records is not accepted, regardless of test results.
 
+Work optimization:
+
+Worker errors concentrate in subtle invariants inside large tasks, not in
+mechanical edits. These five rules keep invariants with the tier that can hold
+them and make the result measurable.
+
+- Test first: before dispatch, the coordinator writes the failing tests that
+  state the invariant. A worker makes the given tests pass and never edits,
+  weakens, skips, or conditions them. A test the worker doubts is reported to
+  the coordinator, not changed.
+- Routing: workers get small mechanical tasks, one function or one file plus
+  the given tests. Invariant-heavy work stays with the coordinator: hash or
+  identity composition, cache invalidation, strict input validation,
+  cross-architecture determinism, conservation math, and concurrency.
+- Records before push: a slice that changes code changes its records in the
+  same commit: `TASKS.md` or `STATE.md`, the daily log, and the SPARC live
+  contracts it touches, each with a verified-UTC stamp (see
+  [../agents/skills/Time-Normalization.md](../agents/skills/Time-Normalization.md)).
+  A slice without them is not pushed. The `SliceRecordsCheck` hook runs this
+  check.
+- Pin rule: a pinned value is one that a test or contract fixes, such as a
+  hash, golden output, snapshot, or schema constant. After any change to a
+  pinned value, the suite that holds the pin runs before the slice is pushed.
+  Before reporting a gate ready, the coordinator runs the project's fast
+  non-browser suites, sequentially. The full acceptance suite stays with the
+  primary.
+- Measurement: per slice, the coordinator records each worker result and how
+  many needed a coordinator fix. The declared field `worker_fix_target`
+  is the accepted share of worker results that need a fix. The coordinator
+  reports the measured rate at gate readiness; the primary reports it at gate
+  close and adjusts routing when the target is missed.
+
 Resources:
 
 - Heavy work (builds, test suites, checks that need a running service) runs
@@ -257,6 +294,7 @@ Heartbeats:
 |---|---|---|---|---|---|
 | PrimaryHeartbeat | host_hook | host-owned | every `heartbeat_primary` | None | active |
 | CoordinatorHeartbeat | host_hook | host-owned | every `heartbeat_coordinator` | None | active |
+| SliceRecordsCheck | pact_hook | [../agents/hooks/SliceRecordsCheck.md](../agents/hooks/SliceRecordsCheck.md) | before pushing a slice | None | active |
 
 `Class` is `pact_hook` (Markdown workflow extension point owned by PACT) or
 `host_hook` (a hook owned by the agent host, IDE, or runtime). Host hooks are

@@ -5,8 +5,8 @@
 name: sub-agent.tpl.md
 type: pact maintenance template
 for: worker sub-agent files
-updated: 2026-10-08 08:40:00 UTC+00:00
-version: 1.1
+updated: 2026-10-08 17:05:00 UTC+00:00
+version: 1.2
 
 ## WHAT
 
@@ -18,6 +18,10 @@ A worker file may realize a tier of the `## Execution Hierarchy` in
 `WORKFLOW.md`: a `coordinator` role (decomposes, briefs, reviews, pushes slices)
 or a `worker` role (executes one atomic task). The tier definitions live in
 `WORKFLOW.md`; the worker file only narrows them.
+
+A `worker` tier file also carries the test-first obligation: the coordinator
+writes the failing tests that state the invariant before dispatch, and the
+worker only makes them pass.
 
 ## FOR
 
@@ -40,6 +44,10 @@ A worker file must contain:
 - allowed scope;
 - inputs;
 - skills used, with links, when the worker uses skills;
+- for a `worker` tier file, the test-first obligation from the Work
+  optimization rules in `WORKFLOW.md`: the worker makes the coordinator's given
+  tests pass and never edits, weakens, skips, or conditions them, and reports a
+  doubtful test instead of changing it;
 - outputs;
 - handoff format;
 - forbidden actions;
@@ -94,6 +102,11 @@ Check that PACT package structure matches the manifest.
 ## SKILLS
 
 - [../skills/StructureReview.md](../skills/StructureReview.md)
+
+## TEST FIRST
+
+Make the coordinator's given tests pass. Never edit, weaken, skip, or condition
+them; report a doubtful test instead of changing it.
 
 ## OUTPUTS
 

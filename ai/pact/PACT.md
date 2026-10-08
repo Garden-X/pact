@@ -1,7 +1,7 @@
 # Protocol for Agent Coordination and Tasks
 
 > Version: draft
-> Updated: 2026-10-08 08:40:00 UTC+00:00
+> Updated: 2026-10-08 17:05:00 UTC+00:00
 > Status: refined specification package
 > Purpose: project maintenance for AI-assisted development
 
@@ -475,6 +475,18 @@ project may override in place. Heartbeats are host hooks registered in the
 section in [agents/AGENTS.md](agents/AGENTS.md); sub-agent roles that realize a
 tier follow [templates/sub-agent.tpl.md](templates/sub-agent.tpl.md).
 
+Work optimization is part of the same section (workflow template 2.8 and
+newer). Five rules keep subtle invariants with the tier that can hold them:
+the coordinator writes the failing tests first and the worker only makes them
+pass; workers get small mechanical tasks while invariant-heavy work stays with
+the coordinator; a slice that changes code carries its records in the same
+commit; any change to a pinned value is followed by the suite that holds the
+pin before the slice is pushed; and per-slice worker results are measured
+against the declared field `worker_fix_target` (default `30%`), which the
+primary reports at gate close. The `SliceRecordsCheck` hook
+([agents/hooks/SliceRecordsCheck.md](agents/hooks/SliceRecordsCheck.md))
+enforces the records rule before a slice is pushed.
+
 Installations created before this section existed are brought in line as
 described in [INSTALL.md](INSTALL.md), under Sync Existing Installations.
 
@@ -609,6 +621,8 @@ by PACT, and `host_hook`, a hook owned by the agent host, IDE, or runtime.
 Host hooks are governed by the host and are registered in `WORKFLOW.md` for
 visibility only. The Execution Hierarchy heartbeats are host hooks of this
 kind.
+`SliceRecordsCheck` is the first shipped `pact_hook`; it runs before a slice is
+pushed to the gate branch.
 
 `hook.tpl.md` governs one individual hook file.
 
