@@ -5,8 +5,8 @@
 name: agents.tpl.md
 type: pact maintenance template
 for: AGENTS.md
-updated: 2026-10-08 08:40:00 UTC+00:00
-version: 3.0
+updated: 2026-10-10 01:59:22 UTC+00:00
+version: 3.2
 
 ## WHAT
 
@@ -113,7 +113,7 @@ Use this template when creating or changing the general rules for all agents.
 - list hooks and script usage when hooks are registered;
 - contain a short `## Execution Hierarchy` section that points to the
   `## Execution Hierarchy` section of `WORKFLOW.md` as the single definition of
-  the primary, coordinator, and worker tiers, without duplicating it;
+  the Prime, Lead, and Worker roles, without duplicating it;
 - keep invariant PACT files discoverable with relative Markdown links;
 - point to the wiki-core index in `PACT-MANIFEST.md`;
 - explain template use for PACT maintenance;
@@ -128,9 +128,14 @@ Use this template when creating or changing the general rules for all agents.
 - treat cache as source of truth;
 - contradict `WORKFLOW.md`.
 
+The Execution Hierarchy pointer must distinguish model capability classes
+from execution roles and link portable Lead and Worker contracts.
+Host sub-agent configurations may bridge to these contracts without
+becoming competing rule authorities.
+
 ## EXAMPLE
 
-```md
+````md
 # AGENTS.md
 
 ## META
@@ -140,7 +145,7 @@ canonical_location: /ai/pact/agents/AGENTS.md
 layer: PACT / agent orientation
 status: canonical
 generated_from: /ai/pact/templates/agents.tpl.md
-generated_from_version: 3.0
+generated_from_version: 3.2
 content_status: current-data
 purpose: Orient agents inside the `/ai` container and keep SPARC project truth separate from PACT project maintenance.
 updated: YYYY-MM-DD HH:mm:ss UTC+00:00
@@ -414,9 +419,9 @@ Project engineering conventions, such as code style, file-chunking limits, and
 docs-first sequencing, are recorded as a `pact_skill`, canonically
 `Code-Conventions.md`, not as agent rules or project truth.
 
-When the owner asks to remember what or how to do something, classify the
-scope before writing files. Ask whether it is for the current soul, all souls,
-a worker, or a hook when scope is unclear.
+When the owner asks to remember what or how to do something, classify the scope
+before writing files. Ask whether it is for the current soul, all souls, a
+worker, or a hook when scope is unclear.
 
 If the remembered behavior is a lifecycle trigger or executable helper, update
 `WORKFLOW.md` and create or update a hook under `/ai/pact/agents/hooks` when
@@ -424,14 +429,21 @@ needed.
 
 ## Execution Hierarchy
 
-Work runs through the primary, coordinator, and worker tiers defined in the
+Work runs through the Prime, Lead, and Worker roles defined in the
 `## Execution Hierarchy` section of
 [../workflow/WORKFLOW.md](../workflow/WORKFLOW.md). Read that section at
-startup and act in the tier your task assigns. This file does not restate it.
+startup and act in the role your task assigns. This file does not restate it.
+
+Prime covers architecture and inspection at the same High tier, with the same
+or different model bindings. Lead hires task-specific Workers. Workflow roles,
+model tiers (High, Middle, Light), and effort percentages are distinct; follow
+the definitions and local bindings in WORKFLOW. Reusable specialist files are
+optional and generated from sub-agent.tpl.md when needed. Current assignments
+belong in TASKS/STATE, not the package manifest or project MAP.
 
 ## Hooks
 
 Hook registration is maintained in `WORKFLOW.md`.
 
 Hook files live under `/ai/pact/agents/hooks/[Hook].md`.
-```
+````

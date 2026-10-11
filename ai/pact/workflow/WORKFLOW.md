@@ -7,10 +7,10 @@ canonical_location: /ai/pact/workflow/WORKFLOW.md
 layer: PACT / workflow
 status: canonical
 generated_from: /ai/pact/templates/workflow.tpl.md
-generated_from_version: 2.8
+generated_from_version: 3.1
 content_status: current-data
 purpose: Define how agents maintain project work without bypassing SPARC project truth.
-updated: 2026-10-08 17:05:00 UTC+00:00
+updated: 2026-10-10 22:12:50 UTC+00:00
 
 ## Lifecycle
 
@@ -23,9 +23,52 @@ shape
 -> project truth update through SPARC when needed
 -> cleanup
 
+IDEAS may supply future context but are not a required starting point. Shaping
+is optional; selected intent always passes through LOGIC-DRAFT before TASKS.
+
 ## Startup
 
 Follow the canonical startup sequence in `PACT-MANIFEST.md`.
+
+## Resume
+
+Read the selected `LOGIC-DRAFT.md`, `STATE.md`, `TASKS.md`, and latest cache
+manifest. Check the current branch and actual diff before resuming a task;
+reconcile any owner changes and outstanding worker results. Resume from the
+recorded validation and handoff, without replaying completed work. A blocked
+task stays blocked only while its recorded blocking condition still holds.
+
+Read the shared keep-alive registry before service work. Check which host
+hooks and schedules are actually installed; Markdown hook files do not prove
+runtime activation. No separate handoff file is required.
+
+## Owner Command Aliases
+
+Recognize these only when the whole owner message, after trimming surrounding
+whitespace, is one of the listed tokens. Match words case-insensitively.
+Embedded prose, quoted tokens, code, and longer punctuation strings are not
+aliases. Interpret intent before decomposing or dispatching work; this is a
+workflow input rule, not an installed runtime hook.
+
+| Owner message | Meaning |
+|---|---|
+| `...` (three ASCII dots), `…` (one ellipsis), `continue`, `продовжуй` | Continue the recovered authorized work from STATE/draft/tasks. |
+| `!!` (two exclamation marks) | Report current status, actual validation and blockers only; do not start implementation. |
+| `!!!` (three exclamation marks), `promt`, `промт` | Stop starting new implementation; prepare a compact next-chat handoff. |
+
+Leading-space forms such as ` ...`, ` …`, ` !!`, and ` !!!` have the
+same meaning once delivered to the model. A host may intercept punctuation
+before delivery; leading-space handling depends on that host. Use the word
+forms for continue/handoff or an explicit status request if necessary.
+
+A handoff records the objective, complete bounded brief and evidence references,
+current progress and diff, changed files, actual validation, blockers, relevant
+PACT/SPARC gaps, exact needed cache pointers, and the next concrete step in
+existing STATE/task/cache records. Return a compact prompt with those pointers;
+no extra handoff file is required. Reconcile outstanding Worker results and
+reservations before marking STATE handoff; do not discard its original brief.
+No alias widens scope, changes bindings, grants merge/publication permission,
+or overrides Prime/Lead/Worker authority.
 
 ## Statuses
 
@@ -38,6 +81,14 @@ Valid `TASKS.md` statuses are `no-active-draft`, `active-draft`, and
 Valid `STATE.md` statuses are `clear`, `active`, `blocked`, and `handoff`.
 
 Task IDs follow `PACT-YYYYMMDD-NNN`.
+
+For active tasks, `task_phase` values `transferred`, `working`, and `validating`
+map to `STATE.md: active`; `blocked` and `handoff` map to their matching
+statuses. In a parallel set, derive the aggregate status as specified in
+[../context/state/STATE.md](../context/state/STATE.md)'s governing template.
+`TASKS.md: complete` and `STATE.md: clear` finish the selected cycle; selecting
+the next draft resets the pending pool without erasing its predecessor's
+completion evidence.
 
 ## Decomposition
 
@@ -65,43 +116,102 @@ returns to `clear` when no active task remains.
 ## Execution Hierarchy
 
 Every project that installs or syncs PACT inherits this hierarchy. It defines
-who plans, who executes, and who accepts work. The declared fields below are
-defaults; a project may override a value in place.
+who plans, who executes, and who accepts work. Prime's Architect and Inspector
+functions share the required High tier. Other declared fields below are
+defaults; a project may override them in place within these role boundaries.
 
 Declared fields:
 
 ```txt
-primary_model: opus
-coordinator_model: sonnet
-coordinator_effort: high
-worker_model: haiku
-worker_effort: medium
-heartbeat_primary: 23m
-heartbeat_coordinator: 11m
+prime_tier: High
+lead_tier: Middle
+worker_tier_default: Light
+prime_effort: 100%
+lead_effort: 75%
+worker_effort_default: 50%
+heartbeat_prime: 23m
+heartbeat_lead: 11m
 default_branch: main
 gate_branch_pattern: gate/<id>
-keep_alive_registry: none
+keep_alive_registry: ../KEEP-ALIVE.md
 heavy_work: sequential
 ram_threshold_gb: 5
-worker_fix_target: 30%
+worker_fix_target: none
+ready_pool_target: 2-4
+prime_stall_policy: ready-only
 ```
 
-Model fields name capability tiers. A host that lacks a named model uses its
-closest equivalent tier and tells the owner once. `keep_alive_registry` is
-`none` or the path of the project's service and port registry.
+Roles and model tiers are separate. The capability tiers are
+`Light < Middle < High`; their names are exactly `Light`, `Middle`, and
+`High`. They express the capability required for the assignment, not a vendor
+or model identity. Concrete provider/model bindings are local configuration;
+preserve the owner's explicit bindings and configured host model. A missing
+capability must be reported with an explicit fallback, never silently lowered.
 
-Tiers:
+Prime has two functions: Architect selects scope and acceptance criteria;
+Inspector checks the candidate and acceptance evidence. Both use the same
+`prime_tier: High`. They may use the same model or different models, with
+separate local bindings when useful. Their effort percentages may differ;
+`prime_effort` supplies the default. Sharing a model does not waive inspection:
+review the candidate against the recorded criteria in a distinct review pass.
+If independent review is required, assign a separate reviewer/context; do not
+label self-review independent. Neither function creates another management
+level or requires two permanently running agents. Only Prime holds gate
+acceptance authority.
 
-| Tier | Does | Does not |
+Lead is the coordinator role. It hires Workers for the skills the task needs,
+such as design, coding, research, documentation, or testing. Workers are
+assignments, not a fixed roster or a compulsory lowest-cost model. Lead selects
+each Worker's specialty, model tier, concrete model binding, and requested
+effort within owner constraints. The default applies only when adequate; a
+Worker may need Middle or High capability without gaining Lead/Prime powers.
+Each dispatch records that assignment in the task brief and active STATE.
+Reusable specialty instructions may be generated from
+[../templates/sub-agent.tpl.md](../templates/sub-agent.tpl.md) only when useful.
+Do not add current hires to PACT-MANIFEST or a project MAP.
+
+Effort is an integer percentage from 0% to 100% of the selected model's
+available effort range. It is independent of capability tier and is not a
+cross-provider promise of equal tokens, cost, or reasoning. A local binding
+records requested percentage and effective native setting. For an ordered
+set of N supported levels, map to the nearest index
+`round(percent / 100 * (N - 1))` (ties toward the higher level); one level
+always maps to itself. A numeric control uses its documented supported range
+and rounding. If effort is unavailable, record `unsupported` and preserve
+the model's behavior. Do not send a percentage to an API that expects a native
+enum or budget. Preserve explicit existing native settings during migration;
+record the corresponding percentage/mapping instead of silently changing them.
+
+A single host may perform roles sequentially when delegation provides no
+benefit, keeping the role boundaries and evidence checks. Role defaults do not
+authorize switching the owner's active model or spawning unnecessary agents.
+
+`keep_alive_registry` is resolved relative to the project root, never the
+workflow folder. Its default is the sibling registry in the project parent's
+directory; a nested project or worktree binds to the existing shared registry.
+`none` is an explicit opt-out for projects without service work.
+
+Roles:
+
+| Role | Does | Does not |
 |---|---|---|
-| primary | selects the shape and the `LOGIC-DRAFT.md` for the gate; reviews only gate validation and PACT and SPARC records; runs the full acceptance suite; fast-forwards `gate/<id>` into `default_branch`; closes the gate | write product code; micromanage slices |
-| coordinator | decomposes the selected draft into atomic `TASKS.md` entries; transfers tasks into `STATE.md`; writes self-contained worker briefs; reviews every worker diff; checks PACT and SPARC conformance; may fix worker errors; prepares the records; commits and pushes every slice to `gate/<id>` | run the full acceptance suite; push or merge `default_branch`; force-push; skip hooks; deploy |
-| worker | executes exactly one atomic task from its brief; reports the diff | write to version control; widen scope; guess when the brief is ambiguous |
+| Prime | as Architect selects the shape and `LOGIC-DRAFT.md`; as Inspector reviews the candidate, gate validation, and PACT/SPARC records; runs the full acceptance suite; fast-forwards `gate/<id>` into `default_branch`; closes the gate | write product code; micromanage slices |
+| Lead | decomposes the selected draft into atomic `TASKS.md` entries; transfers tasks into `STATE.md`; writes self-contained worker briefs; reviews every worker diff; checks PACT and SPARC conformance; may fix worker errors; prepares the records; commits and pushes validated slices to `gate/<id>` when authorized | run the full acceptance suite; push or merge `default_branch`; force-push; skip hooks; deploy |
+| Worker | performs one bounded task using its assigned specialty; returns changes or findings and validation evidence | write to version control; widen scope; guess when the brief is ambiguous |
+
+Artifact ownership: the Prime owns selected scope and acceptance in
+`LOGIC-DRAFT.md`; the Lead owns decomposition, the pending pool in
+`TASKS.md`, and execution/handoff in `STATE.md`. Workers return evidence for
+the Lead to record. WORKFLOW defines responsibilities; specialist files
+narrow a particular assignment. TASKS holds planned briefs and STATE holds
+current assignments/reservations. The package manifest remains a stable
+protocol index; project MAP remains a project-structure contract.
 
 A worker that finds its brief ambiguous or contradicted by the code stops and
-reports the question. Many worker errors mean the brief was unclear: the
-coordinator sharpens the brief, re-dispatches, and records per slice how many
-worker results needed a coordinator fix.
+reports the question. Repeated material corrections can indicate an unclear
+brief or inadequate routing: the Lead sharpens the brief or assignment and
+records actual corrections and validation in the task outcome. Optional
+correction-rate reporting follows the Measurement rule below.
 
 Gate and slice:
 
@@ -109,69 +219,122 @@ Gate and slice:
 - A slice is a coherent, validated commit that carries its own records. Each
   slice stands on its own: it is complete, tested, and pushed to
   `gate_branch_pattern`.
-- The coordinator creates `gate/<id>` from `default_branch` on the first slice
+- The Lead creates `gate/<id>` from `default_branch` on the first slice
   and fetches before each slice to read new commits from the owner or other
-  agents. If `default_branch` moves, the coordinator merges it into the gate
+  agents. If `default_branch` moves, the Lead merges it into the gate
   branch instead of rewriting pushed history.
-- The primary closes the gate by fast-forwarding the gate branch into
+- The Prime closes the gate by fast-forwarding the gate branch into
   `default_branch` after the full acceptance suite passes and the records are
-  reviewed. Among agents, only the primary writes to `default_branch`; the
+  reviewed through the `GateClose` hook. Read every required command's exit
+  status against the revision being accepted: missing, failed, killed, or
+  timed-out checks prevent closure. A final successful command does not erase
+  an earlier failure. Merging is a separate action after the results have been
+  inspected. Among agents, only the Prime writes to `default_branch`; the
   owner may commit directly, and agents fetch and read those commits.
-- Design questions the owner has delegated are decided by the coordinator and
+- Design questions the owner has delegated are decided by the Lead and
   recorded in the project's decision log; they do not block the gate.
+
+Ready pool and stalled roles:
+
+- During a substantial gate, the Lead aims to keep `ready_pool_target`
+  atomic tasks ready, without inventing work to fill the pool. Each ready task
+  records its files, exact brief, validation, and relevant invariant tests
+  with baseline evidence. Small or documentation tasks may use inspection
+  instead, with the reason recorded.
+- The Prime may preselect subsequent gates in `LOGIC-DRAFT.md` `## Next`,
+  with scope, dependencies, and acceptance. They remain selections, not tasks;
+  the Lead decomposes one only after the current gate is accepted and the
+  Prime advances the selected draft. Keep a bounded `## History` summary or
+  pointer when selections advance.
+- A Lead stall permits the Prime to dispatch only already-ready pool
+  tasks. Results remain uncommitted for the Lead's review on return;
+  cover does not grant code review, new decomposition, or acceptance powers.
+  If the pool is empty, wait. Record coverage and transfer ownership once.
+- `prime_stall_policy: ready-only` keeps a ready gate unmerged. The
+  Lead may inspect existing evidence for a Prime-preselected `## Next` gate
+  read-only and record planning/dependency notes in the existing cache. It must
+  not activate or decompose that gate, dispatch its Workers, replace the current
+  LOGIC-DRAFT/TASKS/STATE, or change the ready candidate. Execution waits for
+  current-gate acceptance and Prime advancement; an empty Next supplies no new
+  gate to plan. Absence or elapsed time never transfers default-branch authority.
+  A `close-gate` policy requires explicit owner authorization of the acceptance-
+  role transfer, independent review, and all normal acceptance checks.
+- [../agents/hooks/StallCover.md](../agents/hooks/StallCover.md) governs
+  recovery. Do not dispatch or review the same task under two owners.
 
 Parallel workers:
 
 - Several `STATE.md` tasks may be active at once only when all of these hold:
-  one coordinator owns the set; each task is held by a distinct worker; the
+  one Lead owns the set; each task is held by a distinct worker; the
   tasks' `reservations` are pairwise disjoint; no task in the set builds or
   runs tests.
 - A task that builds or tests, or whose reservations overlap another active
   task, runs alone.
-- Without a coordinator, or in a second agent's scope, the single-task
+- Without a Lead, or in a second agent's scope, the single-task
   `STATE.md` mutex applies.
 
 Conformance:
 
-- PACT and SPARC conformance is mandatory at every tier. The coordinator puts
+- PACT and SPARC conformance is mandatory in every role. The Lead puts
   the applicable PACT and SPARC rules into every worker brief.
-- Every slice updates its records in the same commit: `TASKS.md`, `STATE.md`,
-  the daily log, and the SPARC live contracts the change touches. A slice
-  without its records is not done.
-- The primary reviews the gate by its records. A gate with stale or missing
+- Every slice carries its task outcome and validation in `TASKS.md` or
+  `STATE.md`. Include the daily log when a SPARC binding or project logging
+  policy requires it. Update live SPARC contracts when accepted truth changes;
+  otherwise record which contracts were verified and why no truth edit was
+  needed. Do not manufacture contract edits or freshness stamps.
+- The Prime reviews the gate by its records. A gate with stale or missing
   records is not accepted, regardless of test results.
 
 Work optimization:
 
 Worker errors concentrate in subtle invariants inside large tasks, not in
-mechanical edits. These five rules keep invariants with the tier that can hold
-them and make the result measurable.
+bounded work. These rules keep invariants with the role that owns them;
+measurement is an optional routing diagnostic.
 
-- Test first: before dispatch, the coordinator writes the failing tests that
-  state the invariant. A worker makes the given tests pass and never edits,
+- Test first: for a new or changed code invariant, before dispatch the
+  Lead establishes failing tests that state it. A worker makes the
+  given tests pass and never edits,
   weakens, skips, or conditions them. A test the worker doubts is reported to
-  the coordinator, not changed.
-- Routing: workers get small mechanical tasks, one function or one file plus
-  the given tests. Invariant-heavy work stays with the coordinator: hash or
-  identity composition, cache invalidation, strict input validation,
-  cross-architecture determinism, conservation math, and concurrency.
-- Records before push: a slice that changes code changes its records in the
-  same commit: `TASKS.md` or `STATE.md`, the daily log, and the SPARC live
-  contracts it touches, each with a verified-UTC stamp (see
+  the Lead, not changed. Documentation, read-only research, and
+  reversible low-impact edits use proportionate validation; do not write
+  tests that merely repeat an edit. Ready briefs may point to uncommitted test
+  fixtures; intentionally failing test-only commits are not green slices.
+- Routing: Lead hires the specialty and capability needed for one bounded
+  outcome. Design, code, research, documentation, and testing are valid Worker
+  assignments. Split large outcomes, supply relevant existing evidence, and
+  inspect overlapping code/reference material before choosing reuse or a new
+  approach. Lead retains integration responsibility and reviews subtle hash/
+  identity, cache, validation, determinism, conservation, and concurrency
+  invariants; specialist delegation does not transfer that responsibility.
+- Records before push: inspect each outgoing slice's committed diff, not a
+  possibly empty or unrelated staging area. It carries task validation,
+  required logs, and changed-or-verified SPARC contracts as above, with
+  verified-UTC stamps on meaningfully changed records (see
   [../agents/skills/Time-Normalization.md](../agents/skills/Time-Normalization.md)).
-  A slice without them is not pushed. The `SliceRecordsCheck` hook runs this
-  check.
+  A slice without them is not pushed. Stage intended paths explicitly, without
+  sweeping unrelated state or cache into the commit. The `SliceRecordsCheck`
+  hook defines this check; automation must be bound and verified separately.
 - Pin rule: a pinned value is one that a test or contract fixes, such as a
   hash, golden output, snapshot, or schema constant. After any change to a
   pinned value, the suite that holds the pin runs before the slice is pushed.
-  Before reporting a gate ready, the coordinator runs the project's fast
+  Before reporting a gate ready, the Lead runs the project's fast
   non-browser suites, sequentially. The full acceptance suite stays with the
-  primary.
-- Measurement: per slice, the coordinator records each worker result and how
-  many needed a coordinator fix. The declared field `worker_fix_target`
-  is the accepted share of worker results that need a fix. The coordinator
-  reports the measured rate at gate readiness; the primary reports it at gate
-  close and adjusts routing when the target is missed.
+  Prime.
+- Measurement: `worker_fix_target: none` disables correction-rate reporting.
+  A project may enable a numeric target from 0% to 100%; upgrades preserve an
+  existing enabled value. This policy also governs measurement instructions in
+  reusable profiles: `none` imposes no counting or metric-reporting requirement;
+  enabled profile reporting follows this WORKFLOW policy. Count each reviewed
+  Worker task ID once per gate when enabled.
+  Count a correction only when returned work needed a material change to meet
+  its original bounded brief. Retries do not add counts; exclude cosmetic edits,
+  integration work, and changes to the requested scope. When enabled, the Lead
+  records one gate aggregate at readiness in existing TASKS, or in a required
+  daily log with a TASKS pointer: reviewed task count, materially corrected task
+  count, and a rate only when the denominator is nonzero. Prime reviews the same
+  aggregate at acceptance; no duplicate report is required. Use the target to
+  improve briefs and routing, never as an acceptance gate. Actual failures,
+  corrections, and validation remain part of task evidence when reporting is off.
 
 Resources:
 
@@ -179,27 +342,39 @@ Resources:
   strictly one at a time, as `heavy_work` declares.
 - Before heavy work, check free memory against `ram_threshold_gb` and state the
   measured value. If the host kills a run for low memory, do not restart it;
-  report to the primary.
+  report to the Prime.
 
 Keep-alive:
 
-- When `keep_alive_registry` is declared, services run only on ports registered
-  there, each in its own long-lived window. They never run as session
-  background tasks and never on ad-hoc ports.
-- Agents never stop or restart those windows. A new service is registered
-  before its first start. If a registered service is down, the coordinator
-  reports to the primary, who restarts it.
+- Generate the shared `KEEP-ALIVE.md` from
+  [../templates/keep-alive.tpl.md](../templates/keep-alive.tpl.md), outside the
+  working project, one directory above sibling projects. Resolve an existing
+  registry or explicit shared pointer before creating one; never split one
+  host's port pool into independent project copies. The template stays inside
+  PACT; the host registry remains locally excluded from Git.
+- Register the `dev-*` alias, project path, raw launch command, unique ports,
+  startup dependencies, profile function, and validation before first start.
+  Services use registered ports and a host-owned long-lived process or window
+  that survives the agent session. Do not start ad-hoc verification ports.
+- Preserve owner-running services. A down service may be started through its
+  registered launcher when authorized; stopping or restarting an owner process
+  requires owner authorization. Do not expose an interactive window unless
+  the owner requests one. Validate edited PowerShell blocks without executing
+  them.
 - When `keep_alive_registry` is `none`, no registry rule applies.
 
 Heartbeats:
 
 - Heartbeats are host hooks that keep the tiers in contact. Register them in
-  `## Hooks` as `host_hook` rows, one for the primary at `heartbeat_primary`
-  and one for the coordinator at `heartbeat_coordinator`.
-- The primary heartbeat fetches the gate branch, reads only the record changes
-  in pushed slices, flags gaps to the coordinator, and starts acceptance when
-  the coordinator reports the gate ready.
-- The coordinator heartbeat asks for a one-line status: current slice, workers
+  `## Hooks` as `host_hook` rows, one for the Prime at `heartbeat_prime`
+  and one for the Lead at `heartbeat_lead`. Portable prompt
+  contracts live in the linked hook files; a host installs schedules only
+  under the owner's scheduling authorization. Report the actual binding
+  status, never infer an active timer from a Markdown row.
+- The Prime heartbeat fetches the gate branch, reads only the record changes
+  in pushed slices, flags gaps to the Lead, and starts acceptance when
+  the Lead reports the gate ready.
+- The Lead heartbeat asks for a one-line status: current slice, workers
   running, last pushed commit, free memory.
 - Routine heartbeats are quiet. Report to the owner only milestones, failures,
   and decisions.
@@ -208,15 +383,22 @@ Heartbeats:
 
 | Hook | Class | File | Trigger | Scripts | Status |
 |---|---|---|---|---|---|
-| PrimaryHeartbeat | host_hook | host-owned | every `heartbeat_primary` | None | active |
-| CoordinatorHeartbeat | host_hook | host-owned | every `heartbeat_coordinator` | None | active |
-| SliceRecordsCheck | pact_hook | [../agents/hooks/SliceRecordsCheck.md](../agents/hooks/SliceRecordsCheck.md) | before pushing a slice | None | active |
+| PrimeHeartbeat | host_hook | [../agents/hooks/PrimeHeartbeat.md](../agents/hooks/PrimeHeartbeat.md) | every `heartbeat_prime`, when scheduled | None | unconfigured |
+| LeadHeartbeat | host_hook | [../agents/hooks/LeadHeartbeat.md](../agents/hooks/LeadHeartbeat.md) | every `heartbeat_lead`, when scheduled | None | unconfigured |
+| SliceRecordsCheck | pact_hook | [../agents/hooks/SliceRecordsCheck.md](../agents/hooks/SliceRecordsCheck.md) | before committing or pushing a slice | None | manual |
+| GateClose | pact_hook | [../agents/hooks/GateClose.md](../agents/hooks/GateClose.md) | before accepting a gate | None | manual |
+| StallCover | pact_hook | [../agents/hooks/StallCover.md](../agents/hooks/StallCover.md) | a recorded execution tier stalls | None | manual |
 
 `Class` is `pact_hook` (Markdown workflow extension point owned by PACT) or
 `host_hook` (a hook owned by the agent host, IDE, or runtime). Host hooks are
 governed by the host; register them here for visibility only. When a host hook
 and a PACT hook share a trigger, expose the overlap here rather than assuming
 one wins.
+
+For a bound host hook, record its configuration/script path and verified
+runtime status. Keep required checks explicit when a host cannot enforce them.
+Automatic post-commit pushing must never outrun `SliceRecordsCheck` or
+`GateClose`. Register only integrations that are actually installed.
 
 Project truth changes are handled through SPARC.
 PACT maintenance changes stay in `/ai/pact`.
@@ -404,7 +586,10 @@ Before cleanup, promote durable material out of cache:
 After comparison and any needed distillation, delete the previous cache unless
 the owner requests retention or `STATE.md` records an active, blocked, or
 handoff task that still needs that exact cache. Retained cache must record the
-reason and review point.
+reason and review point. When relocating retained cache, coordinate the move
+with updates to every active STATE/handoff/cache pointer. Verify references
+at the resolved destination before removing the original run or resuming work;
+never delete a run still required by those records.
 
 ## Cleanup
 

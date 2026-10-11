@@ -1,9 +1,10 @@
 # Protocol for Agent Coordination and Tasks
 
-> Version: draft
-> Updated: 2026-10-08 17:05:00 UTC+00:00
-> Status: refined specification package
+> Version: 2.0
+> Updated: 2026-10-10 19:23:24 UTC+00:00
+> Status: release prepared
 > Purpose: project maintenance for AI-assisted development
+> Release title: improved workflow and project syncronization
 
 ## Definition
 
@@ -387,7 +388,7 @@ below.
 `STATE.md` is a project-level active-task mutex. Multiple pending tasks may
 exist in `TASKS.md`, but only one task may be transferred into `STATE.md` at a
 time. The one exception is a parallel worker set under the Execution Hierarchy:
-several tasks may be active together only when one coordinator owns them, each
+several tasks may be active together only when one Lead owns them, each
 is held by a distinct worker, their reservations are pairwise disjoint, and
 none builds or runs tests. The set as a whole holds the mutex. A second agent
 outside the set must wait, help unblock an active task, or receive owner
@@ -448,47 +449,53 @@ Cleanup completes the maintenance cycle:
 
 ## Execution Hierarchy
 
-Every project that installs or syncs PACT runs its work through a three-tier
-execution hierarchy:
+The workflow defines three responsibility roles: Prime, Lead, and Worker.
+Prime's Architect function selects the scope and acceptance criteria; its
+Inspector function checks the candidate and evidence. Both use High capability,
+with the same or different concrete models. Lead coordinates the gate, hires
+specialist Workers, reviews their work, and prepares validated slices. A Worker
+performs one bounded task without gaining version-control or gate authority.
 
-- the primary selects the shape and `LOGIC-DRAFT.md`, reviews gate validation
-  and the PACT and SPARC records, runs the full acceptance suite, and
-  fast-forwards the gate branch into the default branch;
-- the coordinator decomposes the selected draft into atomic tasks, briefs
-  workers, reviews their diffs, checks PACT and SPARC conformance, and pushes
-  every slice to the gate branch;
-- the worker executes exactly one atomic task and writes nothing to version
-  control.
+Model tiers are High, Middle, and Light. Effort is expressed as a percentage
+and mapped to the selected provider/model's supported control. Capability,
+effort, specialty, and authority are distinct. Preserve explicit owner bindings.
+The canonical definitions and overridable defaults live in
+[workflow/WORKFLOW.md](workflow/WORKFLOW.md), generated from
+[templates/workflow.tpl.md](templates/workflow.tpl.md). Optional reusable Lead
+and specialist Worker profiles follow
+[templates/sub-agent.tpl.md](templates/sub-agent.tpl.md); no fixed roster is
+required. Current hires belong in task briefs and STATE, never the package
+manifest or a project's MAP.
 
-A gate is one selected `LOGIC-DRAFT.md` cycle. A slice is a coherent,
-validated commit that carries its own records. A slice without its records is
-not done, and a gate with stale records is not accepted regardless of tests.
+Lead keeps a ready pool when independent work exists, provides bounded briefs
+and relevant evidence, and owns integration and sensitive invariant review.
+Changed material code invariants require failing tests before implementation;
+documentation and reversible low-impact changes use proportionate checks.
+Workers preserve the supplied checks. Records identify actual validation and
+changed or verified SPARC contracts without unnecessary truth edits.
 
-The hierarchy is part of the generated workflow, not an add-on. It is defined
-in the `## Execution Hierarchy` section of
-[workflow/WORKFLOW.md](workflow/WORKFLOW.md), governed by
-[templates/workflow.tpl.md](templates/workflow.tpl.md) (version 2.7 and
-newer). Its declared fields (models, heartbeat intervals, gate branch pattern,
-keep-alive registry, heavy-work policy, memory threshold) carry defaults that a
-project may override in place. Heartbeats are host hooks registered in the
-`## Hooks` table of `WORKFLOW.md`. Agents learn the hierarchy from the pointer
-section in [agents/AGENTS.md](agents/AGENTS.md); sub-agent roles that realize a
-tier follow [templates/sub-agent.tpl.md](templates/sub-agent.tpl.md).
+[SliceRecordsCheck](agents/hooks/SliceRecordsCheck.md) checks slice records.
+[GateClose](agents/hooks/GateClose.md) requires every acceptance result for the
+candidate revision before a separate authorized merge.
+[StallCover](agents/hooks/StallCover.md) keeps recovery bounded by selected
+scope and existing authority. Prime and Lead heartbeat prompts are portable
+records; actual host schedules and enforcement require an installed, verified
+binding. Markdown alone does not activate automation.
 
-Work optimization is part of the same section (workflow template 2.8 and
-newer). Five rules keep subtle invariants with the tier that can hold them:
-the coordinator writes the failing tests first and the worker only makes them
-pass; workers get small mechanical tasks while invariant-heavy work stays with
-the coordinator; a slice that changes code carries its records in the same
-commit; any change to a pinned value is followed by the suite that holds the
-pin before the slice is pushed; and per-slice worker results are measured
-against the declared field `worker_fix_target` (default `30%`), which the
-primary reports at gate close. The `SliceRecordsCheck` hook
-([agents/hooks/SliceRecordsCheck.md](agents/hooks/SliceRecordsCheck.md))
-enforces the records rule before a slice is pushed.
 
-Installations created before this section existed are brought in line as
-described in [INSTALL.md](INSTALL.md), under Sync Existing Installations.
+## Shared Keep-Alive Registry
+
+[templates/keep-alive.tpl.md](templates/keep-alive.tpl.md) governs a host-local
+`KEEP-ALIVE.md`, generated one directory above the working project. Sibling
+projects share this registry for service ports, startup dependencies, aliases,
+raw commands, and profile functions. Nested projects/worktrees may bind to the
+existing shared registry or a parent-level pointer; do not split one host's
+port pool into independently maintained project files.
+
+This is the explicit external operational target of a PACT template. The
+template stays inside `/ai/pact/templates`; the live registry and pointers
+stay locally excluded from Git, outside product-truth files. Their presence
+does not authorize changes to owner-running services.
 
 ## PACT Template Discipline
 
@@ -520,6 +527,12 @@ EXAMPLE
 `EXAMPLE` shows a compact valid target file or fragment.
 
 ## Target META Blocks
+
+These requirements govern installed PACT maintenance targets. An external
+host operational registry such as `KEEP-ALIVE.md` is not an installed PACT
+target: its own template defines its metadata, without requiring PACT
+`layer`, `status`, or `content_status` fields. Template-origin tracking does
+not turn host configuration into project truth or PACT execution state.
 
 Generated PACT target files should start with a Markdown title followed by a
 `## META` block.

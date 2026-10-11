@@ -1,8 +1,8 @@
 # PACT INSTALL
 
-> For: PACT
+> For: PACT 2.0
 > Purpose: install or verify the PACT project-maintenance layer
-> Updated: 2026-10-08 17:05:00 UTC+00:00
+> Updated: 2026-10-10 22:39:56 UTC+00:00
 
 ## Purpose
 
@@ -65,7 +65,7 @@ Latest SPARC means the current `HEAD` of the SPARC repository default branch,
 or an owner-selected tag, branch, or commit when the owner pins one.
 
 An owner-provided local SPARC package is a first-class binding source. When the
-owner declares a local clone or working tree, such as `C:\!DEV\2026\sparc`, as
+owner declares a local clone or working tree, such as `C:\workspace\sparc`, as
 the source of truth, copy or reference that package instead of cloning from
 GitHub. This is the correct path when the machine is offline or when the local
 package is intentionally ahead of the published repository. Verify `SPARC.md`
@@ -202,6 +202,30 @@ adapters/
 cache/
 ```
 
+## Fresh Project State
+
+Install specification files, templates, shipped hook contracts, and the active
+AGENTS/WORKFLOW entry targets. Template EXAMPLE sections demonstrate complete
+generated files; their scenario content is not the target project's history.
+Use the current templates to initialize fresh project data:
+
+- LOGIC-DRAFT: `status: none-selected`, no selected or next gates;
+- TASKS: `status: no-active-draft`, empty Pending and Done;
+- STATE: `status: clear`, `active_task: none`, no active blocks;
+- IDEAS and NICKNAMES: empty project entries until real data exists.
+
+Fresh WORKFLOW defaults `worker_fix_target` to `none`. Correction tracking is
+an optional project diagnostic; preserve an existing enabled percentage during
+upgrades. Do not enable counting merely because an example profile mentions
+correction reports. Real task outcomes, failures, fixes and validation remain
+required whether or not the diagnostic is enabled.
+
+Do not copy this protocol source repository's selected maintenance draft,
+completed tasks, session identifiers, host paths, cache, or active worker hires.
+Create reusable role/specialty files from sub-agent.tpl.md only when needed.
+An upgrade preserves the target project's actual state and profiles; it must
+not reset them to these fresh-install defaults.
+
 ## Docs And Raw
 
 `/ai/docs` is reserved for SPARC-generated project truth for the actual target
@@ -249,6 +273,7 @@ templated cache artifacts:
 - tasks;
 - active state;
 - file guard, when the owner opts in.
+- shared host-local keep-alive registry, outside the working project.
 
 In this specification package, generated target files may be active followable
 targets or seeds with `metadata-only`, `current-data`, or `current-state`
@@ -264,6 +289,33 @@ FOR
 RULES
 EXAMPLE
 ```
+
+## Shared Keep-Alive Installation
+
+Resolve the target project root's parent `KEEP-ALIVE.md` before service work.
+Follow any pointer to the existing canonical host registry. For nested projects
+or worktrees, bind `keep_alive_registry` to that shared file; never generate
+another independent port table for the same host services.
+
+When a registry is needed and none exists, generate the parent-level
+`KEEP-ALIVE.md` from [templates/keep-alive.tpl.md](templates/keep-alive.tpl.md).
+The template remains inside PACT. Its FOR index lists project folders and short
+descriptions; each project has its own small metadata block and service/command
+references. The container does not impose one project META on all entries.
+Preserve existing registry entries during
+migration; verify resolved source/target paths before renaming or relocating
+the file, and synchronize known instruction/launcher pointers. A pointer file
+contains only the canonical path and discovery instructions.
+
+Keep the generated file/pointer host-local with the owning repository's exact
+`.git/info/exclude` entry. A registry outside all repositories needs no
+exclusion; a local exclude does not remove an already tracked file. Do not
+exclude the template or change tracked ignore rules for host-only files.
+
+Register aliases, paths, raw commands, unique ports, dependencies, profile
+functions, and actual check status. Parse edited PowerShell blocks/profile
+before declaring completion. Registry migration does not authorize restarting
+services or rewriting working launch commands.
 
 ## Validation Checklist
 
@@ -289,19 +341,27 @@ EXAMPLE
       `workflow.tpl.md` if it was installed as a `metadata-only` seed, or is
       already shipped as `status: canonical` with `content_status:
       current-data`.
-- [ ] `/ai/pact/workflow/WORKFLOW.md` declares a `## Execution Hierarchy`
-      section with the declared fields (`primary_model`, `coordinator_model`,
-      `worker_model`, `heartbeat_primary`, `heartbeat_coordinator`,
-      `gate_branch_pattern`, `keep_alive_registry`, `heavy_work`,
-      `ram_threshold_gb`) and registers the primary and coordinator
-      heartbeats as `host_hook` rows in its `## Hooks` table.
-- [ ] `/ai/pact/workflow/WORKFLOW.md` is generated from `workflow.tpl.md`
-      version 2.8 or newer: its `## Execution Hierarchy` section contains the
-      "Work optimization" subsection (test first, routing, records before push,
-      pin rule, measurement) and the declared field `worker_fix_target`, and its
-      `## Hooks` table registers `SliceRecordsCheck` as a `pact_hook` row.
-- [ ] `/ai/pact/agents/hooks/SliceRecordsCheck.md` exists and follows
-      `hook.tpl.md`.
+- [ ] WORKFLOW is synchronized with workflow.tpl.md 3.1 or newer and declares
+      Prime, Lead, Worker roles; High/Middle/Light tiers; percentage efforts;
+      gate/heartbeat/registry/resource fields; ready pool and recovery policy.
+- [ ] Prime Architect and Inspector both use High; their model bindings may
+      match or differ. Explicit owner models and effective efforts are preserved.
+- [ ] Lead selects the Worker specialty, adequate tier, model binding, and
+      effort for each brief; TASKS/STATE own assignments. No fixed Worker files
+      or manifest/MAP roster are required.
+- [ ] SliceRecordsCheck, GateClose, StallCover, PrimeHeartbeat, and LeadHeartbeat
+      contracts are discoverable through WORKFLOW with matching hook filenames.
+- [ ] Hook rows show actual manual/unconfigured/bound status. Automatic
+      scheduling and executable enforcement are not inferred from Markdown.
+- [ ] Required acceptance results identify their revision/environment and all
+      exit statuses; a missing/nonzero result prevents closure before a
+      separate merge action.
+- [ ] Slice records allow documented verification of unchanged SPARC truth
+      instead of requiring needless live-contract edits or stamp refreshes.
+- [ ] `keep-alive.tpl.md` is tracked, and `keep_alive_registry` resolves the
+      parent-level `KEEP-ALIVE.md` or the existing shared pointer/binding.
+- [ ] Live registries/pointers remain host-local, service entries and startup
+      dependencies are preserved, and edited PowerShell blocks parse.
 - [ ] `/ai/pact/agents/AGENTS.md` contains an `## Execution Hierarchy` pointer
       section to `WORKFLOW.md`.
 - [ ] Agents treat `/ai/pact/agents/AGENTS.md` as a binding agent rules file
@@ -325,6 +385,11 @@ EXAMPLE
 - [ ] `/ai/pact/context/state/LOGIC-DRAFT.md` exists.
 - [ ] `/ai/pact/context/state/TASKS.md` exists.
 - [ ] `/ai/pact/context/state/STATE.md` exists.
+- [ ] Every active task preserves its complete brief, scope, reservations,
+      validation and applicable test/baseline references; no active task remains
+      Pending. Missing essential recovered instructions block continuation.
+- [ ] Fresh project state is empty and contains no package-maintainer history;
+      upgrades preserve actual target project state and profile bindings.
 - [ ] No skill log exists unless the attached SPARC binding declares
       `runtime_mode: debug` and `WORKFLOW.md` declares the skill log artifact.
 - [ ] No `FILE-GUARD.md` exists unless the owner opted in and `WORKFLOW.md`
@@ -339,28 +404,103 @@ EXAMPLE
 
 ## Sync Existing Installations
 
-A project that installed PACT earlier is synced by comparing its generated
-files with the current templates.
+Compare each target's generated_from_version with its template's version.
+Upgrade the contract and complete example structure, then reapply the target's
+actual settings and state. PACT 2.0 is the package version; do not reset template
+versions to 2.0 or overwrite target files with this repository's operational data.
 
-- If `/ai/pact/workflow/WORKFLOW.md` has no `## Execution Hierarchy` section, or
-  its `generated_from_version` is older than the `version` of
-  `workflow.tpl.md`, regenerate it from the template.
-- Keep the project's own hook rows, declared field overrides (such as
-  `skill_log`, `file_guard`, and any Execution Hierarchy values), and local
-  rules. Take new structure and rules from the template and re-apply the
-  project's own content on top.
-- Version 2.8 of `workflow.tpl.md` adds the "Work optimization" subsection and
-  the `worker_fix_target` field to `## Execution Hierarchy`, and registers the
-  `SliceRecordsCheck` hook. When syncing from an older version, regenerate
-  `WORKFLOW.md`, copy `SliceRecordsCheck.md` to `/ai/pact/agents/hooks/` from
-  this package, keep the project's own `worker_fix_target` override if it has
-  one, and refresh worker files created from `sub-agent.tpl.md` older than
-  version 1.2 so they carry the test-first obligation.
-- Do the same for `AGENTS.md` and any other generated file whose
-  `generated_from_version` is older than its template, then synchronize bridge
-  files as described in Agent Rules Installation.
-- Record the sync in the project's logs. Refresh `updated` only on files whose
-  Markdown content meaningfully changed.
+1. Synchronize WORKFLOW from workflow.tpl.md 3.1 and AGENTS from agents.tpl.md
+   3.2. Preserve local hooks, file_guard, skill_log, resource limits, owner
+   bindings, and project-specific rules. Preserve an existing enabled
+   `worker_fix_target` percentage; `none` disables the diagnostic and is the
+   fresh-install default. Report unresolved conflicts. A metric threshold
+   affects routing, not gate acceptance.
+2. Rename legacy responsibility names Primary to Prime and Coordinator to Lead,
+   including role titles, heartbeat files/registrations, and recovery fields:
+
+   | Existing field or file | PACT 2.0 contract |
+   |---|---|
+   | heartbeat_primary / PrimaryHeartbeat.md | heartbeat_prime / PrimeHeartbeat.md |
+   | heartbeat_coordinator / CoordinatorHeartbeat.md | heartbeat_lead / LeadHeartbeat.md |
+   | primary_stall_policy | prime_stall_policy |
+   | draft owner_tier: primary | owner_role: Prime |
+   | active-task coordinator | lead |
+   | profile tier: coordinator or worker | role: Lead or Worker |
+
+   Check references and host bindings before removing a replaced filename;
+   preserve local profile content and update names without creating a fixed team.
+3. Separate old model fields from roles. Retain concrete provider/model IDs in
+   local bindings; use High/Middle/Light for capability fields. Prime architecture
+   and inspection share High. Defaults are lead_tier: Middle and
+   worker_tier_default: Light, while Lead may choose an adequate higher Worker
+   tier. Do not silently relabel a model whose capability has not been assessed.
+
+   | Legacy model field | Binding destination |
+   |---|---|
+   | primary_model | Prime Architect and Inspector local binding(s); both High |
+   | coordinator_model | Lead local binding; lead_tier declares capability |
+   | worker_model | Worker default local binding; worker_tier_default declares capability |
+
+   Retire the legacy fields after preserving their concrete IDs. An old field
+   containing a capability label instead of a model ID is not a concrete
+   binding; resolve it locally before dispatch. Distinct Architect/Inspector
+   models remain distinct. Worker assignments may override their local default
+   within owner constraints; do not create unrequested agents during migration.
+4. Convert native effort names to percentages only after checking the selected
+   model's actual supported levels/range. Record requested percentage and the
+   effective native value using WORKFLOW's mapping. Preserve explicit settings;
+   unsupported effort is recorded as unsupported. Different providers need not
+   have the same number of levels. No protocol name implies an API enum.
+
+   Map optional primary_effort to prime_effort, coordinator_effort to
+   lead_effort, and worker_effort to worker_effort_default. These new workflow
+   fields contain percentages, while the binding retains the effective native
+   value. For N ordered levels and an existing index i, a corresponding
+   percentage is round(100 * i / (N - 1)); record and verify the round trip.
+   A single fixed level or unavailable control has no inferred percentage;
+   preserve it and mark the mapping fixed/unsupported until a requested
+   percentage is chosen. Retire the old native-effort keys after preservation.
+5. Refresh reusable profiles from sub-agent.tpl.md 2.0, drafts from
+   logic-draft.tpl.md 1.5, task lists from tasks.tpl.md 1.9, and active objects
+   from state.tpl.md 1.5. Preserve selected scope, completed evidence, active
+   actors/reservations, and pending work. Add specialty/binding/effort details to
+   actual Worker assignments; do not fabricate hires or measurements.
+   Preserve the exact bounded `brief`, scope, reservations, validation, and
+   applicable `tests`/`baseline` references when transferring a task to STATE.
+   For an older active object missing instructions, recover them from the
+   project's existing task/draft evidence or recorded brief; keep a complete
+   existing `request` as evidence rather than replacing it with an example.
+   If essential constraints cannot be recovered, mark that task blocked,
+   record precisely what is missing, and obtain the missing brief before
+   continuing. Do not invent instructions, erase progress, or duplicate the
+   active task in Pending. Prime alone advances the selected gate after the
+   current gate's acceptance; Lead's Next preparation is planning only.
+6. Refresh hooks from hook.tpl.md 1.3 and the shipped workflow contracts.
+   Inspect every required acceptance exit status on the candidate revision,
+   including failures masked by later commands. Merge separately after reading
+   results, only when authorized. Bind/verify host execution separately;
+   copying Markdown is not activation. Keep actual host trust and config local.
+7. Resolve the shared external KEEP-ALIVE.md using keep-alive.tpl.md 1.1 as
+   described above. Preserve launch commands, ports, startup dependencies,
+   pointers, and local Git exclusions. Never duplicate the host port registry.
+   The external registry follows its own template metadata, not installed
+   PACT-target `layer`, `status`, or `content_status` requirements.
+8. Synchronize IDEAS from ideas.tpl.md 1.2 while preserving actual idea entries;
+   use empty for no ideas and current for populated content. WORKFLOW recognizes
+   standalone trimmed owner shortcuts; no runtime prehook or new handoff file
+   is required. Check host punctuation delivery separately if used.
+9. Validate relative links, role/field renames, template versions, and generated
+   examples. Update native instruction bridges and host context reminders that
+   would inject obsolete policy. Record validation in TASKS and required logs;
+   refresh stamps only where meaningful content changed.
+
+## Release Preparation
+
+A distributable archive contains the protocol, current templates/examples,
+followable entry targets, shipped hooks, license/notice, and fresh state as
+defined above. Exclude repository-local cache, host configuration, current hires,
+and maintainer task history. Validate the extracted archive as a fresh install
+and retain its checksum. Preparing files does not publish or tag a release.
 
 ## Forbidden Content
 

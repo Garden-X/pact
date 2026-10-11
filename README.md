@@ -1,6 +1,10 @@
-# PACT
+# PACT 2.0
 
-updated: 2026-06-17 23:39:24 UTC+00:00
+updated: 2026-10-10 02:02:18 UTC+00:00
+
+Release title: **improved workflow and project syncronization**.
+
+Release notes and migration summary: [PACT 2.0](ai/pact/RELEASE-NOTES.md).
 
 **PACT** means **Protocol for Agent Coordination and Tasks**.
 
@@ -95,6 +99,18 @@ empty in this package.
 | [ai/pact/context/state/TASKS.md](ai/pact/context/state/TASKS.md) | Pending and done maintenance task state |
 | [ai/pact/context/state/STATE.md](ai/pact/context/state/STATE.md) | Active execution cursor |
 | [ai/pact/templates/](ai/pact/templates/) | PACT maintenance templates |
+| [ai/pact/templates/keep-alive.tpl.md](ai/pact/templates/keep-alive.tpl.md) | Shared host registry generated as the project parent's `KEEP-ALIVE.md` |
+
+PACT 2.0 defines Prime, Lead, and Worker responsibilities separately from
+High, Middle, and Light model tiers. Prime architecture and inspection share
+High capability; Lead hires the specialties needed for each bounded task.
+Effort uses percentages with explicit local provider mappings. Template RULES
+and complete EXAMPLE sections define the portable contract; installed files
+carry the project's actual settings. Hooks record their real activation status.
+
+The shared `KEEP-ALIVE.md` is host-local operational configuration outside
+project folders. Sibling projects resolve the same registry (or a pointer to
+it) for port coordination; the template remains tracked inside PACT.
 
 ## Wiki-Core Use
 
@@ -131,6 +147,15 @@ In this specification package, generated target files may be active followable
 targets or seeds with `metadata-only`, `current-data`, or `current-state`
 content status. `AGENTS.md` and `WORKFLOW.md` ship as canonical current-data
 entry points so agents can start without generating their own rules first.
+
+For a fresh installation, initialize empty project state from the templates;
+do not copy this source repository's maintenance history or active assignments.
+For upgrades, preserve the target project's state and explicit bindings. See
+[INSTALL](ai/pact/INSTALL.md).
+
+Owner-authorized maintenance of the protocol source updates template RULES and
+complete EXAMPLE sections first, then synchronizes followable generated targets.
+The immutable-template rule above applies to normal installed-project use.
 
 PACT templates follow a similar sectioned structure:
 

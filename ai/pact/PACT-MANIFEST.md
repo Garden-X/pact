@@ -1,13 +1,17 @@
 # PACT-MANIFEST
 
 > For: PACT package
+> Version: 2.0
 > Status: canonical package manifest
 > Purpose: describe the installed PACT maintenance environment
-> Updated: 2026-10-08 17:05:00 UTC+00:00
+> Updated: 2026-10-10 22:10:14 UTC+00:00
 
 ## Purpose
 
-This manifest describes the `/ai` container used by PACT.
+This manifest describes the PACT package and its stable file/template routes.
+It is not a project MAP or a roster of currently hired agents. WORKFLOW owns
+role policy; TASKS/STATE record planned and active assignments. Project MAP
+records accepted project structure under SPARC, not temporary worker sessions.
 
 It answers:
 
@@ -126,9 +130,10 @@ PACT entry file:
 PACT governs:
 
 - workflow;
-- the execution hierarchy (primary, coordinator, worker) declared in
+- the execution roles declared in
   [workflow/WORKFLOW.md](workflow/WORKFLOW.md);
-- hooks (the package ships `SliceRecordsCheck`);
+- hooks (records, gate acceptance, stall recovery, and portable heartbeat
+  prompts; host scheduling is configured separately);
 - agent rules;
 - skills;
 - nicknames;
@@ -228,6 +233,7 @@ Core package files:
 - [PACT.md](PACT.md)
 - [PACT-MANIFEST.md](PACT-MANIFEST.md)
 - [INSTALL.md](INSTALL.md)
+- [RELEASE-NOTES.md](RELEASE-NOTES.md)
 - [workflow/WORKFLOW.md](workflow/WORKFLOW.md)
 - [agents/AGENTS.md](agents/AGENTS.md)
 - [agents/NICKNAMES.md](agents/NICKNAMES.md)
@@ -235,6 +241,14 @@ Core package files:
 - [context/state/LOGIC-DRAFT.md](context/state/LOGIC-DRAFT.md)
 - [context/state/TASKS.md](context/state/TASKS.md)
 - [context/state/STATE.md](context/state/STATE.md)
+
+Hook contracts (triggers and activation are registered in WORKFLOW):
+
+- [agents/hooks/SliceRecordsCheck.md](agents/hooks/SliceRecordsCheck.md)
+- [agents/hooks/GateClose.md](agents/hooks/GateClose.md)
+- [agents/hooks/StallCover.md](agents/hooks/StallCover.md)
+- [agents/hooks/PrimeHeartbeat.md](agents/hooks/PrimeHeartbeat.md)
+- [agents/hooks/LeadHeartbeat.md](agents/hooks/LeadHeartbeat.md)
 
 PACT maintenance templates:
 
@@ -252,6 +266,7 @@ PACT maintenance templates:
 - [templates/tasks.tpl.md](templates/tasks.tpl.md)
 - [templates/state.tpl.md](templates/state.tpl.md)
 - [templates/file-guard.tpl.md](templates/file-guard.tpl.md)
+- [templates/keep-alive.tpl.md](templates/keep-alive.tpl.md)
 
 Local reader configuration does not create PACT authority and should remain
 untracked.
@@ -286,14 +301,19 @@ PACT operation.
 If a template is missing or appears incorrect, agents must report the issue and
 request template-maintainer action instead of changing the template.
 
-Generated files and templated cache artifacts are the target paths in the
-mapping below.
+The mapping below includes generated PACT files, templated cache artifacts,
+and the external host operational registry. Their own contracts distinguish
+installed PACT targets from cache and host configuration.
 
 Templates are not generated files.
 
 Metadata-only seed target files must not copy template rules or examples.
 
 Rules and full target examples stay in `/ai/pact/templates/*.tpl.md`.
+When maintaining the protocol source with owner authorization, update both
+RULES and EXAMPLE, then synchronize the active entry targets. Fresh installs
+initialize empty project state from templates; source-repository maintenance
+history and active hires are not distributable installation defaults.
 
 Active generated target files such as `AGENTS.md` and `WORKFLOW.md` may ship
 with followable content when they are needed as immediate agent entry points.
@@ -315,11 +335,9 @@ A generated target whose `generated_from_version` is older than its template's
 under Sync Existing Installations; for `WORKFLOW.md` this brings in the
 Execution Hierarchy.
 
-Change record: `workflow.tpl.md` 2.8 adds the "Work optimization" subsection to
-the Execution Hierarchy (test first, routing, records before push, pin rule,
-measurement; field `worker_fix_target`) and registers the `SliceRecordsCheck`
-hook. `sub-agent.tpl.md` 1.2 adds the worker test-first obligation. Generated
-files older than these versions sync as described above.
+Package release version and individual template versions are independent.
+See [release notes](RELEASE-NOTES.md) for the PACT 2.0 migration summary.
+Template versions remain the drift markers for their generated targets.
 
 When changing a generated PACT target file or creating a templated cache
 artifact, use the mapping below to choose the matching template, apply the
@@ -342,7 +360,16 @@ logic-draft.tpl.md      -> /ai/pact/context/state/LOGIC-DRAFT.md
 tasks.tpl.md            -> /ai/pact/context/state/TASKS.md
 state.tpl.md            -> /ai/pact/context/state/STATE.md
 file-guard.tpl.md       -> /ai/pact/workflow/FILE-GUARD.md
+keep-alive.tpl.md       -> <project-root>/../KEEP-ALIVE.md (shared host registry)
 ```
+
+The keep-alive target is outside the working project. Nested projects and
+worktrees use an explicit binding or parent-level pointer to the existing
+registry. Keep live registries/pointers locally excluded from Git; keep the
+template tracked. This target does not belong under `/ai/docs` or `/ai/pact`.
+It is external host configuration, not an installed generated PACT target.
+Its metadata follows `keep-alive.tpl.md`; the general installed-target
+`layer`, `status`, and `content_status` requirements do not apply.
 
 Scripts and adapters are freeform support artifacts in this package. They do
 not have canonical template mappings unless a project defines local ones.

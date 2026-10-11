@@ -5,8 +5,8 @@
 name: hook.tpl.md
 type: pact maintenance template
 for: agent hook files
-updated: 2026-07-11 10:13:59 UTC+00:00
-version: 1.2
+updated: 2026-10-10 01:59:22 UTC+00:00
+version: 1.3
 
 ## WHAT
 
@@ -53,7 +53,10 @@ A hook file must contain:
 - failure behavior;
 - boundaries;
 - script references, when scripts are used;
-- registration in `/ai/pact/workflow/WORKFLOW.md`;
+- registration in `/ai/pact/workflow/WORKFLOW.md`, with the actual
+  manual/unconfigured/bound status and config/script path for a bound hook;
+- for host hooks, the observed runtime status; Markdown alone installs no
+  scheduler or enforcement and grants no messaging or Git authorization;
 - relative Markdown links to invariant PACT files it depends on.
 
 Optional hook filenames must use CapitalCase:
@@ -101,7 +104,10 @@ None.
 
 ## ACTION
 
-Check that validation is recorded.
+Inspect each required validation result for the actual candidate revision.
+Missing, interrupted, timed-out, or nonzero results prevent completion; a green
+final command does not erase earlier failures. Record the method, command exit
+status when applicable, and evidence. Use proportionate inspection for docs.
 
 ## OUTPUT
 
@@ -110,4 +116,11 @@ Validation result or blocker.
 ## FAILURE
 
 Keep the task active and record the blocker in `STATE.md`.
+
+## BOUNDARIES
+
+This check does not run a timer, authorize Git delivery, or waive SPARC rules.
+Register it in [WORKFLOW](../../workflow/WORKFLOW.md) as a manual pact_hook.
+If a host later binds it, record the actual config and verify execution before
+claiming enforcement.
 ```

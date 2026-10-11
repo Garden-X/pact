@@ -5,8 +5,8 @@
 name: state.tpl.md
 type: pact maintenance template
 for: STATE.md
-updated: 2026-10-08 08:40:00 UTC+00:00
-version: 1.3
+updated: 2026-10-10 22:06:24 UTC+00:00
+version: 1.5
 
 ## WHAT
 
@@ -32,6 +32,8 @@ Use this template when creating or resetting the active state file.
 - use one valid top-level status;
 - map each active task back to one task from `TASKS.md`;
 - own the structured active task objects;
+- preserve the transferred task's exact bounded brief, including its scope,
+  constraints, validation expectation, and applicable tests/baseline references;
 - record task id, request, task phase, actor, source, affected files,
   reservations, validation, retry, and handoff;
 - link related invariant PACT files with relative Markdown links;
@@ -78,7 +80,7 @@ task blocks may be present only under the parallel-worker rule of the
 
 - `active_task` lists every active task id, separated by commas;
 - exactly one active task block must be present per listed id;
-- every block records `coordinator`, the one coordinator that owns the set,
+- every block records `lead`, the one Lead that owns the set,
   and `actor`, the distinct worker that holds the task;
 - reservations across all blocks must be pairwise disjoint;
 - no task in the set builds or runs tests;
@@ -88,7 +90,7 @@ task blocks may be present only under the parallel-worker rule of the
 - a completed task leaves the set and moves to `TASKS.md` Done, and `STATE.md`
   returns to `clear` when the set is empty.
 
-A second coordinator or agent outside the set must wait, help unblock a task,
+A second Lead or agent outside the set must wait, help unblock a task,
 or receive owner approval for a separate coordination scope.
 
 `STATE.md` owns the active task objects.
@@ -97,13 +99,21 @@ Each active task object must include:
 
 - `id`;
 - `request`;
+- `brief`: the exact bounded task instructions, scope, and constraints from
+  TASKS or the authorized dispatch; a short request is not a replacement;
 - `task_phase`;
 - `actor`;
-- `coordinator`, required only for a task in a parallel worker set;
+- `role`: Prime, Lead, or Worker;
+- for a Worker assignment, `specialty`, `model_tier` (High, Middle, or Light),
+  resolved local `model_binding`, and requested `effort` percentage; record the
+  effective native setting or unsupported control with that binding;
+- `lead`, required for every Worker assignment and shared by a parallel set;
 - `created_at` or equivalent timestamp when known;
 - `source`;
 - `affected_files`;
 - `reservations`;
+- `tests` and `baseline` references/evidence when the task changes a code
+  invariant; otherwise record why invariant tests are unnecessary;
 - `validation`;
 - `retry`;
 - `handoff`.
@@ -139,7 +149,22 @@ top-level status as stated above.
 Planned tasks stay in `TASKS.md` Pending. Completed tasks move to `TASKS.md`
 Done and `STATE.md` returns to `clear` when no active task remains.
 
-Validation must record method, result, and evidence or a reason.
+On transfer, copy the complete bounded brief, files/scope, reservations and
+validation expectation, with applicable tests and baseline evidence, into the
+active object before removing its Pending entry. STATE must suffice to resume
+without the deleted entry or chat history. Preserve explicit actor/model/effort
+bindings. Keep large evidence at its existing path and retain its relevant
+references; do not copy transcripts or long-form reasoning into STATE.
+
+On resume, read that object and check the actual diff and reservation status.
+Handoff notes record progress and outstanding work; they do not replace the
+original brief, tests, baseline, or validation. If transferred constraints or
+evidence are missing, recover them from existing authorized records or ask the
+Lead; keep the task blocked when the missing instruction prevents safe work.
+Do not reconstruct lost constraints by guessing or widen the assignment.
+
+Validation preserves the supplied expectation and records method, result, and
+evidence or a reason.
 
 Retry must record attempt count and retry policy.
 
@@ -156,6 +181,13 @@ Handoff must record status and notes needed by the next agent or session.
 
 ## EXAMPLE
 
+This snapshot follows transfer of task 001 from TASKS: its Pending entry has
+been removed, and its brief, reserved files, and validation move into STATE.
+
+The illustrative `ValidateBeforeCompletion.md` target comes from
+[hook.tpl.md](hook.tpl.md)'s example; it is not a shipped hook or a missing
+template. Keep the actual task's selected target name on transfer.
+
 ```md
 # STATE.md
 
@@ -167,7 +199,7 @@ layer: PACT / context / state
 status: active
 active_task: PACT-YYYYMMDD-001
 generated_from: /ai/pact/templates/state.tpl.md
-generated_from_version: 1.3
+generated_from_version: 1.5
 content_status: current-state
 updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 
@@ -175,8 +207,17 @@ updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 
     id: PACT-YYYYMMDD-001
     request: Create the requested hook file.
+    brief: Create ValidateBeforeCompletion.md from hook.tpl.md for the selected completion check;
+      register its trigger and failure action in WORKFLOW. Do not bind a runtime.
     task_phase: working
-    actor: Codex
+    actor: <assigned agent/session>
+    role: Worker
+    lead: <responsible Lead agent/session>
+    specialty: documentation
+    model_tier: Light
+    model_binding: <resolved owner-approved provider/model>
+    effort: 50%
+    effective_effort: <native setting or unsupported>
     created_at: YYYY-MM-DD HH:mm:ss UTC+00:00
     source:
       idea: null
@@ -184,12 +225,16 @@ updated: YYYY-MM-DD HH:mm:ss UTC+00:00
       draft: LOGIC-DRAFT.md
       tasks: TASKS.md
     affected_files:
-      - /ai/pact/agents/hooks/Example.md
+      - /ai/pact/agents/hooks/ValidateBeforeCompletion.md
+      - /ai/pact/workflow/WORKFLOW.md
     reservations:
-      - path: /ai/pact/agents/hooks/Example.md
+      - path: /ai/pact/agents/hooks/ValidateBeforeCompletion.md
         mode: write
+      - path: /ai/pact/workflow/WORKFLOW.md
+        mode: write
+    tests: none - documentation-only task; inspect its governing contract.
     validation:
-      method: Not selected
+      method: Inspect hook file and confirm workflow registration.
       result: Pending
       evidence: null
     retry:
@@ -204,3 +249,27 @@ Related:
 - [TASKS.md](TASKS.md)
 - [LOGIC-DRAFT.md](LOGIC-DRAFT.md)
 ```
+
+For a code-invariant assignment, use the same active object with the task's
+actual id, scope, reservations, binding and source. Copy its instructions and
+test/baseline references unchanged. For example, these fields may replace the
+documentation-only fields above; they are not another active task or file type:
+
+```txt
+task_phase: handoff
+brief: Reject an empty identifier in the reserved validator. Preserve all other
+  valid identifier behavior; make the supplied tests pass without editing them.
+tests: <supplied invariant test path>
+baseline: <recorded failing command, actual exit status, and evidence path>
+validation:
+  method: Run the supplied invariant checks sequentially against this candidate.
+  result: Pending
+  evidence: null
+handoff:
+  status: ready
+  notes: Resume from this brief and its referenced baseline; verify the current
+    diff and reservations before continuing. Required validation remains pending.
+```
+
+Derive the top-level status from the task phases as above. The original bounded
+brief and test/baseline references remain in the object during handoff/resume.

@@ -8,21 +8,23 @@ layer: PACT / agent hook
 class: pact_hook
 status: canonical
 generated_from: /ai/pact/templates/hook.tpl.md
-generated_from_version: 1.2
+generated_from_version: 1.3
 content_status: current-data
-updated: 2026-10-08 17:05:00 UTC+00:00
+updated: 2026-10-10 19:23:24 UTC+00:00
 
 ## TRIGGER
 
-Before the coordinator pushes a slice to the gate branch (`gate_branch_pattern`
-in [../../workflow/WORKFLOW.md](../../workflow/WORKFLOW.md)).
+Before committing a slice, and again before pushing outgoing slices to the
+gate branch (`gate_branch_pattern` in
+[../../workflow/WORKFLOW.md](../../workflow/WORKFLOW.md)).
 
 ## INPUTS
 
-- the staged file list of the slice commit
+- the proposed staged diff before commit; the actual committed diff of each
+  outgoing slice before push, with its revision and base
 - [../../context/state/TASKS.md](../../context/state/TASKS.md) and
   [../../context/state/STATE.md](../../context/state/STATE.md)
-- the project's daily log and SPARC live contracts, as routed by the Project
+- the project's declared logging policy and SPARC live contracts, as routed by the Project
   Truth Updates table in [../../workflow/WORKFLOW.md](../../workflow/WORKFLOW.md)
 - [../skills/Time-Normalization.md](../skills/Time-Normalization.md) for stamps
 
@@ -32,25 +34,39 @@ None.
 
 ## ACTION
 
-Classify each staged path:
+Inspect the records carried by each slice, rather than unrelated index state
+or a later commit's records. Classify paths by their declared purpose:
 
 - record paths: `TASKS.md`, `STATE.md`, the daily log, `LOG.md`, and the SPARC
   live contracts (`LOGIC.md`, `MAP.md`, `SCHEMA.ts`, `DESIGN.md`,
   `PLATFORM-LOGIC.md`);
-- code paths: every other staged path, such as product source, tests, build
-  files, and data.
+- implementation paths: product source, tests, build configuration, and data;
+- maintenance paths: PACT specifications, templates, hooks, skills, and local
+  operational configuration. These are not product-truth changes merely
+  because their filenames differ from the record paths above.
 
-Check: if the slice changes any code path, it must also change `TASKS.md` or
-`STATE.md`, the daily log, and each SPARC live contract the change touches,
-and every changed record carries a verified-UTC stamp. A slice that changes
-only record paths passes.
+Check that implementation and maintenance slices carry an outcome and
+validation in `TASKS.md` or `STATE.md`. Require the daily log when the attached
+SPARC binding or project logging policy requires it. For each affected live
+contract, either update it when accepted truth changed, or record the contract
+path, verification evidence, and why its existing truth remains valid. A fix
+restoring an existing contract does not require editing that contract.
+
+Meaningfully changed records carry verified-UTC stamps. Do not refresh an
+unchanged contract's stamp or invent project-truth files or logs merely to
+satisfy the check. Follow the actual attached binding and project logging
+policy; source-repository maintenance does not supply a target project's truth.
+Record-only slices still need truthful
+validation; a changed filename alone is not evidence of completion. Stage
+intended paths explicitly and exclude unrelated work and temporary cache.
 
 ## OUTPUT
 
 One of:
 
-- `push`: the slice carries its records; the coordinator pushes it;
-- `add records`: the list of missing records; the coordinator adds them to the
+- `pass`: the slice carries its records; the authorized commit or push may
+  proceed after all other applicable checks;
+- `add records`: the list of missing records; the Lead adds them to the
   same commit, then runs the check again.
 
 ## FAILURE
@@ -61,6 +77,7 @@ record a SPARC gap instead of storing project truth in PACT state.
 
 ## BOUNDARIES
 
-The hook checks presence and stamps of records; it does not judge their
-content, which the primary reviews at gate close. It never writes project
-truth, never skips other hooks, and never pushes `default_branch`.
+The hook verifies record presence, scope, and validation pointers; the Prime
+reviews their adequacy at gate close. This Markdown hook is a manual check
+until a host adapter is installed and verified. It never writes project truth,
+never skips other hooks, and never pushes `default_branch`.

@@ -5,8 +5,8 @@
 name: ideas.tpl.md
 type: pact maintenance template
 for: IDEAS.md
-updated: 2026-07-08 09:24:00 UTC+00:00
-version: 1.1
+updated: 2026-10-10 22:06:24 UTC+00:00
+version: 1.2
 
 ## WHAT
 
@@ -40,6 +40,11 @@ Use this template when creating or changing the future-ideas context file.
 - keep ideas separate from active work;
 - explain why an idea may affect current decisions when known;
 - contain project context entries rather than PACT lifecycle instructions.
+
+Use `status: empty` when no future ideas are recorded, with `None.` under
+`## Future Ideas`. Use `status: current` when that section contains project
+idea entries. `current` means that future context is present; it does not select
+implementation logic or authorize tasks.
 
 `IDEAS.md` may inform:
 
@@ -76,9 +81,9 @@ When an idea becomes selected implementation logic, promote it through
 name: IDEAS.md
 canonical_location: /ai/pact/context/IDEAS.md
 layer: PACT / context / future ideas
-status: empty
+status: current
 generated_from: /ai/pact/templates/ideas.tpl.md
-generated_from_version: 1.1
+generated_from_version: 1.2
 content_status: current-data
 purpose: Record future project ideas for agents and souls without turning them into shapes, selected logic, tasks, or active state.
 updated: YYYY-MM-DD HH:mm:ss UTC+00:00

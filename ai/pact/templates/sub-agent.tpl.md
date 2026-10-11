@@ -4,24 +4,20 @@
 
 name: sub-agent.tpl.md
 type: pact maintenance template
-for: worker sub-agent files
-updated: 2026-10-08 17:05:00 UTC+00:00
-version: 1.2
+for: reusable sub-agent role files
+updated: 2026-10-10 01:59:22 UTC+00:00
+version: 2.0
 
 ## WHAT
 
-A worker file defines a reusable sub-agent role for PACT maintenance work.
+A sub-agent file defines reusable instructions for a Lead or a Worker specialty.
+It narrows scope, inputs, validation, outputs, boundaries, and handoff under
+WORKFLOW. A role file is not an active hire or a model identity.
 
-It describes scope, inputs, outputs, boundaries, and handoff expectations.
-
-A worker file may realize a tier of the `## Execution Hierarchy` in
-`WORKFLOW.md`: a `coordinator` role (decomposes, briefs, reviews, pushes slices)
-or a `worker` role (executes one atomic task). The tier definitions live in
-`WORKFLOW.md`; the worker file only narrows them.
-
-A `worker` tier file also carries the test-first obligation: the coordinator
-writes the failing tests that state the invariant before dispatch, and the
-worker only makes them pass.
+Lead hires Workers according to the task: a designer, coder, researcher,
+reviewer, documentation specialist, or another needed specialty. There is no
+mandatory fixed Worker roster. Create a reusable file only when it helps;
+an exact task brief is sufficient for a one-time assignment.
 
 ## FOR
 
@@ -31,89 +27,161 @@ Target path:
 /ai/pact/agents/workers/[WorkerName].md
 ```
 
-Use this template when creating or changing a PACT worker or sub-agent role.
+Generate one file from the relevant example, adapting it to the real scope.
+The examples are alternatives, not files every project must install.
 
 ## RULES
 
-A worker file must contain:
+A sub-agent file must contain:
 
-- role name;
-- `tier`: `coordinator` or `worker` when the role realizes an Execution
-  Hierarchy tier, otherwise omitted;
-- purpose;
-- allowed scope;
-- inputs;
-- skills used, with links, when the worker uses skills;
-- for a `worker` tier file, the test-first obligation from the Work
-  optimization rules in `WORKFLOW.md`: the worker makes the coordinator's given
-  tests pass and never edits, weakens, skips, or conditions them, and reports a
-  doubtful test instead of changing it;
-- outputs;
-- handoff format;
-- forbidden actions;
-- relative Markdown links to invariant PACT files it depends on.
+- name, purpose, scope, inputs, validation, outputs, handoff, and forbidden actions;
+- `role: Lead` or `role: Worker`, distinct from `model_tier`;
+- the Worker specialty when applicable;
+- a model tier (High, Middle, or Light), effort percentage from 0% to 100%,
+  and a local model-binding reference when the profile supplies defaults;
+  the dispatch resolves concrete provider/model and effective native effort;
+- relative links to invariant PACT files and any skills actually used.
 
-A worker file must not:
+WORKFLOW owns role authority, tier meanings, effort mapping, and acceptance.
+The owner controls explicit bindings. Lead chooses an adequate Worker tier and
+effort for the assignment; the Worker is not restricted to Light. Prime's
+Architect and Inspector functions share High even if their models differ.
+Capability does not grant authority to select scope, accept a gate, or merge.
 
-- define project truth;
-- override `AGENTS.md`;
-- override `WORKFLOW.md`, including the tier boundaries of the Execution
-  Hierarchy (a `worker` tier file must not grant version-control writes or
-  scope changes; a `coordinator` tier file must not grant default-branch
-  writes or the full acceptance suite);
-- claim files without recording state;
-- write PACT material into `/ai/docs`.
+Lead owns decomposition, TASKS/STATE, reservations, exact briefs, reviewing all
+returned changes, integration, applicable records, and the acceptance handoff.
+For a changed material code invariant, Lead supplies tests and baseline failure
+evidence. Workers make those checks pass without weakening or changing them;
+report doubtful tests to Lead. Documentation and reversible low-impact work
+use proportionate checks. Parallel assignments obey WORKFLOW resource rules.
 
-Optional worker filenames must use CapitalCase:
+Active hires and their exact bindings belong in TASKS/STATE, not this package's
+manifest or the project's MAP. Do not create a reusable file merely to record
+a current session. Filenames use CapitalCase, for example DesignWorker.md.
 
-```txt
-WorkerName.md
-```
-
-If a worker uses skills, it must link to each skill file under:
-
-```txt
-/ai/pact/agents/skills
-```
+A sub-agent file must not override AGENTS or WORKFLOW, grant Worker version-
+control writes or unreserved scope, grant Lead default-branch writes or Prime
+acceptance authority, or write maintenance state into /ai/docs. Relevant
+project-truth changes still use SPARC and the task's explicit reservations.
 
 ## EXAMPLE
 
+### Lead profile
+
 ```md
-# StructureAuditor.md
+# Lead.md
 
 ## META
 
-name: StructureAuditor
-canonical_location: /ai/pact/agents/workers/StructureAuditor.md
-layer: PACT / worker
-tier: worker
+name: Lead
+canonical_location: /ai/pact/agents/workers/Lead.md
+layer: PACT / sub-agent role
+role: Lead
+model_tier: Middle
+effort: 75%
+model_binding: <owner-approved local binding>
 status: draft
+generated_from: /ai/pact/templates/sub-agent.tpl.md
+generated_from_version: 2.0
 updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 
 ## PURPOSE
 
-Check that PACT package structure matches the manifest.
+Coordinate one Prime-selected gate and prepare reviewed slices for acceptance.
+
+## SCOPE
+
+Own decomposition, TASKS/STATE, integration, and worker review within the selected
+draft. Hire the specialties required by each task with adequate tier/effort.
 
 ## INPUTS
 
-- `/ai/pact/PACT-MANIFEST.md`
-- filesystem tree
+- [../AGENTS.md](../AGENTS.md)
+- [../../workflow/WORKFLOW.md](../../workflow/WORKFLOW.md)
+- [../../context/state/LOGIC-DRAFT.md](../../context/state/LOGIC-DRAFT.md)
+- [../../context/state/TASKS.md](../../context/state/TASKS.md)
+- [../../context/state/STATE.md](../../context/state/STATE.md)
+- relevant SPARC contracts, existing implementation/evidence, and Worker results
 
-## SKILLS
+## VALIDATION
 
-- [../skills/StructureReview.md](../skills/StructureReview.md)
-
-## TEST FIRST
-
-Make the coordinator's given tests pass. Never edit, weaken, skip, or condition
-them; report a doubtful test instead of changing it.
+Give each Worker a bounded brief, reservations, applicable rules, and acceptance
+checks. Supply failing tests for changed material code invariants; use inspection
+for documentation. Inspect each returned diff and actual check result. Serialize
+heavy work and verify records through SliceRecordsCheck before authorized Git
+delivery. Keep full gate acceptance with Prime.
 
 ## OUTPUTS
 
-- findings
-- validation summary
+Reviewed slices, updated task/state evidence, and the candidate acceptance handoff.
 
 ## HANDOFF
 
-Return checked paths, issues found, and suggested next action.
+Report gate/task IDs, revision, inspected changes, each check and exit result,
+unresolved items, and actual Worker correction counts. Use StallCover for recovery.
+
+## FORBIDDEN ACTIONS
+
+No scope expansion, default-branch writes, acceptance-role takeover, weakened
+checks, force-push, deployment, or unauthorized Git/communication actions.
+```
+
+### Design Worker profile
+
+```md
+# DesignWorker.md
+
+## META
+
+name: DesignWorker
+canonical_location: /ai/pact/agents/workers/DesignWorker.md
+layer: PACT / sub-agent role
+role: Worker
+specialty: design
+model_tier: Middle
+effort: 75%
+model_binding: <Lead-selected owner-approved local binding>
+status: draft
+generated_from: /ai/pact/templates/sub-agent.tpl.md
+generated_from_version: 2.0
+updated: YYYY-MM-DD HH:mm:ss UTC+00:00
+
+## PURPOSE
+
+Evaluate and improve one assigned interaction using the project's design rules.
+
+## SCOPE
+
+Only the named interaction, supplied artifacts, and reserved paths. This profile
+does not claim files or select a task; Lead records the actual assignment in STATE.
+
+## INPUTS
+
+- Lead's task ID, brief, reservations, relevant design/behavior contracts,
+  existing UI evidence, and required acceptance checks
+- [../AGENTS.md](../AGENTS.md)
+- [../../workflow/WORKFLOW.md](../../workflow/WORKFLOW.md)
+- [../../context/state/STATE.md](../../context/state/STATE.md)
+
+## VALIDATION
+
+Compare the proposed interaction with the supplied acceptance and design rules.
+Use visual/behavior inspection appropriate to the brief; no code-invariant test
+is needed for a design-only proposal. When code changes are assigned, preserve
+the supplied tests and report their actual results. Report doubtful checks to
+Lead. Run builds/tests only when assigned and resource reservations permit.
+
+## OUTPUTS
+
+The bounded design proposal or reserved diff, inspected evidence, and open issues.
+
+## HANDOFF
+
+Return the task ID, changed/inspected paths, outcome, actual validation, and
+questions. Lead reviews the result and updates execution records.
+
+## FORBIDDEN ACTIONS
+
+No version-control writes, unreserved edits, scope expansion, weakened tests,
+acceptance claims, or service management. Report conflicts rather than guessing.
 ```
