@@ -7,10 +7,10 @@ canonical_location: /ai/pact/workflow/WORKFLOW.md
 layer: PACT / workflow
 status: canonical
 generated_from: /ai/pact/templates/workflow.tpl.md
-generated_from_version: 3.2
+generated_from_version: 3.3
 content_status: current-data
 purpose: Define how agents maintain project work without bypassing SPARC project truth.
-updated: 2026-10-14 06:24:34 UTC+00:00
+updated: 2026-10-14 18:27:22 UTC+00:00
 
 ## Lifecycle
 
@@ -32,8 +32,9 @@ Follow the canonical startup sequence in `PACT-MANIFEST.md`.
 
 ## Resume
 
-Read the selected `LOGIC-DRAFT.md`, `STATE.md`, `TASKS.md`, and latest cache
-manifest. Check the current branch and actual diff before resuming a task;
+Read the selected `LOGIC-DRAFT.md`, `STATE.md` (including any Gate Handoff and
+unanswered Prime-facing key), `TASKS.md`, and latest cache manifest. Check the
+current branch and actual diff before resuming a task;
 reconcile any owner changes and outstanding worker results. Resume from the
 recorded validation and handoff, without replaying completed work. A blocked
 task stays blocked only while its recorded blocking condition still holds.
@@ -86,9 +87,10 @@ For active tasks, `task_phase` values `transferred`, `working`, and `validating`
 map to `STATE.md: active`; `blocked` and `handoff` map to their matching
 statuses. In a parallel set, derive the aggregate status as specified in
 [../context/state/STATE.md](../context/state/STATE.md)'s governing template.
-`TASKS.md: complete` and `STATE.md: clear` finish the selected cycle; selecting
-the next draft resets the pending pool without erasing its predecessor's
-completion evidence.
+`TASKS.md: complete` and `STATE.md: clear` finish the selected cycle's task
+execution; they do not declare gate readiness or acceptance (see Gate
+Handoff). Selecting the next draft resets the pending pool without erasing its
+predecessor's completion evidence.
 
 ## Decomposition
 
@@ -129,8 +131,10 @@ worker_tier_default: Light
 prime_effort: 100%
 lead_effort: 75%
 worker_effort_default: 50%
-heartbeat_prime: 23m
+harness_topology: single
+heartbeat_prime: 2h
 heartbeat_lead: 11m
+heartbeat_watch: none
 default_branch: main
 gate_branch_pattern: gate/<id>
 keep_alive_registry: ../KEEP-ALIVE.md
@@ -196,8 +200,8 @@ Roles:
 | Role | Does | Does not |
 |---|---|---|
 | Prime | as Architect selects the shape and `LOGIC-DRAFT.md`; as Inspector reviews the candidate, gate validation, and PACT/SPARC records; runs the full acceptance suite; fast-forwards `gate/<id>` into `default_branch`; closes the gate | write product code; micromanage slices |
-| Lead | decomposes the selected draft into atomic `TASKS.md` entries; transfers tasks into `STATE.md`; writes self-contained worker briefs; reviews every worker diff; checks PACT and SPARC conformance; may fix worker errors; prepares the records; commits and pushes validated slices to `gate/<id>` when authorized | run the full acceptance suite; push or merge `default_branch`; force-push; skip hooks; deploy |
-| Worker | performs one bounded task using its assigned specialty; returns changes or findings and validation evidence | write to version control; widen scope; guess when the brief is ambiguous |
+| Lead | decomposes the selected draft into atomic `TASKS.md` entries; transfers tasks into `STATE.md`; writes self-contained worker briefs; performs the Watchdog function for its Workers; reviews every worker diff; checks PACT and SPARC conformance; may fix worker errors; prepares the records; commits and pushes validated slices to `gate/<id>` when authorized; publishes `ready` or `escalation` in the Gate Handoff | run the full acceptance suite; wake Prime for routine Worker or slice events; push or merge `default_branch`; force-push; skip hooks; deploy |
+| Worker | performs one bounded task using its assigned specialty; returns changes or findings and validation evidence to Lead | write to version control; widen scope; guess when the brief is ambiguous; wake Prime |
 
 Artifact ownership: the Prime owns selected scope and acceptance in
 `LOGIC-DRAFT.md`; the Lead owns decomposition, the pending pool in
@@ -224,8 +228,10 @@ SPARC, PACT, and the owner's instruction. Root exemption grants no extra powers.
 Each dispatch MUST identify the child's role (Prime, Lead, or Worker), parent
 agent, assigned task, and model tier (High, Middle, or Light), with the existing
 model/effort binding. For Prime, identify the Architect or Inspector function.
-The child must understand its position, responsibilities, and escalation route
-before acting. Spawn depth and model capability do not confer role authority.
+A role-less Watchdog executor records `role: none` and `function: Watchdog`
+with the fixed contract of its hook instead. The child must understand its
+position, responsibilities, and escalation route before acting. Spawn depth,
+model capability, harness, and runtime parenthood do not confer role authority.
 
 The boundary contract defines where the child may act, not how it must solve
 the task. Record these six explicit fields as `boundary_contract` in the
@@ -298,6 +304,8 @@ Ready pool and stalled roles:
   tasks. Results remain uncommitted for the Lead's review on return;
   cover does not grant code review, new decomposition, or acceptance powers.
   If the pool is empty, wait. Record coverage and transfer ownership once.
+  Across harnesses, cover also requires that covered results stay reachable
+  for the Lead's review without an unauthorized Git write; otherwise wait.
 - `prime_stall_policy: ready-only` keeps a ready gate unmerged. The
   Lead may inspect existing evidence for a Prime-preselected `## Next` gate
   read-only and record planning/dependency notes in the existing cache. It must
@@ -411,19 +419,117 @@ Keep-alive:
   them.
 - When `keep_alive_registry` is `none`, no registry rule applies.
 
+### Functions, Harnesses, And Wake Routing
+
+Authority roles are exactly Prime, Lead, and Worker: Prime owns the gate, Lead
+owns the slice, and a Worker owns its task. An operational function is work an
+actor performs: Prime performs Architect and Inspector, Lead performs
+Coordinator and the Watchdog function for its Workers, and a Worker performs
+Executor in its specialty. Performing a function never grants a role. Model
+identity, capability tier, role, function, and harness are separate; concrete
+provider/model names are local bindings only.
+
+A harness is an execution environment that owns its own agent sessions,
+delegation primitives, lifecycle, messaging, or tool context. A PACT parent may
+live in another harness than its child, and a native parent/child link does not
+define PACT authority. Crossing a harness boundary neither resets nor widens
+authority: the parent's boundary_contract travels in the durable task/STATE
+records, not in chat history or a native spawn, and remains inherited.
+
+`harness_topology` declares the deployment:
+
+- `single` (default): one harness holds Prime, Lead, and Workers. Lead keeps
+  the Lead layer and performs the Watchdog function; Prime does not absorb Lead
+  duties because only one harness exists. Consolidating roles into one session
+  follows the sequential-role rule above and keeps each role's boundaries.
+  No cross-harness configuration is required.
+- `multi`: Prime and Lead run in different harnesses. Lead and its Workers
+  coordinate natively inside the Lead harness. Lead reaches Prime only through
+  the durable Gate Handoff, then a direct event when a reliable channel exists;
+  the optional `PrimeWatch` observer covers the handoff when no such channel
+  exists, or as fallback.
+
+Wake routing is event-first with heartbeat fallback:
+
+| Event | Route |
+|---|---|
+| Task completion, ambiguity, failure, or boundary-expansion request | Worker -> Lead |
+| Anything inside Lead's inherited authority, including slice completion and validation | resolved by Lead; no Prime wake |
+| Required scope expansion, boundary or acceptance-contract conflict, unresolvable architectural decision, or needed owner/Prime authorization | Lead -> Prime as `escalation` |
+| Lead's gate execution complete with a validated candidate | Lead -> Prime as `ready` |
+| Lead or its harness unavailable with actionable impact, with exact evidence | host or PrimeWatch -> Prime |
+| Prime decision or GateClose outcome | Prime -> Lead through the durable `prime_response` |
+
+Workers never wake Prime, Prime does not poll Workers, and routine Worker or
+slice events stay with Lead. Native completion and message mechanisms are the
+primary wake path when reliable; heartbeats detect missed events. A tick that
+finds no new durable change wakes nobody.
+
+Message delivery is not the source of truth. Wake events, chat or harness
+messages, and scheduler signals only deliver attention; the durable PACT
+records are canonical. Before any Prime-facing wake, Lead records the signal in
+STATE's `## Gate Handoff`. In `multi`, that record must also be committed and
+pushed to the gate branch, or another declared location both harnesses read,
+before notification. A missed wake loses no truth: a later Prime, Lead, or
+observer reconstructs pending attention from these records.
+
+Gate readiness is declared, never inferred. A finished Worker is not a task
+accepted by Lead; all Workers finished is not a validated slice; committed
+slices are not completed gate execution; all known slices finished is not an
+accepted gate; a ready candidate is not an accepted gate. Only Lead's explicit
+`signal: ready` with an identified candidate declares readiness. Idle Workers,
+empty TASKS/STATE, absent sessions, branch activity, or elapsed time never do.
+Only Prime accepts the gate, through GateClose.
+
+Watchdog function:
+
+- Lead Watchdog, in either topology: under its own Lead authority, Lead
+  observes active Workers, processes completions, notices blocked Workers,
+  maintains the ready pool, reviews returned work, decides what remains in the
+  slice, and escalates beyond its authority. `LeadHeartbeat` is its fallback
+  when native completion events are missing or unreliable.
+- Prime-side observer, `multi` only and optional: a role-less executor of
+  `PrimeWatch`, preferably cheap and read-only. It reads only the minimal
+  records for the current gate and wakes Prime through an authorized host
+  channel for a new Prime-facing handoff key or exact unavailability evidence;
+  otherwise it stays silent. It holds no Prime, Lead, or Worker authority and
+  inherits none. It never selects or changes a gate, decomposes, creates or
+  dispatches tasks, reviews or integrates work, edits code or records, changes
+  boundaries, accepts slices or gates, or writes any branch.
+
+Duplicate wakes are avoided by key, not by new machinery. The handoff key is
+`gate_id` plus the Gate Handoff `seq`; Lead increments `seq` whenever it changes
+`signal` or `candidate`. Prime records `prime_response` for the `seq` it
+handled, and an answered key never wakes Prime again. Prime writes only that
+field and its LOGIC-DRAFT decisions, as a record-only commit on the gate branch
+in `multi`, without force or product edits. Before Prime answers,
+the observer's last-delivered key is host-owned memory (scheduler state or a
+host-local file outside PACT records); it is updated only after successful
+delivery. If it is lost, at most a repeated wake occurs, and Prime finds the key
+already handled or in progress in the records. When a direct event and an
+observer both deliver, the host shares one delivered-key memory. PACT requires
+no database, queue, event bus, or daemon.
+
+No timeout, silence, heartbeat, harness failure, or observer run transfers
+authority; StallCover governs recovery from unavailable roles.
+
 Heartbeats:
 
-- Heartbeats are host hooks that keep the tiers in contact. Register them in
-  `## Hooks` as `host_hook` rows, one for the Prime at `heartbeat_prime`
-  and one for the Lead at `heartbeat_lead`. Portable prompt
+- Heartbeats are host hooks registered in `## Hooks` as `host_hook` rows:
+  `PrimeHeartbeat` at `heartbeat_prime`, `LeadHeartbeat` at `heartbeat_lead`,
+  and, in `multi`, `PrimeWatch` at `heartbeat_watch`. Portable prompt
   contracts live in the linked hook files; a host installs schedules only
   under the owner's scheduling authorization. Report the actual binding
-  status, never infer an active timer from a Markdown row.
-- The Prime heartbeat fetches the gate branch, reads only the record changes
-  in pushed slices, flags gaps to the Lead, and starts acceptance when
-  the Lead reports the gate ready.
-- The Lead heartbeat asks for a one-line status: current slice, workers
-  running, last pushed commit, free memory.
+  status, never infer an active timer from a Markdown row. `none` disables a
+  cadence.
+- The Prime heartbeat is a rare recovery fallback for missed wakes and
+  unavailable observers. It reads the durable Gate Handoff and availability
+  evidence, acts only on an unanswered Prime-facing key or exact evidence, and
+  does not review slices or poll Workers.
+- The Lead heartbeat is the fallback of Lead's Watchdog function: Worker
+  completions and blocks, the ready pool, slice validation and records, new
+  `prime_response` values, and resource evidence. It records status in STATE
+  and does not relay routine status to Prime.
 - Routine heartbeats are quiet. Report to the owner only milestones, failures,
   and decisions.
 
@@ -431,8 +537,9 @@ Heartbeats:
 
 | Hook | Class | File | Trigger | Scripts | Status |
 |---|---|---|---|---|---|
-| PrimeHeartbeat | host_hook | [../agents/hooks/PrimeHeartbeat.md](../agents/hooks/PrimeHeartbeat.md) | every `heartbeat_prime`, when scheduled | None | unconfigured |
-| LeadHeartbeat | host_hook | [../agents/hooks/LeadHeartbeat.md](../agents/hooks/LeadHeartbeat.md) | every `heartbeat_lead`, when scheduled | None | unconfigured |
+| PrimeHeartbeat | host_hook | [../agents/hooks/PrimeHeartbeat.md](../agents/hooks/PrimeHeartbeat.md) | every `heartbeat_prime` as recovery fallback, when scheduled | None | unconfigured |
+| LeadHeartbeat | host_hook | [../agents/hooks/LeadHeartbeat.md](../agents/hooks/LeadHeartbeat.md) | every `heartbeat_lead` as Lead Watchdog fallback, when scheduled | None | unconfigured |
+| PrimeWatch | host_hook | [../agents/hooks/PrimeWatch.md](../agents/hooks/PrimeWatch.md) | every `heartbeat_watch` in `multi` topology, when scheduled | None | unconfigured |
 | SliceRecordsCheck | pact_hook | [../agents/hooks/SliceRecordsCheck.md](../agents/hooks/SliceRecordsCheck.md) | before committing or pushing a slice | None | manual |
 | GateClose | pact_hook | [../agents/hooks/GateClose.md](../agents/hooks/GateClose.md) | before accepting a gate | None | manual |
 | StallCover | pact_hook | [../agents/hooks/StallCover.md](../agents/hooks/StallCover.md) | a recorded execution tier stalls | None | manual |

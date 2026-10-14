@@ -7,10 +7,10 @@ canonical_location: /ai/pact/agents/AGENTS.md
 layer: PACT / agent orientation
 status: canonical
 generated_from: /ai/pact/templates/agents.tpl.md
-generated_from_version: 3.3
+generated_from_version: 3.4
 content_status: current-data
 purpose: Orient agents inside the `/ai` container and keep SPARC project truth separate from PACT project maintenance.
-updated: 2026-10-14 06:24:34 UTC+00:00
+updated: 2026-10-14 18:27:22 UTC+00:00
 
 ## Core Distinction
 
@@ -306,6 +306,12 @@ belong in TASKS/STATE, not the package manifest or project MAP.
 Before spawning or acting as a child, read WORKFLOW's Spawn Boundaries. The
 parent supplies an explicit boundary contract and role/parent/tier context;
 inherit limits without widening and escalate conflicts to that parent.
+
+Watchdog, Coordinator, and other operational functions are not roles; a
+role-less Watchdog only observes and wakes. Harness membership and native
+runtime parenthood confer no authority. Workers report to Lead; Lead wakes
+Prime only for Prime-level events after recording them in STATE's Gate Handoff.
+See WORKFLOW's Functions, Harnesses, And Wake Routing.
 
 ## Hooks
 

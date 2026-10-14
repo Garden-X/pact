@@ -2,7 +2,7 @@
 
 Title: improved workflow and project syncronization
 
-updated: 2026-10-14 06:23:51 UTC+00:00
+updated: 2026-10-14 18:27:22 UTC+00:00
 status: prepared for release
 
 PACT 2.0 makes coordination policy portable through template RULES and full
@@ -19,6 +19,20 @@ EXAMPLE sections, with synchronized installed entry files and migration guidance
   role, parent and capability tier. Descendants inherit effective limits, may
   narrow them, and need parent approval to widen; methods remain autonomous
   inside the fence. Existing TASKS/STATE preserve the contract on recovery.
+- One authority hierarchy works in single- and multi-harness deployments.
+  Prime owns the gate, Lead the slice, Worker the task; Architect, Inspector,
+  Coordinator, Watchdog and Executor are operational functions, not roles.
+  Model, tier, role, function and harness stay separate, and crossing a harness
+  neither resets nor widens inherited boundaries. A single harness keeps the
+  Lead layer, with Lead also acting as Watchdog for its Workers.
+- Wakes are event-first with heartbeat fallback. Workers report to Lead; Lead
+  wakes Prime only for `escalation` or an explicit `ready` candidate, recorded
+  first in STATE's optional Gate Handoff block. Message delivery is not the
+  source of truth, and readiness is never inferred from idle Workers, empty
+  records or time. The Prime heartbeat becomes a rare recovery fallback.
+- The optional role-less PrimeWatch host hook observes the durable handoff
+  across harnesses and wakes Prime once per `gate_id` + `seq` key. It has no
+  Prime or Lead authority; delivered-key memory and schedules stay host-owned.
 - Ready briefs, bounded recovery, and resume guidance preserve ownership.
   Acceptance checks every required result on the candidate before a separate
   authorized merge. Records distinguish changed truth from verified unchanged
@@ -59,10 +73,10 @@ existing versions; no unrelated contract change is required for this release.
 
 | Template | Version |
 |---|---|
-| workflow.tpl.md | 3.2 |
-| agents.tpl.md | 3.3 |
-| sub-agent.tpl.md | 2.1 |
-| state.tpl.md | 1.6 |
+| workflow.tpl.md | 3.3 |
+| agents.tpl.md | 3.4 |
+| sub-agent.tpl.md | 2.2 |
+| state.tpl.md | 1.7 |
 | tasks.tpl.md | 1.10 |
 | logic-draft.tpl.md | 1.5 |
 | hook.tpl.md | 1.3 |

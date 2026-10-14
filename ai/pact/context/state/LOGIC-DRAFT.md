@@ -11,7 +11,7 @@ gate_id: PACT-2.0
 generated_from: /ai/pact/templates/logic-draft.tpl.md
 generated_from_version: 1.5
 content_status: current-state
-updated: 2026-10-14 06:23:51 UTC+00:00
+updated: 2026-10-14 18:27:22 UTC+00:00
 
 ## Selected Logic
 
@@ -105,6 +105,23 @@ and autonomy of method. Root Prime is exempt from a parent-issued contract.
 No new role/file/runtime. Update matching RULES/examples/targets and release
 artifact; verify preservation and existing role authority. Prior installed-
 project rollout remains outstanding; this correction does not close it.
+
+## Harness Topology Update
+
+Owner selects a PACT 2 extension so the unchanged Prime -> Lead -> Worker
+authority works in single- and multi-harness deployments. Separate authority
+roles from operational functions (Watchdog is a function); keep Lead and its
+Watchdog function in a single harness; route wakes event-first with heartbeat
+fallback; publish Prime-facing Lead signals durably in existing STATE before
+notification; require an explicit Lead `ready` candidate; add an optional
+role-less Prime-side observer hook with key-based duplicate suppression. No new
+role, state-file type, runtime, scheduler or SPARC change. Preserve owner
+bindings and Spawn Boundaries. Owner reviews the result before it is pushed to
+a separate branch; the owner merges it. Commits carry no assistant attribution.
+
+Acceptance: scenarios A-K hold by contract walkthrough; templates, examples and
+generated targets agree; existing source validators and reference scenarios
+pass with actual exits; lightweight checks cover the new semantics.
 
 ## Next
 

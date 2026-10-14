@@ -10,19 +10,23 @@ status: canonical
 generated_from: /ai/pact/templates/hook.tpl.md
 generated_from_version: 1.3
 content_status: current-data
-updated: 2026-10-10 01:59:22 UTC+00:00
+updated: 2026-10-14 18:27:22 UTC+00:00
 
 ## TRIGGER
 
 An authorized host scheduler invokes the Lead heartbeat at WORKFLOW's
-declared cadence. This file records a portable prompt; it installs no timer,
-agent, or messaging permission. The host governs actual execution.
+declared `heartbeat_lead` cadence in the Lead's harness. It is the fallback of
+Lead's Watchdog function when native Worker completion events are missing or
+unreliable. This file records a portable prompt; it installs no timer, agent,
+or messaging permission. The host governs actual execution.
 
 ## INPUTS
 
-- [../../workflow/WORKFLOW.md](../../workflow/WORKFLOW.md) cadence and bindings
+- [../../workflow/WORKFLOW.md](../../workflow/WORKFLOW.md) topology, cadence,
+  and bindings
 - [../../context/state/TASKS.md](../../context/state/TASKS.md) and
-  [../../context/state/STATE.md](../../context/state/STATE.md)
+  [../../context/state/STATE.md](../../context/state/STATE.md), including any
+  new `prime_response` in the Gate Handoff
 - current slice, worker availability, validation, and record/delivery status
 
 ## SCRIPTS
@@ -33,21 +37,23 @@ None. Installation and deduplication belong to the authorized host scheduler.
 
 Portable prompt for an installed binding:
 
-> Resume the recorded Lead role for the current gate. Check active
-> reservations, returned worker diffs, and the ready pool; continue only assigned
-> work. Review covered results first. Keep independent light tasks moving,
-> serialize heavy checks, and verify slice records before authorized delivery.
-> Report one line to the Prime through an authorized channel: gate/slice,
-> workers running, latest delivered revision (or uncommitted), validation/blocker,
-> and resource evidence when measured. Hold at ready for Prime acceptance;
-> if it is unavailable, apply the declared StallCover policy. Stay quiet to the
-> owner on unchanged ticks; notify only for a meaningful change, completion,
-> failure, or required owner action.
+> Resume the recorded Lead role for the current gate. As its Watchdog, check
+> active reservations, returned and blocked Worker results, and the ready pool;
+> continue only assigned work. Review covered results first. Keep independent
+> light tasks moving, serialize heavy checks, and verify slice records before
+> authorized delivery. Act on any new `prime_response`. Record progress in
+> STATE; do not relay routine Worker or slice status to Prime. Wake Prime only
+> by publishing `escalation` or `ready` in the Gate Handoff, durably first and
+> pushed before notification in `multi` topology. Hold at ready for Prime
+> acceptance; if Prime is unavailable, apply the declared StallCover policy.
+> Stay quiet to the owner on unchanged ticks; notify only for a meaningful
+> change, completion, failure, or required owner action.
 
 ## OUTPUT
 
-A concise authorized status relay and recorded task progress; routine unchanged
-ticks produce no owner notification.
+Recorded task progress and, only for Prime-level events, a new Gate Handoff
+`seq` with its notification; routine unchanged ticks produce no Prime or owner
+notification.
 
 ## FAILURE
 
@@ -57,7 +63,7 @@ dispatch tasks, manufacture status, or install a replacement timer silently.
 
 ## BOUNDARIES
 
-The host owns runtime behavior and cadence. Relay requires the host's and
-user's applicable messaging authorization; Markdown registration grants none.
-A heartbeat does not permit default-branch delivery, gate acceptance, scope
-changes, or service management.
+The host owns runtime behavior and cadence. Notification requires the host's
+and user's applicable messaging authorization; Markdown registration grants
+none. A heartbeat does not permit default-branch delivery, gate acceptance,
+scope changes, or service management.

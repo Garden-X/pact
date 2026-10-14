@@ -5,8 +5,8 @@
 name: agents.tpl.md
 type: pact maintenance template
 for: AGENTS.md
-updated: 2026-10-14 06:23:51 UTC+00:00
-version: 3.3
+updated: 2026-10-14 18:27:22 UTC+00:00
+version: 3.4
 
 ## WHAT
 
@@ -132,6 +132,9 @@ The Execution Hierarchy pointer must distinguish model capability classes
 from execution roles and link portable Lead and Worker contracts.
 It must direct agents to WORKFLOW Spawn Boundaries for parent-issued limits,
 explicit role/parent/tier context, inheritance, escalation, and child autonomy.
+It must state that Watchdog and other operational functions are not roles,
+that harness or runtime parenthood confers no authority, and that agents report
+to their PACT parent role, with Prime-facing Lead signals recorded durably first.
 Host sub-agent configurations may bridge to these contracts without
 becoming competing rule authorities.
 
@@ -147,7 +150,7 @@ canonical_location: /ai/pact/agents/AGENTS.md
 layer: PACT / agent orientation
 status: canonical
 generated_from: /ai/pact/templates/agents.tpl.md
-generated_from_version: 3.3
+generated_from_version: 3.4
 content_status: current-data
 purpose: Orient agents inside the `/ai` container and keep SPARC project truth separate from PACT project maintenance.
 updated: YYYY-MM-DD HH:mm:ss UTC+00:00
@@ -446,6 +449,12 @@ belong in TASKS/STATE, not the package manifest or project MAP.
 Before spawning or acting as a child, read WORKFLOW's Spawn Boundaries. The
 parent supplies an explicit boundary contract and role/parent/tier context;
 inherit limits without widening and escalate conflicts to that parent.
+
+Watchdog, Coordinator, and other operational functions are not roles; a
+role-less Watchdog only observes and wakes. Harness membership and native
+runtime parenthood confer no authority. Workers report to Lead; Lead wakes
+Prime only for Prime-level events after recording them in STATE's Gate Handoff.
+See WORKFLOW's Functions, Harnesses, And Wake Routing.
 
 ## Hooks
 

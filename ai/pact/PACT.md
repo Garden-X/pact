@@ -482,6 +482,19 @@ scope and existing authority. Prime and Lead heartbeat prompts are portable
 records; actual host schedules and enforcement require an installed, verified
 binding. Markdown alone does not activate automation.
 
+The authority roles stay Prime (gate), Lead (slice), and Worker (task) in any
+deployment. Architect, Inspector, Coordinator, Watchdog, and Executor are
+operational functions, not roles; model identity, capability tier, role,
+function, and harness are separate. A `single` harness topology keeps the Lead
+layer, with Lead also acting as Watchdog for its Workers. A `multi` topology
+places Prime and Lead in different harnesses without resetting or widening
+inherited boundaries. Wakes are event-first with heartbeat fallback: Workers
+report to Lead, and Lead wakes Prime only for `escalation` or an explicit
+`ready` candidate recorded first in STATE's Gate Handoff. Message delivery is
+not the source of truth. The optional role-less
+[PrimeWatch](agents/hooks/PrimeWatch.md) observer only reads that record and
+wakes Prime once per `gate_id` + `seq` key.
+
 
 ## Shared Keep-Alive Registry
 
@@ -632,8 +645,8 @@ Hooks are registered in [workflow/WORKFLOW.md](workflow/WORKFLOW.md).
 Hooks have two classes: `pact_hook`, a Markdown workflow extension point owned
 by PACT, and `host_hook`, a hook owned by the agent host, IDE, or runtime.
 Host hooks are governed by the host and are registered in `WORKFLOW.md` for
-visibility only. The Execution Hierarchy heartbeats are host hooks of this
-kind.
+visibility only. The Execution Hierarchy heartbeats and the cross-harness
+`PrimeWatch` observer are host hooks of this kind.
 `SliceRecordsCheck` is the first shipped `pact_hook`; it runs before a slice is
 pushed to the gate branch.
 

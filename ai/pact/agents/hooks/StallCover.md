@@ -10,13 +10,16 @@ status: canonical
 generated_from: /ai/pact/templates/hook.tpl.md
 generated_from_version: 1.3
 content_status: current-data
-updated: 2026-10-10 19:23:24 UTC+00:00
+updated: 2026-10-14 18:27:22 UTC+00:00
 
 ## TRIGGER
 
-A role is unavailable through a reported session limit/error or the declared
-heartbeat's missed-reply condition while assigned work remains. Elapsed time is
-evidence of availability only; it is never approval or a role transfer.
+A role is unavailable through a reported session limit/error, a host-reported
+harness failure, or the declared heartbeat's missed-reply condition while
+assigned work remains. Evidence may arrive from the host or from
+[PrimeWatch](PrimeWatch.md), which only reports it. Elapsed time is evidence of
+availability only; it is never approval or a role transfer. Neither a
+Watchdog function nor a harness failure grants cover or acceptance authority.
 
 ## INPUTS
 
@@ -43,6 +46,9 @@ in the required daily log or task evidence when the project has no daily log.
 Results stay uncommitted and unreviewed until the Lead resumes and
 reviews them first; the Prime does not expand scope, rewrite briefs, plan
 new slices, or review product code. Wait when the ready pool is empty.
+When Prime and Lead use different harnesses, cover only when the covered
+results stay reachable for the returning Lead's review without a Git write this
+cover does not authorize; otherwise record the evidence and wait.
 
 ### Prime unavailable
 

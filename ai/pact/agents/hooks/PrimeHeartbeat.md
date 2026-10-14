@@ -10,22 +10,26 @@ status: canonical
 generated_from: /ai/pact/templates/hook.tpl.md
 generated_from_version: 1.3
 content_status: current-data
-updated: 2026-10-10 01:59:22 UTC+00:00
+updated: 2026-10-14 18:27:22 UTC+00:00
 
 ## TRIGGER
 
 An authorized host scheduler invokes the Prime heartbeat at WORKFLOW's
-declared cadence. This file records a portable prompt; no scheduler or runtime
-binding is installed by the Markdown file. Host behavior and availability
-govern the binding.
+declared `heartbeat_prime` cadence. It is a rare recovery fallback: Prime is
+normally woken by Lead's native event, a direct cross-harness event, or
+[PrimeWatch](PrimeWatch.md). `none` disables it. This file records a portable
+prompt; no scheduler or runtime binding is installed by the Markdown file. Host
+behavior and availability govern the binding.
 
 ## INPUTS
 
-- [../../workflow/WORKFLOW.md](../../workflow/WORKFLOW.md) cadence and bindings
+- [../../workflow/WORKFLOW.md](../../workflow/WORKFLOW.md) topology, cadence,
+  and bindings
 - [../../context/state/LOGIC-DRAFT.md](../../context/state/LOGIC-DRAFT.md)
-- [../../context/state/TASKS.md](../../context/state/TASKS.md) and
-  [../../context/state/STATE.md](../../context/state/STATE.md)
-- Lead status and gate record revisions through authorized channels
+- the `## Gate Handoff` block of
+  [../../context/state/STATE.md](../../context/state/STATE.md), as published on
+  the gate branch in `multi` topology
+- Lead availability evidence through authorized channels
 
 ## SCRIPTS
 
@@ -35,20 +39,21 @@ None. Installation and deduplication belong to the authorized host scheduler.
 
 Portable prompt for an installed binding:
 
-> Resume the recorded Prime role for this project and current gate. Read
-> WORKFLOW, the selected draft, active state, and new PACT/SPARC records. Keep
-> periodic review to records; flag actionable gaps to the Lead only
-> through an authorized channel. If the Lead is unavailable, apply
-> StallCover to its ready pool. When the gate is ready, use GateClose to inspect
-> every required acceptance result before a separate authorized delivery action.
-> Coordinate resources before heavy work. Preserve existing work and services.
-> Stay quiet on unchanged or non-actionable ticks; notify only for a meaningful
-> change, completion, failure, or required owner action.
+> Resume the recorded Prime role for this project and current gate. Read the
+> durable Gate Handoff. If `ready` or `escalation` has a `seq` that
+> `prime_response` has not answered, handle it: use GateClose for `ready`, or
+> decide the escalation in LOGIC-DRAFT, then record `prime_response`. If exact
+> evidence shows the Lead unavailable while gate work remains, apply StallCover.
+> Do not review slices or poll Workers between events, and never infer
+> readiness from silence or empty records. Coordinate resources before heavy
+> work. Preserve existing work and services. Stay quiet on unchanged or
+> non-actionable ticks; notify only for a meaningful change, completion,
+> failure, or required owner action.
 
 ## OUTPUT
 
-An actionable gate decision or recorded cover action; routine unchanged ticks
-produce no owner notification.
+An actionable gate decision or recorded cover action with its `prime_response`;
+routine unchanged ticks produce no owner notification.
 
 ## FAILURE
 

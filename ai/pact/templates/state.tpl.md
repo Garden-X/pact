@@ -5,8 +5,8 @@
 name: state.tpl.md
 type: pact maintenance template
 for: STATE.md
-updated: 2026-10-14 06:23:51 UTC+00:00
-version: 1.6
+updated: 2026-10-14 18:27:22 UTC+00:00
+version: 1.7
 
 ## WHAT
 
@@ -181,6 +181,45 @@ Reservations must identify claimed files or paths and access mode.
 
 Handoff must record status and notes needed by the next agent or session.
 
+### Gate Handoff
+
+An optional `## Gate Handoff` block is the durable Lead -> Prime record for the
+current gate, in both harness topologies. It reuses STATE instead of adding a
+file type; wake messages only point to it. Absent means `signal: working` with
+no Prime-facing publication. It is independent of the task status above:
+`ready` normally coexists with `clear`, and `escalation` with any status.
+
+Fields:
+
+- `gate_id`: the gate selected in `LOGIC-DRAFT.md`;
+- `seq`: handoff version, an integer Lead increments whenever it changes
+  `signal` or `candidate`; `gate_id` + `seq` is the notification key;
+- `signal`: `working`, `escalation`, or `ready`;
+- `candidate`: for `ready`, the exact revision Lead validated; otherwise `none`;
+- `branch`: the gate branch holding the candidate and this record;
+- `lead`: the Lead actor, naming its harness/session in `multi` topology;
+- `slices`, `validation`, `records`, `blockers`: for `ready`, compact
+  integration, Lead check, SliceRecordsCheck, and blocker state with pointers
+  to TASKS/evidence rather than copies;
+- `escalation`: for `escalation`, the exact Prime-level need, affected task IDs,
+  and the decision requested; otherwise `none`;
+- `recorded_at`: verified-UTC time of the latest Lead change;
+- `prime_response`: written only by Prime: `none`, or the answered `seq` with
+  `received`, `accepted`, `not-accepted`, or `decided`, plus an evidence or
+  LOGIC-DRAFT decision pointer.
+
+Lead owns every field except `prime_response`. `ready` declares that Lead's
+gate execution responsibility is complete: no active task object remains,
+TASKS holds no pending task of the gate, every selected slice is integrated and
+passed SliceRecordsCheck, Lead's fast checks passed on `candidate`, and later
+commits on `branch` change only STATE or TASKS records. These conditions
+are necessary but never sufficient; readiness exists only when Lead writes
+`ready`. Prime acts on an unanswered key, records its response, and confirms the
+candidate before GateClose. After `not-accepted` or `decided`, Lead resumes with
+`signal: working` and a new `seq`. When Prime advances the draft after
+acceptance, the block resets for the next gate; completed outcomes remain in
+TASKS Done.
+
 `STATE.md` must not:
 
 - contain accepted project truth;
@@ -208,7 +247,7 @@ layer: PACT / context / state
 status: active
 active_task: PACT-YYYYMMDD-001
 generated_from: /ai/pact/templates/state.tpl.md
-generated_from_version: 1.6
+generated_from_version: 1.7
 content_status: current-state
 updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 
@@ -290,3 +329,31 @@ handoff:
 
 Derive the top-level status from the task phases as above. The original bounded
 brief and test/baseline references remain in the object during handoff/resume.
+
+When Lead later finishes the gate's execution, STATE returns to `clear` and
+Lead publishes readiness in the same file. This block is the durable record a
+native wake, `PrimeWatch`, or Prime's fallback heartbeat points to; the earlier
+active object is not part of this later snapshot:
+
+```txt
+## Gate Handoff
+
+    gate_id: <selected gate id>
+    seq: 4
+    signal: ready
+    candidate: <full revision Lead validated>
+    branch: gate/<selected gate id>
+    lead: <Lead actor; harness/session in multi topology>
+    slices: all selected slices integrated and pushed; see TASKS Done
+    validation: Lead fast non-browser checks exited 0 on candidate; <evidence path>
+    records: SliceRecordsCheck pass on every outgoing slice
+    blockers: none
+    escalation: none
+    recorded_at: YYYY-MM-DD HH:mm:ss UTC+00:00
+    prime_response: none
+```
+
+An escalation uses the same block with `signal: escalation`,
+`candidate: none`, and an exact `escalation:` such as `Required scope expansion:
+<need>; blocked: <task ids>; decision requested: <choice>`. Prime answers with,
+for example, `prime_response: 5 decided - LOGIC-DRAFT.md / Decisions`.

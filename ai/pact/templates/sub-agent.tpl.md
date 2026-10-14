@@ -5,8 +5,8 @@
 name: sub-agent.tpl.md
 type: pact maintenance template
 for: reusable sub-agent role files
-updated: 2026-10-14 06:23:51 UTC+00:00
-version: 2.1
+updated: 2026-10-14 18:27:22 UTC+00:00
+version: 2.2
 
 ## WHAT
 
@@ -61,6 +61,12 @@ A reusable profile is not a dispatch contract. A child inherits the effective
 boundaries, may narrow them for descendants, and must obtain parent approval
 before widening. Preserve method autonomy within those boundaries.
 
+A profile names an authority role, never an operational function as a role.
+A Lead profile includes the Watchdog function for its Workers in any harness
+topology: Workers report to Lead, and Lead wakes Prime only for Prime-level
+events published durably in STATE's Gate Handoff. A Worker reports only to its
+Lead. A role-less Watchdog follows its hook, not a sub-agent profile.
+
 Active hires and their exact bindings belong in TASKS/STATE, not this package's
 manifest or the project's MAP. Do not create a reusable file merely to record
 a current session. Filenames use CapitalCase, for example DesignWorker.md.
@@ -88,7 +94,7 @@ effort: 75%
 model_binding: <owner-approved local binding>
 status: draft
 generated_from: /ai/pact/templates/sub-agent.tpl.md
-generated_from_version: 2.1
+generated_from_version: 2.2
 updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 
 ## PURPOSE
@@ -99,6 +105,9 @@ Coordinate one Prime-selected gate and prepare reviewed slices for acceptance.
 
 Own decomposition, TASKS/STATE, integration, and worker review within the selected
 draft. Hire the specialties required by each task with adequate tier/effort.
+Perform the Watchdog function for active Workers: process completions and
+blocks, keep the ready pool, and resolve what Lead authority allows without
+waking Prime.
 
 ## BOUNDARIES
 
@@ -128,7 +137,9 @@ delivery. Keep full gate acceptance with Prime.
 
 ## OUTPUTS
 
-Reviewed slices, updated task/state evidence, and the candidate acceptance handoff.
+Reviewed slices, updated task/state evidence, and the candidate acceptance handoff
+as an explicit `ready` (or Prime-level `escalation`) in STATE's Gate Handoff,
+recorded and, across harnesses, pushed before any Prime notification.
 
 ## HANDOFF
 
@@ -158,7 +169,7 @@ effort: 75%
 model_binding: <Lead-selected owner-approved local binding>
 status: draft
 generated_from: /ai/pact/templates/sub-agent.tpl.md
-generated_from_version: 2.1
+generated_from_version: 2.2
 updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 
 ## PURPOSE

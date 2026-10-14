@@ -9,13 +9,20 @@ status: active-draft
 generated_from: /ai/pact/templates/tasks.tpl.md
 generated_from_version: 1.10
 content_status: current-state
-updated: 2026-10-14 06:27:11 UTC+00:00
+updated: 2026-10-14 18:27:22 UTC+00:00
 
 ## Pending
 
 None.
 
 ## Done
+
+- PACT-20261014-002 - Extend PACT 2 for single- and multi-harness topologies.
+  trace: LOGIC-DRAFT.md / Harness Topology Update
+  outcome: Authority roles unchanged (Prime gate, Lead slice, Worker task). Operational functions (Architect, Inspector, Coordinator, Watchdog, Executor) separated from roles; harness/runtime parenthood confer no authority and boundaries cross harnesses inherited. `harness_topology: single` default keeps Lead + Watchdog; `multi` uses the durable STATE Gate Handoff (gate_id/seq/signal/candidate/prime_response) before any wake. Event-first routing table; explicit Lead `ready` only; new role-less PrimeWatch host hook with key-based dedup and host-owned delivered-key memory. Prime heartbeat is recovery fallback (default 2h; existing values preserved); Lead heartbeat no longer relays routine status. GateClose/StallCover read the durable handoff and cross-harness cover limits. No new role, state-file type, runtime, scheduler or SPARC change.
+  validation: Source validator exit0 (121 checks/195 links), reference scenarios exit0 (41), boundary checks exit0 (13), new harness checks exit0 (43; same checks on pre-change HEAD exit1 with 34 failures), git diff --check exit0. Scenarios A-K walked against WORKFLOW/hooks/state contract; observer model covers E-H/K dedup and lost-memory repeat. Review is Root in a separate pass, not independent. Evidence: ai/pact/cache/runs/2026-10-14T18-27-22Z--harness-topology/validation.
+  versions: workflow3.3, agents3.4, sub-agent2.2, state1.7; hook.tpl/tasks/logic-draft unchanged; package 2.0 retained.
+  delivery: uncommitted; owner reviews before push to a separate branch, owner merges. Owner dropped the dist ZIP refresh (2026-10-14); no archive rebuilt.
 
 - PACT-20261014-001 - Add owner-selected Spawn Boundaries and explicit execution context.
   trace: LOGIC-DRAFT.md / Spawn Boundaries Update

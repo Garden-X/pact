@@ -2,7 +2,7 @@
 
 > For: PACT 2.0
 > Purpose: install or verify the PACT project-maintenance layer
-> Updated: 2026-10-14 06:26:28 UTC+00:00
+> Updated: 2026-10-14 18:27:22 UTC+00:00
 
 ## Purpose
 
@@ -185,6 +185,27 @@ invent approval or dispatch an incomplete child assignment. Root tasks need
 no parent-issued contract. Existing role powers, bindings, reservations and
 acceptance remain authoritative. Profiles do not replace a dispatch contract.
 
+## Harness-topology migration
+
+Sync WORKFLOW 3.3, AGENTS 3.4, state 1.7 and sub-agent 2.2 together, add the
+`PrimeWatch` hook contract, and refresh the PrimeHeartbeat, LeadHeartbeat,
+GateClose and StallCover contracts. Authority roles, ownership, boundaries and
+explicit owner model/effort bindings do not change.
+
+- Add `harness_topology: single` and `heartbeat_watch: none` unless the owner
+  declares a multi-harness deployment. Single-harness projects need no other
+  configuration; Lead keeps the Lead layer and the Watchdog function.
+- Preserve existing `heartbeat_prime` and `heartbeat_lead` values. Under
+  event-first routing the Prime heartbeat is a recovery fallback; the owner
+  may lengthen it or set `none`, but the migration does not change it.
+- Register PrimeWatch as `unconfigured` until a host binding is installed and
+  verified. Its executor is role-less; never bind it as Lead or Prime.
+- Existing STATE needs no Gate Handoff block until Lead publishes a
+  Prime-facing signal. Do not infer `ready` for an in-flight gate from its
+  current records; Lead publishes it explicitly with the validated candidate.
+- Lead heartbeat prompts stop relaying routine status to Prime. Host
+  schedules, channels and delivered-key memory remain host configuration.
+
 ## Required PACT Package
 
 Verify that `/ai/pact` contains:
@@ -353,16 +374,20 @@ services or rewriting working launch commands.
       `workflow.tpl.md` if it was installed as a `metadata-only` seed, or is
       already shipped as `status: canonical` with `content_status:
       current-data`.
-- [ ] WORKFLOW is synchronized with workflow.tpl.md 3.1 or newer and declares
+- [ ] WORKFLOW is synchronized with workflow.tpl.md 3.3 or newer and declares
       Prime, Lead, Worker roles; High/Middle/Light tiers; percentage efforts;
-      gate/heartbeat/registry/resource fields; ready pool and recovery policy.
+      gate/heartbeat/registry/resource fields; ready pool and recovery policy;
+      harness topology and event-first wake routing.
+- [ ] Watchdog and other operational functions are not roles. Prime-facing
+      Lead signals are recorded in STATE Gate Handoff before any notification;
+      readiness is only Lead's explicit `ready` with a candidate.
 - [ ] Prime Architect and Inspector both use High; their model bindings may
       match or differ. Explicit owner models and effective efforts are preserved.
 - [ ] Lead selects the Worker specialty, adequate tier, model binding, and
       effort for each brief; TASKS/STATE own assignments. No fixed Worker files
       or manifest/MAP roster are required.
-- [ ] SliceRecordsCheck, GateClose, StallCover, PrimeHeartbeat, and LeadHeartbeat
-      contracts are discoverable through WORKFLOW with matching hook filenames.
+- [ ] SliceRecordsCheck, GateClose, StallCover, PrimeHeartbeat, LeadHeartbeat,
+      and PrimeWatch contracts are discoverable through WORKFLOW with matching hook filenames.
 - [ ] Hook rows show actual manual/unconfigured/bound status. Automatic
       scheduling and executable enforcement are not inferred from Markdown.
 - [ ] Required acceptance results identify their revision/environment and all
@@ -421,8 +446,8 @@ Upgrade the contract and complete example structure, then reapply the target's
 actual settings and state. PACT 2.0 is the package version; do not reset template
 versions to 2.0 or overwrite target files with this repository's operational data.
 
-1. Synchronize WORKFLOW from workflow.tpl.md 3.1 and AGENTS from agents.tpl.md
-   3.2. Preserve local hooks, file_guard, skill_log, resource limits, owner
+1. Synchronize WORKFLOW from workflow.tpl.md 3.3 and AGENTS from agents.tpl.md
+   3.4. Preserve local hooks, file_guard, skill_log, resource limits, owner
    bindings, and project-specific rules. Preserve an existing enabled
    `worker_fix_target` percentage; `none` disables the diagnostic and is the
    fresh-install default. Report unresolved conflicts. A metric threshold
@@ -472,9 +497,9 @@ versions to 2.0 or overwrite target files with this repository's operational dat
    A single fixed level or unavailable control has no inferred percentage;
    preserve it and mark the mapping fixed/unsupported until a requested
    percentage is chosen. Retire the old native-effort keys after preservation.
-5. Refresh reusable profiles from sub-agent.tpl.md 2.0, drafts from
-   logic-draft.tpl.md 1.5, task lists from tasks.tpl.md 1.9, and active objects
-   from state.tpl.md 1.5. Preserve selected scope, completed evidence, active
+5. Refresh reusable profiles from sub-agent.tpl.md 2.2, drafts from
+   logic-draft.tpl.md 1.5, task lists from tasks.tpl.md 1.10, and active objects
+   from state.tpl.md 1.7. Preserve selected scope, completed evidence, active
    actors/reservations, and pending work. Add specialty/binding/effort details to
    actual Worker assignments; do not fabricate hires or measurements.
    Preserve the exact bounded `brief`, scope, reservations, validation, and
@@ -487,7 +512,8 @@ versions to 2.0 or overwrite target files with this repository's operational dat
    continuing. Do not invent instructions, erase progress, or duplicate the
    active task in Pending. Prime alone advances the selected gate after the
    current gate's acceptance; Lead's Next preparation is planning only.
-6. Refresh hooks from hook.tpl.md 1.3 and the shipped workflow contracts.
+6. Refresh hooks from hook.tpl.md 1.3 and the shipped workflow contracts,
+   including PrimeWatch and the harness-topology migration above.
    Inspect every required acceptance exit status on the candidate revision,
    including failures masked by later commands. Merge separately after reading
    results, only when authorized. Bind/verify host execution separately;

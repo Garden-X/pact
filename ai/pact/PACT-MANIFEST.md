@@ -4,7 +4,7 @@
 > Version: 2.0
 > Status: canonical package manifest
 > Purpose: describe the installed PACT maintenance environment
-> Updated: 2026-10-10 22:10:14 UTC+00:00
+> Updated: 2026-10-14 18:27:22 UTC+00:00
 
 ## Purpose
 
@@ -132,8 +132,9 @@ PACT governs:
 - workflow;
 - the execution roles declared in
   [workflow/WORKFLOW.md](workflow/WORKFLOW.md);
-- hooks (records, gate acceptance, stall recovery, and portable heartbeat
-  prompts; host scheduling is configured separately);
+- hooks (records, gate acceptance, stall recovery, portable heartbeat
+  prompts, and the optional cross-harness PrimeWatch observer; host scheduling
+  is configured separately);
 - agent rules;
 - skills;
 - nicknames;
@@ -249,6 +250,7 @@ Hook contracts (triggers and activation are registered in WORKFLOW):
 - [agents/hooks/StallCover.md](agents/hooks/StallCover.md)
 - [agents/hooks/PrimeHeartbeat.md](agents/hooks/PrimeHeartbeat.md)
 - [agents/hooks/LeadHeartbeat.md](agents/hooks/LeadHeartbeat.md)
+- [agents/hooks/PrimeWatch.md](agents/hooks/PrimeWatch.md)
 
 PACT maintenance templates:
 

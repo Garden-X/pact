@@ -8,9 +8,9 @@ layer: PACT / context / state
 status: active
 active_task: PACT-20261010-009
 generated_from: /ai/pact/templates/state.tpl.md
-generated_from_version: 1.6
+generated_from_version: 1.7
 content_status: current-state
-updated: 2026-10-14 06:27:11 UTC+00:00
+updated: 2026-10-14 18:27:22 UTC+00:00
 
 ## Active Task
 
@@ -40,6 +40,8 @@ handoff: Reuse current guarded candidates and evidence; Tarot local-only. Do not
 Delivery progress: Source/extracted validators each exited 0 (119 checks/185 links), source/extracted reference scenarios each exited 0 (41 checks), archive audit exited 0 (16 checks/47 files). Current ZIP SHA256 ddb7072d23ab57ecb9d126d41ddbef47978c65d73c81376e0c564936d73b8e80. Nine guarded applications exited 0; wrong-plan-hash negatives each exited 1 before mutation, after/preserved hashes checked. Six isolated publication copies, Tarot local copy and two fixtures updated; primary working copies and three duplicate copies pending. Native project acceptance checks, commits, pushes and merges pending. No service/SPARC truth change; no independent final helper review claimed.
 
 Source acceptance (2026-10-11 16:34:40 UTC+00:00): Root in the Prime Inspector function reviewed clean candidate 15b7d449533e90e49773aab78666aa1e39602a57, scope/records and the contract walkthrough. Source/extracted validators each exit 0 with119 checks/185 links; source/extracted preservation scenarios each exit0 with41 checks; archive audit exit0 with16 checks/47 files and unchanged dist checksum. These are documentation/reference checks, not host-runtime tests. Native commit/push hygiene passed. Fetched origin/main95f50814aef873409c4b9ad4ba67982538a15cfe is an ancestor (exit0); committed diff hygiene exit0. Source release is accepted for the separately authorized fast-forward delivery to main. This acceptance covers the PACT source only; task009 and the installed-project rollout remain active. Formal tag/release publication remains separate.
+
+Owner decision 2026-10-14: refreshed dist ZIP packaging is dropped from 009; the existing local ZIP is not a current release artifact.
 
 Recovery cache: ai/pact/cache/runs/2026-10-14T06-21-11Z--spawn-boundaries/CACHE.md; earlier delivery cache remains required for unfinished rollout.
 
