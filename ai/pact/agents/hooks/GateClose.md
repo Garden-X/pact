@@ -10,7 +10,7 @@ status: canonical
 generated_from: /ai/pact/templates/hook.tpl.md
 generated_from_version: 1.3
 content_status: current-data
-updated: 2026-10-14 19:55:32 UTC+00:00
+updated: 2026-10-14 22:11:09 UTC+00:00
 
 ## TRIGGER
 
@@ -73,7 +73,10 @@ order; never merge first and record the answer later.
    recovers from the durable answer.
 6. Accepted, when version-control actions are authorized: fetch again before
    delivery.
-7. Verify that no Gate Handoff revision newer than the answered `seq` exists;
+7. Identify the exact answer commit and verify that it carries the canonical
+   trailer `PACT-Answers: <gate_id>#<seq>` for the answered key (WORKFLOW
+   Answer marker and closure). Verify that no Gate Handoff revision newer than
+   the answered `seq` exists;
    that the delivery tip (the answer commit plus only later record commits)
    descends from `candidate`; that
    `git diff --name-only <candidate> <delivery-tip>` lists only PACT state and
@@ -85,11 +88,13 @@ order; never merge first and record the answer later.
 8. Merge in a separate later action: fast-forward `default_branch` exactly to
    that verified delivery tip and push it; do not combine result inspection
    with merge in one shell command.
-9. Verify that the push succeeded: the fetched remote `default_branch` now
-   contains the answer commit. Only this closes the gate; the answer commit
-   and the delivered tip in default history record both revisions.
-10. Then any required daily-log entry and Prime's advance of LOGIC-DRAFT to a
-    preselected next gate may follow on `default_branch`.
+9. Closure check: fetch and test whether the answer commit is reachable from
+   remote `default_branch` (for example
+   `git merge-base --is-ancestor <answer> origin/<default_branch>`). Reachable
+   means the gate is closed; nothing else is written to prove it.
+10. Independent lifecycle updates, such as a required daily-log entry or
+    Prime's advance of LOGIC-DRAFT to a preselected next gate, may follow on
+    `default_branch`; they are not closure evidence.
 
 ### Delivery recovery
 
@@ -115,15 +120,13 @@ automatically.
 
 ## OUTPUT
 
-- `accepted`: all required checks passed on the identified candidate, the
-  answer was committed before delivery, and the listed authorized merge, push,
-  and record actions actually completed; closed only when the answer commit
-  is reachable from remote `default_branch`;
+- `accepted`: all required checks passed on the identified candidate and the
+  answer was committed before delivery. Report the derived closure: `closed`
+  when the answer commit is reachable from remote `default_branch`, otherwise
+  `delivery pending` (for example missing authorization or a failed push),
+  which entry path B resumes. Neither is stored;
 - `not accepted`: failed, missing, stale, or incomplete evidence and next work,
-  durably answered on the gate branch;
-- `awaiting authorized delivery`: the `accepted` answer is recorded but a
-  delivery action lacks authorization or failed; the gate stays open and
-  recoverable through entry path B.
+  durably answered on the gate branch.
 
 ## FAILURE
 

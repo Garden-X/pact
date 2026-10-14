@@ -10,7 +10,7 @@ generated_from: /ai/pact/templates/workflow.tpl.md
 generated_from_version: 3.3
 content_status: current-data
 purpose: Define how agents maintain project work without bypassing SPARC project truth.
-updated: 2026-10-14 20:40:58 UTC+00:00
+updated: 2026-10-14 22:11:09 UTC+00:00
 
 ## Lifecycle
 
@@ -293,16 +293,10 @@ Gate and slice:
   and fetches before each slice to read new commits from the owner or other
   agents. If `default_branch` moves, the Lead merges it into the gate
   branch instead of rewriting pushed history.
-- The Prime closes the gate by fast-forwarding `default_branch` to the
-  verified gate tip after the full acceptance suite passes, the records are
-  reviewed, and the durable acceptance answer is committed on the gate branch,
-  in the order of the `GateClose` hook. Read every required command's exit
-  status against the revision being accepted, the handoff `candidate`:
-  missing, failed, killed, or timed-out checks prevent closure. A final
-  successful command does not erase an earlier failure. The delivered tip may
-  differ from that candidate only in PACT state and decision records, including
-  the acceptance answer (see Candidate identity and Gate close order). Merging is a separate action after the results have been
-  inspected. Among agents, only the Prime writes to `default_branch`; the
+- The Prime closes the gate through the `GateClose` hook: acceptance must
+  pass on the exact handoff `candidate`, and the answer commit is then
+  fast-forwarded into `default_branch` as a separate action (see Answer
+  marker and closure). Among agents, only the Prime writes to `default_branch`; the
   owner may commit directly, and agents fetch and read those commits.
 - Design questions the owner has delegated are decided by the Lead and
   recorded in the project's decision log; they do not block the gate.
@@ -554,8 +548,8 @@ answered key:
 
 Prime answers only the newest published revision; a superseded `seq` is never
 answered. A Prime decision commit changes only PACT state records
-(`/ai/pact/context/state/`), carries the trailer
-`PACT-Answers: <gate_id>#<seq>`, and is based on a freshly fetched gate-branch
+(`/ai/pact/context/state/`), carries the canonical answer trailer (below), and
+is based on a freshly fetched gate-branch
 tip whose newest handoff is that `seq`. Push it without force. A rejected push
 means the other harness moved: fetch, read every new commit, and re-evaluate,
 answering the newest revision on the new tip; never merge or rebase blindly
@@ -566,38 +560,22 @@ without altering their entries, pushes without force, and on rejection
 fetches, reads, integrates, and re-checks any unpublished revision. Lead acts
 on a decision only from its durable record; a message only points to it.
 
-Candidate identity: the handoff `candidate` is the exact implementation
-revision Lead validated and Prime's acceptance checks run on. Commits after it
-may change only PACT state and decision records under
-`/ai/pact/context/state/`. Before delivery, Prime proves with
-`git diff --name-only <candidate> <delivery-tip>` that only those records
-differ, and records both revisions. Any implementation, configuration, runtime,
-or product change after `candidate` invalidates readiness; Lead must publish a
-new candidate. The delivered tip is the accepted candidate plus allowed record
-commits plus the durable acceptance answer.
+Answer marker and closure. A Prime decision commit carries exactly one
+canonical trailer, `PACT-Answers: <gate_id>#<seq>`, naming the gate and the
+handoff revision it answers. The trailer is the answer's identity; STATE, TASKS
+and other records do not repeat it. After an `accepted` answer, the Git graph
+is the delivery truth:
 
-Gate close order: durable decision precedes delivery. Prime fetches and
-confirms the newest unanswered `ready` revision; runs every acceptance check on
-exactly `candidate`; inspects all results; decides; records the decision in a
-record-only `PACT-Answers` commit pushed to the gate branch without force; fetches again and verifies that no newer handoff
-revision exists, that the tip descends from `candidate`, and that the path diff
-is records-only; then fast-forwards `default_branch` exactly to that verified
-tip; and verifies that the remote `default_branch` now contains the answer
-commit. A not-accepted decision is committed and pushed the same way before
-Lead is notified, and nothing merges. If a newer
-handoff appears before the fast-forward, the earlier answer does not close the
-gate: reread and re-evaluate. Never merge then record the answer later.
+- answer commit not reachable from `default_branch`: delivery pending;
+- answer commit reachable from `default_branch`: gate closed.
 
-Accepted is not delivered. The decision (`accepted` or `not-accepted`) is
-recorded; delivery is derived from Git: the gate is closed only when the
-accepted answer commit is reachable from the remote `default_branch`. An
-`accepted` answer whose commit is not yet reachable is a pending delivery, so
-durable state distinguishes accepted-but-undelivered from closed after any
-crash or restart. `PACT-Answers` alone never proves closure. Lead does not
-treat `accepted` as closure, and the next gate starts only after closure and
-Prime's advance of LOGIC-DRAFT. Recovery of a pending delivery follows
-GateClose without rerunning acceptance when candidate, evidence, and branches
-are unchanged.
+Both conditions are derived, never stored; no delivery, completion or
+recovery record exists or is needed to prove closure. The handoff `candidate`
+is exact: commits after it may change only PACT state records under
+`/ai/pact/context/state/`. Lead does not treat `accepted` as closure; the next
+gate starts only after closure and Prime's advance of LOGIC-DRAFT.
+[GateClose](../agents/hooks/GateClose.md) owns the acceptance and delivery
+procedure.
 
 Watchdog function:
 

@@ -5,7 +5,7 @@
 name: state.tpl.md
 type: pact maintenance template
 for: STATE.md
-updated: 2026-10-14 19:55:32 UTC+00:00
+updated: 2026-10-14 22:11:09 UTC+00:00
 version: 1.7
 
 ## WHAT
@@ -222,7 +222,7 @@ Worker results, and this block. Prime never writes this block and does not
 perform Lead execution-state maintenance. When answering a Prime-facing
 revision, Prime may write only the minimum authority-decision entry in the
 artifact that owns the affected authority or contract, in a record-only
-commit with the trailer `PACT-Answers: <gate_id>#<seq>` (see WORKFLOW Writers on the gate branch). A
+commit with the trailer `PACT-Answers: <gate_id>#<seq>` (see WORKFLOW Answer marker and closure). A
 boundary widening becomes one appended authority-decision entry in the
 affected task's `boundary_contract`, touching no other field and leaving
 LOGIC-DRAFT unchanged; a gate scope, acceptance or

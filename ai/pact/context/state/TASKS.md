@@ -9,13 +9,19 @@ status: active-draft
 generated_from: /ai/pact/templates/tasks.tpl.md
 generated_from_version: 1.10
 content_status: current-state
-updated: 2026-10-14 19:55:32 UTC+00:00
+updated: 2026-10-14 22:11:09 UTC+00:00
 
 ## Pending
 
 None.
 
 ## Done
+
+- PACT-20261014-008 - Complete the gate-closure simplification.
+  trace: LOGIC-DRAFT.md / Harness Topology Correction (owner simplification)
+  outcome: WORKFLOW defines the canonical answer marker once (one trailer PACT-Answers: <gate_id>#<seq>, the answer identity, not repeated in STATE/TASKS) and the closure rule: after accepted, answer commit not reachable from default_branch = delivery pending, reachable = gate closed; both derived, never stored. Removed WORKFLOW Candidate identity, Gate close order and Accepted-is-not-delivered prose and the duplicated exit-status rules (GateClose owns them). GateClose step 7 identifies the answer commit and verifies its trailer; step 9 is the reachability closure check; outputs are accepted (derived closed or delivery pending) or not accepted, without a persistent awaiting-delivery state.
+  validation: validator exit0 (121), scenarios exit0 (41), boundaries exit0 (13), harness exit0 (59), close exit0 (13), delivery exit0 (12), trigger exit0 (10); git diff --check exit0; obsolete-term search over protocol files exit1 (no matches). Root self-review, not independent.
+  delivery: committed to gate/PACT-Harness for owner review; no main merge.
 
 - PACT-20261014-007 - Occam simplification: derived delivery, trailer-only answers.
   trace: LOGIC-DRAFT.md / Harness Topology Correction (owner simplification)
