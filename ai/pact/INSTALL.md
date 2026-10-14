@@ -2,7 +2,7 @@
 
 > For: PACT 2.0
 > Purpose: install or verify the PACT project-maintenance layer
-> Updated: 2026-10-14 19:16:25 UTC+00:00
+> Updated: 2026-10-14 19:39:23 UTC+00:00
 
 ## Purpose
 
@@ -217,6 +217,11 @@ explicit owner model/effort bindings do not change.
   only under `/ai/pact/context/state/`. GateClose commits the acceptance
   answer on the gate branch, re-verifies the tip, and only then fast-forwards
   the default branch.
+- Refresh LOGIC-DRAFT from logic-draft.tpl.md 1.6: `## Acceptance` entries
+  keep decision and delivery state apart (`accepted` + `delivery: pending`
+  until the answer commit is reachable from the default branch, then
+  `delivery: complete` with `delivery_tip`). Existing acceptance prose stays;
+  do not backfill invented entries for already closed gates.
 - Treat existing `lead_tier`/`worker_tier_default` values as routing hints;
   do not add a Watchdog tier field. Preserve explicit owner model bindings.
 
@@ -513,7 +518,7 @@ versions to 2.0 or overwrite target files with this repository's operational dat
    preserve it and mark the mapping fixed/unsupported until a requested
    percentage is chosen. Retire the old native-effort keys after preservation.
 5. Refresh reusable profiles from sub-agent.tpl.md 2.2, drafts from
-   logic-draft.tpl.md 1.5, task lists from tasks.tpl.md 1.10, and active objects
+   logic-draft.tpl.md 1.6, task lists from tasks.tpl.md 1.10, and active objects
    from state.tpl.md 1.7. Preserve selected scope, completed evidence, active
    actors/reservations, and pending work. Add specialty/binding/effort details to
    actual Worker assignments; do not fabricate hires or measurements.

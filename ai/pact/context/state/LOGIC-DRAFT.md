@@ -9,9 +9,9 @@ status: selected
 owner_role: Prime
 gate_id: PACT-2.0
 generated_from: /ai/pact/templates/logic-draft.tpl.md
-generated_from_version: 1.5
+generated_from_version: 1.6
 content_status: current-state
-updated: 2026-10-14 19:16:25 UTC+00:00
+updated: 2026-10-14 19:39:23 UTC+00:00
 
 ## Selected Logic
 
@@ -142,6 +142,11 @@ delivery tip and fast-forwarding the default branch; a not-accepted answer is
 pushed before Lead is notified and nothing merges; a newer handoff before the
 fast-forward voids the earlier close. Lead owns mutable execution state;
 Prime's writes are a narrow authority-decision exception. No redesign.
+
+Delivery-state correction: accepted is not delivered. LOGIC-DRAFT Acceptance
+entries carry decision and delivery state (logic-draft 1.6); a gate closes
+only when the answer commit is reachable from the default branch; PrimeWatch
+and the Prime heartbeat recover `accepted` + `delivery: pending` once per key.
 
 ## Next
 

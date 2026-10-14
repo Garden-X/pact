@@ -10,7 +10,7 @@ status: canonical
 generated_from: /ai/pact/templates/hook.tpl.md
 generated_from_version: 1.3
 content_status: current-data
-updated: 2026-10-14 18:49:23 UTC+00:00
+updated: 2026-10-14 19:39:23 UTC+00:00
 
 ## TRIGGER
 
@@ -37,6 +37,9 @@ Read-only, and only what the current gate needs:
   [../../context/state/STATE.md](../../context/state/STATE.md) on the gate
   branch or the declared shared location, and whether a gate-branch commit
   carries `PACT-Answers: <gate_id>#<seq>` for it
+- the LOGIC-DRAFT `## Acceptance` entries on the gate branch and on
+  `default_branch`, to see `accepted` + `delivery: pending` without a
+  matching `delivery: complete`
 - host-owned delivered-key and open-incident memory, outside PACT records
 - host-reported Lead/harness failure evidence, when the host exposes it
 
@@ -52,7 +55,11 @@ Portable prompt for an installed binding:
 > classify, and wake. Fetch read-only and read the newest published Gate
 > Handoff revision. Wake Prime through the authorized channel only when its
 > `signal` is `ready` or `escalation`, no commit carries `PACT-Answers` for its
-> `gate_id#seq`, and that key differs from the last delivered key. A published
+> `gate_id#seq`, and that key differs from the last delivered key. Also wake
+> Prime once per delivery key `gate_id#seq@candidate:pending` when an
+> `accepted` entry has `delivery: pending` and `default_branch` has no
+> `delivery: complete` entry for that key: an existing `PACT-Answers` does not
+> mean the gate is closed. A published
 > revision is immutable, so a changed request always has a new `seq`; never
 > compare payload text to invent a wake. For Lead or harness unavailability
 > while gate work remains, form the incident key from the gate, affected role
@@ -67,7 +74,8 @@ Portable prompt for an installed binding:
 
 ## OUTPUT
 
-At most one Prime wake per new handoff key or incident key, naming the durable
+At most one Prime wake per new handoff key, delivery key, or incident key,
+naming the durable
 record or exact evidence; no output on unchanged ticks. The host updates its
 memory only after successful delivery.
 

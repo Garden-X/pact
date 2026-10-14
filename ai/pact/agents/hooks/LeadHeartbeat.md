@@ -10,7 +10,7 @@ status: canonical
 generated_from: /ai/pact/templates/hook.tpl.md
 generated_from_version: 1.3
 content_status: current-data
-updated: 2026-10-14 19:16:25 UTC+00:00
+updated: 2026-10-14 19:39:23 UTC+00:00
 
 ## TRIGGER
 
@@ -52,7 +52,9 @@ Portable prompt for an installed binding:
 > topology. Any material change to a published revision is the next `seq`.
 > Push without force; on rejection, fetch, read, integrate, and re-check.
 > Hold at ready for Prime acceptance; if Prime is unavailable, apply the
-> declared StallCover policy.
+> declared StallCover policy. `accepted` is not closure: hold until the answer
+> commit is reachable from `default_branch` and Prime advances LOGIC-DRAFT;
+> resume from a durable `not-accepted` answer.
 > Stay quiet to the owner on unchanged ticks; notify only for a meaningful
 > change, completion, failure, or required owner action.
 

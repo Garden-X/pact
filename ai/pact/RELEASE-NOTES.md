@@ -2,7 +2,7 @@
 
 Title: improved workflow and project syncronization
 
-updated: 2026-10-14 19:16:25 UTC+00:00
+updated: 2026-10-14 19:39:23 UTC+00:00
 status: prepared for release
 
 PACT 2.0 makes coordination policy portable through template RULES and full
@@ -39,7 +39,10 @@ EXAMPLE sections, with synchronized installed entry files and migration guidance
   narrow authority-decision entries. Acceptance names the exact candidate; the
   delivered tip may differ from it only in PACT state records. GateClose makes
   the acceptance answer durable on the gate branch before it fast-forwards the
-  default branch.
+  default branch. Accepted is not delivered: `accepted` + `delivery: pending`
+  stays recoverable Prime work until the answer commit is reachable from the
+  default branch, then `delivery: complete` is recorded; PrimeWatch and the
+  Prime heartbeat wake for a pending delivery once per key.
 - The optional role-less PrimeWatch host hook observes the durable handoff
   across harnesses and wakes Prime once per handoff key or stable incident key.
   It has no Prime or Lead authority; dedup memory and schedules stay host-owned.
@@ -92,7 +95,7 @@ existing versions; no unrelated contract change is required for this release.
 | sub-agent.tpl.md | 2.2 |
 | state.tpl.md | 1.7 |
 | tasks.tpl.md | 1.10 |
-| logic-draft.tpl.md | 1.5 |
+| logic-draft.tpl.md | 1.6 |
 | hook.tpl.md | 1.3 |
 | keep-alive.tpl.md | 1.1 |
 | ideas.tpl.md | 1.2 |

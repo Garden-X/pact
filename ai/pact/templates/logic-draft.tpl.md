@@ -5,8 +5,8 @@
 name: logic-draft.tpl.md
 type: pact maintenance template
 for: LOGIC-DRAFT.md
-updated: 2026-10-10 01:59:22 UTC+00:00
-version: 1.5
+updated: 2026-10-14 19:39:23 UTC+00:00
+version: 1.6
 
 ## WHAT
 
@@ -69,6 +69,27 @@ with a scope, acceptance conditions, and dependencies. It is a bounded lookahead
 (normally one to three gates), not a worker task list. Empty lookahead means no
 next gate has been selected; agents must not invent one during a stall.
 
+`## Acceptance` also holds Prime's durable acceptance decisions for the gate,
+one entry per answered handoff key, so decision state and delivery state stay
+distinct. `accepted` never means closed:
+
+- `answers: <gate_id>#<seq>`, `decision` (`accepted` or `not-accepted`),
+  `candidate` (the exact accepted implementation revision), and an evidence
+  pointer;
+- for `accepted`, `delivery: pending` with `delivery_tip: none` in the
+  answer commit on the gate branch; after a verified fast-forward, a later
+  record-only commit on `default_branch` appends `delivery: complete` with
+  `delivery_tip` naming the delivered revision;
+- for `not-accepted`, `delivery: not-applicable`.
+
+The gate is closed when the accepted answer commit is reachable from the
+remote `default_branch`. The `delivery: complete` entry confirms that fact in
+delivered history; if it is missing while the answer commit is reachable, the
+gate is delivered and only its confirmation record is pending. While the
+answer commit is not reachable, `accepted` + `delivery: pending` remains
+Prime-level work. Lead and Next activation never treat `accepted` alone as
+closure.
+
 An optional `## History` keeps short superseded-selection summaries and
 pointers to their evidence or preserved versions. Do not copy old drafts
 wholesale or move execution history into the current draft. Empty generated
@@ -97,7 +118,7 @@ canonical_location: /ai/pact/context/state/LOGIC-DRAFT.md
 layer: PACT / context / state
 status: selected
 generated_from: /ai/pact/templates/logic-draft.tpl.md
-generated_from_version: 1.5
+generated_from_version: 1.6
 content_status: current-state
 owner_role: Prime
 gate_id: <project-specific gate id>
@@ -145,3 +166,22 @@ None.
 
 None.
 ```
+
+Acceptance decision entries in `## Acceptance`, in the order they are written:
+
+```txt
+answers: <gate_id>#7
+decision: accepted
+candidate: <full accepted implementation revision>
+evidence: <acceptance evidence path>
+delivery: pending
+delivery_tip: none
+
+answers: <gate_id>#7
+delivery: complete
+delivery_tip: <revision default_branch was fast-forwarded to>
+```
+
+The first entry is the `PACT-Answers` commit on the gate branch; the second is
+the later record-only commit on `default_branch`. A rejected revision records
+`decision: not-accepted`, its evidence, and `delivery: not-applicable`.

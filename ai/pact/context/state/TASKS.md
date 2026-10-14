@@ -9,13 +9,20 @@ status: active-draft
 generated_from: /ai/pact/templates/tasks.tpl.md
 generated_from_version: 1.10
 content_status: current-state
-updated: 2026-10-14 19:16:25 UTC+00:00
+updated: 2026-10-14 19:39:23 UTC+00:00
 
 ## Pending
 
 None.
 
 ## Done
+
+- PACT-20261014-005 - Separate acceptance decision from gate delivery.
+  trace: LOGIC-DRAFT.md / Harness Topology Correction (delivery-state correction)
+  outcome: LOGIC-DRAFT Acceptance entries (logic-draft 1.6) record answers/decision/candidate/evidence plus delivery state: accepted answer commit carries delivery: pending, delivery_tip: none; not-accepted carries delivery: not-applicable. A gate closes only when the accepted answer commit is reachable from remote default_branch (verified after the push); a later record-only default-branch entry adds delivery: complete with delivery_tip. GateClose has 11 steps plus Delivery recovery (no acceptance rerun when candidate/evidence/branches unchanged; record-only completion when already reachable; re-evaluate on newer handoff, non-record path, or moved default). PrimeWatch wakes once per delivery key gate#seq@candidate:pending; Prime heartbeat recovers it; Lead holds until closure and Prime's LOGIC-DRAFT advance.
+  validation: Source validator exit0 (121/195 links), scenarios exit0 (41), boundaries exit0 (13), harness exit0 (59; two assertions repointed to the new GateClose wording), close exit0 (13), new delivery checks exit0 (13); delivery checks on ce09127 exit1 with 12 failures incl. crash-after-answer. git diff --check exit0. Root self-review, not independent.
+  versions: logic-draft.tpl 1.5 -> 1.6 (LOGIC-DRAFT target synced); other branch template versions unchanged.
+  delivery: committed to gate/PACT-Harness for owner review; no main merge.
 
 - PACT-20261014-004 - Fix GateClose ordering and clarify writer ownership.
   trace: LOGIC-DRAFT.md / Harness Topology Correction (final owner correction)

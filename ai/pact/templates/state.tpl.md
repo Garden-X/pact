@@ -5,7 +5,7 @@
 name: state.tpl.md
 type: pact maintenance template
 for: STATE.md
-updated: 2026-10-14 19:16:25 UTC+00:00
+updated: 2026-10-14 19:39:23 UTC+00:00
 version: 1.7
 
 ## WHAT
@@ -228,8 +228,9 @@ boundary widening becomes one appended authority-decision entry in the
 affected task's `boundary_contract`, touching no other field and leaving
 LOGIC-DRAFT unchanged; a gate scope, acceptance or
 selected-logic change goes to LOGIC-DRAFT; an acceptance outcome goes to
-GateClose evidence and LOGIC-DRAFT `## Acceptance`, committed before any
-default-branch delivery. Lead preserves those entries unchanged when it
+GateClose evidence and a LOGIC-DRAFT `## Acceptance` entry (`decision`,
+`candidate`, `delivery: pending` or `not-applicable`), committed before any
+default-branch delivery; `accepted` is not closure. Lead preserves those entries unchanged when it
 integrates the commit. A key is answered when such a
 commit exists; Prime answers only the newest published revision.
 

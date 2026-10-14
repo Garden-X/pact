@@ -10,7 +10,7 @@ generated_from: /ai/pact/templates/workflow.tpl.md
 generated_from_version: 3.3
 content_status: current-data
 purpose: Define how agents maintain project work without bypassing SPARC project truth.
-updated: 2026-10-14 19:16:25 UTC+00:00
+updated: 2026-10-14 19:39:23 UTC+00:00
 
 ## Lifecycle
 
@@ -511,9 +511,10 @@ Writers on the gate branch, in either topology:
   rewrites Lead execution state, writes the Gate Handoff, or edits product
   files. When answering a Prime-facing handoff, Prime may write only the
   minimum authority-decision entry into the artifact that owns the decision
-  (below). This is a narrow writer exception, not shared ownership. The only
-  other exception is StallCover's recorded cover transfer while Lead is
-  unavailable. PrimeWatch writes nothing.
+  (below). This is a narrow writer exception, not shared ownership. The other
+  exceptions are StallCover's recorded cover transfer while Lead is
+  unavailable and, on `default_branch` after delivery, the `delivery: complete`
+  entry and LOGIC-DRAFT advance. PrimeWatch writes nothing.
 
 Handoff revisions are immutable. `gate_id` + `seq` identifies one published
 Prime-facing handoff revision; published means committed to the gate branch,
@@ -534,7 +535,8 @@ affected authority or contract, each naming the answered key as
   other field; LOGIC-DRAFT stays unchanged;
 - gate scope, acceptance criteria, selected logic, or a gate-owned
   architectural decision: LOGIC-DRAFT;
-- acceptance outcome: GateClose evidence and LOGIC-DRAFT `## Acceptance`;
+- acceptance outcome: GateClose evidence and a LOGIC-DRAFT `## Acceptance`
+  entry with `decision`, `candidate`, and delivery state;
 - a decision needing owner authorization: obtained from the owner, then
   recorded where the authorized change is owned.
 
@@ -569,10 +571,24 @@ exactly `candidate`; inspects all results; decides; records the decision with
 gate branch without force; fetches again and verifies that no newer handoff
 revision exists, that the tip descends from `candidate`, and that the path diff
 is records-only; then fast-forwards `default_branch` exactly to that verified
-tip. A not-accepted decision is committed and pushed the same way before Lead
-is notified, and nothing merges. If a newer handoff appears before the
-fast-forward, the earlier answer does not close the gate: reread and
-re-evaluate. Never merge then record the answer later.
+tip; verifies that the remote `default_branch` now contains the answer commit;
+and records `delivery: complete` with `delivery_tip` on `default_branch`. A
+not-accepted decision is committed and pushed the same way before Lead is
+notified, with `delivery: not-applicable`, and nothing merges. If a newer
+handoff appears before the fast-forward, the earlier answer does not close the
+gate: reread and re-evaluate. Never merge then record the answer later.
+
+Accepted is not delivered. Decision state (`ready` -> `accepted` or
+`not-accepted`) and delivery state (`pending` -> `complete`) are distinct. The
+accepted answer commit carries `delivery: pending`. The gate is closed only
+when that answer commit is reachable from the remote `default_branch`; the
+later `delivery: complete` entry confirms it in delivered history, so durable
+records distinguish accepted-but-undelivered from accepted-and-closed after
+any crash or restart. `PACT-Answers` alone never proves closure. Lead does not
+treat `accepted` as closure, and the next gate starts only after closure and
+Prime's advance of LOGIC-DRAFT. Recovery of a pending delivery follows
+GateClose without rerunning acceptance when candidate, evidence, and branches
+are unchanged.
 
 Watchdog function:
 
@@ -587,8 +603,9 @@ Watchdog function:
   High to interpret ambiguous failures, stale evidence, or complex recovery
   conditions. Its contract stays observe, classify, and wake at any capability.
   It reads only the minimal records for the current gate and wakes Prime
-  through an authorized host channel for the newest unanswered handoff key or a
-  new unavailability incident; otherwise it stays silent. It holds no Prime, Lead, or Worker authority and
+  through an authorized host channel for the newest unanswered handoff key, a
+  pending delivery key, or a new unavailability incident; otherwise it stays
+  silent. It holds no Prime, Lead, or Worker authority and
   inherits none. It never selects or changes a gate, decomposes, creates or
   dispatches tasks, reviews or integrates work, edits code or records, changes
   boundaries, accepts slices or gates, or writes any branch.
@@ -597,7 +614,12 @@ Duplicate wakes are avoided by stable keys, not by new machinery:
 
 - Handoff key: `gate_id#seq` of the newest published revision with `signal`
   `ready` or `escalation`. It is answered once a gate-branch commit carries
-  `PACT-Answers` for it; answered or superseded keys never wake Prime.
+  `PACT-Answers` for it; answered or superseded keys never wake Prime for the
+  handoff itself.
+- Delivery key: `gate_id#seq@candidate:pending` while an `accepted` entry has
+  `delivery: pending` and no `delivery: complete` for that key exists on
+  `default_branch`. It wakes Prime for delivery recovery even though
+  `PACT-Answers` exists, once per key; a recorded completion ends it.
 - Incident key, for unavailability: `gate_id`, the affected role and its
   actor/harness/session identity, the failure kind, and an incident id (the
   host's error or session id, or the first observation that opened the
@@ -627,8 +649,9 @@ Heartbeats:
   cadence.
 - The Prime heartbeat is a rare recovery fallback for missed wakes and
   unavailable observers. It reads the durable Gate Handoff and availability
-  evidence, acts only on the newest unanswered handoff key or a new incident,
-  and does not review slices or poll Workers.
+  evidence, acts only on the newest unanswered handoff key, a pending delivery
+  of an accepted gate, or a new incident, and does not review slices or poll
+  Workers.
 - The Lead heartbeat is the fallback of Lead's Watchdog function: Worker
   completions and blocks, the ready pool, slice validation and records, new
   Prime decision commits, and resource evidence. It records status in STATE
