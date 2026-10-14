@@ -10,7 +10,7 @@ status: canonical
 generated_from: /ai/pact/templates/hook.tpl.md
 generated_from_version: 1.3
 content_status: current-data
-updated: 2026-10-14 19:55:32 UTC+00:00
+updated: 2026-10-14 23:22:03 UTC+00:00
 
 ## TRIGGER
 
@@ -77,7 +77,8 @@ Portable prompt for an installed binding:
 At most one Prime wake per new handoff key, delivery key, or incident key,
 naming the durable
 record or exact evidence; no output on unchanged ticks. The host updates its
-memory only after successful delivery.
+memory only after successful delivery, and shares one memory when a direct
+event also delivers.
 
 ## FAILURE
 

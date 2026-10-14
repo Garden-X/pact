@@ -9,13 +9,19 @@ status: active-draft
 generated_from: /ai/pact/templates/tasks.tpl.md
 generated_from_version: 1.10
 content_status: current-state
-updated: 2026-10-14 22:11:09 UTC+00:00
+updated: 2026-10-14 23:22:03 UTC+00:00
 
 ## Pending
 
 None.
 
 ## Done
+
+- PACT-20261014-009 - Compress WORKFLOW duplication before merge.
+  trace: LOGIC-DRAFT.md / Harness Topology Correction (owner cleanup)
+  outcome: Documentation normalization only. WORKFLOW 881 -> 750 lines, workflow.tpl.md 1028 -> 882. Harness section collapsed to core rules, roles/functions/harness, topology, routing table, writers, answer marker and closure, Watchdog and heartbeats, with references to state.tpl.md (Gate Handoff fields, immutability, decision destinations), GateClose (acceptance, answer verification, delivery recovery), PrimeWatch (observer algorithm, stable wake keys), the heartbeat hooks (prompts) and StallCover (cover detail). Capability, Prime functions, stall, records-before-push, measurement (tasks.tpl.md) and keep-alive (keep-alive.tpl.md) prose shortened. The direct-event shared-memory sentence moved to PrimeWatch. No semantics, fields, hooks or terms added or changed.
+  validation: validator exit0 (121), scenarios exit0 (41), boundaries exit0 (13), harness exit0 (59), close exit0 (13), delivery exit0 (12), trigger exit0 (10); git diff --check exit0. Nine check assertions repointed to the owning file or the shortened wording. Root self-review, not independent.
+  delivery: committed to gate/PACT-Harness for owner review; no main merge.
 
 - PACT-20261014-008 - Complete the gate-closure simplification.
   trace: LOGIC-DRAFT.md / Harness Topology Correction (owner simplification)
