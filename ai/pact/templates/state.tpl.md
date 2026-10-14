@@ -5,7 +5,7 @@
 name: state.tpl.md
 type: pact maintenance template
 for: STATE.md
-updated: 2026-10-14 19:39:23 UTC+00:00
+updated: 2026-10-14 19:55:32 UTC+00:00
 version: 1.7
 
 ## WHAT
@@ -221,16 +221,15 @@ Lead owns mutable execution state: task transfer, progress, reservations,
 Worker results, and this block. Prime never writes this block and does not
 perform Lead execution-state maintenance. When answering a Prime-facing
 revision, Prime may write only the minimum authority-decision entry in the
-artifact that owns the affected authority or contract, naming
-`answers: <gate_id>#<seq>`, in a record-only commit with the trailer
-`PACT-Answers: <gate_id>#<seq>` (see WORKFLOW Writers on the gate branch). A
+artifact that owns the affected authority or contract, in a record-only
+commit with the trailer `PACT-Answers: <gate_id>#<seq>` (see WORKFLOW Writers on the gate branch). A
 boundary widening becomes one appended authority-decision entry in the
 affected task's `boundary_contract`, touching no other field and leaving
 LOGIC-DRAFT unchanged; a gate scope, acceptance or
 selected-logic change goes to LOGIC-DRAFT; an acceptance outcome goes to
 GateClose evidence and a LOGIC-DRAFT `## Acceptance` entry (`decision`,
-`candidate`, `delivery: pending` or `not-applicable`), committed before any
-default-branch delivery; `accepted` is not closure. Lead preserves those entries unchanged when it
+`candidate`, evidence), committed before any default-branch delivery;
+`accepted` is not closure. Lead preserves those entries unchanged when it
 integrates the commit. A key is answered when such a
 commit exists; Prime answers only the newest published revision.
 
@@ -387,7 +386,7 @@ next `seq` rather than editing the published one. Prime answers in the owning
 artifact, for example an approval entry in the affected `boundary_contract`:
 
 ```txt
-approval: write /ai/pact/workflow/WORKFLOW.md added to permitted_area; Prime; answers: <selected gate id>#5
+approval: write /ai/pact/workflow/WORKFLOW.md added to permitted_area; Prime
 ```
 
 committed alone as a state-record change with `PACT-Answers: <selected gate id>#5`.

@@ -2,7 +2,7 @@
 
 > For: PACT 2.0
 > Purpose: install or verify the PACT project-maintenance layer
-> Updated: 2026-10-14 19:39:23 UTC+00:00
+> Updated: 2026-10-14 19:55:32 UTC+00:00
 
 ## Purpose
 
@@ -218,10 +218,10 @@ explicit owner model/effort bindings do not change.
   answer on the gate branch, re-verifies the tip, and only then fast-forwards
   the default branch.
 - Refresh LOGIC-DRAFT from logic-draft.tpl.md 1.6: `## Acceptance` entries
-  keep decision and delivery state apart (`accepted` + `delivery: pending`
-  until the answer commit is reachable from the default branch, then
-  `delivery: complete` with `delivery_tip`). Existing acceptance prose stays;
-  do not backfill invented entries for already closed gates.
+  record `decision`, `candidate` and evidence in a `PACT-Answers` commit;
+  delivery is derived from whether that commit is reachable from the default
+  branch. Existing acceptance prose stays; do not backfill invented entries
+  for already closed gates.
 - Treat existing `lead_tier`/`worker_tier_default` values as routing hints;
   do not add a Watchdog tier field. Preserve explicit owner model bindings.
 

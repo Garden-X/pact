@@ -5,7 +5,7 @@
 name: workflow.tpl.md
 type: pact maintenance template
 for: WORKFLOW.md
-updated: 2026-10-14 19:48:20 UTC+00:00
+updated: 2026-10-14 19:55:32 UTC+00:00
 version: 3.3
 
 ## WHAT
@@ -114,13 +114,12 @@ The Execution Hierarchy must also:
 - make each published handoff revision (`gate_id` + `seq`) immutable, with
   Lead as its only writer and owner of mutable execution state; Prime writes
   only a narrow authority-decision entry in the artifact that owns the decision,
-  through record-only, non-force commits naming the answered key, and never
-  answers a superseded revision;
+  through record-only, non-force commits with a `PACT-Answers` trailer, and
+  never answers a superseded revision;
 - at gate close, commit the durable acceptance answer on the gate branch
   before verifying the delivery tip and fast-forwarding the default branch,
-  and keep decision state separate from delivery state: `accepted` with
-  `delivery: pending` stays recoverable Prime work until the answer commit is
-  reachable from the default branch;
+  and keep decision separate from delivery: an `accepted` answer stays
+  recoverable Prime work until its commit is reachable from the default branch;
 - require Lead's explicit `ready` signal with an identified candidate for gate
   readiness, never inferred from idle Workers, empty records, or time; the
   delivered tip may differ from the accepted candidate only in PACT state records;
@@ -661,8 +660,8 @@ Writers on the gate branch, in either topology:
   minimum authority-decision entry into the artifact that owns the decision
   (below). This is a narrow writer exception, not shared ownership. The other
   exceptions are StallCover's recorded cover transfer while Lead is
-  unavailable and, on `default_branch` after delivery, the `delivery: complete`
-  entry and LOGIC-DRAFT advance. PrimeWatch writes nothing.
+  unavailable and, after delivery, Prime's LOGIC-DRAFT advance on
+  `default_branch`. PrimeWatch writes nothing.
 
 Handoff revisions are immutable. `gate_id` + `seq` identifies one published
 Prime-facing handoff revision; published means committed to the gate branch,
@@ -675,8 +674,8 @@ re-read of the same pointer, create no revision and are not edited into a
 published one. Unpublished local drafts may change freely.
 
 Prime decisions are recorded in the authoritative PACT artifact that owns the
-affected authority or contract, each naming the answered key as
-`answers: <gate_id>#<seq>`:
+affected authority or contract; the commit's `PACT-Answers` trailer names the
+answered key:
 
 - boundary widening for a Lead or Worker task: one authority-decision entry
   appended to that task's `boundary_contract` in TASKS or STATE, touching no
@@ -684,7 +683,7 @@ affected authority or contract, each naming the answered key as
 - gate scope, acceptance criteria, selected logic, or a gate-owned
   architectural decision: LOGIC-DRAFT;
 - acceptance outcome: GateClose evidence and a LOGIC-DRAFT `## Acceptance`
-  entry with `decision`, `candidate`, and delivery state;
+  entry with `decision`, `candidate`, and evidence;
 - a decision needing owner authorization: obtained from the owner, then
   recorded where the authorized change is owned.
 
@@ -714,25 +713,22 @@ commits plus the durable acceptance answer.
 
 Gate close order: durable decision precedes delivery. Prime fetches and
 confirms the newest unanswered `ready` revision; runs every acceptance check on
-exactly `candidate`; inspects all results; decides; records the decision with
-`answers: <gate_id>#<seq>` in a record-only `PACT-Answers` commit pushed to the
-gate branch without force; fetches again and verifies that no newer handoff
+exactly `candidate`; inspects all results; decides; records the decision in a
+record-only `PACT-Answers` commit pushed to the gate branch without force; fetches again and verifies that no newer handoff
 revision exists, that the tip descends from `candidate`, and that the path diff
 is records-only; then fast-forwards `default_branch` exactly to that verified
-tip; verifies that the remote `default_branch` now contains the answer commit;
-and records `delivery: complete` with `delivery_tip` on `default_branch`. A
-not-accepted decision is committed and pushed the same way before Lead is
-notified, with `delivery: not-applicable`, and nothing merges. If a newer
+tip; and verifies that the remote `default_branch` now contains the answer
+commit. A not-accepted decision is committed and pushed the same way before
+Lead is notified, and nothing merges. If a newer
 handoff appears before the fast-forward, the earlier answer does not close the
 gate: reread and re-evaluate. Never merge then record the answer later.
 
-Accepted is not delivered. Decision state (`ready` -> `accepted` or
-`not-accepted`) and delivery state (`pending` -> `complete`) are distinct. The
-accepted answer commit carries `delivery: pending`. The gate is closed only
-when that answer commit is reachable from the remote `default_branch`; the
-later `delivery: complete` entry confirms it in delivered history, so durable
-records distinguish accepted-but-undelivered from accepted-and-closed after
-any crash or restart. `PACT-Answers` alone never proves closure. Lead does not
+Accepted is not delivered. The decision (`accepted` or `not-accepted`) is
+recorded; delivery is derived from Git: the gate is closed only when the
+accepted answer commit is reachable from the remote `default_branch`. An
+`accepted` answer whose commit is not yet reachable is a pending delivery, so
+durable state distinguishes accepted-but-undelivered from closed after any
+crash or restart. `PACT-Answers` alone never proves closure. Lead does not
 treat `accepted` as closure, and the next gate starts only after closure and
 Prime's advance of LOGIC-DRAFT. Recovery of a pending delivery follows
 GateClose without rerunning acceptance when candidate, evidence, and branches
@@ -752,7 +748,7 @@ Watchdog function:
   conditions. Its contract stays observe, classify, and wake at any capability.
   It reads only the minimal records for the current gate and wakes Prime
   through an authorized host channel for the newest unanswered handoff key, a
-  pending delivery key, or a new unavailability incident; otherwise it stays
+  pending delivery, or a new unavailability incident; otherwise it stays
   silent. It holds no Prime, Lead, or Worker authority and
   inherits none. It never selects or changes a gate, decomposes, creates or
   dispatches tasks, reviews or integrates work, edits code or records, changes
@@ -764,10 +760,10 @@ Duplicate wakes are avoided by stable keys, not by new machinery:
   `ready` or `escalation`. It is answered once a gate-branch commit carries
   `PACT-Answers` for it; answered or superseded keys never wake Prime for the
   handoff itself.
-- Delivery key: `gate_id#seq@candidate:pending` while an `accepted` entry has
-  `delivery: pending` and no `delivery: complete` for that key exists on
-  `default_branch`. It wakes Prime for delivery recovery even though
-  `PACT-Answers` exists, once per key; a recorded completion ends it.
+- Delivery key: `gate_id#seq@candidate` while that `accepted` answer commit
+  is not reachable from remote `default_branch`. It wakes Prime for delivery
+  recovery even though `PACT-Answers` exists, once per key; reachability ends
+  it.
 - Incident key, for unavailability: `gate_id`, the affected role and its
   actor/harness/session identity, the failure kind, and an incident id (the
   host's error or session id, or the first observation that opened the
@@ -815,7 +811,7 @@ Heartbeats:
 | LeadHeartbeat | host_hook | [../agents/hooks/LeadHeartbeat.md](../agents/hooks/LeadHeartbeat.md) | every `heartbeat_lead` as Lead Watchdog fallback, when scheduled | None | unconfigured |
 | PrimeWatch | host_hook | [../agents/hooks/PrimeWatch.md](../agents/hooks/PrimeWatch.md) | every `heartbeat_watch` in `multi` topology, when scheduled | None | unconfigured |
 | SliceRecordsCheck | pact_hook | [../agents/hooks/SliceRecordsCheck.md](../agents/hooks/SliceRecordsCheck.md) | before committing or pushing a slice | None | manual |
-| GateClose | pact_hook | [../agents/hooks/GateClose.md](../agents/hooks/GateClose.md) | unanswered `ready` handoff (acceptance path), or `accepted` with `delivery: pending` (delivery-recovery path) | None | manual |
+| GateClose | pact_hook | [../agents/hooks/GateClose.md](../agents/hooks/GateClose.md) | unanswered `ready` handoff (acceptance path), or an `accepted` answer not yet reachable from `default_branch` (delivery-recovery path) | None | manual |
 | StallCover | pact_hook | [../agents/hooks/StallCover.md](../agents/hooks/StallCover.md) | a recorded execution tier stalls | None | manual |
 
 `Class` is `pact_hook` (Markdown workflow extension point owned by PACT) or

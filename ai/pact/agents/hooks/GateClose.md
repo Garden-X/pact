@@ -10,7 +10,7 @@ status: canonical
 generated_from: /ai/pact/templates/hook.tpl.md
 generated_from_version: 1.3
 content_status: current-data
-updated: 2026-10-14 19:48:20 UTC+00:00
+updated: 2026-10-14 19:55:32 UTC+00:00
 
 ## TRIGGER
 
@@ -19,18 +19,16 @@ GateClose has two distinct entry paths under
 
 - A. Acceptance path: the newest published Gate Handoff revision in STATE
   records `signal: ready` with an identified candidate, and no commit carries
-  `PACT-Answers` for its `gate_id#seq`. Run ACTION steps 1-11.
-- B. Delivery-recovery path: a durable LOGIC-DRAFT `## Acceptance` entry has
-  `decision: accepted` and `delivery: pending` (its `PACT-Answers` already
-  exists), and either the accepted answer commit is not yet reachable from
-  remote `default_branch`, or it is reachable but the `delivery: complete`
-  confirmation entry is still missing. Run Delivery recovery below; never
-  rerun acceptance automatically.
+  `PACT-Answers` for its `gate_id#seq`. Run ACTION steps 1-10.
+- B. Delivery-recovery path: a durable `decision: accepted` answer exists (its
+  `PACT-Answers` commit is on the gate branch), but that answer commit is not
+  yet reachable from remote `default_branch`. Run Delivery recovery below;
+  never rerun acceptance automatically.
 
 A native wake, [PrimeWatch](PrimeWatch.md), or the Prime fallback heartbeat
 only delivers attention to these records; idle Workers, empty records, or
-elapsed time are not a trigger. Registration is a workflow contract; this file does not itself
-install a runtime hook.
+elapsed time are not a trigger. Registration is a workflow contract; this file
+does not itself install a runtime hook.
 
 ## INPUTS
 
@@ -65,12 +63,10 @@ order; never merge first and record the answer later.
    acceptance; a green final command does not erase earlier failures.
 4. Decide only after reading the results, then make the decision durable on
    the gate branch: append to LOGIC-DRAFT `## Acceptance` an entry with
-   `answers: <gate_id>#<seq>`, `decision`, `candidate`, the evidence pointer,
-   and `delivery: pending` / `delivery_tip: none` for `accepted` or
-   `delivery: not-applicable` for `not-accepted`, as a record-only commit with
-   the trailer `PACT-Answers: <gate_id>#<seq>`, based on the fetched tip.
-   This is Prime's narrow authority-decision write; it touches no Lead
-   execution state.
+   `decision` (`accepted` or `not-accepted`), `candidate`, and the evidence
+   pointer, as a record-only commit with the trailer
+   `PACT-Answers: <gate_id>#<seq>`, based on the fetched tip. This is Prime's
+   narrow authority-decision write; it touches no Lead execution state.
 5. Push the gate branch without force. If the push is rejected, fetch, read
    the new commits, and re-evaluate from step 1. Not accepted: stop here and
    notify Lead only after the answer is pushed; no default-branch merge. Lead
@@ -90,34 +86,28 @@ order; never merge first and record the answer later.
    that verified delivery tip and push it; do not combine result inspection
    with merge in one shell command.
 9. Verify that the push succeeded: the fetched remote `default_branch` now
-   contains the answer commit. Only this closes the gate.
-10. Record `answers: <gate_id>#<seq>`, `delivery: complete`, and
-    `delivery_tip: <delivered revision>` in LOGIC-DRAFT `## Acceptance` as a
-    record-only commit on `default_branch`, pushed without force. With the
-    step 4 entry, both the accepted candidate and the delivered tip are now
-    recorded. It confirms a closure that the reachable answer commit already
-    proves.
-11. Then any required daily-log entry and Prime's advance of LOGIC-DRAFT to a
+   contains the answer commit. Only this closes the gate; the answer commit
+   and the delivered tip in default history record both revisions.
+10. Then any required daily-log entry and Prime's advance of LOGIC-DRAFT to a
     preselected next gate may follow on `default_branch`.
 
 ### Delivery recovery
 
-Entry path B: `decision: accepted` with `delivery: pending` stays open
-Prime-level work after any crash, end of session, failed push, or missing
-authorization. It resumes from the recorded accepted candidate and evidence and
-does not rerun the acceptance suite automatically.
+Entry path B: an `accepted` answer whose commit is not yet reachable from
+remote `default_branch` stays open Prime-level work after any crash, end of
+session, failed push, or missing authorization. It resumes from the recorded
+accepted candidate and evidence and does not rerun the acceptance suite
+automatically.
 
 1. Fetch the gate and default branches.
-2. Verify the durable accepted entry: `answers`, `decision: accepted`,
-   `candidate`, and its evidence pointer, in the `PACT-Answers` commit.
+2. Verify the durable accepted entry (`decision: accepted`, `candidate`, and
+   its evidence pointer) in the `PACT-Answers` commit.
 3. Verify that no Gate Handoff revision newer than the answered `seq` exists.
 4. Verify that the delivery tip descends from `candidate`.
 5. Verify that `git diff --name-only <candidate> <delivery-tip>` lists only
    PACT state and decision records under `/ai/pact/context/state/`.
-6. Inspect `default_branch`. If the answer commit is not reachable from it,
-   and `default_branch` is still an ancestor of the tip, complete steps 8-10
-   when authorized. If the answer commit is already reachable but the
-   `delivery: complete` entry is missing, perform only step 10.
+6. Inspect `default_branch`. If it is still an ancestor of the tip, complete
+   steps 8-9 when authorized.
 7. If the branches or the handoff changed materially (a newer handoff, a
    non-record path, or `default_branch` no longer an ancestor), do not
    deliver: stop and re-evaluate through entry path A or return the gate to
@@ -130,18 +120,18 @@ does not rerun the acceptance suite automatically.
   and record actions actually completed; closed only when the answer commit
   is reachable from remote `default_branch`;
 - `not accepted`: failed, missing, stale, or incomplete evidence and next work,
-  durably answered on the gate branch with `delivery: not-applicable`;
-- `awaiting authorized delivery`: `accepted` + `delivery: pending` is recorded
-  but a delivery action lacks authorization or failed; the gate stays open and
-  recoverable.
+  durably answered on the gate branch;
+- `awaiting authorized delivery`: the `accepted` answer is recorded but a
+  delivery action lacks authorization or failed; the gate stays open and
+  recoverable through entry path B.
 
 ## FAILURE
 
 Do not merge or mark the gate closed. Keep the gate's pending acceptance or
 delivery recorded. A failure the Lead must act on is answered durably as in
-steps 4-5 before any notification. A failed delivery push leaves
-`delivery: pending` for recovery. A killed run is reported, not silently
-restarted.
+steps 4-5 before any notification. A failed delivery push leaves the accepted
+answer unreachable from `default_branch`, so entry path B recovers it. A
+killed run is reported, not silently restarted.
 
 ## BOUNDARIES
 

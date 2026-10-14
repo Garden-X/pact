@@ -9,13 +9,19 @@ status: active-draft
 generated_from: /ai/pact/templates/tasks.tpl.md
 generated_from_version: 1.10
 content_status: current-state
-updated: 2026-10-14 19:48:20 UTC+00:00
+updated: 2026-10-14 19:55:32 UTC+00:00
 
 ## Pending
 
 None.
 
 ## Done
+
+- PACT-20261014-007 - Occam simplification: derived delivery, trailer-only answers.
+  trace: LOGIC-DRAFT.md / Harness Topology Correction (owner simplification)
+  outcome: Removed the delivery: complete/delivery_tip/delivery: pending/not-applicable fields and the in-record answers: key. Acceptance entries record decision, candidate and evidence in a PACT-Answers commit; delivery is derived from whether that commit is reachable from remote default_branch. GateClose has steps 1-10 and recovery entry path B for an unreachable accepted answer; delivery key gate#seq@candidate.
+  validation: validator exit0 (121), scenarios exit0 (41), boundaries exit0 (13), harness exit0 (59), close exit0 (13), delivery v2 exit0 (11), trigger v2 exit0 (10); delivery v2 on 1032648 exit1 (2 passed), trigger v2 on 1032648 exit1 (6 passed). git diff --check exit0. Root self-review, not independent.
+  delivery: committed to gate/PACT-Harness for owner review; no main merge.
 
 - PACT-20261014-006 - Align GateClose trigger with delivery recovery.
   trace: LOGIC-DRAFT.md / Harness Topology Correction (delivery-state correction)

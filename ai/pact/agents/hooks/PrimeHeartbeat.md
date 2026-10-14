@@ -10,7 +10,7 @@ status: canonical
 generated_from: /ai/pact/templates/hook.tpl.md
 generated_from_version: 1.3
 content_status: current-data
-updated: 2026-10-14 19:48:20 UTC+00:00
+updated: 2026-10-14 19:55:32 UTC+00:00
 
 ## TRIGGER
 
@@ -43,12 +43,13 @@ Portable prompt for an installed binding:
 > read the newest published Gate Handoff revision. If it is `ready` or
 > `escalation` and no commit carries `PACT-Answers` for its `gate_id#seq`,
 > handle it: an unanswered `ready` enters GateClose's acceptance path. An
-> `accepted` entry with `delivery: pending` and no `delivery: complete`
-> enters GateClose's delivery-recovery path, which never reruns acceptance
-> automatically. For an escalation, write only the minimum authority-decision entry
+> `accepted` answer whose commit is not reachable from remote
+> `default_branch` enters GateClose's delivery-recovery path, which never
+> reruns acceptance automatically. For an escalation, write only the minimum authority-decision entry
 > in the artifact that owns the affected authority (a boundary widening appended
 > to that task's `boundary_contract`, a gate scope or acceptance change in
-> LOGIC-DRAFT), as a record-only, non-force commit naming the key, based on the
+> LOGIC-DRAFT), as a record-only, non-force commit with the `PACT-Answers`
+> trailer, based on the
 > fetched tip. Never perform Lead execution-state maintenance or write the Gate
 > Handoff.
 > If the push is rejected, fetch, read the new commits, and answer only the

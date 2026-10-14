@@ -10,7 +10,7 @@ status: canonical
 generated_from: /ai/pact/templates/hook.tpl.md
 generated_from_version: 1.3
 content_status: current-data
-updated: 2026-10-14 19:48:20 UTC+00:00
+updated: 2026-10-14 19:55:32 UTC+00:00
 
 ## TRIGGER
 
@@ -37,9 +37,8 @@ Read-only, and only what the current gate needs:
   [../../context/state/STATE.md](../../context/state/STATE.md) on the gate
   branch or the declared shared location, and whether a gate-branch commit
   carries `PACT-Answers: <gate_id>#<seq>` for it
-- the LOGIC-DRAFT `## Acceptance` entries on the gate branch and on
-  `default_branch`, to see `accepted` + `delivery: pending` without a
-  matching `delivery: complete`
+- whether the newest `accepted` answer commit is reachable from remote
+  `default_branch`
 - host-owned delivered-key and open-incident memory, outside PACT records
 - host-reported Lead/harness failure evidence, when the host exposes it
 
@@ -56,10 +55,9 @@ Portable prompt for an installed binding:
 > Handoff revision. Wake Prime through the authorized channel only when its
 > `signal` is `ready` or `escalation`, no commit carries `PACT-Answers` for its
 > `gate_id#seq`, and that key differs from the last delivered key. Also wake
-> Prime once per delivery key `gate_id#seq@candidate:pending` when an
-> `accepted` entry has `delivery: pending` and `default_branch` has no
-> `delivery: complete` entry for that key: an existing `PACT-Answers` does not
-> mean the gate is closed. These wakes point Prime to GateClose's acceptance
+> Prime once per delivery key `gate_id#seq@candidate` when an `accepted`
+> answer commit is not reachable from remote `default_branch`: an existing
+> `PACT-Answers` does not mean the gate is closed. These wakes point Prime to GateClose's acceptance
 > path or delivery-recovery path respectively; classify which one, nothing
 > more. A published
 > revision is immutable, so a changed request always has a new `seq`; never
