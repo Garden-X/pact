@@ -10,7 +10,7 @@ generated_from: /ai/pact/templates/workflow.tpl.md
 generated_from_version: 3.3
 content_status: current-data
 purpose: Define how agents maintain project work without bypassing SPARC project truth.
-updated: 2026-10-14 19:55:32 UTC+00:00
+updated: 2026-10-14 20:40:58 UTC+00:00
 
 ## Lifecycle
 
@@ -439,6 +439,18 @@ Keep-alive:
 - When `keep_alive_registry` is `none`, no registry rule applies.
 
 ### Functions, Harnesses, And Wake Routing
+
+Core rules, detailed below:
+
+- Lead is the sole Gate Handoff writer.
+- Published handoff revisions are immutable.
+- Prime answers through `PACT-Answers` commits.
+- Candidate is exact; after it only PACT state records change.
+- A gate closes when the accepted answer commit is reachable from remote
+  `default_branch`.
+- Workers -> Lead; Prime-level events -> Prime.
+- Watchdog observes and wakes only.
+- Capability never grants authority.
 
 Authority roles are exactly Prime, Lead, and Worker: Prime owns the gate, Lead
 owns the slice, and a Worker owns its task. An operational function is work an
