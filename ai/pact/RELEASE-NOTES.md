@@ -2,7 +2,7 @@
 
 Title: improved workflow and project syncronization
 
-updated: 2026-10-10 22:10:14 UTC+00:00
+updated: 2026-10-14 06:23:51 UTC+00:00
 status: prepared for release
 
 PACT 2.0 makes coordination policy portable through template RULES and full
@@ -15,6 +15,10 @@ EXAMPLE sections, with synchronized installed entry files and migration guidance
   provider mappings; existing owner model/native-effort bindings are preserved.
 - The package manifest indexes protocol files and template routes. TASKS/STATE
   hold real assignments; neither the manifest nor a project MAP is a live roster.
+- Every spawned agent receives explicit parent-issued boundaries and knows its
+  role, parent and capability tier. Descendants inherit effective limits, may
+  narrow them, and need parent approval to widen; methods remain autonomous
+  inside the fence. Existing TASKS/STATE preserve the contract on recovery.
 - Ready briefs, bounded recovery, and resume guidance preserve ownership.
   Acceptance checks every required result on the candidate before a separate
   authorized merge. Records distinguish changed truth from verified unchanged
@@ -55,11 +59,11 @@ existing versions; no unrelated contract change is required for this release.
 
 | Template | Version |
 |---|---|
-| workflow.tpl.md | 3.1 |
-| agents.tpl.md | 3.2 |
-| sub-agent.tpl.md | 2.0 |
-| state.tpl.md | 1.5 |
-| tasks.tpl.md | 1.9 |
+| workflow.tpl.md | 3.2 |
+| agents.tpl.md | 3.3 |
+| sub-agent.tpl.md | 2.1 |
+| state.tpl.md | 1.6 |
+| tasks.tpl.md | 1.10 |
 | logic-draft.tpl.md | 1.5 |
 | hook.tpl.md | 1.3 |
 | keep-alive.tpl.md | 1.1 |

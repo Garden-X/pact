@@ -7,15 +7,23 @@ canonical_location: /ai/pact/context/state/TASKS.md
 layer: PACT / context / state
 status: active-draft
 generated_from: /ai/pact/templates/tasks.tpl.md
-generated_from_version: 1.9
+generated_from_version: 1.10
 content_status: current-state
-updated: 2026-10-11 03:37:22 UTC+00:00
+updated: 2026-10-14 06:27:11 UTC+00:00
 
 ## Pending
 
 None.
 
 ## Done
+
+- PACT-20261014-001 - Add owner-selected Spawn Boundaries and explicit execution context.
+  trace: LOGIC-DRAFT.md / Spawn Boundaries Update
+  outcome: Parent-issued six-field boundary_contract and role/parent/task/tier context required for every spawned role, with Prime function and preserved model/effort binding. Descendants carry effective inherited limits, narrow freely, and escalate widening to authorized parent. Root exemption does not grant extra authority; methods stay autonomous inside the fence. Matching RULES/full examples/generated targets and migration/release notes updated. No new role/file type/runtime; no agent spawned or host model changed.
+  validation: Source validator exit0 (119 checks/185 links), reference scenarios exit0 (41), boundary documentation/preservation checks exit0 (13), diff hygiene exit0. Initial helper failed on a missing state-only anchor; exact template snapshots restored and corrected helper completed. Readback found nested-fence extraction truncation and a replaced illustrative timestamp; full generated targets/sample stamp restored before the passing checks. No product code invariant or SPARC truth changed; package placeholders and authority separation verified. Review is Root in a separate Inspector pass, not independent.
+  versions: workflow3.2, agents3.3, sub-agent2.1, state1.6, tasks1.10; package title/version retained.
+  artifact: Existing dist ZIP/checksum preserved; refreshed packaging pending under009 because measured free memory2.24GiB is below existing builder5GiB threshold. No build attempted and no runtime enforcement claimed.
+  delivery: Protocol source correction ready for authorized commit/push/fast-forward; installed-project rollout and archive refresh remain outstanding under009.
 
 - PACT-20261010-010 - Align existing shared Claude workflow guidance.
   trace: LOGIC-DRAFT.md / Delivery And Synchronization

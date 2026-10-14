@@ -5,8 +5,8 @@
 name: sub-agent.tpl.md
 type: pact maintenance template
 for: reusable sub-agent role files
-updated: 2026-10-10 01:59:22 UTC+00:00
-version: 2.0
+updated: 2026-10-14 06:23:51 UTC+00:00
+version: 2.1
 
 ## WHAT
 
@@ -55,6 +55,12 @@ evidence. Workers make those checks pass without weakening or changing them;
 report doubtful tests to Lead. Documentation and reversible low-impact work
 use proportionate checks. Parallel assignments obey WORKFLOW resource rules.
 
+Every actual spawn requires the parent-issued boundary contract and explicit
+role, parent, task and model-tier context defined by WORKFLOW Spawn Boundaries.
+A reusable profile is not a dispatch contract. A child inherits the effective
+boundaries, may narrow them for descendants, and must obtain parent approval
+before widening. Preserve method autonomy within those boundaries.
+
 Active hires and their exact bindings belong in TASKS/STATE, not this package's
 manifest or the project's MAP. Do not create a reusable file merely to record
 a current session. Filenames use CapitalCase, for example DesignWorker.md.
@@ -82,7 +88,7 @@ effort: 75%
 model_binding: <owner-approved local binding>
 status: draft
 generated_from: /ai/pact/templates/sub-agent.tpl.md
-generated_from_version: 2.0
+generated_from_version: 2.1
 updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 
 ## PURPOSE
@@ -93,6 +99,15 @@ Coordinate one Prime-selected gate and prepare reviewed slices for acceptance.
 
 Own decomposition, TASKS/STATE, integration, and worker review within the selected
 draft. Hire the specialties required by each task with adequate tier/effort.
+
+## BOUNDARIES
+
+Receive Prime's actual boundary_contract and role/parent/tier context before
+acting: selected gate scope; named read/write areas and task/STATE reservations;
+protected product areas; unchanged SPARC/interfaces and acceptance checks;
+authorized record/Git effects; and escalation conditions. Carry all effective
+inherited limits into each Worker dispatch and specify only narrower scope or
+approved changes. Missing limits or required expansion go to the parent.
 
 ## INPUTS
 
@@ -143,7 +158,7 @@ effort: 75%
 model_binding: <Lead-selected owner-approved local binding>
 status: draft
 generated_from: /ai/pact/templates/sub-agent.tpl.md
-generated_from_version: 2.0
+generated_from_version: 2.1
 updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 
 ## PURPOSE
@@ -154,6 +169,16 @@ Evaluate and improve one assigned interaction using the project's design rules.
 
 Only the named interaction, supplied artifacts, and reserved paths. This profile
 does not claim files or select a task; Lead records the actual assignment in STATE.
+
+## BOUNDARIES
+
+Receive the parent's actual boundary_contract and role/parent/tier context:
+assigned interaction; named artifact paths/access; protected code/runtime areas;
+unchanged design/behavior interfaces; allowed proposal or reserved-edit effects;
+and escalation for conflicts, missing limits or needed expansion. For a
+proposal-only assignment, side effects are none. Choose the design method inside
+these limits. If descendant work is authorized, carry inherited limits forward,
+narrow as needed, and seek parent approval before widening.
 
 ## INPUTS
 

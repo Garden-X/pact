@@ -7,10 +7,10 @@ canonical_location: /ai/pact/agents/AGENTS.md
 layer: PACT / agent orientation
 status: canonical
 generated_from: /ai/pact/templates/agents.tpl.md
-generated_from_version: 3.2
+generated_from_version: 3.3
 content_status: current-data
 purpose: Orient agents inside the `/ai` container and keep SPARC project truth separate from PACT project maintenance.
-updated: 2026-10-10 01:59:22 UTC+00:00
+updated: 2026-10-14 06:24:34 UTC+00:00
 
 ## Core Distinction
 
@@ -302,6 +302,10 @@ model tiers (High, Middle, Light), and effort percentages are distinct; follow
 the definitions and local bindings in WORKFLOW. Reusable specialist files are
 optional and generated from sub-agent.tpl.md when needed. Current assignments
 belong in TASKS/STATE, not the package manifest or project MAP.
+
+Before spawning or acting as a child, read WORKFLOW's Spawn Boundaries. The
+parent supplies an explicit boundary contract and role/parent/tier context;
+inherit limits without widening and escalate conflicts to that parent.
 
 ## Hooks
 

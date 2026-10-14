@@ -8,9 +8,9 @@ layer: PACT / context / state
 status: active
 active_task: PACT-20261010-009
 generated_from: /ai/pact/templates/state.tpl.md
-generated_from_version: 1.5
+generated_from_version: 1.6
 content_status: current-state
-updated: 2026-10-11 16:34:40 UTC+00:00
+updated: 2026-10-14 06:27:11 UTC+00:00
 
 ## Active Task
 
@@ -18,6 +18,7 @@ updated: 2026-10-11 16:34:40 UTC+00:00
 id: PACT-20261010-009
 request: Publish PACT 2.0 and synchronize installed projects.
 brief: Publish and separately fast-forward merge the accepted PACT 2.0 source; upgrade existing PACT installations across C:/!DEV/2026 and dev-tools, preserving each project’s state, history, owner models/native efforts, enabled metrics, hooks, guards and unrelated work. Commit/push six project upgrades; Tarot is local-only by subsequent owner instruction and must not be pushed. Update two non-Git fixtures and three duplicate working copies locally without publishing unrelated feature branches. Reuse the guarded migration helper and existing validators; recover exact active constraints from target-owned evidence. Inspect actual required command exit statuses on outgoing revisions, then perform acceptance and delivery separately. Align demonstrated stale shared Claude guidance; no new scheduler, role, framework, service deployment or SPARC truth edits. Preserve prior artifacts, build and validate a fresh release ZIP/checksum. Formal tag/release remains separate.
+owner_update: Implement Spawn Boundaries and explicit role/parent/tier context in protocol templates, examples and generated targets; retain existing authority and child method autonomy. Preserve prior rollout evidence and outstanding work.
 task_phase: working
 actor: /root
 role: Lead
@@ -39,3 +40,7 @@ handoff: Reuse current guarded candidates and evidence; Tarot local-only. Do not
 Delivery progress: Source/extracted validators each exited 0 (119 checks/185 links), source/extracted reference scenarios each exited 0 (41 checks), archive audit exited 0 (16 checks/47 files). Current ZIP SHA256 ddb7072d23ab57ecb9d126d41ddbef47978c65d73c81376e0c564936d73b8e80. Nine guarded applications exited 0; wrong-plan-hash negatives each exited 1 before mutation, after/preserved hashes checked. Six isolated publication copies, Tarot local copy and two fixtures updated; primary working copies and three duplicate copies pending. Native project acceptance checks, commits, pushes and merges pending. No service/SPARC truth change; no independent final helper review claimed.
 
 Source acceptance (2026-10-11 16:34:40 UTC+00:00): Root in the Prime Inspector function reviewed clean candidate 15b7d449533e90e49773aab78666aa1e39602a57, scope/records and the contract walkthrough. Source/extracted validators each exit 0 with119 checks/185 links; source/extracted preservation scenarios each exit0 with41 checks; archive audit exit0 with16 checks/47 files and unchanged dist checksum. These are documentation/reference checks, not host-runtime tests. Native commit/push hygiene passed. Fetched origin/main95f50814aef873409c4b9ad4ba67982538a15cfe is an ancestor (exit0); committed diff hygiene exit0. Source release is accepted for the separately authorized fast-forward delivery to main. This acceptance covers the PACT source only; task009 and the installed-project rollout remain active. Formal tag/release publication remains separate.
+
+Recovery cache: ai/pact/cache/runs/2026-10-14T06-21-11Z--spawn-boundaries/CACHE.md; earlier delivery cache remains required for unfinished rollout.
+
+Spawn-boundary slice001: matching source documentation is validated (119+41+13 checks, actual exits0). Refreshed ZIP packaging is pending under009: host free memory2.24GiB below builder5GiB threshold; existing dist ZIP/checksum remains prior accepted release, not the updated boundary release. Prior migration copies must be replanned/updated with current portable contracts before their delivery; do not replay applied old plans or claim rollout completed.

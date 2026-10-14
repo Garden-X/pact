@@ -7,10 +7,10 @@ canonical_location: /ai/pact/workflow/WORKFLOW.md
 layer: PACT / workflow
 status: canonical
 generated_from: /ai/pact/templates/workflow.tpl.md
-generated_from_version: 3.1
+generated_from_version: 3.2
 content_status: current-data
 purpose: Define how agents maintain project work without bypassing SPARC project truth.
-updated: 2026-10-10 22:12:50 UTC+00:00
+updated: 2026-10-14 06:24:34 UTC+00:00
 
 ## Lifecycle
 
@@ -212,6 +212,54 @@ reports the question. Repeated material corrections can indicate an unclear
 brief or inadequate routing: the Lead sharpens the brief or assignment and
 records actual corrections and validation in the task outcome. Optional
 correction-rate reporting follows the Measurement rule below.
+
+### Spawn Boundaries
+
+Every spawned agent MUST receive an explicit boundary contract from its parent
+before acting. This applies to spawned Leads, Workers, and reviewers, including
+a child assigned a Prime function. The root agent (Prime) is exempt from the
+parent-issued contract requirement: its boundaries come from the project,
+SPARC, PACT, and the owner's instruction. Root exemption grants no extra powers.
+
+Each dispatch MUST identify the child's role (Prime, Lead, or Worker), parent
+agent, assigned task, and model tier (High, Middle, or Light), with the existing
+model/effort binding. For Prime, identify the Architect or Inspector function.
+The child must understand its position, responsibilities, and escalation route
+before acting. Spawn depth and model capability do not confer role authority.
+
+The boundary contract defines where the child may act, not how it must solve
+the task. Record these six explicit fields as `boundary_contract` in the
+existing task brief and preserve them in active STATE and handoff:
+
+- `task_scope`: the bounded outcome;
+- `permitted_area`: project paths and permitted access modes;
+- `protected_area`: forbidden/protected paths or operations;
+- `unchanged_contracts`: contracts/interfaces that must not be changed;
+- `allowed_side_effects`: permitted effects, including an explicit `none`
+  for read-only assignments;
+- `escalation`: conditions requiring a report to the parent before the
+  affected action, such as missing/conflicting boundaries or necessary scope
+  expansion. Independent work inside the clear boundary may continue.
+
+Use explicit `none` when a category has no additional restriction; applicable
+project, SPARC, PACT, role, file-guard and owner constraints still apply.
+Reservations identify claimed writes; they do not replace these boundaries.
+Reusable profiles supply context but do not replace a parent's dispatch contract.
+
+When spawning a descendant, the parent MUST carry forward its effective inherited
+boundaries automatically in the dispatch and state only relevant changes or
+narrower scope. The child MAY narrow those boundaries for its descendants; it
+MUST NOT widen them without explicit approval from its parent. An immediate
+parent cannot authorize beyond its own inherited authority: escalate upstream
+until the authorized parent or owner can approve. Record approved changes in
+the existing task/STATE before dispatch or the expanded action. No delegation
+grants new role powers, permission to spawn, or permission for side effects.
+
+The child chooses its method inside the fence, subject to supplied invariant
+tests, acceptance requirements, and applicable contracts. No new boundary file,
+role, reporting framework, host hook, or runtime enforcement is required.
+
+Principle: Parent defines the fence. Child chooses how to work inside it.
 
 Gate and slice:
 

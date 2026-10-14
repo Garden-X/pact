@@ -5,8 +5,8 @@
 name: agents.tpl.md
 type: pact maintenance template
 for: AGENTS.md
-updated: 2026-10-10 01:59:22 UTC+00:00
-version: 3.2
+updated: 2026-10-14 06:23:51 UTC+00:00
+version: 3.3
 
 ## WHAT
 
@@ -130,6 +130,8 @@ Use this template when creating or changing the general rules for all agents.
 
 The Execution Hierarchy pointer must distinguish model capability classes
 from execution roles and link portable Lead and Worker contracts.
+It must direct agents to WORKFLOW Spawn Boundaries for parent-issued limits,
+explicit role/parent/tier context, inheritance, escalation, and child autonomy.
 Host sub-agent configurations may bridge to these contracts without
 becoming competing rule authorities.
 
@@ -145,7 +147,7 @@ canonical_location: /ai/pact/agents/AGENTS.md
 layer: PACT / agent orientation
 status: canonical
 generated_from: /ai/pact/templates/agents.tpl.md
-generated_from_version: 3.2
+generated_from_version: 3.3
 content_status: current-data
 purpose: Orient agents inside the `/ai` container and keep SPARC project truth separate from PACT project maintenance.
 updated: YYYY-MM-DD HH:mm:ss UTC+00:00
@@ -440,6 +442,10 @@ model tiers (High, Middle, Light), and effort percentages are distinct; follow
 the definitions and local bindings in WORKFLOW. Reusable specialist files are
 optional and generated from sub-agent.tpl.md when needed. Current assignments
 belong in TASKS/STATE, not the package manifest or project MAP.
+
+Before spawning or acting as a child, read WORKFLOW's Spawn Boundaries. The
+parent supplies an explicit boundary contract and role/parent/tier context;
+inherit limits without widening and escalate conflicts to that parent.
 
 ## Hooks
 

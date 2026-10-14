@@ -5,8 +5,8 @@
 name: state.tpl.md
 type: pact maintenance template
 for: STATE.md
-updated: 2026-10-10 22:06:24 UTC+00:00
-version: 1.5
+updated: 2026-10-14 06:23:51 UTC+00:00
+version: 1.6
 
 ## WHAT
 
@@ -33,7 +33,8 @@ Use this template when creating or resetting the active state file.
 - map each active task back to one task from `TASKS.md`;
 - own the structured active task objects;
 - preserve the transferred task's exact bounded brief, including its scope,
-  constraints, validation expectation, and applicable tests/baseline references;
+  constraints, validation expectation, applicable tests/baseline references,
+  and parent-issued boundary_contract and execution context when spawned;
 - record task id, request, task phase, actor, source, affected files,
   reservations, validation, retry, and handoff;
 - link related invariant PACT files with relative Markdown links;
@@ -107,6 +108,12 @@ Each active task object must include:
 - for a Worker assignment, `specialty`, `model_tier` (High, Middle, or Light),
   resolved local `model_binding`, and requested `effort` percentage; record the
   effective native setting or unsupported control with that binding;
+- for every spawned assignment, `parent`, the actual spawning agent, plus
+  `model_tier`, resolved `model_binding`, requested `effort` and effective
+  native setting, and `boundary_contract` with all six WORKFLOW Spawn Boundaries
+  fields; use `function: Architect` or `function: Inspector` for a Prime
+  assignment. Do not infer authority from depth or capability. Root is exempt
+  from a parent-issued contract, not from project/role authority;
 - `lead`, required for every Worker assignment and shared by a parallel set;
 - `created_at` or equivalent timestamp when known;
 - `source`;
@@ -153,8 +160,10 @@ On transfer, copy the complete bounded brief, files/scope, reservations and
 validation expectation, with applicable tests and baseline evidence, into the
 active object before removing its Pending entry. STATE must suffice to resume
 without the deleted entry or chat history. Preserve explicit actor/model/effort
-bindings. Keep large evidence at its existing path and retain its relevant
-references; do not copy transcripts or long-form reasoning into STATE.
+bindings, parent/role/tier context and the complete effective boundary_contract.
+Approved changes retain their parent approval evidence; a descendant may not
+silently widen inherited limits. Keep large evidence at its existing path and
+retain its relevant references; do not copy transcripts or long-form reasoning into STATE.
 
 On resume, read that object and check the actual diff and reservation status.
 Handoff notes record progress and outstanding work; they do not replace the
@@ -199,7 +208,7 @@ layer: PACT / context / state
 status: active
 active_task: PACT-YYYYMMDD-001
 generated_from: /ai/pact/templates/state.tpl.md
-generated_from_version: 1.5
+generated_from_version: 1.6
 content_status: current-state
 updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 
@@ -213,6 +222,14 @@ updated: YYYY-MM-DD HH:mm:ss UTC+00:00
     actor: <assigned agent/session>
     role: Worker
     lead: <responsible Lead agent/session>
+    parent: <responsible Lead agent/session>
+    boundary_contract:
+      task_scope: Create and register the selected completion-check hook.
+      permitted_area: Read governing PACT contracts; write only the two reserved files.
+      protected_area: No template edits, product code, SPARC truth, host configuration or other state writes.
+      unchanged_contracts: Preserve PACT/SPARC authority and all existing hook interfaces.
+      allowed_side_effects: Reserved Markdown edits only; no Git, runtime binding, services or external messages.
+      escalation: Report missing/conflicting limits or needed scope/interface/side-effect expansion to parent before acting.
     specialty: documentation
     model_tier: Light
     model_binding: <resolved owner-approved provider/model>

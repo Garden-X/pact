@@ -11,7 +11,7 @@ gate_id: PACT-2.0
 generated_from: /ai/pact/templates/logic-draft.tpl.md
 generated_from_version: 1.5
 content_status: current-state
-updated: 2026-10-11 03:37:22 UTC+00:00
+updated: 2026-10-14 06:23:51 UTC+00:00
 
 ## Selected Logic
 
@@ -95,6 +95,16 @@ Prime selects the owner-authorized publication and all installed-project rollout
 Acceptance: source/extracted protocol checks pass; target preservation checks pass; actual native Git gates are inspected on outgoing revisions; source and project updates reach their remote default branches through separate fast-forward acceptance actions. Non-Git fixtures are updated locally; duplicate worktrees are preserved without unrelated branch merges.
 
 Owner clarification: Tarot stays local; do not publish its empty remote or database/product ancestry. Commit its PACT update locally. Other six project updates remain authorized for commit/push/merge.
+
+## Spawn Boundaries Update
+
+Owner adds explicit parent-issued boundaries to every spawn and requires each
+agent to understand its role and level. Keep the six boundary fields and
+role/parent/tier context in existing briefs/STATE; preserve inherited limits
+and autonomy of method. Root Prime is exempt from a parent-issued contract.
+No new role/file/runtime. Update matching RULES/examples/targets and release
+artifact; verify preservation and existing role authority. Prior installed-
+project rollout remains outstanding; this correction does not close it.
 
 ## Next
 

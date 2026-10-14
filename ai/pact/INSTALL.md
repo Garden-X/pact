@@ -2,7 +2,7 @@
 
 > For: PACT 2.0
 > Purpose: install or verify the PACT project-maintenance layer
-> Updated: 2026-10-10 22:39:56 UTC+00:00
+> Updated: 2026-10-14 06:26:28 UTC+00:00
 
 ## Purpose
 
@@ -172,6 +172,18 @@ updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 Refresh `updated` when meaningful Markdown content changes. Do not use local
 timezone names, IANA timezone names, city names, or other location-bearing
 timezone labels.
+
+## Spawn-boundary migration
+
+Sync WORKFLOW, AGENTS, task/state and reusable sub-agent contracts together.
+Before the next spawn, record the parent-issued boundary_contract (scope,
+permitted/protected areas, unchanged interfaces, allowed side effects and
+escalation) and explicit role/parent/tier context in the existing brief.
+Preserve effective inherited limits through transfer, restart and handoff.
+Recover missing limits from authorized project evidence or the parent; do not
+invent approval or dispatch an incomplete child assignment. Root tasks need
+no parent-issued contract. Existing role powers, bindings, reservations and
+acceptance remain authoritative. Profiles do not replace a dispatch contract.
 
 ## Required PACT Package
 

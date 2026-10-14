@@ -5,8 +5,8 @@
 name: tasks.tpl.md
 type: pact maintenance template
 for: TASKS.md
-updated: 2026-10-10 22:06:24 UTC+00:00
-version: 1.9
+updated: 2026-10-14 06:23:51 UTC+00:00
+version: 1.10
 
 ## WHAT
 
@@ -36,7 +36,8 @@ Use this template when creating or resetting the PACT task list.
 - keep pending and done tasks separate;
 - move active work into `STATE.md`;
 - transfer the exact bounded brief, scope/constraints, reservations, validation
-  expectation, and applicable tests/baseline references into its active object;
+  expectation, applicable tests/baseline references, and any parent-issued
+  boundary_contract and role/parent/tier context into its active object;
 - remove a transferred task from Pending when it becomes an active task in
   `STATE.md`; several tasks may be transferred at once only as a parallel
   worker set under the `## Execution Hierarchy` rule in `WORKFLOW.md`;
@@ -106,6 +107,13 @@ existing authorized records or referred to Lead, never invented on resume.
 During Lead cover, only pre-briefed ready tasks may be dispatched under
 the StallCover policy registered in WORKFLOW.
 
+For every task intended for a spawned agent, readiness additionally requires
+all six boundary_contract fields from WORKFLOW Spawn Boundaries and explicit
+role, parent, task and model-tier context (Prime function when applicable).
+Carry inherited limits into the dispatch; preserve the effective contract on
+transfer/restart/handoff. Missing boundaries prevent dispatch. Root tasks are
+exempt from the parent-issued contract requirement. This grants no spawn permission.
+
 ### Results and measurement
 
 Done entries carry actual outcomes, validation evidence, and a commit when
@@ -147,7 +155,7 @@ canonical_location: /ai/pact/context/state/TASKS.md
 layer: PACT / context / state
 status: active-draft
 generated_from: /ai/pact/templates/tasks.tpl.md
-generated_from_version: 1.9
+generated_from_version: 1.10
 content_status: current-state
 updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 
@@ -160,6 +168,15 @@ updated: YYYY-MM-DD HH:mm:ss UTC+00:00
   files: /ai/pact/agents/hooks/ValidateBeforeCompletion.md, /ai/pact/workflow/WORKFLOW.md
   reservations: /ai/pact/agents/hooks/ValidateBeforeCompletion.md, /ai/pact/workflow/WORKFLOW.md
   ready: true
+  parent: <responsible Lead agent/session>
+  role: Worker
+  boundary_contract:
+    task_scope: Create and register the selected completion-check hook.
+    permitted_area: Read governing PACT contracts; write only the two reserved files.
+    protected_area: No template edits, product code, SPARC truth, host configuration or other state writes.
+    unchanged_contracts: Preserve PACT/SPARC authority and all existing hook interfaces.
+    allowed_side_effects: Reserved Markdown edits only; no Git, runtime binding, services or external messages.
+    escalation: Report missing/conflicting limits or needed scope/interface/side-effect expansion to parent before acting.
   specialty: documentation
   model_tier: Light
   model_binding: <owner-approved local binding, resolved before dispatch>
@@ -199,7 +216,8 @@ baseline: <recorded failing command, actual exit status, and evidence path>
 validation: Run the supplied invariant checks sequentially against this candidate.
 ```
 
-Copy these fields and the original scope/reservations into the active STATE
+Copy these fields, the parent-issued boundary_contract and execution context,
+and the original scope/reservations into the active STATE
 object before removing the Pending entry. The matching invariant-field example
 in [state.tpl.md](state.tpl.md) shows the same object during handoff, retaining the task's
 instructions and baseline references for resume.
