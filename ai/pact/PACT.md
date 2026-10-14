@@ -1,7 +1,7 @@
 # Protocol for Agent Coordination and Tasks
 
 > Version: 2.0
-> Updated: 2026-10-10 19:23:24 UTC+00:00
+> Updated: 2026-10-14 18:49:23 UTC+00:00
 > Status: release prepared
 > Purpose: project maintenance for AI-assisted development
 > Release title: improved workflow and project syncronization
@@ -491,9 +491,15 @@ places Prime and Lead in different harnesses without resetting or widening
 inherited boundaries. Wakes are event-first with heartbeat fallback: Workers
 report to Lead, and Lead wakes Prime only for `escalation` or an explicit
 `ready` candidate recorded first in STATE's Gate Handoff. Message delivery is
-not the source of truth. The optional role-less
-[PrimeWatch](agents/hooks/PrimeWatch.md) observer only reads that record and
-wakes Prime once per `gate_id` + `seq` key.
+not the source of truth. Lead is the only writer of that handoff, and each
+published `gate_id` + `seq` revision is immutable. Prime records decisions in
+the artifact that owns the affected authority, through record-only commits
+naming the answered key, and accepts an exact `candidate` that the delivered
+tip may differ from only in PACT state records. The optional role-less
+[PrimeWatch](agents/hooks/PrimeWatch.md) observer only observes, classifies,
+and wakes Prime once per handoff or incident key. Capability is selected for
+the assignment and authority by the role/function contract; tier fields are
+routing hints, so Lead, Worker, and Watchdog work may use any adequate tier.
 
 
 ## Shared Keep-Alive Registry

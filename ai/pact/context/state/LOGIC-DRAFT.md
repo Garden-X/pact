@@ -11,7 +11,7 @@ gate_id: PACT-2.0
 generated_from: /ai/pact/templates/logic-draft.tpl.md
 generated_from_version: 1.5
 content_status: current-state
-updated: 2026-10-14 18:27:22 UTC+00:00
+updated: 2026-10-14 18:49:23 UTC+00:00
 
 ## Selected Logic
 
@@ -122,6 +122,19 @@ a separate branch; the owner merges it. Commits carry no assistant attribution.
 Acceptance: scenarios A-K hold by contract walkthrough; templates, examples and
 generated targets agree; existing source validators and reference scenarios
 pass with actual exits; lightweight checks cover the new semantics.
+
+## Harness Topology Correction
+
+Owner review of gate/PACT-Harness selects corrections without redesign: tier
+fields become routing hints (capability is selected for the assignment,
+authority by the role/function contract; Lead, Worker and Watchdog may use any
+adequate tier); each published Gate Handoff `gate_id#seq` is immutable with
+Lead as its single writer; Prime records decisions in the artifact that owns
+the affected authority through record-only, non-force `PACT-Answers` commits;
+acceptance names the exact candidate and the delivered tip may differ only in
+PACT state records; unavailability wakes dedup by stable incident key. Work only
+on gate/PACT-Harness; do not merge to main. Acceptance: owner scenarios A-L in
+the harness checks, which must also fail on the pre-correction revision.
 
 ## Next
 

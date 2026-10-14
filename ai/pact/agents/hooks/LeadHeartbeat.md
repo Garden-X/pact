@@ -10,7 +10,7 @@ status: canonical
 generated_from: /ai/pact/templates/hook.tpl.md
 generated_from_version: 1.3
 content_status: current-data
-updated: 2026-10-14 18:27:22 UTC+00:00
+updated: 2026-10-14 18:49:23 UTC+00:00
 
 ## TRIGGER
 
@@ -25,8 +25,8 @@ or messaging permission. The host governs actual execution.
 - [../../workflow/WORKFLOW.md](../../workflow/WORKFLOW.md) topology, cadence,
   and bindings
 - [../../context/state/TASKS.md](../../context/state/TASKS.md) and
-  [../../context/state/STATE.md](../../context/state/STATE.md), including any
-  new `prime_response` in the Gate Handoff
+  [../../context/state/STATE.md](../../context/state/STATE.md), and new Prime
+  decision commits (`PACT-Answers`) on the gate branch
 - current slice, worker availability, validation, and record/delivery status
 
 ## SCRIPTS
@@ -41,11 +41,16 @@ Portable prompt for an installed binding:
 > active reservations, returned and blocked Worker results, and the ready pool;
 > continue only assigned work. Review covered results first. Keep independent
 > light tasks moving, serialize heavy checks, and verify slice records before
-> authorized delivery. Act on any new `prime_response`. Record progress in
-> STATE; do not relay routine Worker or slice status to Prime. Wake Prime only
-> by publishing `escalation` or `ready` in the Gate Handoff, durably first and
-> pushed before notification in `multi` topology. Hold at ready for Prime
-> acceptance; if Prime is unavailable, apply the declared StallCover policy.
+> authorized delivery. Fetch before every commit, push, or handoff publication;
+> read and integrate new Prime decision commits without altering their entries,
+> and act on a decision only from its durable record. Record progress in STATE;
+> do not relay routine Worker or slice status to Prime. Wake Prime only by
+> publishing a new immutable Gate Handoff revision with `escalation` or
+> `ready`, committed first and pushed before notification in `multi`
+> topology. Any material change to a published revision is the next `seq`.
+> Push without force; on rejection, fetch, read, integrate, and re-check.
+> Hold at ready for Prime acceptance; if Prime is unavailable, apply the
+> declared StallCover policy.
 > Stay quiet to the owner on unchanged ticks; notify only for a meaningful
 > change, completion, failure, or required owner action.
 

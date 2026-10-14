@@ -5,7 +5,7 @@
 name: state.tpl.md
 type: pact maintenance template
 for: STATE.md
-updated: 2026-10-14 18:27:22 UTC+00:00
+updated: 2026-10-14 18:49:23 UTC+00:00
 version: 1.7
 
 ## WHAT
@@ -189,13 +189,25 @@ file type; wake messages only point to it. Absent means `signal: working` with
 no Prime-facing publication. It is independent of the task status above:
 `ready` normally coexists with `clear`, and `escalation` with any status.
 
+Lead is the only writer of this block. It shows the newest published revision;
+earlier revisions remain in Git history. `gate_id` + `seq` identifies one
+immutable published Prime-facing revision: once committed to the gate branch
+(and pushed in `multi` topology) it is never edited in place. Any material
+change to its Prime-facing payload, including `signal`, `candidate`,
+`escalation`, `blockers`, `validation`, `records`, `slices`, or any other
+value that could alter Prime's decision, replaces the block with a new revision
+and the next `seq`. Non-semantic differences (timestamp, formatting, a re-read
+of the same pointer) create no revision and are not edited into a published
+one. Unpublished local drafts may change freely.
+
 Fields:
 
 - `gate_id`: the gate selected in `LOGIC-DRAFT.md`;
-- `seq`: handoff version, an integer Lead increments whenever it changes
-  `signal` or `candidate`; `gate_id` + `seq` is the notification key;
+- `seq`: integer revision number, incremented for every published material
+  change; `gate_id#seq` is the notification key;
 - `signal`: `working`, `escalation`, or `ready`;
-- `candidate`: for `ready`, the exact revision Lead validated; otherwise `none`;
+- `candidate`: for `ready`, the exact implementation revision Lead validated
+  and Prime accepts; otherwise `none`;
 - `branch`: the gate branch holding the candidate and this record;
 - `lead`: the Lead actor, naming its harness/session in `multi` topology;
 - `slices`, `validation`, `records`, `blockers`: for `ready`, compact
@@ -203,22 +215,30 @@ Fields:
   to TASKS/evidence rather than copies;
 - `escalation`: for `escalation`, the exact Prime-level need, affected task IDs,
   and the decision requested; otherwise `none`;
-- `recorded_at`: verified-UTC time of the latest Lead change;
-- `prime_response`: written only by Prime: `none`, or the answered `seq` with
-  `received`, `accepted`, `not-accepted`, or `decided`, plus an evidence or
-  LOGIC-DRAFT decision pointer.
+- `recorded_at`: verified-UTC publication time of this revision.
 
-Lead owns every field except `prime_response`. `ready` declares that Lead's
-gate execution responsibility is complete: no active task object remains,
-TASKS holds no pending task of the gate, every selected slice is integrated and
-passed SliceRecordsCheck, Lead's fast checks passed on `candidate`, and later
-commits on `branch` change only STATE or TASKS records. These conditions
-are necessary but never sufficient; readiness exists only when Lead writes
-`ready`. Prime acts on an unanswered key, records its response, and confirms the
-candidate before GateClose. After `not-accepted` or `decided`, Lead resumes with
-`signal: working` and a new `seq`. When Prime advances the draft after
-acceptance, the block resets for the next gate; completed outcomes remain in
-TASKS Done.
+Prime never writes this block. Prime records each decision in the
+authoritative artifact that owns the affected authority or contract, naming
+`answers: <gate_id>#<seq>`, in a record-only commit with the trailer
+`PACT-Answers: <gate_id>#<seq>` (see WORKFLOW Writers on the gate branch). A
+boundary widening becomes an approval entry in the affected task's
+`boundary_contract`, leaving LOGIC-DRAFT unchanged; a gate scope, acceptance or
+selected-logic change goes to LOGIC-DRAFT; an acceptance outcome goes to
+GateClose evidence and LOGIC-DRAFT `## Acceptance`. Lead preserves those
+entries unchanged when it integrates the commit. A key is answered when such a
+commit exists; Prime answers only the newest published revision.
+
+`ready` declares that Lead's gate execution responsibility is complete: no
+active task object remains, TASKS holds no pending task of the gate, every
+selected slice is integrated and passed SliceRecordsCheck, and Lead's fast
+checks passed on `candidate`. Commits after `candidate` may change only PACT
+state records under `/ai/pact/context/state/`, so the delivered tip differs
+from the accepted candidate only in records. These conditions are necessary but
+never sufficient; readiness exists only when Lead publishes `ready`. After a
+not-accepted outcome or a decision, Lead integrates the answering commit and
+publishes `signal: working` with the next `seq`. When Prime advances the draft
+after acceptance, the block resets for the next gate; completed outcomes remain
+in TASKS Done.
 
 `STATE.md` must not:
 
@@ -350,10 +370,17 @@ active object is not part of this later snapshot:
     blockers: none
     escalation: none
     recorded_at: YYYY-MM-DD HH:mm:ss UTC+00:00
-    prime_response: none
 ```
 
-An escalation uses the same block with `signal: escalation`,
+An escalation is a new revision of the same block with `signal: escalation`,
 `candidate: none`, and an exact `escalation:` such as `Required scope expansion:
-<need>; blocked: <task ids>; decision requested: <choice>`. Prime answers with,
-for example, `prime_response: 5 decided - LOGIC-DRAFT.md / Decisions`.
+<need>; blocked: <task ids>; decision requested: <choice>`. If the request then
+changes materially, for example to a wider path set, Lead publishes it as the
+next `seq` rather than editing the published one. Prime answers in the owning
+artifact, for example an approval entry in the affected `boundary_contract`:
+
+```txt
+approval: write /ai/pact/workflow/WORKFLOW.md added to permitted_area; Prime; answers: <selected gate id>#5
+```
+
+committed alone as a state-record change with `PACT-Answers: <selected gate id>#5`.

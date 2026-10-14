@@ -10,13 +10,13 @@ status: canonical
 generated_from: /ai/pact/templates/hook.tpl.md
 generated_from_version: 1.3
 content_status: current-data
-updated: 2026-10-14 18:27:22 UTC+00:00
+updated: 2026-10-14 18:49:23 UTC+00:00
 
 ## TRIGGER
 
-The Lead's durable Gate Handoff in STATE records `signal: ready` with an
-identified candidate under [WORKFLOW](../../workflow/WORKFLOW.md), and
-`prime_response` has not answered that `seq`. A native wake,
+The newest published Gate Handoff revision in STATE records `signal: ready`
+with an identified candidate under [WORKFLOW](../../workflow/WORKFLOW.md), and
+no commit carries `PACT-Answers` for its `gate_id#seq`. A native wake,
 [PrimeWatch](PrimeWatch.md), or the Prime fallback heartbeat only delivers
 attention to that record; idle Workers, empty records, or elapsed time are not
 a trigger. Registration is a workflow contract; this file does not itself
@@ -39,11 +39,10 @@ None. The installed project's WORKFLOW supplies its acceptance commands.
 ## ACTION
 
 1. The Prime verifies scope, task evidence, records, and the candidate
-   revision. The gate branch tip must equal the handoff `candidate` or differ
-   from it only in STATE/TASKS records; otherwise the handoff is stale.
-   Tests cannot be attributed to a commit when relevant working
-   files differ from it; record and resolve that discrepancy first. Prime may
-   record `prime_response: <seq> received` to mark a long inspection in progress.
+   revision. The handoff `candidate` is the implementation revision under
+   acceptance; run the checks on exactly that revision. Tests cannot be
+   attributed to a commit when relevant working files differ from it; record
+   and resolve that discrepancy first.
 2. Coordinate a hold on competing heavy runs, check declared resource limits,
    and run every required acceptance command sequentially. Record the command,
    exit status, candidate revision, environment, and evidence location.
@@ -51,14 +50,19 @@ None. The installed project's WORKFLOW supplies its acceptance commands.
    steps exited zero. Missing, timed-out, interrupted, or nonzero steps prevent
    acceptance; a green final command does not erase earlier failures.
 4. Decide acceptance only after reading the results. If version-control actions
-   are authorized, fetch/check freshness and confirm the gate revision to merge
-   is the tested revision. Confirm the default branch remains its ancestor;
-   changes requiring a new candidate require relevant validation again.
+   are authorized, fetch/check freshness. The delivery tip must descend from
+   `candidate`, and `git diff --name-only <candidate> <tip>` may list only
+   PACT state records under `/ai/pact/context/state/`; any other path, or a
+   newer handoff revision, makes this handoff stale and is not accepted.
+   Record both the accepted candidate and the delivered tip. Confirm the
+   default branch remains its ancestor; changes requiring a new candidate
+   require relevant validation again.
 5. Merge in a separate later action, using fast-forward only. Authorized push
    and completion-record writes follow; do not combine result inspection with
-   merge in one shell command. Update TASKS/STATE and any required daily log,
-   record `prime_response: <seq> accepted`, and have the Prime advance
-   LOGIC-DRAFT to a preselected next gate if one exists.
+   merge in one shell command. Record the outcome in LOGIC-DRAFT
+   `## Acceptance` naming `answers: <gate_id>#<seq>`, update completion
+   records and any required daily log, and have the Prime advance LOGIC-DRAFT
+   to a preselected next gate if one exists.
 
 ## OUTPUT
 
@@ -71,10 +75,11 @@ None. The installed project's WORKFLOW supplies its acceptance commands.
 ## FAILURE
 
 Do not merge or mark the gate closed. Keep the gate's pending acceptance or
-delivery recorded and return exact failure evidence to the Lead as
-`prime_response: <seq> not-accepted` with its evidence pointer, durably before
-any notification through an authorized channel. A killed run is reported, not
-silently restarted.
+delivery recorded. Record `not accepted` with its evidence pointer in
+LOGIC-DRAFT `## Acceptance` naming `answers: <gate_id>#<seq>`, as a
+record-only, non-force commit with the `PACT-Answers` trailer based on the
+fetched gate tip, before any notification to the Lead. A killed run is
+reported, not silently restarted.
 
 ## BOUNDARIES
 

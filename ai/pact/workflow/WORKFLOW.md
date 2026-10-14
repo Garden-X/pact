@@ -10,7 +10,7 @@ generated_from: /ai/pact/templates/workflow.tpl.md
 generated_from_version: 3.3
 content_status: current-data
 purpose: Define how agents maintain project work without bypassing SPARC project truth.
-updated: 2026-10-14 18:27:22 UTC+00:00
+updated: 2026-10-14 18:49:23 UTC+00:00
 
 ## Lifecycle
 
@@ -32,8 +32,9 @@ Follow the canonical startup sequence in `PACT-MANIFEST.md`.
 
 ## Resume
 
-Read the selected `LOGIC-DRAFT.md`, `STATE.md` (including any Gate Handoff and
-unanswered Prime-facing key), `TASKS.md`, and latest cache manifest. Check the
+Read the selected `LOGIC-DRAFT.md`, `STATE.md` (including the newest Gate
+Handoff revision and whether a `PACT-Answers` commit answered it), `TASKS.md`,
+and latest cache manifest. Check the
 current branch and actual diff before resuming a task;
 reconcile any owner changes and outstanding worker results. Resume from the
 recorded validation and handoff, without replaying completed work. A blocked
@@ -120,7 +121,8 @@ returns to `clear` when no active task remains.
 Every project that installs or syncs PACT inherits this hierarchy. It defines
 who plans, who executes, and who accepts work. Prime's Architect and Inspector
 functions share the required High tier. Other declared fields below are
-defaults; a project may override them in place within these role boundaries.
+defaults and routing hints; a project may override them in place within these
+role boundaries.
 
 Declared fields:
 
@@ -152,6 +154,18 @@ or model identity. Concrete provider/model bindings are local configuration;
 preserve the owner's explicit bindings and configured host model. A missing
 capability must be reported with an explicit fallback, never silently lowered.
 
+Capability is selected for the assignment; authority is selected by the
+role/function contract. Neither determines the other. `lead_tier` and
+`worker_tier_default` are default routing hints, not role classifications:
+an actual Lead, Worker, or Watchdog assignment may use Light, Middle, or High
+(a Watchdog may also be a non-model script) when that capability is adequate
+for the work and owner/provider/model constraints permit it. A simple Lead
+coordinating a few trivial tasks may be Light; subtle cross-cutting integration
+may need Middle or High; a Worker may be High for one hard bounded task. A
+higher tier never adds authority, and a lower tier never removes authority the
+role already grants. `prime_tier: High` is the required capability for Prime's
+Architect and Inspector assignments, not a source of authority.
+
 Prime has two functions: Architect selects scope and acceptance criteria;
 Inspector checks the candidate and acceptance evidence. Both use the same
 `prime_tier: High`. They may use the same model or different models, with
@@ -163,7 +177,9 @@ label self-review independent. Neither function creates another management
 level or requires two permanently running agents. Only Prime holds gate
 acceptance authority.
 
-Lead is the coordinator role. It hires Workers for the skills the task needs,
+Lead is the coordinator role. Prime selects the Lead assignment's adequate tier
+for the gate within owner constraints; `lead_tier` is only the default. Lead
+hires Workers for the skills the task needs,
 such as design, coding, research, documentation, or testing. Workers are
 assignments, not a fixed roster or a compulsory lowest-cost model. Lead selects
 each Worker's specialty, model tier, concrete model binding, and requested
@@ -280,9 +296,11 @@ Gate and slice:
 - The Prime closes the gate by fast-forwarding the gate branch into
   `default_branch` after the full acceptance suite passes and the records are
   reviewed through the `GateClose` hook. Read every required command's exit
-  status against the revision being accepted: missing, failed, killed, or
-  timed-out checks prevent closure. A final successful command does not erase
-  an earlier failure. Merging is a separate action after the results have been
+  status against the revision being accepted, the handoff `candidate`:
+  missing, failed, killed, or timed-out checks prevent closure. A final
+  successful command does not erase an earlier failure. The delivered tip may
+  differ from that candidate only in PACT state records (see Candidate
+  identity). Merging is a separate action after the results have been
   inspected. Among agents, only the Prime writes to `default_branch`; the
   owner may commit directly, and agents fetch and read those commits.
 - Design questions the owner has delegated are decided by the Lead and
@@ -457,8 +475,8 @@ Wake routing is event-first with heartbeat fallback:
 | Anything inside Lead's inherited authority, including slice completion and validation | resolved by Lead; no Prime wake |
 | Required scope expansion, boundary or acceptance-contract conflict, unresolvable architectural decision, or needed owner/Prime authorization | Lead -> Prime as `escalation` |
 | Lead's gate execution complete with a validated candidate | Lead -> Prime as `ready` |
-| Lead or its harness unavailable with actionable impact, with exact evidence | host or PrimeWatch -> Prime |
-| Prime decision or GateClose outcome | Prime -> Lead through the durable `prime_response` |
+| Lead or its harness unavailable with actionable impact, with exact evidence | host or PrimeWatch -> Prime, once per incident |
+| Prime decision or GateClose outcome | recorded by Prime in the artifact that owns it; delivery to Lead is only a pointer |
 
 Workers never wake Prime, Prime does not poll Workers, and routine Worker or
 slice events stay with Lead. Native completion and message mechanisms are the
@@ -467,9 +485,9 @@ finds no new durable change wakes nobody.
 
 Message delivery is not the source of truth. Wake events, chat or harness
 messages, and scheduler signals only deliver attention; the durable PACT
-records are canonical. Before any Prime-facing wake, Lead records the signal in
-STATE's `## Gate Handoff`. In `multi`, that record must also be committed and
-pushed to the gate branch, or another declared location both harnesses read,
+records are canonical. Before any Prime-facing wake, Lead publishes a handoff
+revision in STATE's `## Gate Handoff`: committed to the gate branch and, in
+`multi`, pushed there (or to another declared location both harnesses read)
 before notification. A missed wake loses no truth: a later Prime, Lead, or
 observer reconstructs pending attention from these records.
 
@@ -481,6 +499,57 @@ accepted gate; a ready candidate is not an accepted gate. Only Lead's explicit
 empty TASKS/STATE, absent sessions, branch activity, or elapsed time never do.
 Only Prime accepts the gate, through GateClose.
 
+Writers on the gate branch, in either topology:
+
+- Lead is the only writer of the Gate Handoff, of STATE/TASKS execution
+  content, and of product changes. Workers write nothing to version control.
+- Prime writes only its decision records (below), StallCover's recorded cover
+  transfer while Lead is unavailable, and completion records at close; never
+  the Gate Handoff or product files. PrimeWatch writes nothing.
+
+Handoff revisions are immutable. `gate_id` + `seq` identifies one published
+Prime-facing handoff revision; published means committed to the gate branch,
+and in `multi` pushed. A published revision is never edited in place. Any
+material change to its Prime-facing payload (`signal`, `candidate`,
+`escalation`, `blockers`, `validation`, `records`, `slices`, or any value that
+could alter Prime's decision) is published as a new revision with the next
+`seq`. Non-semantic differences, such as a timestamp, formatting, or a
+re-read of the same pointer, create no revision and are not edited into a
+published one. Unpublished local drafts may change freely.
+
+Prime decisions are recorded in the authoritative PACT artifact that owns the
+affected authority or contract, each naming the answered key as
+`answers: <gate_id>#<seq>`:
+
+- boundary widening for a Lead or Worker task: an approval entry in that task's
+  `boundary_contract` in TASKS or STATE; LOGIC-DRAFT stays unchanged;
+- gate scope, acceptance criteria, selected logic, or a gate-owned
+  architectural decision: LOGIC-DRAFT;
+- acceptance outcome: GateClose evidence and LOGIC-DRAFT `## Acceptance`;
+- a decision needing owner authorization: obtained from the owner, then
+  recorded where the authorized change is owned.
+
+Prime answers only the newest published revision; a superseded `seq` is never
+answered. A Prime decision commit changes only PACT state records
+(`/ai/pact/context/state/`), carries the trailer
+`PACT-Answers: <gate_id>#<seq>`, and is based on a freshly fetched gate-branch
+tip whose newest handoff is that `seq`. Push it without force. A rejected push
+means the other harness moved: fetch, read every new commit, and re-evaluate,
+answering the newest revision on the new tip; never merge or rebase blindly
+across an unseen handoff. In a shared working copy, Prime writes only a record
+file that holds no uncommitted Lead edits. Lead fetches before every commit,
+push, or handoff publication, reads and integrates Prime decision commits
+without altering their entries, pushes without force, and on rejection
+fetches, reads, integrates, and re-checks any unpublished revision. Lead acts
+on a decision only from its durable record; a message only points to it.
+
+Candidate identity: the handoff `candidate` is the exact implementation
+revision Lead validated and Prime's acceptance checks run on. Commits after it
+may change only PACT state records under `/ai/pact/context/state/`. Before
+delivery, Prime proves with the path diff from `candidate` to the delivery tip
+that only those records differ, and records both revisions. Any other
+difference makes the handoff stale; Lead must publish a new candidate.
+
 Watchdog function:
 
 - Lead Watchdog, in either topology: under its own Lead authority, Lead
@@ -488,27 +557,37 @@ Watchdog function:
   maintains the ready pool, reviews returned work, decides what remains in the
   slice, and escalates beyond its authority. `LeadHeartbeat` is its fallback
   when native completion events are missing or unreliable.
-- Prime-side observer, `multi` only and optional: a role-less executor of
-  `PrimeWatch`, preferably cheap and read-only. It reads only the minimal
-  records for the current gate and wakes Prime through an authorized host
-  channel for a new Prime-facing handoff key or exact unavailability evidence;
-  otherwise it stays silent. It holds no Prime, Lead, or Worker authority and
+- Prime-side observer, `multi` only and optional: a role-less, read-only
+  executor of `PrimeWatch`. Its capability is selected for the observation: a
+  deterministic script or Light model for mechanical state checks, Middle or
+  High to interpret ambiguous failures, stale evidence, or complex recovery
+  conditions. Its contract stays observe, classify, and wake at any capability.
+  It reads only the minimal records for the current gate and wakes Prime
+  through an authorized host channel for the newest unanswered handoff key or a
+  new unavailability incident; otherwise it stays silent. It holds no Prime, Lead, or Worker authority and
   inherits none. It never selects or changes a gate, decomposes, creates or
   dispatches tasks, reviews or integrates work, edits code or records, changes
   boundaries, accepts slices or gates, or writes any branch.
 
-Duplicate wakes are avoided by key, not by new machinery. The handoff key is
-`gate_id` plus the Gate Handoff `seq`; Lead increments `seq` whenever it changes
-`signal` or `candidate`. Prime records `prime_response` for the `seq` it
-handled, and an answered key never wakes Prime again. Prime writes only that
-field and its LOGIC-DRAFT decisions, as a record-only commit on the gate branch
-in `multi`, without force or product edits. Before Prime answers,
-the observer's last-delivered key is host-owned memory (scheduler state or a
-host-local file outside PACT records); it is updated only after successful
-delivery. If it is lost, at most a repeated wake occurs, and Prime finds the key
-already handled or in progress in the records. When a direct event and an
-observer both deliver, the host shares one delivered-key memory. PACT requires
-no database, queue, event bus, or daemon.
+Duplicate wakes are avoided by stable keys, not by new machinery:
+
+- Handoff key: `gate_id#seq` of the newest published revision with `signal`
+  `ready` or `escalation`. It is answered once a gate-branch commit carries
+  `PACT-Answers` for it; answered or superseded keys never wake Prime.
+- Incident key, for unavailability: `gate_id`, the affected role and its
+  actor/harness/session identity, the failure kind, and an incident id (the
+  host's error or session id, or the first observation that opened the
+  incident). Repeated observations of one open incident wake Prime at most
+  once until its kind or impact materially changes; changing timestamps or
+  liveness details do not. Observed recovery closes the incident, and a later
+  failure opens a new incident and a new wake.
+
+Delivered-key and open-incident memory is host-owned bookkeeping (scheduler
+state or a host-local file), never PACT project truth. It is updated only
+after successful delivery; if it is lost, at most one repeated wake occurs and
+Prime finds the key answered or in progress in the records. When a direct
+event and an observer both deliver, the host shares one memory. PACT requires
+no database, queue, lock service, event bus, or daemon.
 
 No timeout, silence, heartbeat, harness failure, or observer run transfers
 authority; StallCover governs recovery from unavailable roles.
@@ -524,11 +603,11 @@ Heartbeats:
   cadence.
 - The Prime heartbeat is a rare recovery fallback for missed wakes and
   unavailable observers. It reads the durable Gate Handoff and availability
-  evidence, acts only on an unanswered Prime-facing key or exact evidence, and
-  does not review slices or poll Workers.
+  evidence, acts only on the newest unanswered handoff key or a new incident,
+  and does not review slices or poll Workers.
 - The Lead heartbeat is the fallback of Lead's Watchdog function: Worker
   completions and blocks, the ready pool, slice validation and records, new
-  `prime_response` values, and resource evidence. It records status in STATE
+  Prime decision commits, and resource evidence. It records status in STATE
   and does not relay routine status to Prime.
 - Routine heartbeats are quiet. Report to the owner only milestones, failures,
   and decisions.

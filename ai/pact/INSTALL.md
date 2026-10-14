@@ -2,7 +2,7 @@
 
 > For: PACT 2.0
 > Purpose: install or verify the PACT project-maintenance layer
-> Updated: 2026-10-14 18:27:22 UTC+00:00
+> Updated: 2026-10-14 18:49:23 UTC+00:00
 
 ## Purpose
 
@@ -204,7 +204,17 @@ explicit owner model/effort bindings do not change.
   Prime-facing signal. Do not infer `ready` for an in-flight gate from its
   current records; Lead publishes it explicitly with the validated candidate.
 - Lead heartbeat prompts stop relaying routine status to Prime. Host
-  schedules, channels and delivered-key memory remain host configuration.
+  schedules, channels and delivered-key/incident memory remain host
+  configuration.
+- Lead is the only writer of the Gate Handoff; each published `gate_id#seq`
+  revision is immutable, and material changes publish the next `seq`. Prime
+  records decisions in the owning artifact (boundary approvals in the affected
+  `boundary_contract`, gate scope/acceptance in LOGIC-DRAFT) through
+  record-only, non-force commits with a `PACT-Answers` trailer.
+- Acceptance names the exact `candidate`; the delivered tip may differ from it
+  only under `/ai/pact/context/state/`.
+- Treat existing `lead_tier`/`worker_tier_default` values as routing hints;
+  do not add a Watchdog tier field. Preserve explicit owner model bindings.
 
 ## Required PACT Package
 
@@ -468,9 +478,10 @@ versions to 2.0 or overwrite target files with this repository's operational dat
    preserve local profile content and update names without creating a fixed team.
 3. Separate old model fields from roles. Retain concrete provider/model IDs in
    local bindings; use High/Middle/Light for capability fields. Prime architecture
-   and inspection share High. Defaults are lead_tier: Middle and
-   worker_tier_default: Light, while Lead may choose an adequate higher Worker
-   tier. Do not silently relabel a model whose capability has not been assessed.
+   and inspection share High. lead_tier: Middle and worker_tier_default: Light
+   are default routing hints only: an actual Lead, Worker, or Watchdog
+   assignment may use Light, Middle, or High when adequate, and no tier changes
+   role authority. Do not silently relabel a model whose capability has not been assessed.
 
    | Legacy model field | Binding destination |
    |---|---|

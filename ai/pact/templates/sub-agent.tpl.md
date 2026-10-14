@@ -5,7 +5,7 @@
 name: sub-agent.tpl.md
 type: pact maintenance template
 for: reusable sub-agent role files
-updated: 2026-10-14 18:27:22 UTC+00:00
+updated: 2026-10-14 18:49:23 UTC+00:00
 version: 2.2
 
 ## WHAT
@@ -44,7 +44,12 @@ A sub-agent file must contain:
 
 WORKFLOW owns role authority, tier meanings, effort mapping, and acceptance.
 The owner controls explicit bindings. Lead chooses an adequate Worker tier and
-effort for the assignment; the Worker is not restricted to Light. Prime's
+effort for the assignment; the Worker is not restricted to Light, and Prime
+chooses the Lead assignment's tier the same way. A profile's `model_tier` is
+only a default for its typical assignment: Lead, Worker, and Watchdog work may
+use Light, Middle, or High as the actual assignment requires. Capability is
+selected for the assignment; authority is selected by the role/function
+contract. Neither determines the other. Prime's
 Architect and Inspector functions share High even if their models differ.
 Capability does not grant authority to select scope, accept a gate, or merge.
 
@@ -63,7 +68,7 @@ before widening. Preserve method autonomy within those boundaries.
 
 A profile names an authority role, never an operational function as a role.
 A Lead profile includes the Watchdog function for its Workers in any harness
-topology: Workers report to Lead, and Lead wakes Prime only for Prime-level
+topology, at the Lead assignment's own capability: Workers report to Lead, and Lead wakes Prime only for Prime-level
 events published durably in STATE's Gate Handoff. A Worker reports only to its
 Lead. A role-less Watchdog follows its hook, not a sub-agent profile.
 
@@ -138,8 +143,9 @@ delivery. Keep full gate acceptance with Prime.
 ## OUTPUTS
 
 Reviewed slices, updated task/state evidence, and the candidate acceptance handoff
-as an explicit `ready` (or Prime-level `escalation`) in STATE's Gate Handoff,
-recorded and, across harnesses, pushed before any Prime notification.
+as a new immutable `ready` (or Prime-level `escalation`) revision in STATE's
+Gate Handoff, committed and, across harnesses, pushed before any Prime
+notification. Integrate Prime decision commits without altering them.
 
 ## HANDOFF
 

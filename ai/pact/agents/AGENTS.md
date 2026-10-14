@@ -10,7 +10,7 @@ generated_from: /ai/pact/templates/agents.tpl.md
 generated_from_version: 3.4
 content_status: current-data
 purpose: Orient agents inside the `/ai` container and keep SPARC project truth separate from PACT project maintenance.
-updated: 2026-10-14 18:27:22 UTC+00:00
+updated: 2026-10-14 18:49:23 UTC+00:00
 
 ## Core Distinction
 
@@ -308,7 +308,9 @@ parent supplies an explicit boundary contract and role/parent/tier context;
 inherit limits without widening and escalate conflicts to that parent.
 
 Watchdog, Coordinator, and other operational functions are not roles; a
-role-less Watchdog only observes and wakes. Harness membership and native
+role-less Watchdog only observes, classifies, and wakes. Capability is selected
+for the assignment and authority by the role/function contract; neither
+determines the other. Harness membership and native
 runtime parenthood confer no authority. Workers report to Lead; Lead wakes
 Prime only for Prime-level events after recording them in STATE's Gate Handoff.
 See WORKFLOW's Functions, Harnesses, And Wake Routing.

@@ -5,7 +5,7 @@
 name: agents.tpl.md
 type: pact maintenance template
 for: AGENTS.md
-updated: 2026-10-14 18:27:22 UTC+00:00
+updated: 2026-10-14 18:49:23 UTC+00:00
 version: 3.4
 
 ## WHAT
@@ -133,6 +133,7 @@ from execution roles and link portable Lead and Worker contracts.
 It must direct agents to WORKFLOW Spawn Boundaries for parent-issued limits,
 explicit role/parent/tier context, inheritance, escalation, and child autonomy.
 It must state that Watchdog and other operational functions are not roles,
+that capability tiers never define or change authority,
 that harness or runtime parenthood confers no authority, and that agents report
 to their PACT parent role, with Prime-facing Lead signals recorded durably first.
 Host sub-agent configurations may bridge to these contracts without
@@ -451,7 +452,9 @@ parent supplies an explicit boundary contract and role/parent/tier context;
 inherit limits without widening and escalate conflicts to that parent.
 
 Watchdog, Coordinator, and other operational functions are not roles; a
-role-less Watchdog only observes and wakes. Harness membership and native
+role-less Watchdog only observes, classifies, and wakes. Capability is selected
+for the assignment and authority by the role/function contract; neither
+determines the other. Harness membership and native
 runtime parenthood confer no authority. Workers report to Lead; Lead wakes
 Prime only for Prime-level events after recording them in STATE's Gate Handoff.
 See WORKFLOW's Functions, Harnesses, And Wake Routing.

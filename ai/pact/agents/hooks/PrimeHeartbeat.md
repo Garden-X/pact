@@ -10,7 +10,7 @@ status: canonical
 generated_from: /ai/pact/templates/hook.tpl.md
 generated_from_version: 1.3
 content_status: current-data
-updated: 2026-10-14 18:27:22 UTC+00:00
+updated: 2026-10-14 18:49:23 UTC+00:00
 
 ## TRIGGER
 
@@ -26,9 +26,9 @@ behavior and availability govern the binding.
 - [../../workflow/WORKFLOW.md](../../workflow/WORKFLOW.md) topology, cadence,
   and bindings
 - [../../context/state/LOGIC-DRAFT.md](../../context/state/LOGIC-DRAFT.md)
-- the `## Gate Handoff` block of
-  [../../context/state/STATE.md](../../context/state/STATE.md), as published on
-  the gate branch in `multi` topology
+- the newest published `## Gate Handoff` revision of
+  [../../context/state/STATE.md](../../context/state/STATE.md) and any
+  `PACT-Answers` commits on the gate branch
 - Lead availability evidence through authorized channels
 
 ## SCRIPTS
@@ -39,11 +39,16 @@ None. Installation and deduplication belong to the authorized host scheduler.
 
 Portable prompt for an installed binding:
 
-> Resume the recorded Prime role for this project and current gate. Read the
-> durable Gate Handoff. If `ready` or `escalation` has a `seq` that
-> `prime_response` has not answered, handle it: use GateClose for `ready`, or
-> decide the escalation in LOGIC-DRAFT, then record `prime_response`. If exact
-> evidence shows the Lead unavailable while gate work remains, apply StallCover.
+> Resume the recorded Prime role for this project and current gate. Fetch and
+> read the newest published Gate Handoff revision. If it is `ready` or
+> `escalation` and no commit carries `PACT-Answers` for its `gate_id#seq`,
+> handle it: use GateClose for `ready`; for an escalation, record the decision
+> in the artifact that owns the affected authority (a boundary widening in that
+> task's `boundary_contract`, a gate scope or acceptance change in LOGIC-DRAFT),
+> as a record-only, non-force commit naming the key, based on the fetched tip.
+> If the push is rejected, fetch, read the new commits, and answer only the
+> newest revision. If exact evidence shows a new Lead unavailability incident
+> while gate work remains, apply StallCover.
 > Do not review slices or poll Workers between events, and never infer
 > readiness from silence or empty records. Coordinate resources before heavy
 > work. Preserve existing work and services. Stay quiet on unchanged or
@@ -52,7 +57,8 @@ Portable prompt for an installed binding:
 
 ## OUTPUT
 
-An actionable gate decision or recorded cover action with its `prime_response`;
+An actionable gate decision recorded in its owning artifact, or a recorded
+cover action;
 routine unchanged ticks produce no owner notification.
 
 ## FAILURE
