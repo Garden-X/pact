@@ -10,7 +10,7 @@ status: canonical
 generated_from: /ai/pact/templates/hook.tpl.md
 generated_from_version: 1.3
 content_status: current-data
-updated: 2026-10-14 19:39:23 UTC+00:00
+updated: 2026-10-14 19:48:20 UTC+00:00
 
 ## TRIGGER
 
@@ -42,12 +42,10 @@ Portable prompt for an installed binding:
 > Resume the recorded Prime role for this project and current gate. Fetch and
 > read the newest published Gate Handoff revision. If it is `ready` or
 > `escalation` and no commit carries `PACT-Answers` for its `gate_id#seq`,
-> handle it. Also resume an `accepted` gate whose `delivery: pending` has no
-> `delivery: complete` on `default_branch`: follow GateClose delivery
-> recovery, without rerunning acceptance when candidate, evidence, and
-> branches are unchanged, and stop to re-evaluate if anything moved. For a
-> handoff, use GateClose for `ready`, recording the answer before any
-> delivery; for an escalation, write only the minimum authority-decision entry
+> handle it: an unanswered `ready` enters GateClose's acceptance path. An
+> `accepted` entry with `delivery: pending` and no `delivery: complete`
+> enters GateClose's delivery-recovery path, which never reruns acceptance
+> automatically. For an escalation, write only the minimum authority-decision entry
 > in the artifact that owns the affected authority (a boundary widening appended
 > to that task's `boundary_contract`, a gate scope or acceptance change in
 > LOGIC-DRAFT), as a record-only, non-force commit naming the key, based on the

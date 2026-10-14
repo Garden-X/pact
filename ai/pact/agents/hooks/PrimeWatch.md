@@ -10,7 +10,7 @@ status: canonical
 generated_from: /ai/pact/templates/hook.tpl.md
 generated_from_version: 1.3
 content_status: current-data
-updated: 2026-10-14 19:39:23 UTC+00:00
+updated: 2026-10-14 19:48:20 UTC+00:00
 
 ## TRIGGER
 
@@ -59,7 +59,9 @@ Portable prompt for an installed binding:
 > Prime once per delivery key `gate_id#seq@candidate:pending` when an
 > `accepted` entry has `delivery: pending` and `default_branch` has no
 > `delivery: complete` entry for that key: an existing `PACT-Answers` does not
-> mean the gate is closed. A published
+> mean the gate is closed. These wakes point Prime to GateClose's acceptance
+> path or delivery-recovery path respectively; classify which one, nothing
+> more. A published
 > revision is immutable, so a changed request always has a new `seq`; never
 > compare payload text to invent a wake. For Lead or harness unavailability
 > while gate work remains, form the incident key from the gate, affected role

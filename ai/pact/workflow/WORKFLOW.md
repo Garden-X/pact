@@ -10,7 +10,7 @@ generated_from: /ai/pact/templates/workflow.tpl.md
 generated_from_version: 3.3
 content_status: current-data
 purpose: Define how agents maintain project work without bypassing SPARC project truth.
-updated: 2026-10-14 19:39:23 UTC+00:00
+updated: 2026-10-14 19:48:20 UTC+00:00
 
 ## Lifecycle
 
@@ -667,7 +667,7 @@ Heartbeats:
 | LeadHeartbeat | host_hook | [../agents/hooks/LeadHeartbeat.md](../agents/hooks/LeadHeartbeat.md) | every `heartbeat_lead` as Lead Watchdog fallback, when scheduled | None | unconfigured |
 | PrimeWatch | host_hook | [../agents/hooks/PrimeWatch.md](../agents/hooks/PrimeWatch.md) | every `heartbeat_watch` in `multi` topology, when scheduled | None | unconfigured |
 | SliceRecordsCheck | pact_hook | [../agents/hooks/SliceRecordsCheck.md](../agents/hooks/SliceRecordsCheck.md) | before committing or pushing a slice | None | manual |
-| GateClose | pact_hook | [../agents/hooks/GateClose.md](../agents/hooks/GateClose.md) | before accepting a gate | None | manual |
+| GateClose | pact_hook | [../agents/hooks/GateClose.md](../agents/hooks/GateClose.md) | unanswered `ready` handoff (acceptance path), or `accepted` with `delivery: pending` (delivery-recovery path) | None | manual |
 | StallCover | pact_hook | [../agents/hooks/StallCover.md](../agents/hooks/StallCover.md) | a recorded execution tier stalls | None | manual |
 
 `Class` is `pact_hook` (Markdown workflow extension point owned by PACT) or

@@ -10,16 +10,26 @@ status: canonical
 generated_from: /ai/pact/templates/hook.tpl.md
 generated_from_version: 1.3
 content_status: current-data
-updated: 2026-10-14 19:39:23 UTC+00:00
+updated: 2026-10-14 19:48:20 UTC+00:00
 
 ## TRIGGER
 
-The newest published Gate Handoff revision in STATE records `signal: ready`
-with an identified candidate under [WORKFLOW](../../workflow/WORKFLOW.md), and
-no commit carries `PACT-Answers` for its `gate_id#seq`. A native wake,
-[PrimeWatch](PrimeWatch.md), or the Prime fallback heartbeat only delivers
-attention to that record; idle Workers, empty records, or elapsed time are not
-a trigger. Registration is a workflow contract; this file does not itself
+GateClose has two distinct entry paths under
+[WORKFLOW](../../workflow/WORKFLOW.md):
+
+- A. Acceptance path: the newest published Gate Handoff revision in STATE
+  records `signal: ready` with an identified candidate, and no commit carries
+  `PACT-Answers` for its `gate_id#seq`. Run ACTION steps 1-11.
+- B. Delivery-recovery path: a durable LOGIC-DRAFT `## Acceptance` entry has
+  `decision: accepted` and `delivery: pending` (its `PACT-Answers` already
+  exists), and either the accepted answer commit is not yet reachable from
+  remote `default_branch`, or it is reachable but the `delivery: complete`
+  confirmation entry is still missing. Run Delivery recovery below; never
+  rerun acceptance automatically.
+
+A native wake, [PrimeWatch](PrimeWatch.md), or the Prime fallback heartbeat
+only delivers attention to these records; idle Workers, empty records, or
+elapsed time are not a trigger. Registration is a workflow contract; this file does not itself
 install a runtime hook.
 
 ## INPUTS
@@ -92,17 +102,26 @@ order; never merge first and record the answer later.
 
 ### Delivery recovery
 
-`decision: accepted` with `delivery: pending` and no `delivery: complete` for
-that key on `default_branch` is open Prime-level work after any crash, end of
-session, failed push, or missing authorization. On resume, do not rerun the
-acceptance suite when the recorded candidate and evidence stand and nothing
-relevant changed. Fetch gate and default branches. If the answer commit is
-already reachable from remote `default_branch`, the gate is delivered: perform
-only step 10. Otherwise verify the recorded candidate and evidence, step 7
-in full, and then steps 8-10 when authorized. If anything changed materially
-(a newer handoff, a non-record path, or `default_branch` no longer an ancestor),
-do not deliver: re-evaluate from step 1 or return the gate to Lead with a
-durable answer to the newest revision.
+Entry path B: `decision: accepted` with `delivery: pending` stays open
+Prime-level work after any crash, end of session, failed push, or missing
+authorization. It resumes from the recorded accepted candidate and evidence and
+does not rerun the acceptance suite automatically.
+
+1. Fetch the gate and default branches.
+2. Verify the durable accepted entry: `answers`, `decision: accepted`,
+   `candidate`, and its evidence pointer, in the `PACT-Answers` commit.
+3. Verify that no Gate Handoff revision newer than the answered `seq` exists.
+4. Verify that the delivery tip descends from `candidate`.
+5. Verify that `git diff --name-only <candidate> <delivery-tip>` lists only
+   PACT state and decision records under `/ai/pact/context/state/`.
+6. Inspect `default_branch`. If the answer commit is not reachable from it,
+   and `default_branch` is still an ancestor of the tip, complete steps 8-10
+   when authorized. If the answer commit is already reachable but the
+   `delivery: complete` entry is missing, perform only step 10.
+7. If the branches or the handoff changed materially (a newer handoff, a
+   non-record path, or `default_branch` no longer an ancestor), do not
+   deliver: stop and re-evaluate through entry path A or return the gate to
+   Lead with a durable answer to the newest revision.
 
 ## OUTPUT
 

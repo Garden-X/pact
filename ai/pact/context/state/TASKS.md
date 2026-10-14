@@ -9,13 +9,19 @@ status: active-draft
 generated_from: /ai/pact/templates/tasks.tpl.md
 generated_from_version: 1.10
 content_status: current-state
-updated: 2026-10-14 19:39:23 UTC+00:00
+updated: 2026-10-14 19:48:20 UTC+00:00
 
 ## Pending
 
 None.
 
 ## Done
+
+- PACT-20261014-006 - Align GateClose trigger with delivery recovery.
+  trace: LOGIC-DRAFT.md / Harness Topology Correction (delivery-state correction)
+  outcome: GateClose TRIGGER has two distinct entry paths: A acceptance (newest ready handoff without PACT-Answers, steps 1-11) and B delivery recovery (accepted + delivery: pending whose answer commit is not reachable from remote default_branch, or reachable without the delivery: complete entry), which never reruns acceptance. Delivery recovery is an ordered 7-step check. PrimeWatch/PrimeHeartbeat route each state to its path without duplicating recovery logic; WORKFLOW hook row registers both triggers.
+  validation: validator exit0 (121), scenarios exit0 (41), boundaries exit0 (13), harness exit0 (59), close exit0 (13), delivery exit0 (13, three rules repointed to the new wording), new trigger check exit0 (11); trigger check on f4f45fc exit1 with 8 failures. git diff --check exit0. Root self-review, not independent.
+  delivery: committed to gate/PACT-Harness for owner review; no main merge.
 
 - PACT-20261014-005 - Separate acceptance decision from gate delivery.
   trace: LOGIC-DRAFT.md / Harness Topology Correction (delivery-state correction)
