@@ -10,7 +10,7 @@ status: canonical
 generated_from: /ai/pact/templates/hook.tpl.md
 generated_from_version: 1.3
 content_status: current-data
-updated: 2026-10-14 18:49:23 UTC+00:00
+updated: 2026-10-14 19:16:25 UTC+00:00
 
 ## TRIGGER
 
@@ -41,7 +41,9 @@ Portable prompt for an installed binding:
 > active reservations, returned and blocked Worker results, and the ready pool;
 > continue only assigned work. Review covered results first. Keep independent
 > light tasks moving, serialize heavy checks, and verify slice records before
-> authorized delivery. Fetch before every commit, push, or handoff publication;
+> authorized delivery. Lead owns mutable execution state; Prime adds only
+> narrow authority-decision entries. Fetch before every commit, push, or
+> handoff publication;
 > read and integrate new Prime decision commits without altering their entries,
 > and act on a decision only from its durable record. Record progress in STATE;
 > do not relay routine Worker or slice status to Prime. Wake Prime only by

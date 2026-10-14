@@ -10,7 +10,7 @@ status: canonical
 generated_from: /ai/pact/templates/hook.tpl.md
 generated_from_version: 1.3
 content_status: current-data
-updated: 2026-10-14 18:49:23 UTC+00:00
+updated: 2026-10-14 19:16:25 UTC+00:00
 
 ## TRIGGER
 
@@ -42,10 +42,13 @@ Portable prompt for an installed binding:
 > Resume the recorded Prime role for this project and current gate. Fetch and
 > read the newest published Gate Handoff revision. If it is `ready` or
 > `escalation` and no commit carries `PACT-Answers` for its `gate_id#seq`,
-> handle it: use GateClose for `ready`; for an escalation, record the decision
-> in the artifact that owns the affected authority (a boundary widening in that
-> task's `boundary_contract`, a gate scope or acceptance change in LOGIC-DRAFT),
-> as a record-only, non-force commit naming the key, based on the fetched tip.
+> handle it: use GateClose for `ready`, recording the answer before any
+> delivery; for an escalation, write only the minimum authority-decision entry
+> in the artifact that owns the affected authority (a boundary widening appended
+> to that task's `boundary_contract`, a gate scope or acceptance change in
+> LOGIC-DRAFT), as a record-only, non-force commit naming the key, based on the
+> fetched tip. Never perform Lead execution-state maintenance or write the Gate
+> Handoff.
 > If the push is rejected, fetch, read the new commits, and answer only the
 > newest revision. If exact evidence shows a new Lead unavailability incident
 > while gate work remains, apply StallCover.

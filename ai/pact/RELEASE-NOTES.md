@@ -2,7 +2,7 @@
 
 Title: improved workflow and project syncronization
 
-updated: 2026-10-14 18:49:23 UTC+00:00
+updated: 2026-10-14 19:16:25 UTC+00:00
 status: prepared for release
 
 PACT 2.0 makes coordination policy portable through template RULES and full
@@ -35,8 +35,11 @@ EXAMPLE sections, with synchronized installed entry files and migration guidance
   records decisions where the affected authority lives (boundary approvals in
   the task's boundary_contract, gate scope/acceptance in LOGIC-DRAFT) through
   record-only, non-force commits with a `PACT-Answers` trailer, answering only
-  the newest revision. Acceptance names the exact candidate; the delivered tip
-  may differ from it only in PACT state records.
+  the newest revision. Lead owns mutable execution state; Prime's writes are
+  narrow authority-decision entries. Acceptance names the exact candidate; the
+  delivered tip may differ from it only in PACT state records. GateClose makes
+  the acceptance answer durable on the gate branch before it fast-forwards the
+  default branch.
 - The optional role-less PrimeWatch host hook observes the durable handoff
   across harnesses and wakes Prime once per handoff key or stable incident key.
   It has no Prime or Lead authority; dedup memory and schedules stay host-owned.

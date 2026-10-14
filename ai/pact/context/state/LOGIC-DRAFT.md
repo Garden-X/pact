@@ -11,7 +11,7 @@ gate_id: PACT-2.0
 generated_from: /ai/pact/templates/logic-draft.tpl.md
 generated_from_version: 1.5
 content_status: current-state
-updated: 2026-10-14 18:49:23 UTC+00:00
+updated: 2026-10-14 19:16:25 UTC+00:00
 
 ## Selected Logic
 
@@ -135,6 +135,13 @@ acceptance names the exact candidate and the delivered tip may differ only in
 PACT state records; unavailability wakes dedup by stable incident key. Work only
 on gate/PACT-Harness; do not merge to main. Acceptance: owner scenarios A-L in
 the harness checks, which must also fail on the pre-correction revision.
+
+Final owner correction: GateClose records the durable acceptance answer
+(`answers:` + `PACT-Answers`) on the gate branch before re-verifying the
+delivery tip and fast-forwarding the default branch; a not-accepted answer is
+pushed before Lead is notified and nothing merges; a newer handoff before the
+fast-forward voids the earlier close. Lead owns mutable execution state;
+Prime's writes are a narrow authority-decision exception. No redesign.
 
 ## Next
 

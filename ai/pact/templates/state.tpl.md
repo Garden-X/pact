@@ -5,7 +5,7 @@
 name: state.tpl.md
 type: pact maintenance template
 for: STATE.md
-updated: 2026-10-14 18:49:23 UTC+00:00
+updated: 2026-10-14 19:16:25 UTC+00:00
 version: 1.7
 
 ## WHAT
@@ -217,23 +217,29 @@ Fields:
   and the decision requested; otherwise `none`;
 - `recorded_at`: verified-UTC publication time of this revision.
 
-Prime never writes this block. Prime records each decision in the
-authoritative artifact that owns the affected authority or contract, naming
+Lead owns mutable execution state: task transfer, progress, reservations,
+Worker results, and this block. Prime never writes this block and does not
+perform Lead execution-state maintenance. When answering a Prime-facing
+revision, Prime may write only the minimum authority-decision entry in the
+artifact that owns the affected authority or contract, naming
 `answers: <gate_id>#<seq>`, in a record-only commit with the trailer
 `PACT-Answers: <gate_id>#<seq>` (see WORKFLOW Writers on the gate branch). A
-boundary widening becomes an approval entry in the affected task's
-`boundary_contract`, leaving LOGIC-DRAFT unchanged; a gate scope, acceptance or
+boundary widening becomes one appended authority-decision entry in the
+affected task's `boundary_contract`, touching no other field and leaving
+LOGIC-DRAFT unchanged; a gate scope, acceptance or
 selected-logic change goes to LOGIC-DRAFT; an acceptance outcome goes to
-GateClose evidence and LOGIC-DRAFT `## Acceptance`. Lead preserves those
-entries unchanged when it integrates the commit. A key is answered when such a
+GateClose evidence and LOGIC-DRAFT `## Acceptance`, committed before any
+default-branch delivery. Lead preserves those entries unchanged when it
+integrates the commit. A key is answered when such a
 commit exists; Prime answers only the newest published revision.
 
 `ready` declares that Lead's gate execution responsibility is complete: no
 active task object remains, TASKS holds no pending task of the gate, every
 selected slice is integrated and passed SliceRecordsCheck, and Lead's fast
 checks passed on `candidate`. Commits after `candidate` may change only PACT
-state records under `/ai/pact/context/state/`, so the delivered tip differs
-from the accepted candidate only in records. These conditions are necessary but
+state and decision records under `/ai/pact/context/state/`, so the delivered
+tip differs from the accepted candidate only in records, including Prime's
+durable acceptance answer. These conditions are necessary but
 never sufficient; readiness exists only when Lead publishes `ready`. After a
 not-accepted outcome or a decision, Lead integrates the answering commit and
 publishes `signal: working` with the next `seq`. When Prime advances the draft

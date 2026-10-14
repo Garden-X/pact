@@ -9,13 +9,19 @@ status: active-draft
 generated_from: /ai/pact/templates/tasks.tpl.md
 generated_from_version: 1.10
 content_status: current-state
-updated: 2026-10-14 18:49:23 UTC+00:00
+updated: 2026-10-14 19:16:25 UTC+00:00
 
 ## Pending
 
 None.
 
 ## Done
+
+- PACT-20261014-004 - Fix GateClose ordering and clarify writer ownership.
+  trace: LOGIC-DRAFT.md / Harness Topology Correction (final owner correction)
+  outcome: GateClose order is fetch/confirm newest unanswered ready -> acceptance on exact candidate -> inspect -> decide -> durable LOGIC-DRAFT Acceptance answer with answers:/PACT-Answers pushed to the gate branch -> refetch and verify no newer handoff, ancestry and records-only path diff -> separate fast-forward of default to the verified tip. Reject path pushes the answer before notifying Lead, no merge. Lead owns mutable execution state; Prime never maintains it and writes only the minimum authority-decision entry (or StallCover cover transfer). WORKFLOW/template, state template, GateClose, Prime/Lead heartbeats, INSTALL and notes aligned.
+  validation: Source validator exit0 (121/195 links), scenarios exit0 (41), boundaries exit0 (13), harness checks exit0 (59, three assertions re-pointed to the new ownership wording), new close checks exit0 (13); close checks on af480c2 exit1 with 11 failures. git diff --check exit0. Root self-review, not independent.
+  delivery: committed to gate/PACT-Harness for owner review; no main merge.
 
 - PACT-20261014-003 - Correct harness synchronization, handoff and capability semantics.
   trace: LOGIC-DRAFT.md / Harness Topology Correction

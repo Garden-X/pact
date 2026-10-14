@@ -10,7 +10,7 @@ generated_from: /ai/pact/templates/workflow.tpl.md
 generated_from_version: 3.3
 content_status: current-data
 purpose: Define how agents maintain project work without bypassing SPARC project truth.
-updated: 2026-10-14 18:49:23 UTC+00:00
+updated: 2026-10-14 19:16:25 UTC+00:00
 
 ## Lifecycle
 
@@ -293,14 +293,15 @@ Gate and slice:
   and fetches before each slice to read new commits from the owner or other
   agents. If `default_branch` moves, the Lead merges it into the gate
   branch instead of rewriting pushed history.
-- The Prime closes the gate by fast-forwarding the gate branch into
-  `default_branch` after the full acceptance suite passes and the records are
-  reviewed through the `GateClose` hook. Read every required command's exit
+- The Prime closes the gate by fast-forwarding `default_branch` to the
+  verified gate tip after the full acceptance suite passes, the records are
+  reviewed, and the durable acceptance answer is committed on the gate branch,
+  in the order of the `GateClose` hook. Read every required command's exit
   status against the revision being accepted, the handoff `candidate`:
   missing, failed, killed, or timed-out checks prevent closure. A final
   successful command does not erase an earlier failure. The delivered tip may
-  differ from that candidate only in PACT state records (see Candidate
-  identity). Merging is a separate action after the results have been
+  differ from that candidate only in PACT state and decision records, including
+  the acceptance answer (see Candidate identity and Gate close order). Merging is a separate action after the results have been
   inspected. Among agents, only the Prime writes to `default_branch`; the
   owner may commit directly, and agents fetch and read those commits.
 - Design questions the owner has delegated are decided by the Lead and
@@ -501,11 +502,18 @@ Only Prime accepts the gate, through GateClose.
 
 Writers on the gate branch, in either topology:
 
-- Lead is the only writer of the Gate Handoff, of STATE/TASKS execution
-  content, and of product changes. Workers write nothing to version control.
-- Prime writes only its decision records (below), StallCover's recorded cover
-  transfer while Lead is unavailable, and completion records at close; never
-  the Gate Handoff or product files. PrimeWatch writes nothing.
+- Lead owns mutable execution state. Lead decomposes, transfers tasks,
+  updates task progress, manages reservations, records Worker results, edits
+  normal TASKS/STATE execution content, writes the Gate Handoff, and commits
+  product changes. Workers write nothing to version control.
+- Prime does not perform Lead execution-state maintenance. It never
+  reorganizes or moves tasks, edits Worker progress, manages reservations,
+  rewrites Lead execution state, writes the Gate Handoff, or edits product
+  files. When answering a Prime-facing handoff, Prime may write only the
+  minimum authority-decision entry into the artifact that owns the decision
+  (below). This is a narrow writer exception, not shared ownership. The only
+  other exception is StallCover's recorded cover transfer while Lead is
+  unavailable. PrimeWatch writes nothing.
 
 Handoff revisions are immutable. `gate_id` + `seq` identifies one published
 Prime-facing handoff revision; published means committed to the gate branch,
@@ -521,8 +529,9 @@ Prime decisions are recorded in the authoritative PACT artifact that owns the
 affected authority or contract, each naming the answered key as
 `answers: <gate_id>#<seq>`:
 
-- boundary widening for a Lead or Worker task: an approval entry in that task's
-  `boundary_contract` in TASKS or STATE; LOGIC-DRAFT stays unchanged;
+- boundary widening for a Lead or Worker task: one authority-decision entry
+  appended to that task's `boundary_contract` in TASKS or STATE, touching no
+  other field; LOGIC-DRAFT stays unchanged;
 - gate scope, acceptance criteria, selected logic, or a gate-owned
   architectural decision: LOGIC-DRAFT;
 - acceptance outcome: GateClose evidence and LOGIC-DRAFT `## Acceptance`;
@@ -545,10 +554,25 @@ on a decision only from its durable record; a message only points to it.
 
 Candidate identity: the handoff `candidate` is the exact implementation
 revision Lead validated and Prime's acceptance checks run on. Commits after it
-may change only PACT state records under `/ai/pact/context/state/`. Before
-delivery, Prime proves with the path diff from `candidate` to the delivery tip
-that only those records differ, and records both revisions. Any other
-difference makes the handoff stale; Lead must publish a new candidate.
+may change only PACT state and decision records under
+`/ai/pact/context/state/`. Before delivery, Prime proves with
+`git diff --name-only <candidate> <delivery-tip>` that only those records
+differ, and records both revisions. Any implementation, configuration, runtime,
+or product change after `candidate` invalidates readiness; Lead must publish a
+new candidate. The delivered tip is the accepted candidate plus allowed record
+commits plus the durable acceptance answer.
+
+Gate close order: durable decision precedes delivery. Prime fetches and
+confirms the newest unanswered `ready` revision; runs every acceptance check on
+exactly `candidate`; inspects all results; decides; records the decision with
+`answers: <gate_id>#<seq>` in a record-only `PACT-Answers` commit pushed to the
+gate branch without force; fetches again and verifies that no newer handoff
+revision exists, that the tip descends from `candidate`, and that the path diff
+is records-only; then fast-forwards `default_branch` exactly to that verified
+tip. A not-accepted decision is committed and pushed the same way before Lead
+is notified, and nothing merges. If a newer handoff appears before the
+fast-forward, the earlier answer does not close the gate: reread and
+re-evaluate. Never merge then record the answer later.
 
 Watchdog function:
 

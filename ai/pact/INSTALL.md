@@ -2,7 +2,7 @@
 
 > For: PACT 2.0
 > Purpose: install or verify the PACT project-maintenance layer
-> Updated: 2026-10-14 18:49:23 UTC+00:00
+> Updated: 2026-10-14 19:16:25 UTC+00:00
 
 ## Purpose
 
@@ -206,13 +206,17 @@ explicit owner model/effort bindings do not change.
 - Lead heartbeat prompts stop relaying routine status to Prime. Host
   schedules, channels and delivered-key/incident memory remain host
   configuration.
-- Lead is the only writer of the Gate Handoff; each published `gate_id#seq`
-  revision is immutable, and material changes publish the next `seq`. Prime
-  records decisions in the owning artifact (boundary approvals in the affected
-  `boundary_contract`, gate scope/acceptance in LOGIC-DRAFT) through
-  record-only, non-force commits with a `PACT-Answers` trailer.
+- Lead owns mutable execution state and is the only writer of the Gate
+  Handoff; each published `gate_id#seq` revision is immutable, and material
+  changes publish the next `seq`. Prime does not maintain execution state; it
+  writes only narrow authority-decision entries in the owning artifact
+  (boundary approvals appended to the affected `boundary_contract`, gate
+  scope/acceptance in LOGIC-DRAFT) through record-only, non-force commits with
+  a `PACT-Answers` trailer.
 - Acceptance names the exact `candidate`; the delivered tip may differ from it
-  only under `/ai/pact/context/state/`.
+  only under `/ai/pact/context/state/`. GateClose commits the acceptance
+  answer on the gate branch, re-verifies the tip, and only then fast-forwards
+  the default branch.
 - Treat existing `lead_tier`/`worker_tier_default` values as routing hints;
   do not add a Watchdog tier field. Preserve explicit owner model bindings.
 
