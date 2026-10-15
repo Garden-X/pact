@@ -10,7 +10,7 @@ active_task: PACT-20261010-009
 generated_from: /ai/pact/templates/state.tpl.md
 generated_from_version: 1.8
 content_status: current-state
-updated: 2026-10-14 18:27:22 UTC+00:00
+updated: 2026-10-15 09:37:03 UTC+00:00
 
 ## Active Task
 
@@ -42,6 +42,22 @@ Delivery progress: Source/extracted validators each exited 0 (119 checks/185 lin
 Source acceptance (2026-10-11 16:34:40 UTC+00:00): Root in the Prime Inspector function reviewed clean candidate 15b7d449533e90e49773aab78666aa1e39602a57, scope/records and the contract walkthrough. Source/extracted validators each exit 0 with119 checks/185 links; source/extracted preservation scenarios each exit0 with41 checks; archive audit exit0 with16 checks/47 files and unchanged dist checksum. These are documentation/reference checks, not host-runtime tests. Native commit/push hygiene passed. Fetched origin/main95f50814aef873409c4b9ad4ba67982538a15cfe is an ancestor (exit0); committed diff hygiene exit0. Source release is accepted for the separately authorized fast-forward delivery to main. This acceptance covers the PACT source only; task009 and the installed-project rollout remain active. Formal tag/release publication remains separate.
 
 Owner decision 2026-10-14: refreshed dist ZIP packaging is dropped from 009; the existing local ZIP is not a current release artifact.
+
+Handoff 2026-10-15 09:37:03 UTC+00:00 (owner /clear-safe): PACT main 10963ce carries harness,
+closure-by-reachability and interop (workflow 3.4, tasks 1.11, state 1.8).
+Rollout: every installed project has templates updated and one parked task
+PACT-20261015-001 to rework its workflow when next in work. Pushed: ai-eve
+117fc0c, flash-ui-final 0f07daa, keen 7539706 (via a temporary worktree; the
+local keen copy is 35 behind with a stale uncommitted STATE from Oct 4).
+Forge fully reworked (main b10f491, then 4a5263e). Local only: arcana lab
+3 commits ahead (1b201a3, 5cc92f3 plus the owner's older f002d77), push blocked
+by the global pre-push typecheck failing in product code; tarot 5921ae09 and
+223b245d (local-only rule). Not committed: 1garden.net root templates and task
+sit in its working tree on gate/PACT-20261003-003 next to the uncommitted 2.0
+upgrade. ai-eve-workspace test1/test2 (no Git) have 3.3 templates and the task,
+not the 3.4 interop update. Open: align the host Claude guidance (gate-hierarchy
+skill and memory still describe a 23-minute Prime heartbeat and a Middle Lead
+as norms); the dist ZIP refresh was dropped by the owner.
 
 Recovery cache: ai/pact/cache/runs/2026-10-14T06-21-11Z--spawn-boundaries/CACHE.md; earlier delivery cache remains required for unfinished rollout.
 
