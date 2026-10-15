@@ -10,7 +10,7 @@ generated_from: /ai/pact/templates/workflow.tpl.md
 generated_from_version: 3.4
 content_status: current-data
 purpose: Define how agents maintain project work without bypassing SPARC project truth.
-updated: 2026-10-15 01:23:13 UTC+00:00
+updated: 2026-10-15 01:43:21 UTC+00:00
 
 ## Lifecycle
 
@@ -283,9 +283,9 @@ Runtime requirements and host adapters:
   `role` answers who has authority, `model_tier` the reasoning capability,
   `requires` what runtime the work needs, and `boundary_contract` what the actor
   may do. None implies another; `requires` grants nothing.
-- The dispatching parent or its adapter checks `requires` before the
-  assignment starts. An unmet requirement means the assignment does not start:
-  record it blocked or escalate to the parent. Never silently switch harness or
+- The dispatching parent or its adapter checks `requires` before transfer. An
+  unmet requirement keeps the task pending with `ready: false`, or is escalated;
+  one discovered after transfer makes the task `blocked`, or is escalated. Never silently switch harness or
   provider, widen permissions, lower requirements, or start partial work outside
   the brief; the parent may choose another already authorized assignment.
 - Where a host offers native permission or sandbox controls, the adapter SHOULD

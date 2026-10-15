@@ -5,7 +5,7 @@
 name: state.tpl.md
 type: pact maintenance template
 for: STATE.md
-updated: 2026-10-15 01:23:13 UTC+00:00
+updated: 2026-10-15 01:43:21 UTC+00:00
 version: 1.8
 
 ## WHAT
@@ -116,7 +116,8 @@ Each active task object must include:
   from a parent-issued contract, not from project/role authority;
 - `lead`, required for every Worker assignment and shared by a parallel set;
 - `requires`, when the assignment declares runtime prerequisites, copied
-  unchanged from the brief; it grants no authority;
+  unchanged from the brief; it grants no authority. A requirement found unmet
+  after transfer makes the task `blocked` or is escalated;
 - `created_at` or equivalent timestamp when known;
 - `source`;
 - `affected_files`;
