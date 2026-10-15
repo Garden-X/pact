@@ -7,10 +7,10 @@ canonical_location: /ai/pact/workflow/WORKFLOW.md
 layer: PACT / workflow
 status: canonical
 generated_from: /ai/pact/templates/workflow.tpl.md
-generated_from_version: 3.3
+generated_from_version: 3.4
 content_status: current-data
 purpose: Define how agents maintain project work without bypassing SPARC project truth.
-updated: 2026-10-14 23:22:03 UTC+00:00
+updated: 2026-10-15 01:23:13 UTC+00:00
 
 ## Lifecycle
 
@@ -274,6 +274,35 @@ tests, acceptance requirements, and applicable contracts. No new boundary file,
 role, reporting framework, host hook, or runtime enforcement is required.
 
 Principle: Parent defines the fence. Child chooses how to work inside it.
+
+Runtime requirements and host adapters:
+
+- An assignment may declare `requires`: host-resolved identifiers of the
+  minimum runtime capabilities it needs before it starts (for example `shell`,
+  `repo-write`, `browser`, `mcp:<server>`). There is no capability registry.
+  `role` answers who has authority, `model_tier` the reasoning capability,
+  `requires` what runtime the work needs, and `boundary_contract` what the actor
+  may do. None implies another; `requires` grants nothing.
+- The dispatching parent or its adapter checks `requires` before the
+  assignment starts. An unmet requirement means the assignment does not start:
+  record it blocked or escalate to the parent. Never silently switch harness or
+  provider, widen permissions, lower requirements, or start partial work outside
+  the brief; the parent may choose another already authorized assignment.
+- Where a host offers native permission or sandbox controls, the adapter SHOULD
+  narrow the runtime to the effective `boundary_contract` where practical.
+  Native restrictions MAY narrow PACT authority and MUST NOT widen it: available
+  tools, write access, or network never grant authority. Their syntax stays in
+  adapters and host configuration.
+- Actor and harness/session identities and evidence pointers may be opaque
+  host-native or remote references (repository path, Git revision, durable
+  file, URL, host artifact or run/session id). PACT does not interpret them;
+  each must stay durable and resolvable by the actor that validates or recovers
+  the work.
+- An adapter (script, host plugin, CLI integration, MCP or A2A bridge, native
+  code, or manual binding) maps role, `boundary_contract`, and `requires` to
+  host controls. PACT defines no transport, authentication, sandbox, artifact,
+  event-stream, or provider schema. A harness that can only read and write
+  files, run commands, and commit to Git still follows PACT fully.
 
 Gate and slice:
 

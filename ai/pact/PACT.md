@@ -1,7 +1,7 @@
 # Protocol for Agent Coordination and Tasks
 
 > Version: 2.0
-> Updated: 2026-10-14 22:11:09 UTC+00:00
+> Updated: 2026-10-15 01:23:13 UTC+00:00
 > Status: release prepared
 > Purpose: project maintenance for AI-assisted development
 > Release title: improved workflow and project syncronization
@@ -501,6 +501,12 @@ an accepted gate is closed exactly when its answer commit is reachable from
 and wakes Prime once per handoff or incident key. Capability is selected for
 the assignment and authority by the role/function contract; tier fields are
 routing hints, so Lead, Worker, and Watchdog work may use any adequate tier.
+An optional `requires` names an assignment's minimum runtime capabilities; it
+is separate from tiers and authority and grants nothing. Host adapters may
+enforce the `boundary_contract` natively, narrowing but never widening PACT
+authority. Session and evidence references may be opaque host or remote
+pointers. PACT defines no transport, authentication, sandbox, artifact, or
+provider schema; those stay with adapters and harnesses.
 
 
 ## Shared Keep-Alive Registry

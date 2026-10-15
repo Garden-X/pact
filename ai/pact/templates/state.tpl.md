@@ -5,8 +5,8 @@
 name: state.tpl.md
 type: pact maintenance template
 for: STATE.md
-updated: 2026-10-14 22:11:09 UTC+00:00
-version: 1.7
+updated: 2026-10-15 01:23:13 UTC+00:00
+version: 1.8
 
 ## WHAT
 
@@ -115,6 +115,8 @@ Each active task object must include:
   assignment. Do not infer authority from depth or capability. Root is exempt
   from a parent-issued contract, not from project/role authority;
 - `lead`, required for every Worker assignment and shared by a parallel set;
+- `requires`, when the assignment declares runtime prerequisites, copied
+  unchanged from the brief; it grants no authority;
 - `created_at` or equivalent timestamp when known;
 - `source`;
 - `affected_files`;
@@ -173,7 +175,9 @@ Lead; keep the task blocked when the missing instruction prevents safe work.
 Do not reconstruct lost constraints by guessing or widen the assignment.
 
 Validation preserves the supplied expectation and records method, result, and
-evidence or a reason.
+evidence or a reason. `actor`, harness/session identities, and evidence
+pointers may be opaque host-native or remote references, provided the actor
+that validates or recovers the work can resolve them.
 
 Retry must record attempt count and retry policy.
 
@@ -273,7 +277,7 @@ layer: PACT / context / state
 status: active
 active_task: PACT-YYYYMMDD-001
 generated_from: /ai/pact/templates/state.tpl.md
-generated_from_version: 1.7
+generated_from_version: 1.8
 content_status: current-state
 updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 
@@ -298,6 +302,7 @@ updated: YYYY-MM-DD HH:mm:ss UTC+00:00
     specialty: documentation
     model_tier: Light
     model_binding: <resolved owner-approved provider/model>
+    requires: [repo-write]
     effort: 50%
     effective_effort: <native setting or unsupported>
     created_at: YYYY-MM-DD HH:mm:ss UTC+00:00

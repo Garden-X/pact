@@ -7,15 +7,22 @@ canonical_location: /ai/pact/context/state/TASKS.md
 layer: PACT / context / state
 status: active-draft
 generated_from: /ai/pact/templates/tasks.tpl.md
-generated_from_version: 1.10
+generated_from_version: 1.11
 content_status: current-state
-updated: 2026-10-14 23:22:03 UTC+00:00
+updated: 2026-10-15 01:23:13 UTC+00:00
 
 ## Pending
 
 None.
 
 ## Done
+
+- PACT-20261015-002 - Harness interoperability without absorption.
+  trace: owner instruction 2026-10-15 (final PACT 2 interoperability pass)
+  outcome: WORKFLOW Execution Hierarchy gains Runtime requirements and host adapters: optional assignment requires (host-resolved minimum runtime capabilities, no registry) distinct from role, model_tier and boundary_contract and granting nothing; an unmet requirement means the assignment does not start (existing blocked/escalation, no silent substitution); host-native permission/sandbox controls SHOULD narrow to the effective boundary_contract and MUST NOT widen authority; actor/session identities and evidence pointers may be opaque host or remote references that stay durable and resolvable; adapters map role, boundary and requires; PACT defines no transport, auth, sandbox, artifact, event-stream or provider schema; a minimal file/command/Git harness still suffices. tasks and state templates carry requires (examples transfer it unchanged) and allow opaque references; PACT.md, INSTALL and RELEASE-NOTES summarize. No role, state file, status, lifecycle or handoff object added.
+  validation: validator exit0 (121), scenarios exit0 (41), boundaries exit0 (13), harness exit0 (59), close exit0 (13), delivery exit0 (12), trigger exit0 (10), new interop exit0 (12; on main 881d249 exit1, 3 passed); git diff --check exit0. Root self-review, not independent.
+  versions: workflow 3.4, tasks 1.11, state 1.8.
+  delivery: gate/PACT-Interop for owner review; no main merge.
 
 - PACT-20261014-009 - Compress WORKFLOW duplication before merge.
   trace: LOGIC-DRAFT.md / Harness Topology Correction (owner cleanup)

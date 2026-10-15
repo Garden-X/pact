@@ -2,7 +2,7 @@
 
 Title: improved workflow and project syncronization
 
-updated: 2026-10-14 19:55:32 UTC+00:00
+updated: 2026-10-15 01:23:13 UTC+00:00
 status: prepared for release
 
 PACT 2.0 makes coordination policy portable through template RULES and full
@@ -46,6 +46,11 @@ EXAMPLE sections, with synchronized installed entry files and migration guidance
 - The optional role-less PrimeWatch host hook observes the durable handoff
   across harnesses and wakes Prime once per handoff key or stable incident key.
   It has no Prime or Lead authority; dedup memory and schedules stay host-owned.
+- Harness interoperability without absorption: an optional assignment
+  `requires` names minimum runtime capabilities (separate from tiers and
+  authority; unmet means blocked or escalated); host-native enforcement may
+  narrow but never widen the boundary_contract; session and evidence references
+  may be opaque. Transport, auth, sandbox and artifact schemas stay outside PACT.
 - Capability is selected for the assignment and authority by the role/function
   contract. `lead_tier` and `worker_tier_default` are routing hints: Lead,
   Worker, and Watchdog assignments may use Light, Middle, or High (a Watchdog
@@ -90,11 +95,11 @@ existing versions; no unrelated contract change is required for this release.
 
 | Template | Version |
 |---|---|
-| workflow.tpl.md | 3.3 |
+| workflow.tpl.md | 3.4 |
 | agents.tpl.md | 3.4 |
 | sub-agent.tpl.md | 2.2 |
-| state.tpl.md | 1.7 |
-| tasks.tpl.md | 1.10 |
+| state.tpl.md | 1.8 |
+| tasks.tpl.md | 1.11 |
 | logic-draft.tpl.md | 1.6 |
 | hook.tpl.md | 1.3 |
 | keep-alive.tpl.md | 1.1 |

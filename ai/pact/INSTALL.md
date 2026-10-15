@@ -2,7 +2,7 @@
 
 > For: PACT 2.0
 > Purpose: install or verify the PACT project-maintenance layer
-> Updated: 2026-10-14 19:55:32 UTC+00:00
+> Updated: 2026-10-15 01:23:13 UTC+00:00
 
 ## Purpose
 
@@ -222,6 +222,9 @@ explicit owner model/effort bindings do not change.
   delivery is derived from whether that commit is reachable from the default
   branch. Existing acceptance prose stays; do not backfill invented entries
   for already closed gates.
+- `requires` (workflow 3.4, tasks 1.11, state 1.8) is optional; existing
+  assignments need no change. Host-native permission or sandbox settings stay
+  in local adapter configuration and only narrow the boundary_contract.
 - Treat existing `lead_tier`/`worker_tier_default` values as routing hints;
   do not add a Watchdog tier field. Preserve explicit owner model bindings.
 
@@ -465,7 +468,7 @@ Upgrade the contract and complete example structure, then reapply the target's
 actual settings and state. PACT 2.0 is the package version; do not reset template
 versions to 2.0 or overwrite target files with this repository's operational data.
 
-1. Synchronize WORKFLOW from workflow.tpl.md 3.3 and AGENTS from agents.tpl.md
+1. Synchronize WORKFLOW from workflow.tpl.md 3.4 and AGENTS from agents.tpl.md
    3.4. Preserve local hooks, file_guard, skill_log, resource limits, owner
    bindings, and project-specific rules. Preserve an existing enabled
    `worker_fix_target` percentage; `none` disables the diagnostic and is the
@@ -518,8 +521,8 @@ versions to 2.0 or overwrite target files with this repository's operational dat
    preserve it and mark the mapping fixed/unsupported until a requested
    percentage is chosen. Retire the old native-effort keys after preservation.
 5. Refresh reusable profiles from sub-agent.tpl.md 2.2, drafts from
-   logic-draft.tpl.md 1.6, task lists from tasks.tpl.md 1.10, and active objects
-   from state.tpl.md 1.7. Preserve selected scope, completed evidence, active
+   logic-draft.tpl.md 1.6, task lists from tasks.tpl.md 1.11, and active objects
+   from state.tpl.md 1.8. Preserve selected scope, completed evidence, active
    actors/reservations, and pending work. Add specialty/binding/effort details to
    actual Worker assignments; do not fabricate hires or measurements.
    Preserve the exact bounded `brief`, scope, reservations, validation, and

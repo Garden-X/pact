@@ -5,8 +5,8 @@
 name: tasks.tpl.md
 type: pact maintenance template
 for: TASKS.md
-updated: 2026-10-14 06:23:51 UTC+00:00
-version: 1.10
+updated: 2026-10-15 01:23:13 UTC+00:00
+version: 1.11
 
 ## WHAT
 
@@ -84,7 +84,10 @@ enough independent work exists. Do not invent tasks to
 fill the pool. Lead selects the Worker specialty, adequate model tier, local
 model binding, and effort percentage for each dispatch. Record them as
 `specialty:`, `model_tier:`, `model_binding:`, and `effort:` in the ready brief;
-these are assignment requirements until an actor takes the task. Each optional
+these are assignment requirements until an actor takes the task. An optional
+`requires:` lists the minimum runtime capabilities from WORKFLOW Runtime
+requirements; a task whose requirements no available actor meets stays
+`ready: false` or is escalated, and `requires` grants no authority. Each optional
 `ready: true` entry requires an exact `brief:`,
 `files:`, write `reservations:`, and `validation:`. A read-only task declares
 `reservations: none`. Check reservations against active STATE before transfer.
@@ -155,7 +158,7 @@ canonical_location: /ai/pact/context/state/TASKS.md
 layer: PACT / context / state
 status: active-draft
 generated_from: /ai/pact/templates/tasks.tpl.md
-generated_from_version: 1.10
+generated_from_version: 1.11
 content_status: current-state
 updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 
@@ -180,6 +183,7 @@ updated: YYYY-MM-DD HH:mm:ss UTC+00:00
   specialty: documentation
   model_tier: Light
   model_binding: <owner-approved local binding, resolved before dispatch>
+  requires: [repo-write]
   effort: 50%
   brief: Create ValidateBeforeCompletion.md from hook.tpl.md for the selected completion check;
     register its trigger and failure action in WORKFLOW. Do not bind a runtime.

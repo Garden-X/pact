@@ -8,7 +8,7 @@ layer: PACT / context / state
 status: active
 active_task: PACT-20261010-009
 generated_from: /ai/pact/templates/state.tpl.md
-generated_from_version: 1.7
+generated_from_version: 1.8
 content_status: current-state
 updated: 2026-10-14 18:27:22 UTC+00:00
 
