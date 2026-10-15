@@ -5,7 +5,7 @@
 name: hook.tpl.md
 type: pact maintenance template
 for: agent hook files
-updated: 2026-10-10 01:59:22 UTC+00:00
+updated: 2026-10-15 00:26:17 UTC+00:00
 version: 1.3
 
 ## WHAT
@@ -22,8 +22,8 @@ Hooks have two classes, mirroring the skill classes:
 - `pact_hook` is a Markdown workflow extension point owned by PACT, defined by
   this template and registered in `WORKFLOW.md`. This is the default.
 - `host_hook` is a hook owned by the agent host, IDE, or runtime, such as a
-  Claude Code `settings.json` hook. Host hooks are governed by the host, not
-  by PACT. PACT does not define their behavior; it only records them in
+  host-native settings or configuration hook. Host hooks are governed by the
+  host, not by PACT. PACT does not define their behavior; it only records them in
   `WORKFLOW.md` for visibility and to note any interaction with PACT
   maintenance.
 
