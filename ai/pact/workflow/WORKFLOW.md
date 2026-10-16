@@ -10,7 +10,7 @@ generated_from: /ai/pact/templates/workflow.tpl.md
 generated_from_version: 3.5
 content_status: current-data
 purpose: Define how agents maintain project work without bypassing SPARC project truth.
-updated: 2026-10-16 05:11:21 UTC+00:00
+updated: 2026-10-16 05:23:02 UTC+00:00
 
 ## Lifecycle
 
@@ -211,7 +211,7 @@ Roles:
 | Role | Does | Does not |
 |---|---|---|
 | Prime | as Architect selects the shape and `LOGIC-DRAFT.md`; as Inspector reviews the candidate, gate validation, and PACT/SPARC records; runs the full acceptance suite; fast-forwards `gate/<id>` into `default_branch`; closes the gate | write product code; micromanage slices |
-| Lead | decomposes the selected draft into atomic `TASKS.md` entries; transfers tasks into `STATE.md`; writes self-contained worker briefs; performs the Watchdog function for its Workers; reviews every worker diff; checks PACT and SPARC conformance; may fix worker errors; prepares the records; integrates reviewed task candidates into `gate/<id>` preserving their ancestry; commits and pushes validated slices to `gate/<id>` when authorized; publishes `ready` or `escalation` in the Gate Handoff | run the full acceptance suite; wake Prime for routine Worker or slice events; push or merge `default_branch`; force-push; skip hooks; deploy |
+| Lead | decomposes the selected draft into atomic `TASKS.md` entries; transfers tasks into `STATE.md`; writes self-contained worker briefs; performs the Watchdog function for its Workers; reviews every worker diff; checks PACT and SPARC conformance; may fix worker errors; prepares the records; when executing a mutating task itself, commits and pushes that task's exact candidate only to its assigned task branch before integrating it into the gate; integrates reviewed task candidates into `gate/<id>` preserving their ancestry; commits and pushes validated slices to `gate/<id>` when authorized; publishes `ready` or `escalation` in the Gate Handoff | bypass task-candidate publication for material mutating work; run the full acceptance suite; wake Prime for routine Worker or slice events; push or merge `default_branch`; force-push; skip hooks; deploy |
 | Worker | performs one bounded task using its assigned specialty; for a mutating task commits and pushes its exact candidate only to its assigned task branch; returns changes or findings, the candidate commit, and validation evidence to Lead | write to any other branch (gate, `default_branch`, another task); integrate, merge, rebase shared history, or force-push; accept its own task; widen scope; guess when the brief is ambiguous; wake Prime |
 
 Artifact ownership: the Prime owns selected scope and acceptance in

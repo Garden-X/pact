@@ -9,13 +9,19 @@ status: active-draft
 generated_from: /ai/pact/templates/tasks.tpl.md
 generated_from_version: 1.12
 content_status: current-state
-updated: 2026-10-16 05:20:21 UTC+00:00
+updated: 2026-10-16 05:24:55 UTC+00:00
 
 ## Pending
 
 None.
 
 ## Done
+
+- PACT-20261016-003 - Align the Lead role row with Task candidates.
+  trace: owner instruction 2026-10-16 (final narrow correction on gate/PACT-TaskCandidates)
+  outcome: WORKFLOW Roles table, Lead: Does adds "when executing a mutating task itself, commits and pushes that task's exact candidate only to its assigned task branch before integrating it into the gate"; Does not adds "bypass task-candidate publication for material mutating work". Wording alignment only; no other protocol semantics changed.
+  validation: check-task-candidates exit0 (71; new R10 alignment check exit1 on 283a09d), validate exit0 (122), scenarios exit0 (41), close exit0 (13), delivery exit0 (12), harness exit0 (59), interop exit0 (12), trigger exit0 (10), boundaries exit0 (13); git diff --check exit0. Root self-review, not independent.
+  delivery: gate/PACT-TaskCandidates for owner review; no main merge.
 
 - PACT-20261016-002 - Task candidates: semantic tightening for multi-harness recovery.
   trace: owner instruction 2026-10-16 (second pass on gate/PACT-TaskCandidates; refine, do not redesign)
