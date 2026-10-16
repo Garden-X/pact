@@ -10,7 +10,7 @@ generated_from: /ai/pact/templates/workflow.tpl.md
 generated_from_version: 3.5
 content_status: current-data
 purpose: Define how agents maintain project work without bypassing SPARC project truth.
-updated: 2026-10-16 04:55:33 UTC+00:00
+updated: 2026-10-16 05:11:21 UTC+00:00
 
 ## Lifecycle
 
@@ -330,22 +330,35 @@ Task candidates:
 - Publication, integration and acceptance are different operations: a Worker
   publishes a task candidate, Lead integrates it into the gate, and Prime
   accepts the gate into `default_branch`.
-- A task that mutates repository state (code, tests, configuration, schemas,
-  contracts, documentation) publishes a durable candidate on
-  `task_branch_pattern`, using the existing gate and task ids. A Worker may
+- Every mutating task produces an exact task candidate before it is integrated
+  into the gate. A task mutates repository state when it changes code, tests,
+  configuration, schemas, contracts or documentation. It is dispatched against
+  an exact gate revision, `task_base`, and publishes its candidate on
+  `task_branch_pattern` using the existing gate and task ids; the active STATE
+  object carries `task_base`, `task_branch` and `task_candidate`. A Worker may
   commit and push only its assigned task candidate branch. Integration
-  authority remains with Lead. A read-only task (research, analysis,
-  inspection, review, read-only validation) needs no task branch and completes
-  on its evidence. When Lead executes a task itself, its validated slice commit
-  on the gate is both candidate and integration.
-- The Worker implements, validates, commits, pushes its task branch, and
-  reports the exact candidate commit to Lead. That exact candidate commit is
-  the handoff identity for mutating work; it is not a "done" report, a branch
-  name, a workspace diff, uncommitted changes, or a chat message. The active
-  STATE object records the task branch and candidate, so Lead recovers from
-  task id, branch, candidate and records without the Worker's session.
-- Lead fetches the exact candidate, reviews its diff and evidence, runs the
-  required checks, and integrates it by fast-forward or another
+  authority remains with Lead. This holds when Lead executes the task itself:
+  Lead acting as executor publishes the candidate and Lead acting as
+  integrator integrates it, even within one session. A read-only task
+  (research, analysis, inspection, review, read-only validation) needs no task
+  branch and completes on its evidence.
+- Integration mechanics stay Lead's gate work without a task: mechanical
+  conflict resolution, import or path reconciliation, record-only integration
+  edits, and formatting required solely by the merge. An integration that
+  needs a material behavior, code or design change is a correction task with
+  its own candidate.
+- The executor implements on `task_base`, validates, commits, pushes its task
+  branch, and reports the exact candidate commit, which becomes
+  `task_candidate`. That exact candidate commit is the handoff identity for
+  mutating work; it is not a "done" report, a branch name, a workspace diff,
+  uncommitted changes, or a chat message. Lead recovers from the task id,
+  `task_base`, `task_branch`, `task_candidate`, records and evidence
+  references, without the executor's session.
+- Lead fetches the exact candidate, checks
+  `git merge-base --is-ancestor <task-base> <task-candidate>`, reviews
+  `git diff <task-base> <task-candidate>` and its evidence, and runs the
+  required checks. A candidate that does not descend from its `task_base` is
+  rejected before integration. Lead integrates by fast-forward or another
   ancestry-preserving merge, never a squash or cherry-pick that leaves the
   original candidate unreachable, and never by force-pushing a shared branch.
   Lead orders integration and resolves conflicts. A task branch adds
@@ -521,8 +534,9 @@ Lead's explicit `signal: ready` with a candidate declares it. Idle Workers,
 empty TASKS/STATE, absent sessions, branch activity, or elapsed time never do.
 
 Writers on the gate branch. Lead owns mutable execution state, writes the Gate
-Handoff, and commits or integrates product changes on the gate; Workers write
-only their assigned task candidate branch (see Task candidates).
+Handoff, integrates task candidates, and commits integration mechanics and
+records on the gate; Workers write only their assigned task candidate branch
+(see Task candidates).
 Prime does not perform Lead execution-state maintenance. It never reorganizes
 or moves tasks, edits Worker progress, manages reservations, rewrites Lead
 execution state, writes the Gate Handoff, or edits product files. When
@@ -765,7 +779,9 @@ Do not confuse cache `raw-data/` with `/ai/raw`. Cache `raw-data/` is
 session-scoped and disposable. `/ai/raw` is the durable raw/evidence area
 outside cache.
 
-The latest cache run remains until the next session refresh. A new session
+The latest cache run remains until the next session refresh while its task is
+active or unaccepted; for an accepted mutating task the task-level cleanup
+point below takes precedence over session retention. A new session
 starts when the owner or agent explicitly starts one, or by default after
 about four hours of elapsed work.
 
@@ -798,25 +814,40 @@ never delete a run still required by those records.
 
 Task-level cleanup point: once an accepted mutating task's candidate is
 reachable from the remote gate branch, inspect its task-local cache, promote
-what must survive by the rules above, repair durable pointers, and delete the
-disposable rest (tmp, chunks, temporary RAG indexes, retrieval notes,
-transformed copies, sandbox outputs, local validation dumps). Do not keep
-cache just because it exists. Prefer promotion for evidence Prime needs at
-gate acceptance; anything that must stay in cache instead uses the retention
-record above with `reason: required-for-gate-acceptance` and
-`review_point: gate-close`. At gate close, remaining gate-retained cache is
-reviewed and then promoted or deleted.
+what must survive by the rules above, repair durable pointers, and then, in
+the Cleanup GC order, delete the disposable rest (tmp, chunks, temporary RAG
+indexes, retrieval notes, transformed copies, sandbox outputs, local
+validation dumps). Do not keep
+cache just because it exists or because no new session has started.
+
+Any evidence required by a later authority that may run in another harness
+MUST be promoted to a durable reference resolvable by that authority before
+task-local cleanup. Such a reference may be a repository path, Git revision,
+approved project log, shared `/ai/raw`, durable remote artifact, URL, or host
+artifact/run reference that authority resolves; PACT defines no transport for
+it. Retained cache serves same-host recovery, local optimization, or evidence
+awaiting promotion; it is not a cross-harness handoff, and another harness
+may rely on it only through a durable shared reference. Material that stays
+retained records its reason, for example
+`reason: required-for-gate-acceptance`, and a bounded review point such as
+`review_point: gate-close`. At gate close,
+remaining gate-retained cache is reviewed and then promoted or deleted.
 
 Runtime cache never enters Git: `/ai/pact/cache/runs/` and
-`/ai/pact/cache/retained/` stay excluded (project `.gitignore` or
-`.git/info/exclude`), while `ai/pact/cache/.gitkeep` and the cache-run
-template stay tracked. Do not ignore all of `/ai/pact/cache/`.
+`/ai/pact/cache/retained/` stay excluded, while `ai/pact/cache/.gitkeep` and
+the cache-run template stay tracked; do not ignore all of `/ai/pact/cache/`.
+A portable installation SHOULD use tracked `.gitignore` entries for these
+paths when project policy permits, because they travel with the repository.
+Use clone-local `.git/info/exclude` only when owner or project policy forbids
+changing tracked ignore rules; every participating clone or harness then
+establishes that exclusion itself.
 
 ## Cleanup
 
 Move completed work to Done, clear `STATE.md`, release reservations, record
 validation, and keep or supersede `LOGIC-DRAFT.md` according to the next
-selected draft. Keep the latest cache until the next session refresh, promote
+selected draft. Keep the latest cache until the next session refresh unless
+the task-level cleanup point applies, promote
 durable cache material, then delete or explicitly retain superseded cache
 runs. To abandon a draft, resolve active state and cancel or complete pending
 tasks before marking `LOGIC-DRAFT.md` superseded.
@@ -833,16 +864,26 @@ becomes reachable from the durable branch owned by the next authority level.
 The levels are Worker candidate -> Lead gate and Lead gate -> Prime default
 branch.
 
-- Task level: only after the Task candidates reachability check passes may
-  Lead delete the remote and local task branch, its worktree, and task-specific
-  temporaries, never before. A crashed cleanup resumes from the same check
-  without re-integrating; a copied commit (squash, cherry-pick) never proves it.
+GC occurs only after durable records no longer depend on the resource being
+collected. A resource that meets these conditions is eligible for cleanup, not
+required to be deleted; actual deletion follows project or host retention
+policy.
+
+- Task level, GC order for a mutating task: fetch; verify the exact
+  `task_candidate` is reachable from the remote gate branch; promote all
+  evidence and material that must survive; repair durable references and
+  pointers; record the task Done with its candidate and validation; clear or
+  update STATE and release reservations; commit and push those records to the
+  gate; verify the remote gate contains them; only then delete task cache,
+  worktree and task branch, never before. A crash resumes at the first
+  unfinished step without re-integrating; a copied commit (squash,
+  cherry-pick) never proves reachability.
 - Gate level: after closure is proven (the accepted answer commit is reachable
   from remote `default_branch`), cleanup may remove the remote gate branch,
   the local gate branch or worktree, remaining gate-retained cache, task
   branches of that gate whose candidates are reachable from remote
-  `default_branch`, and gate-only temporaries;
-  never while the answer is unreachable.
+  `default_branch`, and gate-only temporaries; never while the answer is
+  unreachable.
 
 To start the next draft after completed work, preserve the completed cycle's
 summary and validation evidence, then replace `LOGIC-DRAFT.md`, reset

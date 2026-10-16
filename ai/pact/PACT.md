@@ -444,7 +444,7 @@ Cleanup completes the maintenance cycle:
 - keep supporting shape files unless the owner asks for removal;
 - clear disposable cache when it is no longer useful, and remove task or gate
   branches only after their accepted candidate is reachable from the next
-  level (WORKFLOW Cleanup);
+  level and no durable record depends on them (WORKFLOW Cleanup);
 - leave `LOGIC-DRAFT.md` as `selected` for traceability, set it to
   `superseded` when replaced, or reset it to `none-selected` when the selected
   logic is intentionally cleared.
@@ -457,10 +457,11 @@ Inspector function checks the candidate and evidence. Both use High capability,
 with the same or different concrete models. Lead coordinates the gate, hires
 specialist Workers, reviews their work, and prepares validated slices. A Worker
 performs one bounded task and may publish only its own task candidate
-branch; it gains no integration or gate authority. A Worker publishes a task
-candidate, Lead integrates it into the gate, Prime integrates the gate into
-the default branch, and each lower level is cleaned only after its accepted
-candidate is reachable from the higher level.
+branch; it gains no integration or gate authority. Every mutating task
+produces an exact candidate from a known gate revision; Lead integrates that
+candidate into the gate, Prime integrates the accepted gate into the default
+branch, and lower-level resources are garbage-collected only after
+reachability is proven and durable records no longer depend on them.
 
 Model tiers are High, Middle, and Light. Effort is expressed as a percentage
 and mapped to the selected provider/model's supported control. Capability,

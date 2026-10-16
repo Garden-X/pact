@@ -223,13 +223,15 @@ explicit owner model/effort bindings do not change.
   branch. Existing acceptance prose stays; do not backfill invented entries
   for already closed gates.
 - `requires` (workflow 3.4, tasks 1.11, state 1.8) is optional; existing
-  assignments need no change.
+  assignments need no change. Host-native permission or sandbox settings stay
+  in local adapter configuration and only narrow the boundary_contract.
 - Task candidates (workflow 3.5, tasks 1.12, state 1.9, cache-run 1.1): add
   `task_branch_pattern: task/<gate-id>/<task-id>` and the runtime-cache
-  exclusion above. In-flight Worker results need no rewrite; new mutating
-  Worker tasks publish on their task branch. Do not delete existing task or
-  gate branches until their candidates are reachable from the next level. Host-native permission or sandbox settings stay
-  in local adapter configuration and only narrow the boundary_contract.
+  exclusion above; active mutating tasks gain `task_base`, `task_branch` and
+  `task_candidate` coordinates (`none` for read-only tasks). In-flight Worker
+  results need no rewrite; new mutating tasks publish on their task branch.
+  Do not delete existing task or gate branches until their candidates are
+  reachable from the next level and no durable record depends on them.
 - Treat existing `lead_tier`/`worker_tier_default` values as routing hints;
   do not add a Watchdog tier field. Preserve explicit owner model bindings.
 
@@ -263,9 +265,12 @@ cache/
 ```
 
 Runtime cache stays untracked. Ensure `/ai/pact/cache/runs/` and
-`/ai/pact/cache/retained/` are excluded from Git: append those two lines to
-the project's `.gitignore`, preserving its existing content, or to
-`.git/info/exclude` when the owner keeps `.gitignore` unchanged. Keep
+`/ai/pact/cache/retained/` are excluded from Git. A portable installation
+SHOULD use tracked `.gitignore` entries: append those two lines to the
+project's `.gitignore`, preserving its existing content. Use clone-local
+`.git/info/exclude` only when owner or project policy forbids changing
+tracked ignore rules; every participating clone or harness then establishes
+that exclusion itself. Keep
 `ai/pact/cache/.gitkeep` and `ai/pact/templates/cache-run.tpl.md` tracked;
 never ignore all of `/ai/pact/cache/`.
 ## Fresh Project State

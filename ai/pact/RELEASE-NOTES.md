@@ -2,7 +2,7 @@
 
 Title: improved workflow and project syncronization
 
-updated: 2026-10-16 04:55:33 UTC+00:00
+updated: 2026-10-16 05:11:21 UTC+00:00
 status: prepared for release
 
 PACT 2.0 makes coordination policy portable through template RULES and full
@@ -43,14 +43,18 @@ EXAMPLE sections, with synchronized installed entry files and migration guidance
   recoverable Prime work until its commit is reachable from the default
   branch; PrimeWatch and the Prime heartbeat wake for that pending delivery
   once per key, and GateClose recovers it without rerunning acceptance.
-- Task candidates: a mutating task publishes an exact candidate commit on
-  `task/<gate-id>/<task-id>`; a Worker may push only that branch, Lead
-  integrates it into the gate preserving ancestry, and the task is Done when
+- Task candidates: every mutating task, whoever executes it, produces an exact
+  candidate from a known gate revision (`task_base`, `task_branch`,
+  `task_candidate` in the active task object) on `task/<gate-id>/<task-id>`; a
+  Worker may push only that branch, Lead checks ancestry from `task_base`,
+  integrates the candidate preserving ancestry, and the task is Done when
   `git merge-base --is-ancestor <task-candidate> origin/gate/<gate-id>`
-  passes. Read-only tasks need no branch. Task branches, worktrees and task
-  cache are cleaned only after that check, gate resources only after closure.
-  Runtime cache paths stay out of Git. No new role, status, record or close
-  protocol.
+  passes. Mechanical integration stays Lead gate work; material corrections
+  get their own candidate. Read-only tasks need no branch. Resources are
+  collected only after reachability and once durable records no longer depend
+  on them; evidence a later authority in another harness needs is promoted to
+  a reference it can resolve. Tracked `.gitignore` is the preferred cache
+  exclusion. No new role, status, record or close protocol.
 - The optional role-less PrimeWatch host hook observes the durable handoff
   across harnesses and wakes Prime once per handoff key or stable incident key.
   It has no Prime or Lead authority; dedup memory and schedules stay host-owned.

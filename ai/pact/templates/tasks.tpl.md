@@ -5,7 +5,7 @@
 name: tasks.tpl.md
 type: pact maintenance template
 for: TASKS.md
-updated: 2026-10-16 04:55:33 UTC+00:00
+updated: 2026-10-16 05:11:21 UTC+00:00
 version: 1.12
 
 ## WHAT
@@ -52,9 +52,9 @@ Use this template when creating or resetting the PACT task list.
 - record the result commit when one exists, without inventing a commit or
   claiming validation that was not run; for a mutating task that commit is its
   exact task candidate;
-- move a mutating task to Done only after its exact candidate is reachable
-  from the remote gate branch (WORKFLOW Task candidates); a read-only task
-  needs no task branch;
+- move a mutating task, whoever executes it, to Done only after its exact
+  `task_candidate`, built on its `task_base`, is reachable from the remote gate
+  branch (WORKFLOW Task candidates); a read-only task needs no task branch;
 - link related invariant PACT files with relative Markdown links;
 - keep task entries compact and traceable.
 

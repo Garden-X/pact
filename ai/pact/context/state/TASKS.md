@@ -9,13 +9,19 @@ status: active-draft
 generated_from: /ai/pact/templates/tasks.tpl.md
 generated_from_version: 1.12
 content_status: current-state
-updated: 2026-10-16 04:58:06 UTC+00:00
+updated: 2026-10-16 05:20:21 UTC+00:00
 
 ## Pending
 
 None.
 
 ## Done
+
+- PACT-20261016-002 - Task candidates: semantic tightening for multi-harness recovery.
+  trace: owner instruction 2026-10-16 (second pass on gate/PACT-TaskCandidates; refine, do not redesign)
+  outcome: Lead's material-task bypass removed: every mutating task produces an exact task candidate before integration, including a Lead-executed one (Lead acting as executor, then as integrator, even in one session); mechanical conflict resolution, import or path reconciliation, record-only integration edits and merge-only formatting stay Lead gate work, while a material behavior, code or design change during integration is a correction task with its own candidate. The active STATE object gains coordinates task_base (exact gate revision at dispatch), task_branch and task_candidate (none until publication; all none for a read-only task); handoff notes no longer carry candidate identity. Lead checks git merge-base --is-ancestor <task-base> <task-candidate>, reviews git diff <task-base> <task-candidate>, and rejects a candidate not descending from its base. Evidence a later authority in another harness needs MUST be promoted to a reference it can resolve before task-local cleanup; retained cache is not a cross-harness handoff. GC occurs only after durable records no longer depend on the resource (fetch, verify reachability, promote, repair pointers, record Done, clear STATE, push records, verify remote, then delete); eligible for cleanup, not required. Session retention yields to the task-level cleanup point after acceptance. Tracked .gitignore is the preferred portable exclusion; .git/info/exclude only when policy forbids, set in every participating clone or harness. Fixed a first-pass INSTALL edit that had split the requires migration bullet. No new role, status, task_phase, lifecycle, record, registry, TaskClose or Task-Answers; versions unchanged within this unmerged gate (workflow 3.5, tasks 1.12, state 1.9, cache-run 1.1).
+  validation: check-task-candidates exit0 (70; on a1c43ec exit1, 41 passed, 29 failed: refinement doc checks plus doc-gated real-git recovery scenarios RA-RJ), validate exit0 (122), scenarios exit0 (41), close exit0 (13), delivery exit0 (12), harness exit0 (59), interop exit0 (12), trigger exit0 (10), boundaries exit0 (13); git diff --check exit0. One superseded first-pass assertion (handoff carries candidate) repointed to the coordinates. Evidence: ai/pact/cache/runs/2026-10-16T04-51-37Z--task-candidates/validation/final2-* (local, Git-excluded). Root self-review, not independent.
+  delivery: gate/PACT-TaskCandidates for owner review; no main merge.
 
 - PACT-20261016-001 - Task candidates and reachability-based cleanup.
   trace: owner instruction 2026-10-16 (PACT 2 refinement: every mutating task publishes a durable task candidate first)

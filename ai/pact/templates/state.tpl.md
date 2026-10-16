@@ -5,7 +5,7 @@
 name: state.tpl.md
 type: pact maintenance template
 for: STATE.md
-updated: 2026-10-16 04:55:33 UTC+00:00
+updated: 2026-10-16 05:11:21 UTC+00:00
 version: 1.9
 
 ## WHAT
@@ -122,6 +122,13 @@ Each active task object must include:
 - `source`;
 - `affected_files`;
 - `reservations`;
+- `task_base`, `task_branch`, `task_candidate`: coordinates of a mutating
+  task. `task_base` is the exact gate revision the task was dispatched
+  against, `task_branch` its assigned branch from `task_branch_pattern`, and
+  `task_candidate` is `none` until publication, then the exact pushed
+  candidate commit. All three are `none` for a read-only task. They are
+  coordinates in this object, not another state object; integration is
+  derived from Git reachability and never stored;
 - `tests` and `baseline` references/evidence when the task changes a code
   invariant; otherwise record why invariant tests are unnecessary;
 - `validation`;
@@ -184,9 +191,8 @@ Retry must record attempt count and retry policy.
 
 Reservations must identify claimed files or paths and access mode.
 
-Handoff must record status and notes needed by the next agent or session.
-For a published mutating task it also records the task branch and exact
-candidate commit; integration is derived from Git reachability, never stored.
+Handoff must record status and notes needed by the next agent or session;
+candidate identity lives in the task coordinates, not in handoff notes.
 
 ### Gate Handoff
 
@@ -322,6 +328,9 @@ updated: YYYY-MM-DD HH:mm:ss UTC+00:00
         mode: write
       - path: /ai/pact/workflow/WORKFLOW.md
         mode: write
+    task_base: <exact gate/<gate-id> revision at dispatch>
+    task_branch: task/<gate-id>/PACT-YYYYMMDD-001
+    task_candidate: none
     tests: none - documentation-only task; inspect its governing contract.
     validation:
       method: Inspect hook file and confirm workflow registration.
