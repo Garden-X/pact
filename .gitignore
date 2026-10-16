@@ -5,3 +5,7 @@ meta.md
 .obsidian/
 ai/sparc/*
 !ai/sparc/.gitkeep
+
+# PACT runtime cache (session or explicitly retained working memory)
+/ai/pact/cache/runs/
+/ai/pact/cache/retained/

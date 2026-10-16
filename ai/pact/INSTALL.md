@@ -223,7 +223,12 @@ explicit owner model/effort bindings do not change.
   branch. Existing acceptance prose stays; do not backfill invented entries
   for already closed gates.
 - `requires` (workflow 3.4, tasks 1.11, state 1.8) is optional; existing
-  assignments need no change. Host-native permission or sandbox settings stay
+  assignments need no change.
+- Task candidates (workflow 3.5, tasks 1.12, state 1.9, cache-run 1.1): add
+  `task_branch_pattern: task/<gate-id>/<task-id>` and the runtime-cache
+  exclusion above. In-flight Worker results need no rewrite; new mutating
+  Worker tasks publish on their task branch. Do not delete existing task or
+  gate branches until their candidates are reachable from the next level. Host-native permission or sandbox settings stay
   in local adapter configuration and only narrow the boundary_contract.
 - Treat existing `lead_tier`/`worker_tier_default` values as routing hints;
   do not add a Watchdog tier field. Preserve explicit owner model bindings.
@@ -257,6 +262,12 @@ adapters/
 cache/
 ```
 
+Runtime cache stays untracked. Ensure `/ai/pact/cache/runs/` and
+`/ai/pact/cache/retained/` are excluded from Git: append those two lines to
+the project's `.gitignore`, preserving its existing content, or to
+`.git/info/exclude` when the owner keeps `.gitignore` unchanged. Keep
+`ai/pact/cache/.gitkeep` and `ai/pact/templates/cache-run.tpl.md` tracked;
+never ignore all of `/ai/pact/cache/`.
 ## Fresh Project State
 
 Install specification files, templates, shipped hook contracts, and the active
@@ -468,7 +479,7 @@ Upgrade the contract and complete example structure, then reapply the target's
 actual settings and state. PACT 2.0 is the package version; do not reset template
 versions to 2.0 or overwrite target files with this repository's operational data.
 
-1. Synchronize WORKFLOW from workflow.tpl.md 3.4 and AGENTS from agents.tpl.md
+1. Synchronize WORKFLOW from workflow.tpl.md 3.5 and AGENTS from agents.tpl.md
    3.4. Preserve local hooks, file_guard, skill_log, resource limits, owner
    bindings, and project-specific rules. Preserve an existing enabled
    `worker_fix_target` percentage; `none` disables the diagnostic and is the
@@ -521,8 +532,8 @@ versions to 2.0 or overwrite target files with this repository's operational dat
    preserve it and mark the mapping fixed/unsupported until a requested
    percentage is chosen. Retire the old native-effort keys after preservation.
 5. Refresh reusable profiles from sub-agent.tpl.md 2.2, drafts from
-   logic-draft.tpl.md 1.6, task lists from tasks.tpl.md 1.11, and active objects
-   from state.tpl.md 1.8. Preserve selected scope, completed evidence, active
+   logic-draft.tpl.md 1.6, task lists from tasks.tpl.md 1.12, and active objects
+   from state.tpl.md 1.9. Preserve selected scope, completed evidence, active
    actors/reservations, and pending work. Add specialty/binding/effort details to
    actual Worker assignments; do not fabricate hires or measurements.
    Preserve the exact bounded `brief`, scope, reservations, validation, and

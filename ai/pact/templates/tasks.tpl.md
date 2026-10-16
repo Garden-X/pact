@@ -5,8 +5,8 @@
 name: tasks.tpl.md
 type: pact maintenance template
 for: TASKS.md
-updated: 2026-10-15 01:23:13 UTC+00:00
-version: 1.11
+updated: 2026-10-16 04:55:33 UTC+00:00
+version: 1.12
 
 ## WHAT
 
@@ -50,7 +50,11 @@ Use this template when creating or resetting the PACT task list.
 - record validation evidence or a reason validation was not possible when a
   task moves to Done;
 - record the result commit when one exists, without inventing a commit or
-  claiming validation that was not run;
+  claiming validation that was not run; for a mutating task that commit is its
+  exact task candidate;
+- move a mutating task to Done only after its exact candidate is reachable
+  from the remote gate branch (WORKFLOW Task candidates); a read-only task
+  needs no task branch;
 - link related invariant PACT files with relative Markdown links;
 - keep task entries compact and traceable.
 
@@ -120,7 +124,9 @@ exempt from the parent-issued contract requirement. This grants no spawn permiss
 ### Results and measurement
 
 Done entries carry actual outcomes, validation evidence, and a commit when
-available; uncommitted work says so. `worker_fix_target: none` in WORKFLOW
+available. A mutating task moves to Done only after its exact candidate is
+reachable from the remote gate branch, and its entry records that candidate;
+read-only work has no commit and says so. `worker_fix_target: none` in WORKFLOW
 disables correction-rate tracking for fresh installations; preserve an existing
 project's enabled value. No metric entries or counts are required when disabled.
 
@@ -158,7 +164,7 @@ canonical_location: /ai/pact/context/state/TASKS.md
 layer: PACT / context / state
 status: active-draft
 generated_from: /ai/pact/templates/tasks.tpl.md
-generated_from_version: 1.11
+generated_from_version: 1.12
 content_status: current-state
 updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 
@@ -178,7 +184,7 @@ updated: YYYY-MM-DD HH:mm:ss UTC+00:00
     permitted_area: Read governing PACT contracts; write only the two reserved files.
     protected_area: No template edits, product code, SPARC truth, host configuration or other state writes.
     unchanged_contracts: Preserve PACT/SPARC authority and all existing hook interfaces.
-    allowed_side_effects: Reserved Markdown edits only; no Git, runtime binding, services or external messages.
+    allowed_side_effects: Reserved Markdown edits; commit and push only task/<gate-id>/PACT-YYYYMMDD-001; no other Git write, runtime binding, services or external messages.
     escalation: Report missing/conflicting limits or needed scope/interface/side-effect expansion to parent before acting.
   specialty: documentation
   model_tier: Light
@@ -199,8 +205,9 @@ updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 
 ## Done
 
-None yet. Completed entries record actual outcome, validation and commit
-(or `uncommitted`).
+None yet. Completed entries record actual outcome, validation and, for a
+mutating task, the exact candidate commit reachable from the gate (read-only
+tasks: `none`).
 
 Related:
 

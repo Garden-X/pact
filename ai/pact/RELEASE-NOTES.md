@@ -2,7 +2,7 @@
 
 Title: improved workflow and project syncronization
 
-updated: 2026-10-15 01:23:13 UTC+00:00
+updated: 2026-10-16 04:55:33 UTC+00:00
 status: prepared for release
 
 PACT 2.0 makes coordination policy portable through template RULES and full
@@ -43,6 +43,14 @@ EXAMPLE sections, with synchronized installed entry files and migration guidance
   recoverable Prime work until its commit is reachable from the default
   branch; PrimeWatch and the Prime heartbeat wake for that pending delivery
   once per key, and GateClose recovers it without rerunning acceptance.
+- Task candidates: a mutating task publishes an exact candidate commit on
+  `task/<gate-id>/<task-id>`; a Worker may push only that branch, Lead
+  integrates it into the gate preserving ancestry, and the task is Done when
+  `git merge-base --is-ancestor <task-candidate> origin/gate/<gate-id>`
+  passes. Read-only tasks need no branch. Task branches, worktrees and task
+  cache are cleaned only after that check, gate resources only after closure.
+  Runtime cache paths stay out of Git. No new role, status, record or close
+  protocol.
 - The optional role-less PrimeWatch host hook observes the durable handoff
   across harnesses and wakes Prime once per handoff key or stable incident key.
   It has no Prime or Lead authority; dedup memory and schedules stay host-owned.
@@ -95,15 +103,16 @@ existing versions; no unrelated contract change is required for this release.
 
 | Template | Version |
 |---|---|
-| workflow.tpl.md | 3.4 |
+| workflow.tpl.md | 3.5 |
 | agents.tpl.md | 3.4 |
 | sub-agent.tpl.md | 2.2 |
-| state.tpl.md | 1.8 |
-| tasks.tpl.md | 1.11 |
+| state.tpl.md | 1.9 |
+| tasks.tpl.md | 1.12 |
 | logic-draft.tpl.md | 1.6 |
 | hook.tpl.md | 1.3 |
 | keep-alive.tpl.md | 1.1 |
 | ideas.tpl.md | 1.2 |
+| cache-run.tpl.md | 1.1 |
 
 ## Migration
 

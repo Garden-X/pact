@@ -5,8 +5,8 @@
 name: cache-run.tpl.md
 type: pact maintenance template
 for: CACHE.md
-updated: 2026-06-17 03:55:16 UTC+00:00
-version: 1.0
+updated: 2026-10-16 04:55:33 UTC+00:00
+version: 1.1
 
 ## WHAT
 
@@ -64,7 +64,12 @@ Retained cache runs keep the same `CACHE.md` when moved to:
 - list promotion targets;
 - record comparison and carry-forward notes when a new session is created from
   a previous cache run;
-- record cleanup or retention decision.
+- record cleanup or retention decision; for a mutating task, clean up at the
+  task-level point (its candidate reachable from the remote gate branch) after
+  promotion, and give any gate-retained item an explicit
+  `reason: required-for-gate-acceptance` and `review_point: gate-close`;
+- stay out of Git: `/ai/pact/cache/runs/` and `/ai/pact/cache/retained/` are
+  excluded runtime paths.
 
 `CACHE.md` must not:
 
@@ -184,5 +189,6 @@ or run-specific working data in `raw-data/`.
 
 ## CLEANUP DECISION
 
-pending
+pending - delete disposable material after the task candidate is reachable
+from origin/gate/<gate-id>; retained items list reason and review_point.
 ```

@@ -7,15 +7,22 @@ canonical_location: /ai/pact/context/state/TASKS.md
 layer: PACT / context / state
 status: active-draft
 generated_from: /ai/pact/templates/tasks.tpl.md
-generated_from_version: 1.11
+generated_from_version: 1.12
 content_status: current-state
-updated: 2026-10-15 01:23:13 UTC+00:00
+updated: 2026-10-16 04:58:06 UTC+00:00
 
 ## Pending
 
 None.
 
 ## Done
+
+- PACT-20261016-001 - Task candidates and reachability-based cleanup.
+  trace: owner instruction 2026-10-16 (PACT 2 refinement: every mutating task publishes a durable task candidate first)
+  outcome: WORKFLOW declares task_branch_pattern task/<gate-id>/<task-id> and a Task candidates block: publication, integration and acceptance are separate; a mutating task publishes an exact candidate commit on its task branch (a Worker may commit and push only that branch; integration authority stays with Lead); read-only tasks need no branch; a Lead-executed task's gate slice is candidate and integration; Lead integrates by fast-forward or ancestry-preserving merge, never squash/cherry-pick or force; integration is derived from git merge-base --is-ancestor <task-candidate> origin/gate/<gate-id>, no stored flag; a mutating task is Done only after that check. Worker/Lead role rows and the gate-writers rule narrowed accordingly. Cache gains the task-level cleanup point (promote, then delete disposable), bounded gate retention (reason: required-for-gate-acceptance, review_point: gate-close) and normative Git exclusion of cache/runs and cache/retained; Cleanup gains the Durability order (task -> gate -> default) with task cleanup after reachability and gate cleanup after closure. tasks/state/cache-run templates, StallCover (covered results wait on the task branch), GateClose (cleanup only after closure), PACT.md, INSTALL (exclusion + migration note), RELEASE-NOTES and .gitignore follow. No TaskClose, Task-Answers, new role, status, lifecycle, record or registry; gate closure unchanged.
+  validation: new check-task-candidates exit0 (42; on main exit1, 5 passed: doc checks plus doc-gated real-git scenarios A-J in a throwaway repo), validate exit0 (122; copied with pinned versions repointed to workflow 3.5, tasks 1.12, state 1.9, cache-run 1.1), scenarios exit0 (41), close exit0 (13), delivery exit0 (12), harness exit0 (59), interop exit0 (12), trigger exit0 (10), boundaries exit0 (13); git diff --check exit0. Evidence: ai/pact/cache/runs/2026-10-16T04-51-37Z--task-candidates/validation (local, Git-excluded). Root self-review, not independent.
+  versions: workflow 3.5, tasks 1.12, state 1.9, cache-run 1.1.
+  delivery: gate/PACT-TaskCandidates for owner review; no main merge.
 
 - PACT-20261015-002 - Harness interoperability without absorption.
   trace: owner instruction 2026-10-15 (final PACT 2 interoperability pass)

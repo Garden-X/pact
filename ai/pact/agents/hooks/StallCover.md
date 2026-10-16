@@ -10,7 +10,7 @@ status: canonical
 generated_from: /ai/pact/templates/hook.tpl.md
 generated_from_version: 1.3
 content_status: current-data
-updated: 2026-10-14 18:49:23 UTC+00:00
+updated: 2026-10-16 04:55:33 UTC+00:00
 
 ## TRIGGER
 
@@ -45,7 +45,8 @@ active reservations. Transfer each taken task to STATE with its actor and
 lead; do not duplicate ownership. Parallel tasks require disjoint writes
 and no task in the set that builds or runs tests. Record `covered by Prime`
 in the required daily log or task evidence when the project has no daily log.
-Results stay uncommitted and unreviewed until the Lead resumes and
+A covered Worker publishes a mutating result only on its assigned task
+branch; results stay unintegrated and unreviewed until the Lead resumes and
 reviews them first; the Prime does not expand scope, rewrite briefs, plan
 new slices, or review product code. Wait when the ready pool is empty.
 When Prime and Lead use different harnesses, cover only when the covered

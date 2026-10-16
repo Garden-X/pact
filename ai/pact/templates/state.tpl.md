@@ -5,8 +5,8 @@
 name: state.tpl.md
 type: pact maintenance template
 for: STATE.md
-updated: 2026-10-15 01:43:21 UTC+00:00
-version: 1.8
+updated: 2026-10-16 04:55:33 UTC+00:00
+version: 1.9
 
 ## WHAT
 
@@ -185,6 +185,8 @@ Retry must record attempt count and retry policy.
 Reservations must identify claimed files or paths and access mode.
 
 Handoff must record status and notes needed by the next agent or session.
+For a published mutating task it also records the task branch and exact
+candidate commit; integration is derived from Git reachability, never stored.
 
 ### Gate Handoff
 
@@ -278,7 +280,7 @@ layer: PACT / context / state
 status: active
 active_task: PACT-YYYYMMDD-001
 generated_from: /ai/pact/templates/state.tpl.md
-generated_from_version: 1.8
+generated_from_version: 1.9
 content_status: current-state
 updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 
@@ -298,7 +300,7 @@ updated: YYYY-MM-DD HH:mm:ss UTC+00:00
       permitted_area: Read governing PACT contracts; write only the two reserved files.
       protected_area: No template edits, product code, SPARC truth, host configuration or other state writes.
       unchanged_contracts: Preserve PACT/SPARC authority and all existing hook interfaces.
-      allowed_side_effects: Reserved Markdown edits only; no Git, runtime binding, services or external messages.
+      allowed_side_effects: Reserved Markdown edits; commit and push only task/<gate-id>/PACT-YYYYMMDD-001; no other Git write, runtime binding, services or external messages.
       escalation: Report missing/conflicting limits or needed scope/interface/side-effect expansion to parent before acting.
     specialty: documentation
     model_tier: Light

@@ -10,7 +10,7 @@ status: canonical
 generated_from: /ai/pact/templates/hook.tpl.md
 generated_from_version: 1.3
 content_status: current-data
-updated: 2026-10-14 22:11:09 UTC+00:00
+updated: 2026-10-16 04:55:33 UTC+00:00
 
 ## TRIGGER
 
@@ -91,7 +91,9 @@ order; never merge first and record the answer later.
 9. Closure check: fetch and test whether the answer commit is reachable from
    remote `default_branch` (for example
    `git merge-base --is-ancestor <answer> origin/<default_branch>`). Reachable
-   means the gate is closed; nothing else is written to prove it.
+   means the gate is closed; nothing else is written to prove it. Branch and
+   cache cleanup happens only after closure, following WORKFLOW Cleanup
+   (Durability order).
 10. Independent lifecycle updates, such as a required daily-log entry or
     Prime's advance of LOGIC-DRAFT to a preselected next gate, may follow on
     `default_branch`; they are not closure evidence.

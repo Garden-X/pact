@@ -442,7 +442,9 @@ Cleanup completes the maintenance cycle:
   completed task entry, the relevant SPARC daily log, or both;
 - set `TASKS.md` to `complete` when no pending tasks remain;
 - keep supporting shape files unless the owner asks for removal;
-- clear disposable cache when it is no longer useful;
+- clear disposable cache when it is no longer useful, and remove task or gate
+  branches only after their accepted candidate is reachable from the next
+  level (WORKFLOW Cleanup);
 - leave `LOGIC-DRAFT.md` as `selected` for traceability, set it to
   `superseded` when replaced, or reset it to `none-selected` when the selected
   logic is intentionally cleared.
@@ -454,7 +456,11 @@ Prime's Architect function selects the scope and acceptance criteria; its
 Inspector function checks the candidate and evidence. Both use High capability,
 with the same or different concrete models. Lead coordinates the gate, hires
 specialist Workers, reviews their work, and prepares validated slices. A Worker
-performs one bounded task without gaining version-control or gate authority.
+performs one bounded task and may publish only its own task candidate
+branch; it gains no integration or gate authority. A Worker publishes a task
+candidate, Lead integrates it into the gate, Prime integrates the gate into
+the default branch, and each lower level is cleaned only after its accepted
+candidate is reachable from the higher level.
 
 Model tiers are High, Middle, and Light. Effort is expressed as a percentage
 and mapped to the selected provider/model's supported control. Capability,
