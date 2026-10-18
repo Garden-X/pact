@@ -11,7 +11,7 @@ gate_id: PACT-Maintenance
 generated_from: /ai/pact/templates/logic-draft.tpl.md
 generated_from_version: 1.6
 content_status: current-state
-updated: 2026-10-18 08:56:45 UTC+00:00
+updated: 2026-10-18 09:01:28 UTC+00:00
 
 ## Selected Logic
 
@@ -49,6 +49,10 @@ unrelated work, existing explicit bindings, shared host services, and actual
 validation evidence. No invented gates, hires, metrics, or timestamps.
 
 ## Acceptance
+
+PACT-Maintenance decision: accepted
+candidate: c6571438d82d6b76adf0732e466af2bb75bdc655
+evidence: TASKS Done PACT-20261018-002 and local validation/maintenance-final/exits.json in cache run 2026-10-18T02-06-19Z--routing-delivery. Root in Prime Inspector pass reviewed the complete source patch, candidate identity, all nine actual zero exits (353 checks, 203 links), 41 host-helper checks, 15 contract walkthrough cases, and preservation hashes for 12 template-only copies. The later Lead records change only TASKS/STATE and passed the fresh 122-check/203-link validator. Native commit/push hygiene passed. Existing acceptance authority, mandatory hooks, project data and owner bindings are preserved. Host event trust/delivery remains unverified; protocol rules and manual CLI results do not prove runtime enforcement. No product/SPARC truth changed. Source fast-forward delivery is separately authorized; project active migration and publication are outside this task.
 
 PACT-Routing decision: accepted
 candidate: 50caccbcfab0dff2c292c363cf6b34f0677d8931
