@@ -13,7 +13,36 @@ updated: 2026-10-16 05:24:55 UTC+00:00
 
 ## Pending
 
-None.
+### PACT-20261010-009 — remaining installed-project delivery
+
+Assigned to the next delivery continuation, outside the current source-routing gate. Preserve the original brief and subsequent owner amendments below. The source-routing slice is tracked separately as PACT-20261018-001; no duplicate active task exists. Resume only the remaining remote delivery or reported failures; do not replay applied migrations or publish Tarot.
+
+```yaml
+id: PACT-20261010-009
+request: Publish PACT 2.0 and synchronize installed projects.
+brief: Publish and separately fast-forward merge the accepted PACT 2.0 source; upgrade existing PACT installations across C:/!DEV/2026 and dev-tools, preserving each project’s state, history, owner models/native efforts, enabled metrics, hooks, guards and unrelated work. Commit/push six project upgrades; Tarot is local-only by subsequent owner instruction and must not be pushed. Update two non-Git fixtures and three duplicate working copies locally without publishing unrelated feature branches. Reuse the guarded migration helper and existing validators; recover exact active constraints from target-owned evidence. Inspect actual required command exit statuses on outgoing revisions, then perform acceptance and delivery separately. Align demonstrated stale shared Claude guidance; no new scheduler, role, framework, service deployment or SPARC truth edits. Preserve prior artifacts, build and validate a fresh release ZIP/checksum. Formal tag/release remains separate.
+owner_update: Implement Spawn Boundaries and explicit role/parent/tier context in protocol templates, examples and generated targets; retain existing authority and child method autonomy. Preserve prior rollout evidence and outstanding work.
+owner_update_20261017: Implement evidence-based residual-work tier routing, complete delivered Forge U4 lifecycle records, refresh Forge active PACT and distribute current templates; preserve models/native effort, active work and Tarot local-only; ZIP refresh remains dropped.
+task_base: 5baf0364d7d1f7922acdeef4a6a868a1aa5807b8
+task_branch: task/PACT-2.0/PACT-20261010-009
+task_candidate: none
+task_phase: awaiting-delivery
+actor: /root
+role: Lead
+created_at: 2026-10-11 03:37:22 UTC+00:00
+source:
+  idea: null
+  shape: null
+  draft: LOGIC-DRAFT.md / Delivery And Synchronization
+  tasks: TASKS.md / authorized dispatch
+affected_files: PACT source contracts/records, six remote project PACT installations, Tarot local PACT, two fixtures, three duplicate working copies, four shared Claude guidance files; current-run temporary helpers/evidence
+reservations: These PACT/host guidance paths only; preserve all unrelated product/data/cache/runtime settings.
+tests: Documentation preservation/source/extracted validators and target-aware guarded migration checks; existing native Git gates apply to actual outgoing commits. No product code invariant is changed.
+baseline: Prior recovery negative scenarios and read-only project audit; do not fabricate product baselines.
+validation: Inspect each actual exit, file-preservation proof, candidate revisions and remote ancestry. Acceptance precedes separate fast-forward delivery.
+retry: 0
+handoff: Reuse current guarded candidates and evidence; Tarot local-only. Do not replay earlier protocol implementation or merge active feature history.
+```
 
 ## Done
 

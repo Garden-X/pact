@@ -7,7 +7,7 @@ canonical_location: /ai/pact/context/state/LOGIC-DRAFT.md
 layer: PACT / context / state
 status: selected
 owner_role: Prime
-gate_id: PACT-2.0
+gate_id: PACT-Routing
 generated_from: /ai/pact/templates/logic-draft.tpl.md
 generated_from_version: 1.6
 content_status: current-state
@@ -15,9 +15,7 @@ updated: 2026-10-17 20:52:02 UTC+00:00
 
 ## Selected Logic
 
-Prepare PACT 2.0, titled improved workflow and project syncronization, applying
-the owner's ten corrections to portable protocol templates and their complete
-examples, not only this repository's generated entry files.
+Owner-requested source correction: explicit evidence-based residual-work routing, workflow 3.6 and sub-agent 2.3, their complete examples/generated target and migration/release guidance. Acceptance uses the existing nine source validators, manual routing review and native Git hygiene. Installed-project delivery is preserved as task 009 in Next; its success is not implied by source acceptance. Prior release requirements and decisions below remain history/context; ZIP refresh was explicitly dropped on October 14.
 
 ## Source / Evidence
 
@@ -162,7 +160,7 @@ decision dropping ZIP refresh. Do not start U5 implementation in this rollout.
 
 ## Next
 
-None.
+Resume remaining installed-project delivery in TASKS PACT-20261010-009, preserving its exact brief and recorded blockers. Forge recovery and all local template applications are separately evidenced; no product gate is activated here.
 
 ## History
 
