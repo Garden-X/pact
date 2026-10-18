@@ -5,32 +5,16 @@
 name: STATE.md
 canonical_location: /ai/pact/context/state/STATE.md
 layer: PACT / context / state
-status: active
-active_task: PACT-20261018-002
+status: clear
+active_task: none
 generated_from: /ai/pact/templates/state.tpl.md
 generated_from_version: 1.9
 content_status: current-state
-updated: 2026-10-18 08:56:45 UTC+00:00
+updated: 2026-10-18 09:00:47 UTC+00:00
 
 ## Active Task
 
-```yaml
-id: PACT-20261018-002
-request: Improve PACT validation, consent-based update discovery, deferred activation and external-push reporting.
-brief: Define scope/risk-based checks and evidence reuse with verified inputs, revisions and environment; preserve explicit mandatory checks, native hooks, Prime authority and separate merge. Define startup reconciliation of approved newer templates preserving project state and owner bindings. Update complete template examples, source targets, migration/release guidance and the existing read-only session reminder; validate source and meaningful negative cases. Distribute templates only; do not migrate active projects, launch services or run their product suites. Check only committed owner-selected update sources, obtain agreement before a newly offered upgrade, and have Prime report newly observed external pushes without inferring pusher identity or changing existing sync automation. Merge the accepted source separately. No new scheduler, state-file type, metric, ZIP or deployment.
-role: Lead
-actor: Codex root
-task_base: 8a92fcd1010ab197922cc077c70cfc12c6ebbc29
-task_branch: task/PACT-Maintenance/PACT-20261018-002
-task_candidate: none
-task_phase: working
-scope: PACT source contracts/records; existing session-context.mjs; approved installed template copies only
-reservations: Preserve project STATE/workflow/bindings/custom hooks and unrelated owner changes; do not modify mandatory native Git hooks
-validation: Existing nine validators, focused reuse/migration scenarios, read-only host notice tests and template hash preservation
-tests: Existing documentation and Git-fixture checks; host reminder input and filesystem-boundary checks
-baseline: Prior hooks always require full command reruns; startup does not report template drift
-handoff: Owner replaced broad project delivery with protocol work and deferred template activation
-```
+None.
 
 Delivery progress: Source/extracted validators each exited 0 (119 checks/185 links), source/extracted reference scenarios each exited 0 (41 checks), archive audit exited 0 (16 checks/47 files). Current ZIP SHA256 ddb7072d23ab57ecb9d126d41ddbef47978c65d73c81376e0c564936d73b8e80. Nine guarded applications exited 0; wrong-plan-hash negatives each exited 1 before mutation, after/preserved hashes checked. Six isolated publication copies, Tarot local copy and two fixtures updated; primary working copies and three duplicate copies pending. Native project acceptance checks, commits, pushes and merges pending. No service/SPARC truth change; no independent final helper review claimed.
 
@@ -80,3 +64,18 @@ Delivery continuation 2026-10-18 02:06:19 UTC+00:00: prior guarded changes and a
 Historical delivery continuation (superseded by the owner scope recorded in TASKS): source main cc84ba2 and Forge recovery main 298bd0c verified. Forge final U5 transition push is running. flash-ui-final candidate passed lint/build and awaits main push. Arcana first push failed with missing socket.io-client; npm ci from unchanged lockfile exited 0, requiring a fresh native push check. ai-eve and 1garden use isolated candidate worktrees to preserve owner changes. Keen uses Claude's existing recovery worktree. Tarot commits remain local.
 
 Owner clarification: add bounded committed-source update discovery for local/GitHub repositories and user agreement before a newly offered update. Prime reports newly observed external pushes (not merely its own pushes); preserve existing sync automation and never infer pusher identity from commit authorship. Merge of this reviewed PACT source is explicitly authorized.
+
+## Gate Handoff
+
+    gate_id: PACT-Maintenance
+    seq: 1
+    signal: ready
+    candidate: c6571438d82d6b76adf0732e466af2bb75bdc655
+    branch: gate/PACT-Maintenance
+    lead: Codex root in Lead pass
+    slices: PACT-20261018-002; exact candidate reachable from remote gate
+    validation: nine actual exits 0, 353 checks and 203 links; 41 host-helper checks; 15 contract cases; 12 guarded template-only copies
+    records: SliceRecordsCheck passed; TASKS holds durable scope/results/limitations; no project/SPARC truth change
+    blockers: none for source acceptance; native hook trust/event delivery unverified, unrelated project activation intentionally deferred
+    escalation: none
+    recorded_at: 2026-10-18 09:00:47 UTC+00:00
