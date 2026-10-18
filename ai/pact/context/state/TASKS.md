@@ -46,6 +46,9 @@ handoff: Reuse current guarded candidates and evidence; Tarot local-only. Do not
 
 ## Done
 
+- PACT-20261018-001 — Residual-work capability routing. Candidate 50caccbcfab0dff2c292c363cf6b34f0677d8931, published on task/PACT-Routing/PACT-20261018-001 and integrated by ancestry into remote gate/PACT-Routing. Workflow 3.6, sub-agent 2.3, generated workflow, migration and release guidance synchronized. Existing validators: validate 122 (203 links), scenarios 41, task-candidates 71, close 13, delivery 12, harness 59, interop 12, trigger 10, boundaries 13; every actual exit 0 on this candidate. Manual cases preserve useful results, choose bounded local correction versus same-tier context repair versus evidenced capability escalation, and retain all acceptance and role boundaries. Root self-review, not independent. Evidence: ai/pact/cache/runs/2026-10-17T20-50-41Z--tier-routing-forge-closeout/validation/exits.json; detailed delivery run 2026-10-18T02-06-19Z--routing-delivery. No product/SPARC change; no fresh ZIP.
+
+
 - PACT-20261016-003 - Align the Lead role row with Task candidates.
   trace: owner instruction 2026-10-16 (final narrow correction on gate/PACT-TaskCandidates)
   outcome: WORKFLOW Roles table, Lead: Does adds "when executing a mutating task itself, commits and pushes that task's exact candidate only to its assigned task branch before integrating it into the gate"; Does not adds "bypass task-candidate publication for material mutating work". Wording alignment only; no other protocol semantics changed.
