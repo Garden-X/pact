@@ -50,6 +50,11 @@ validation evidence. No invented gates, hires, metrics, or timestamps.
 
 ## Acceptance
 
+PACT-Routing decision: accepted
+candidate: 50caccbcfab0dff2c292c363cf6b34f0677d8931
+evidence: TASKS Done PACT-20261018-001, nine actual validation exits 0 (353 checks, 203 links), manual routing/authority review, native commit and task/gate push hygiene 0. Root in Prime Inspector pass reviewed the full source diff and actual outputs. Documentation/reference and Git-fixture coverage only; no host scheduler enforcement or independent reviewer claimed. Installed-project failures/delivery stay under preserved task 009, outside this source acceptance.
+
+
 - All affected RULES and EXAMPLE sections use coherent roles/tiers/efforts.
 - Generated entry targets match their governing examples; versions and links
   resolve, and migration preserves real target data.
