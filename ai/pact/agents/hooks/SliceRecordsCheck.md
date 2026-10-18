@@ -8,9 +8,9 @@ layer: PACT / agent hook
 class: pact_hook
 status: canonical
 generated_from: /ai/pact/templates/hook.tpl.md
-generated_from_version: 1.3
+generated_from_version: 1.4
 content_status: current-data
-updated: 2026-10-10 19:23:24 UTC+00:00
+updated: 2026-10-18 02:28:25 UTC+00:00
 
 ## TRIGGER
 
@@ -56,6 +56,10 @@ Meaningfully changed records carry verified-UTC stamps. Do not refresh an
 unchanged contract's stamp or invent project-truth files or logs merely to
 satisfy the check. Follow the actual attached binding and project logging
 policy; source-repository maintenance does not supply a target project's truth.
+Apply WORKFLOW Validation scope and evidence reuse to the actual effects of
+the diff. Resolve every reused result and its original revision, unchanged
+inputs and environment; missing equivalence requires the applicable check.
+A changed live contract is not automatically a pure progress record.
 Record-only slices still need truthful
 validation; a changed filename alone is not evidence of completion. Stage
 intended paths explicitly and exclude unrelated work and temporary cache.

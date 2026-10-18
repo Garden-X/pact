@@ -5,8 +5,8 @@
 name: hook.tpl.md
 type: pact maintenance template
 for: agent hook files
-updated: 2026-10-15 00:26:17 UTC+00:00
-version: 1.3
+updated: 2026-10-18 08:51:00 UTC+00:00
+version: 1.4
 
 ## WHAT
 
@@ -65,6 +65,18 @@ Optional hook filenames must use CapitalCase:
 [Hook].md
 ```
 
+Validation hooks, including GateClose and SliceRecordsCheck, follow WORKFLOW's
+Validation scope and evidence reuse: inspect all required results, record any
+verified reuse with original revision/inputs/environment, and run missing or
+invalidated checks. GateClose retains Prime acceptance, immutable handoffs,
+record-only answers and separate delivery. Startup host hooks may report
+local template/target drift and newer committed versions from an explicitly
+configured local or GitHub source, with bounded read-only lookup. They offer
+an upgrade for user agreement; they do not apply migrations, execute
+project checks or grant authority. During target reconciliation, align existing
+named hooks with these rules while preserving custom mandatory checks; report
+any unresolved conflict instead of silently replacing a local hook.
+
 A hook file must not:
 
 - define project truth;
@@ -105,6 +117,9 @@ None.
 ## ACTION
 
 Inspect each required validation result for the actual candidate revision.
+Use WORKFLOW Validation scope and evidence reuse: a verified prior result may
+cover unchanged inputs, with its original tested revision and environment
+recorded honestly. Otherwise run the required check; never bypass native hooks.
 Missing, interrupted, timed-out, or nonzero results prevent completion; a green
 final command does not erase earlier failures. Record the method, command exit
 status when applicable, and evidence. Use proportionate inspection for docs.

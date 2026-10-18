@@ -6,39 +6,30 @@ name: STATE.md
 canonical_location: /ai/pact/context/state/STATE.md
 layer: PACT / context / state
 status: active
-active_task: PACT-20261010-009
+active_task: PACT-20261018-002
 generated_from: /ai/pact/templates/state.tpl.md
 generated_from_version: 1.9
 content_status: current-state
-updated: 2026-10-18 02:06:19 UTC+00:00
+updated: 2026-10-18 08:56:45 UTC+00:00
 
 ## Active Task
 
 ```yaml
-id: PACT-20261010-009
-request: Publish PACT 2.0 and synchronize installed projects.
-brief: Publish and separately fast-forward merge the accepted PACT 2.0 source; upgrade existing PACT installations across C:/!DEV/2026 and dev-tools, preserving each project’s state, history, owner models/native efforts, enabled metrics, hooks, guards and unrelated work. Commit/push six project upgrades; Tarot is local-only by subsequent owner instruction and must not be pushed. Update two non-Git fixtures and three duplicate working copies locally without publishing unrelated feature branches. Reuse the guarded migration helper and existing validators; recover exact active constraints from target-owned evidence. Inspect actual required command exit statuses on outgoing revisions, then perform acceptance and delivery separately. Align demonstrated stale shared Claude guidance; no new scheduler, role, framework, service deployment or SPARC truth edits. Preserve prior artifacts, build and validate a fresh release ZIP/checksum. Formal tag/release remains separate.
-owner_update: Implement Spawn Boundaries and explicit role/parent/tier context in protocol templates, examples and generated targets; retain existing authority and child method autonomy. Preserve prior rollout evidence and outstanding work.
-owner_update_20261017: Implement evidence-based residual-work tier routing, complete delivered Forge U4 lifecycle records, refresh Forge active PACT and distribute current templates; preserve models/native effort, active work and Tarot local-only; ZIP refresh remains dropped.
-task_base: 5baf0364d7d1f7922acdeef4a6a868a1aa5807b8
-task_branch: task/PACT-2.0/PACT-20261010-009
+id: PACT-20261018-002
+request: Improve PACT validation, consent-based update discovery, deferred activation and external-push reporting.
+brief: Define scope/risk-based checks and evidence reuse with verified inputs, revisions and environment; preserve explicit mandatory checks, native hooks, Prime authority and separate merge. Define startup reconciliation of approved newer templates preserving project state and owner bindings. Update complete template examples, source targets, migration/release guidance and the existing read-only session reminder; validate source and meaningful negative cases. Distribute templates only; do not migrate active projects, launch services or run their product suites. Check only committed owner-selected update sources, obtain agreement before a newly offered upgrade, and have Prime report newly observed external pushes without inferring pusher identity or changing existing sync automation. Merge the accepted source separately. No new scheduler, state-file type, metric, ZIP or deployment.
+role: Lead
+actor: Codex root
+task_base: 8a92fcd1010ab197922cc077c70cfc12c6ebbc29
+task_branch: task/PACT-Maintenance/PACT-20261018-002
 task_candidate: none
 task_phase: working
-actor: /root
-role: Lead
-created_at: 2026-10-11 03:37:22 UTC+00:00
-source:
-  idea: null
-  shape: null
-  draft: LOGIC-DRAFT.md / Delivery And Synchronization
-  tasks: TASKS.md / authorized dispatch
-affected_files: PACT source contracts/records, six remote project PACT installations, Tarot local PACT, two fixtures, three duplicate working copies, four shared Claude guidance files; current-run temporary helpers/evidence
-reservations: These PACT/host guidance paths only; preserve all unrelated product/data/cache/runtime settings.
-tests: Documentation preservation/source/extracted validators and target-aware guarded migration checks; existing native Git gates apply to actual outgoing commits. No product code invariant is changed.
-baseline: Prior recovery negative scenarios and read-only project audit; do not fabricate product baselines.
-validation: Inspect each actual exit, file-preservation proof, candidate revisions and remote ancestry. Acceptance precedes separate fast-forward delivery.
-retry: 0
-handoff: Reuse current guarded candidates and evidence; Tarot local-only. Do not replay earlier protocol implementation or merge active feature history.
+scope: PACT source contracts/records; existing session-context.mjs; approved installed template copies only
+reservations: Preserve project STATE/workflow/bindings/custom hooks and unrelated owner changes; do not modify mandatory native Git hooks
+validation: Existing nine validators, focused reuse/migration scenarios, read-only host notice tests and template hash preservation
+tests: Existing documentation and Git-fixture checks; host reminder input and filesystem-boundary checks
+baseline: Prior hooks always require full command reruns; startup does not report template drift
+handoff: Owner replaced broad project delivery with protocol work and deferred template activation
 ```
 
 Delivery progress: Source/extracted validators each exited 0 (119 checks/185 links), source/extracted reference scenarios each exited 0 (41 checks), archive audit exited 0 (16 checks/47 files). Current ZIP SHA256 ddb7072d23ab57ecb9d126d41ddbef47978c65d73c81376e0c564936d73b8e80. Nine guarded applications exited 0; wrong-plan-hash negatives each exited 1 before mutation, after/preserved hashes checked. Six isolated publication copies, Tarot local copy and two fixtures updated; primary working copies and three duplicate copies pending. Native project acceptance checks, commits, pushes and merges pending. No service/SPARC truth change; no independent final helper review claimed.
@@ -86,4 +77,6 @@ Delivery continuation 2026-10-18 02:06:19 UTC+00:00: prior guarded changes and a
     escalation: none
     recorded_at: 2026-10-18 02:06:19 UTC+00:00
 
-Current delivery continuation: source main cc84ba2 and Forge recovery main 298bd0c verified. Forge final U5 transition push is running. FLASH candidate passed lint/build and awaits main push. Arcana first push failed with missing socket.io-client; npm ci from unchanged lockfile exited 0, requiring a fresh native push check. ai-eve and 1garden use isolated candidate worktrees to preserve owner changes. Keen uses Claude's existing recovery worktree. Tarot commits remain local.
+Historical delivery continuation (superseded by the owner scope recorded in TASKS): source main cc84ba2 and Forge recovery main 298bd0c verified. Forge final U5 transition push is running. flash-ui-final candidate passed lint/build and awaits main push. Arcana first push failed with missing socket.io-client; npm ci from unchanged lockfile exited 0, requiring a fresh native push check. ai-eve and 1garden use isolated candidate worktrees to preserve owner changes. Keen uses Claude's existing recovery worktree. Tarot commits remain local.
+
+Owner clarification: add bounded committed-source update discovery for local/GitHub repositories and user agreement before a newly offered update. Prime reports newly observed external pushes (not merely its own pushes); preserve existing sync automation and never infer pusher identity from commit authorship. Merge of this reviewed PACT source is explicitly authorized.

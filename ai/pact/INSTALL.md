@@ -2,7 +2,7 @@
 
 > For: PACT 2.0
 > Purpose: install or verify the PACT project-maintenance layer
-> Updated: 2026-10-17 20:52:02 UTC+00:00
+> Updated: 2026-10-18 08:51:00 UTC+00:00
 
 ## Purpose
 
@@ -196,7 +196,8 @@ acceptance remain authoritative. Profiles do not replace a dispatch contract.
 
 ## Harness-topology migration
 
-Sync WORKFLOW 3.3, AGENTS 3.4, state 1.7 and sub-agent 2.2 together, add the
+Harness topology was introduced in WORKFLOW 3.3, AGENTS 3.4, state 1.7 and
+sub-agent 2.2. Use their current versions from the release table together; add the
 `PrimeWatch` hook contract, and refresh the PrimeHeartbeat, LeadHeartbeat,
 GateClose and StallCover contracts. Authority roles, ownership, boundaries and
 explicit owner model/effort bindings do not change.
@@ -486,6 +487,44 @@ services or rewriting working launch commands.
 - [ ] Hooks that use scripts expose those scripts through hook files and
       `WORKFLOW.md`.
 
+## Check for an available update
+
+Use the owner-selected local PACT source repository or approved GitHub source.
+Read an identified committed revision, inspect its template version table and
+compare actual local template and target META; PACT 2.0 alone is not an update
+identifier. Review relevant contract changes from that revision and offer the
+bounded migration with its preservation scope. Explicit user agreement is
+required before applying a newly offered upgrade; earlier specific approval
+remains valid. Never run source-provided commands merely to check versions.
+
+A startup host hook may perform a bounded read-only lookup and return this
+proposal/discovery notice. Without a configured hook, the agent performs the
+same check during normal startup using its existing repository access. No
+source configuration means ask for a source when an update is wanted; no
+network access or invalid metadata means status unknown, not current. Do not
+fetch into or pull/merge the product repository during discovery.
+
+## Deferred activation and validation
+
+An owner may distribute approved templates now and defer active-target
+reconciliation until the next project work session. Do not launch the product
+or run its build merely to copy templates. Preserve active WORKFLOW, STATE,
+bindings and custom hooks during distribution. Record pending migration in
+existing TASKS or an existing startup reminder; without such a discovery path,
+report that manual startup inspection is required. A reminder reports drift
+read-only and never applies an upgrade itself.
+
+At startup, apply WORKFLOW Pending template updates after reading current state
+and guard. Align all affected target contracts and named hooks from approved
+template rules/examples and compatible package assets. Preserve project data
+and immutable history; if the necessary asset or instruction is absent, record
+the gap and hold dependent work rather than reconstructing missing policy.
+Validate the migrated contracts before using them.
+
+Validation follows WORKFLOW Validation scope and evidence reuse. Existing
+mandatory host gates remain in force until their adapter is explicitly updated
+and verified; copying these templates does not optimize native hooks by itself.
+
 ## Sync Existing Installations
 
 Compare each target's generated_from_version with its template's version.
@@ -493,8 +532,8 @@ Upgrade the contract and complete example structure, then reapply the target's
 actual settings and state. PACT 2.0 is the package version; do not reset template
 versions to 2.0 or overwrite target files with this repository's operational data.
 
-1. Synchronize WORKFLOW from workflow.tpl.md 3.5 and AGENTS from agents.tpl.md
-   3.4. Preserve local hooks, file_guard, skill_log, resource limits, owner
+1. Synchronize WORKFLOW from workflow.tpl.md 3.7 and AGENTS from agents.tpl.md
+   3.5. Preserve local hooks, file_guard, skill_log, resource limits, owner
    bindings, and project-specific rules. Preserve an existing enabled
    `worker_fix_target` percentage; `none` disables the diagnostic and is the
    fresh-install default. Report unresolved conflicts. A metric threshold
@@ -545,7 +584,7 @@ versions to 2.0 or overwrite target files with this repository's operational dat
    A single fixed level or unavailable control has no inferred percentage;
    preserve it and mark the mapping fixed/unsupported until a requested
    percentage is chosen. Retire the old native-effort keys after preservation.
-5. Refresh reusable profiles from sub-agent.tpl.md 2.2, drafts from
+5. Refresh reusable profiles from sub-agent.tpl.md 2.3, drafts from
    logic-draft.tpl.md 1.6, task lists from tasks.tpl.md 1.12, and active objects
    from state.tpl.md 1.9. Preserve selected scope, completed evidence, active
    actors/reservations, and pending work. Add specialty/binding/effort details to
@@ -560,7 +599,7 @@ versions to 2.0 or overwrite target files with this repository's operational dat
    continuing. Do not invent instructions, erase progress, or duplicate the
    active task in Pending. Prime alone advances the selected gate after the
    current gate's acceptance; Lead's Next preparation is planning only.
-6. Refresh hooks from hook.tpl.md 1.3 and the shipped workflow contracts,
+6. Refresh hooks from hook.tpl.md 1.4 and the shipped workflow contracts,
    including PrimeWatch and the harness-topology migration above.
    Inspect every required acceptance exit status on the candidate revision,
    including failures masked by later commands. Merge separately after reading

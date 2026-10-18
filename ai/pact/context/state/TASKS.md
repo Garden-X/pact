@@ -9,13 +9,16 @@ status: active-draft
 generated_from: /ai/pact/templates/tasks.tpl.md
 generated_from_version: 1.12
 content_status: current-state
-updated: 2026-10-16 05:24:55 UTC+00:00
+updated: 2026-10-18 02:28:25 UTC+00:00
 
 ## Pending
 
 None.
 
 ## Done
+
+- PACT-20261010-009 — Previous broad publication scope superseded by owner on 2026-10-18 02:28:25 UTC+00:00. Source routing and Forge recovery delivered; Forge main 42758e2, flash-ui-final templates main 05b86ea. Tarot local 3604647a. Other template candidates remain local or on task branches; no claim that all project main branches were updated. Owner now selects PACT improvements and template-only distribution, deferring each active project migration to its next work session. Original full brief and results remain in prior STATE Git history and the referenced delivery cache; do not resume superseded product checks or mass active-target upgrades.
+
 
 - PACT-20261018-001 — Residual-work capability routing. Candidate 50caccbcfab0dff2c292c363cf6b34f0677d8931, published on task/PACT-Routing/PACT-20261018-001 and integrated by ancestry into remote gate/PACT-Routing. Workflow 3.6, sub-agent 2.3, generated workflow, migration and release guidance synchronized. Existing validators: validate 122 (203 links), scenarios 41, task-candidates 71, close 13, delivery 12, harness 59, interop 12, trigger 10, boundaries 13; every actual exit 0 on this candidate. Manual cases preserve useful results, choose bounded local correction versus same-tier context repair versus evidenced capability escalation, and retain all acceptance and role boundaries. Root self-review, not independent. Evidence: ai/pact/cache/runs/2026-10-17T20-50-41Z--tier-routing-forge-closeout/validation/exits.json; detailed delivery run 2026-10-18T02-06-19Z--routing-delivery. No product/SPARC change; no fresh ZIP.
 

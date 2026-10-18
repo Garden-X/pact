@@ -7,10 +7,10 @@ canonical_location: /ai/pact/workflow/WORKFLOW.md
 layer: PACT / workflow
 status: canonical
 generated_from: /ai/pact/templates/workflow.tpl.md
-generated_from_version: 3.6
+generated_from_version: 3.7
 content_status: current-data
 purpose: Define how agents maintain project work without bypassing SPARC project truth.
-updated: 2026-10-17 20:52:02 UTC+00:00
+updated: 2026-10-18 08:51:00 UTC+00:00
 
 ## Lifecycle
 
@@ -29,6 +29,55 @@ is optional; selected intent always passes through LOGIC-DRAFT before TASKS.
 ## Startup
 
 Follow the canonical startup sequence in `PACT-MANIFEST.md`.
+
+### Source update discovery
+
+At session start, when an owner-selected PACT source is available locally or
+through the GitHub/repository access already in use, inspect its committed
+revision read-only and compare its package/template versions with the local
+installation. A source is explicitly selected by the owner/host configuration;
+do not infer an update source from the product repository's remote. Compare
+template versions too: the package label alone may remain PACT 2.0. Capture
+the exact source revision; uncommitted source edits are not published updates.
+
+If newer contracts are available, present the source, current/available
+versions, relevant changes and preservation scope. Apply only after explicit
+user agreement covering that update proposal; an existing specific upgrade
+authorization counts. A read-only lookup is not consent to pull, merge or
+replace files. If the source moves beyond the agreed proposal, inspect the
+new differences before applying them and obtain agreement for changed scope.
+Unreachable, malformed or unverifiable sources mean update status unknown,
+not up to date; ordinary project startup is not blocked by a lookup failure.
+Checks are bounded and do not run services/tests or create a polling scheduler.
+Use the existing INSTALL migration procedure after agreement.
+
+### Pending template updates
+
+At project work-session startup, after reading current STATE and the enabled
+file guard, compare each installed target's generated_from_version with its
+approved local governing template version. Compare numeric version components,
+not lexical strings. New templates are available contracts, not evidence that
+active targets have already been migrated. A read-only host reminder may report
+this drift; it must not write files, run checks, fetch updates, start services
+or change bindings. Missing or ambiguous version/provenance needs inspection.
+
+When the owner has authorized the distributed upgrade, the responsible agent
+reconciles affected targets and registered hooks before work that relies on the
+changed contract. Use INSTALL's preservation procedure and the template RULES
+and complete EXAMPLE; never replace project data with seed examples or the
+protocol repository's operational records. Preserve exact active briefs, scope,
+reservations, validation references, pending work, immutable published handoffs,
+acceptance history, owner models/native efforts, custom hooks and file guards.
+Coordinate with any active writer; Prime retains authority decisions and Lead
+execution records. A migration does not advance a gate or dispatch work.
+
+Record the applied versions and preservation checks in existing TASKS/STATE.
+If authorization, required instructions, compatible package assets or safe
+reconciliation is missing, retain the current targets and record the precise
+conflict; hold only work dependent on that unresolved contract. Do not silently
+run mixed policies. Report templates updated and active workflow migrated as
+separate outcomes. Distribution can remain template-only until this startup
+step; it requires no project build, service launch or scheduler.
 
 ## Resume
 
@@ -210,7 +259,7 @@ Roles:
 
 | Role | Does | Does not |
 |---|---|---|
-| Prime | as Architect selects the shape and `LOGIC-DRAFT.md`; as Inspector reviews the candidate, gate validation, and PACT/SPARC records; runs the full acceptance suite; fast-forwards `gate/<id>` into `default_branch`; closes the gate | write product code; micromanage slices |
+| Prime | as Architect selects the shape and `LOGIC-DRAFT.md`; as Inspector reviews the candidate, gate validation, and PACT/SPARC records; inspects the complete required acceptance evidence and runs checks without reusable evidence; fast-forwards `gate/<id>` into `default_branch`; closes the gate | write product code; micromanage slices |
 | Lead | decomposes the selected draft into atomic `TASKS.md` entries; transfers tasks into `STATE.md`; writes self-contained worker briefs; performs the Watchdog function for its Workers; reviews every worker diff; checks PACT and SPARC conformance; may fix worker errors; prepares the records; when executing a mutating task itself, commits and pushes that task's exact candidate only to its assigned task branch before integrating it into the gate; integrates reviewed task candidates into `gate/<id>` preserving their ancestry; commits and pushes validated slices to `gate/<id>` when authorized; publishes `ready` or `escalation` in the Gate Handoff | bypass task-candidate publication for material mutating work; run the full acceptance suite; wake Prime for routine Worker or slice events; push or merge `default_branch`; force-push; skip hooks; deploy |
 | Worker | performs one bounded task using its assigned specialty; for a mutating task commits and pushes its exact candidate only to its assigned task branch; returns changes or findings, the candidate commit, and validation evidence to Lead | write to any other branch (gate, `default_branch`, another task); integrate, merge, rebase shared history, or force-push; accept its own task; widen scope; guess when the brief is ambiguous; wake Prime |
 
@@ -261,6 +310,29 @@ when Lead executes it. Pure integration mechanics remain Lead integration work.
 Boundary or acceptance changes follow normal parent/Prime escalation; tier
 routing cannot authorize them. Keep the decision and actual validation in
 existing records; no new score, threshold, retry ladder or reporting framework.
+
+### External pushes observed by Prime
+
+During normal startup, fetch, synchronization or pre-delivery inspection,
+compare observed remote branch tips with the previously observed tips or
+known published candidates. When another push advances or rewrites a relevant
+branch beyond this session's expected publication, Prime reports the repository,
+branch, previous and current revisions, a concise change summary and impact on
+current work or acceptance. Lead/Workers surface the observation to Prime
+through existing reporting boundaries; no new notification channel is implied.
+
+A first observation without a reliable previous tip establishes a baseline;
+it does not prove that somebody just pushed. Commit authorship is not proof of
+who pushed: name a person only with reliable provider evidence, otherwise report
+the observed remote update. Report each new observed revision once using
+existing session context or records; avoid repeating unchanged status.
+
+This notification leaves authorized GitHub/local synchronization and its
+automation intact. It grants no merge, overwrite, force-push or deployment
+authority. Inspect the incoming changes before continuing affected integration
+or acceptance under the existing candidate/ancestry rules. Observation happens
+on the next normal repository check; no instant alert, scheduled watcher or
+runtime enforcement is implied.
 
 ### Spawn Boundaries
 
@@ -453,6 +525,51 @@ Conformance:
 - The Prime reviews the gate by its records. A gate with stale or missing
   records is not accepted, regardless of test results.
 
+### Validation scope and evidence reuse
+
+Prime defines the complete required acceptance checks from selected scope,
+changed contracts and risk before execution. Lead selects task checks within
+that requirement. Classify the actual diff and its effects, not filenames
+alone: documentation can change a behavioral contract, and a workflow/script
+change can change execution. Keep explicit owner/project mandatory checks;
+never reclassify a failure or weaken a test to obtain a pass.
+
+- Product code, dependency, configuration, test/fixture or pin changes require
+  their affected checks; a changed pin always runs its owning suite. Unknown
+  impact requires the broader applicable checks.
+- Documentation-only changes require appropriate structure, links, examples,
+  contract consistency and migration-preservation checks. They do not by
+  themselves require unrelated product builds or browser suites.
+- Pure progress, acceptance or delivery records require diff/record hygiene,
+  evidence resolution and candidate/answer/reachability checks. Confirm that
+  no implementation, contract, test or execution setting changed. Every
+  required check still needs valid evidence; record-only is not a blanket pass.
+
+An earlier successful command result may satisfy a required check only when
+the reviewer can verify its command, actual zero exit, tested revision,
+relevant input scope and environment, and resolve its durable evidence. Prove
+that all inputs consumed by that check remain unchanged at the candidate: code,
+tests/fixtures, dependencies/lockfiles, build and test configuration, toolchain,
+relevant runtime settings and external data. Equal Git revisions alone do not
+prove equal environments or mutable external inputs. When the input scope is
+unknown, compare the entire relevant tree and environment or run the check.
+
+Changed inputs, missing or stale evidence, an unverified environment, a failed
+or interrupted prior run, or an explicit requirement for a fresh run prevents
+reuse. Record the earlier tested revision, current candidate, evidence pointer
+and equivalence basis in existing validation records; do not relabel an old run
+as a new execution. A later record-only commit does not invalidate a product
+check by itself, but its own records and delivery ancestry must be checked.
+
+Prime inspects the complete required evidence before acceptance. Where reuse
+is not established, run every required acceptance command sequentially on
+exactly the candidate under resource limits. Acceptance remains separate from
+merge. Native hooks remain mandatory: this policy never authorizes bypassing
+them. A host Git adapter may implement the same scope/equivalence rules under
+its own authorized configuration; if it still mandates a full run, obey it and
+report that limitation. No automatic pass cache, age threshold, reporting file
+or service is required.
+
 Work optimization:
 
 Worker errors concentrate in subtle invariants inside large tasks, not in
@@ -482,9 +599,9 @@ measurement is an optional routing diagnostic.
 - Pin rule: a pinned value is one that a test or contract fixes, such as a
   hash, golden output, snapshot, or schema constant. After any change to a
   pinned value, the suite that holds the pin runs before the slice is pushed.
-  Before reporting a gate ready, the Lead runs the project's fast
-  non-browser suites, sequentially. The full acceptance suite stays with the
-  Prime.
+  Before reporting a gate ready, the Lead supplies the required fast
+  non-browser check evidence under Validation scope and evidence reuse. Fresh
+  runs are sequential. Complete gate acceptance stays with Prime.
 - Measurement: `worker_fix_target: none` disables correction-rate reporting;
   upgrades preserve an enabled 0%-100% target, which also governs reusable
   profiles. [../templates/tasks.tpl.md](../templates/tasks.tpl.md) owns the

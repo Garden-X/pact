@@ -8,7 +8,7 @@ layer: PACT / agent hook
 class: pact_hook
 status: canonical
 generated_from: /ai/pact/templates/hook.tpl.md
-generated_from_version: 1.3
+generated_from_version: 1.4
 content_status: current-data
 updated: 2026-10-16 04:55:33 UTC+00:00
 

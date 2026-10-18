@@ -5,8 +5,8 @@
 name: agents.tpl.md
 type: pact maintenance template
 for: AGENTS.md
-updated: 2026-10-14 18:49:23 UTC+00:00
-version: 3.4
+updated: 2026-10-18 08:51:00 UTC+00:00
+version: 3.5
 
 ## WHAT
 
@@ -50,6 +50,9 @@ Use this template when creating or changing the general rules for all agents.
 
 `AGENTS.md` must:
 
+- direct startup reconciliation of owner-authorized newer templates through
+  WORKFLOW after current state and guard inspection, preserving project data
+  and bindings; a host version-drift notice remains read-only;
 - define the SPARC project-truth and PACT project-maintenance boundary;
 - state that `AGENTS.md` is a binding agent rules file, not optional
   documentation;
@@ -151,7 +154,7 @@ canonical_location: /ai/pact/agents/AGENTS.md
 layer: PACT / agent orientation
 status: canonical
 generated_from: /ai/pact/templates/agents.tpl.md
-generated_from_version: 3.4
+generated_from_version: 3.5
 content_status: current-data
 purpose: Orient agents inside the `/ai` container and keep SPARC project truth separate from PACT project maintenance.
 updated: YYYY-MM-DD HH:mm:ss UTC+00:00
@@ -334,6 +337,14 @@ Optional artifacts may exist only when needed and use their local naming
 pattern.
 
 ## Startup
+
+After reading current state and the enabled guard, follow WORKFLOW Pending
+template updates before relying on an owner-authorized updated contract.
+Available templates and migrated active targets are separate states. Preserve
+project work and bindings; a host startup notice only reports drift. Follow
+WORKFLOW Source update discovery for local/GitHub source comparison and user
+agreement before applying a newly offered update. Prime reports newly observed
+external pushes through WORKFLOW External pushes observed by Prime.
 
 Follow the canonical startup sequence in
 [../PACT-MANIFEST.md](../PACT-MANIFEST.md).

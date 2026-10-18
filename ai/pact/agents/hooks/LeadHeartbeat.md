@@ -8,7 +8,7 @@ layer: PACT / host hook record
 class: host_hook
 status: canonical
 generated_from: /ai/pact/templates/hook.tpl.md
-generated_from_version: 1.3
+generated_from_version: 1.4
 content_status: current-data
 updated: 2026-10-14 19:39:23 UTC+00:00
 

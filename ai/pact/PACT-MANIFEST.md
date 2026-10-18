@@ -4,7 +4,7 @@
 > Version: 2.0
 > Status: canonical package manifest
 > Purpose: describe the installed PACT maintenance environment
-> Updated: 2026-10-14 18:27:22 UTC+00:00
+> Updated: 2026-10-18 02:28:25 UTC+00:00
 
 ## Purpose
 
@@ -411,6 +411,9 @@ Default agent startup:
 10. If work changes accepted project truth, route the change through the
     relevant SPARC live contract in `/ai/docs` using the truth map above.
 11. Read `/ai/pact/context/state/STATE.md`.
+    Read any enabled file guard and inspect owner-authorized pending template
+    updates under WORKFLOW before relying on an updated contract. Preserve
+    current state; a host drift notice never migrates targets automatically.
 12. If state is active, blocked, or handoff, resume, unblock, or hand off the
    active task.
 13. If state is clear, read `/ai/pact/context/state/TASKS.md`.

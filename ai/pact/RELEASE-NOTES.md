@@ -2,7 +2,7 @@
 
 Title: improved workflow and project syncronization
 
-updated: 2026-10-17 20:52:02 UTC+00:00
+updated: 2026-10-18 08:51:00 UTC+00:00
 status: prepared for release
 
 PACT 2.0 makes coordination policy portable through template RULES and full
@@ -67,6 +67,16 @@ EXAMPLE sections, with synchronized installed entry files and migration guidance
   contract. `lead_tier` and `worker_tier_default` are routing hints: Lead,
   Worker, and Watchdog assignments may use Light, Middle, or High (a Watchdog
   also a non-model script) without any change in authority.
+- Startup may compare an explicitly selected local/GitHub committed source;
+  a newly offered upgrade requires user agreement before application. Prime
+  reports newly observed external pushes with revisions and impact, while
+  existing repository synchronization keeps its own authorization.
+- Validation follows actual scope and risk; proven unchanged successful evidence
+  may be reused with its original revision/environment. Mandatory checks, native
+  hooks and Prime acceptance remain authoritative.
+- Approved templates can be distributed ahead of active-target reconciliation
+  at project work-session startup, preserving project state and owner bindings.
+  Startup reminders report drift read-only; they never launch or migrate projects.
 - Capability routing favors bounded, safe and economical parent corrections
   when a child result has a sound foundation. Same-tier clarification addresses
   missing context; promotion needs a concrete capability gap or verified risk.
@@ -111,13 +121,13 @@ existing versions; no unrelated contract change is required for this release.
 
 | Template | Version |
 |---|---|
-| workflow.tpl.md | 3.6 |
-| agents.tpl.md | 3.4 |
+| workflow.tpl.md | 3.7 |
+| agents.tpl.md | 3.5 |
 | sub-agent.tpl.md | 2.3 |
 | state.tpl.md | 1.9 |
 | tasks.tpl.md | 1.12 |
 | logic-draft.tpl.md | 1.6 |
-| hook.tpl.md | 1.3 |
+| hook.tpl.md | 1.4 |
 | keep-alive.tpl.md | 1.1 |
 | ideas.tpl.md | 1.2 |
 | cache-run.tpl.md | 1.1 |

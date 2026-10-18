@@ -7,15 +7,15 @@ canonical_location: /ai/pact/context/state/LOGIC-DRAFT.md
 layer: PACT / context / state
 status: selected
 owner_role: Prime
-gate_id: PACT-Delivery
+gate_id: PACT-Maintenance
 generated_from: /ai/pact/templates/logic-draft.tpl.md
 generated_from_version: 1.6
 content_status: current-state
-updated: 2026-10-17 20:52:02 UTC+00:00
+updated: 2026-10-18 08:56:45 UTC+00:00
 
 ## Selected Logic
 
-Continue the owner-authorized installed-project delivery under preserved task PACT-20261010-009. Source routing is accepted and delivered at cc84ba2. Preserve every project's active work, bindings, task history and native gates; finish remote main delivery where checks pass and retain exact failures otherwise. Tarot stays local. No product implementation, new runtime, ZIP refresh, tag or deployment.
+Owner approved scope/risk-based validation and proven evidence reuse, with a read-only startup reminder for deferred template activation. Update PACT itself and distribute templates only. Preserve mandatory checks, Prime acceptance, explicit owner bindings, active project work and existing authority boundaries. Existing global Git gates are not changed by this protocol pass. Check owner-selected committed local/GitHub sources, offer upgrades for user agreement, and have Prime report newly observed external pushes during normal repository inspection. Preserve existing sync automation. Acceptance requires source consistency, negative reuse/migration cases and verified read-only reminder behavior. The owner authorizes source merge; installed projects receive templates only.
 
 ## Source / Evidence
 
@@ -170,3 +170,5 @@ None.
 ## History
 
 Previous maintenance draft superseded by these explicit owner corrections.
+
+Owner clarification: add bounded committed-source update discovery for local/GitHub repositories and user agreement before a newly offered update. Prime reports newly observed external pushes (not merely its own pushes); preserve existing sync automation and never infer pusher identity from commit authorship. Merge of this reviewed PACT source is explicitly authorized.
