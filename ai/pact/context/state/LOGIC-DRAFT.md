@@ -7,7 +7,7 @@ canonical_location: /ai/pact/context/state/LOGIC-DRAFT.md
 layer: PACT / context / state
 status: selected
 owner_role: Prime
-gate_id: PACT-Routing
+gate_id: PACT-Delivery
 generated_from: /ai/pact/templates/logic-draft.tpl.md
 generated_from_version: 1.6
 content_status: current-state
@@ -15,7 +15,7 @@ updated: 2026-10-17 20:52:02 UTC+00:00
 
 ## Selected Logic
 
-Owner-requested source correction: explicit evidence-based residual-work routing, workflow 3.6 and sub-agent 2.3, their complete examples/generated target and migration/release guidance. Acceptance uses the existing nine source validators, manual routing review and native Git hygiene. Installed-project delivery is preserved as task 009 in Next; its success is not implied by source acceptance. Prior release requirements and decisions below remain history/context; ZIP refresh was explicitly dropped on October 14.
+Continue the owner-authorized installed-project delivery under preserved task PACT-20261010-009. Source routing is accepted and delivered at cc84ba2. Preserve every project's active work, bindings, task history and native gates; finish remote main delivery where checks pass and retain exact failures otherwise. Tarot stays local. No product implementation, new runtime, ZIP refresh, tag or deployment.
 
 ## Source / Evidence
 
@@ -165,7 +165,7 @@ decision dropping ZIP refresh. Do not start U5 implementation in this rollout.
 
 ## Next
 
-Resume remaining installed-project delivery in TASKS PACT-20261010-009, preserving its exact brief and recorded blockers. Forge recovery and all local template applications are separately evidenced; no product gate is activated here.
+None.
 
 ## History
 
