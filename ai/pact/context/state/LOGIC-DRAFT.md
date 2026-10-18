@@ -11,7 +11,7 @@ gate_id: PACT-2.0
 generated_from: /ai/pact/templates/logic-draft.tpl.md
 generated_from_version: 1.6
 content_status: current-state
-updated: 2026-10-14 19:55:32 UTC+00:00
+updated: 2026-10-17 20:52:02 UTC+00:00
 
 ## Selected Logic
 
@@ -148,6 +148,17 @@ entries carry the decision (logic-draft 1.6); delivery is derived: a gate
 closes only when the answer commit is reachable from the default branch;
 PrimeWatch and the Prime heartbeat recover an unreachable `accepted` answer
 once per key. Owner simplification: no completion record, trailer only.
+
+## Residual Work Routing And Forge Recovery
+
+Owner selects explicit evidence-based child-tier routing: prefer bounded safe
+parent correction when the foundation is sound, clarify context at the same
+adequate tier, and raise capability only for a demonstrated gap or verified
+complexity/risk. No numeric80% threshold or acceptance relaxation. Finish the
+delivered Forge U4 lifecycle records, refresh its active PACT while preserving
+local bindings/contracts, and distribute current templates to installed
+projects with preservation evidence. Preserve Tarot local-only and the owner
+decision dropping ZIP refresh. Do not start U5 implementation in this rollout.
 
 ## Next
 

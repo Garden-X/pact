@@ -7,10 +7,10 @@ canonical_location: /ai/pact/workflow/WORKFLOW.md
 layer: PACT / workflow
 status: canonical
 generated_from: /ai/pact/templates/workflow.tpl.md
-generated_from_version: 3.5
+generated_from_version: 3.6
 content_status: current-data
 purpose: Define how agents maintain project work without bypassing SPARC project truth.
-updated: 2026-10-16 05:23:02 UTC+00:00
+updated: 2026-10-17 20:52:02 UTC+00:00
 
 ## Lifecycle
 
@@ -227,6 +227,40 @@ reports the question. Repeated material corrections can indicate an unclear
 brief or inadequate routing: the Lead sharpens the brief or assignment and
 records actual corrections and validation in the task outcome. Optional
 correction-rate reporting follows the Measurement rule below.
+
+### Correction And Capability Routing
+
+The parent reviews the returned work against the original brief and required
+checks, then chooses how to finish the residual work. A mostly correct result
+does not automatically require a higher-tier child. An approximate "80% good"
+description is not a scoring rule, capability threshold or acceptance standard.
+
+- Prefer a bounded local correction when the foundation is sound, the remaining
+  changes are understood and localized, their risk is controlled, and the
+  parent can validate them within its authority and boundaries. Compare the
+  total expected effort of finishing and checking with rebriefing, dispatch,
+  review and integration; do not discard useful work simply to rerun it with a
+  stronger model. All original acceptance requirements still must pass.
+- Clarify or retry at the same adequate tier when missing context, an ambiguous
+  brief or an environment/access failure explains the problem. A failed check,
+  retry count, correction-rate target or fraction completed alone is not proof
+  of insufficient capability. Do not loop retries without an identified fix.
+- Raise the child tier when review identifies a concrete capability gap and
+  the residual work cannot be safely and economically bounded for local
+  correction, or when the assignment's verified complexity/risk requires
+  stronger reasoning. Record the remaining problem, supporting evidence and
+  revised binding in the existing task/STATE; preserve useful results and
+  owner model constraints. Higher capability adds no scope or authority.
+
+Here parent means the authority responsible for the child's work, not merely
+the native harness parent. It acts only within its role: Lead may execute a
+correction, while Prime routes product execution through Lead rather than
+writing product code. A material behavior, code or design correction is a
+bounded task with its own published candidate under Task candidates, including
+when Lead executes it. Pure integration mechanics remain Lead integration work.
+Boundary or acceptance changes follow normal parent/Prime escalation; tier
+routing cannot authorize them. Keep the decision and actual validation in
+existing records; no new score, threshold, retry ladder or reporting framework.
 
 ### Spawn Boundaries
 

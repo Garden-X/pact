@@ -5,8 +5,8 @@
 name: sub-agent.tpl.md
 type: pact maintenance template
 for: reusable sub-agent role files
-updated: 2026-10-14 18:49:23 UTC+00:00
-version: 2.2
+updated: 2026-10-17 20:52:02 UTC+00:00
+version: 2.3
 
 ## WHAT
 
@@ -60,6 +60,13 @@ evidence. Workers make those checks pass without weakening or changing them;
 report doubtful tests to Lead. Documentation and reversible low-impact work
 use proportionate checks. Parallel assignments obey WORKFLOW resource rules.
 
+Review residual work under WORKFLOW Correction And Capability Routing: prefer
+a safe, bounded and economical parent correction; clarify missing context at
+the same adequate tier; raise capability only for an evidenced gap or verified
+complexity/risk. A mostly correct result or one failure never automatically
+promotes a child. Preserve acceptance and boundaries; Prime does not execute
+product corrections. Material Lead corrections publish their own task candidate.
+
 Every actual spawn requires the parent-issued boundary contract and explicit
 role, parent, task and model-tier context defined by WORKFLOW Spawn Boundaries.
 A reusable profile is not a dispatch contract. A child inherits the effective
@@ -99,7 +106,7 @@ effort: 75%
 model_binding: <owner-approved local binding>
 status: draft
 generated_from: /ai/pact/templates/sub-agent.tpl.md
-generated_from_version: 2.2
+generated_from_version: 2.3
 updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 
 ## PURPOSE
@@ -133,6 +140,11 @@ approved changes. Missing limits or required expansion go to the parent.
 - relevant SPARC contracts, existing implementation/evidence, and Worker results
 
 ## VALIDATION
+
+Assess returned work before changing tier. Finish a localized, understood
+remainder when safe and economical within Lead authority; otherwise clarify
+or route the evidenced capability gap. Keep the original acceptance checks,
+and publish any material correction as its own task candidate.
 
 Give each Worker a bounded brief, reservations, applicable rules, and acceptance
 checks. Supply failing tests for changed material code invariants; use inspection
@@ -175,7 +187,7 @@ effort: 75%
 model_binding: <Lead-selected owner-approved local binding>
 status: draft
 generated_from: /ai/pact/templates/sub-agent.tpl.md
-generated_from_version: 2.2
+generated_from_version: 2.3
 updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 
 ## PURPOSE
@@ -216,6 +228,8 @@ Lead. Run builds/tests only when assigned and resource reservations permit.
 ## OUTPUTS
 
 The bounded design proposal or reserved diff, inspected evidence, and open issues.
+Identify any uncertain remainder and its concrete blockers; do not self-promote
+or request a higher tier merely because the result needs a local correction.
 
 ## HANDOFF
 

@@ -2,7 +2,7 @@
 
 > For: PACT 2.0
 > Purpose: install or verify the PACT project-maintenance layer
-> Updated: 2026-10-15 01:23:13 UTC+00:00
+> Updated: 2026-10-17 20:52:02 UTC+00:00
 
 ## Purpose
 
@@ -172,6 +172,15 @@ updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 Refresh `updated` when meaningful Markdown content changes. Do not use local
 timezone names, IANA timezone names, city names, or other location-bearing
 timezone labels.
+
+## Capability-routing migration
+
+Refresh WORKFLOW and reusable sub-agent profiles together. Preserve owner model
+bindings and enabled measurement targets. A mostly correct result can be
+completed by the responsible parent within its role; it does not imply tier
+promotion. Review residual scope, risk, evidence and total correction cost.
+Clarify context before blaming capability; material parent corrections follow
+the existing task-candidate path. No completion-percentage threshold is added.
 
 ## Spawn-boundary migration
 
