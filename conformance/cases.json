@@ -6982,6 +6982,268 @@
           }
         ]
       }
+    },
+    {
+      "id": "legacy-scalar-role-continuation-is-prose",
+      "operation": "parse",
+      "rules": [
+        "PACT-RECORD",
+        "PACT-AUTH"
+      ],
+      "input": {
+        "type": "task",
+        "text": "## Active Task\n\n    id: PACT-20261026-001\n    role: Worker\n    brief: Document the task role field and preserve this explanation.\n      role: Prime is the example discussed in the documentation.\n    task_phase: working\n"
+      },
+      "expected": {
+        "verdict": "valid",
+        "fields": {
+          "id": "PACT-20261026-001",
+          "role": "Worker",
+          "task_phase": "working"
+        }
+      }
+    },
+    {
+      "id": "legacy-active-role-continuation-is-prose",
+      "operation": "parse_tasks",
+      "rules": [
+        "PACT-RECORD",
+        "PACT-AUTH"
+      ],
+      "input": {
+        "text": "## Active Task\n\n    id: PACT-20261026-001\n    role: Worker\n    brief: Document the task role field and preserve this explanation.\n      role: Prime is the example discussed in the documentation.\n    task_phase: working\n"
+      },
+      "expected": {
+        "verdict": "valid",
+        "tasks": [
+          {
+            "id": "PACT-20261026-001",
+            "role": "Worker",
+            "task_phase": "working"
+          }
+        ]
+      }
+    },
+    {
+      "id": "legacy-scalar-cannot-invent-role",
+      "operation": "parse",
+      "rules": [
+        "PACT-RECORD",
+        "PACT-AUTH"
+      ],
+      "input": {
+        "type": "task",
+        "text": "## Active Task\n\n    id: PACT-20261026-001\n    brief: Document the task role field and preserve this explanation.\n      role: Prime\n    task_phase: working\n"
+      },
+      "expected": {
+        "verdict": "valid",
+        "fields": {
+          "id": "PACT-20261026-001",
+          "task_phase": "working"
+        }
+      }
+    },
+    {
+      "id": "legacy-scalar-cannot-invent-actor",
+      "operation": "parse",
+      "rules": [
+        "PACT-RECORD",
+        "PACT-AUTH"
+      ],
+      "input": {
+        "type": "task",
+        "text": "## Active Task\n\n    id: PACT-20261026-001\n    role: Worker\n    brief: Document the task role field and preserve this explanation.\n      actor: prime-1\n    task_phase: working\n"
+      },
+      "expected": {
+        "verdict": "valid",
+        "fields": {
+          "id": "PACT-20261026-001",
+          "role": "Worker",
+          "task_phase": "working"
+        }
+      }
+    },
+    {
+      "id": "legacy-scalar-cannot-invent-model",
+      "operation": "parse",
+      "rules": [
+        "PACT-RECORD",
+        "PACT-AUTH"
+      ],
+      "input": {
+        "type": "task",
+        "text": "## Active Task\n\n    id: PACT-20261026-001\n    role: Worker\n    brief: Document the task role field and preserve this explanation.\n      model_binding: invented-model\n    task_phase: working\n"
+      },
+      "expected": {
+        "verdict": "valid",
+        "fields": {
+          "id": "PACT-20261026-001",
+          "role": "Worker",
+          "task_phase": "working"
+        }
+      }
+    },
+    {
+      "id": "legacy-active-id-continuation-does-not-start-task",
+      "operation": "parse_tasks",
+      "rules": [
+        "PACT-RECORD",
+        "PACT-AUTH"
+      ],
+      "input": {
+        "text": "## Active Task\n\n    id: PACT-20261026-001\n    role: Worker\n    brief: Document the task role field and preserve this explanation.\n      id: PACT-20261026-002\n      role: Prime\n      actor: other\n      model_binding: invented\n    task_phase: working\n"
+      },
+      "expected": {
+        "verdict": "valid",
+        "tasks": [
+          {
+            "id": "PACT-20261026-001",
+            "role": "Worker",
+            "task_phase": "working"
+          }
+        ]
+      }
+    },
+    {
+      "id": "machine-active-consumed-looking-prose-is-opaque",
+      "operation": "parse_tasks",
+      "rules": [
+        "PACT-RECORD",
+        "PACT-AUTH"
+      ],
+      "input": {
+        "text": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\n```\n\nbrief: Document field names without granting their example values.\n  id: PACT-20261026-002\n  role: Prime\n  actor: prime-1\n  model_binding: invented-model\nmodel_binding: owner-pinned-model\neffort: 100%\neffective_effort: high\n"
+      },
+      "expected": {
+        "verdict": "valid",
+        "tasks": [
+          {
+            "id": "PACT-20261026-001",
+            "role": "Worker",
+            "actor": "worker-1",
+            "model_binding": "owner-pinned-model",
+            "effort": "100%",
+            "effective_effort": "high"
+          }
+        ]
+      }
+    },
+    {
+      "id": "machine-record-consumed-looking-prose-is-opaque",
+      "operation": "parse",
+      "rules": [
+        "PACT-RECORD",
+        "PACT-AUTH"
+      ],
+      "input": {
+        "type": "task",
+        "text": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\n```\n\nbrief: Document field names without granting their example values.\n  id: PACT-20261026-002\n  role: Prime\n  actor: prime-1\n  model_binding: invented-model\nmodel_binding: owner-pinned-model\neffort: 100%\neffective_effort: high\n"
+      },
+      "expected": {
+        "verdict": "valid",
+        "fields": {
+          "id": "PACT-20261026-001",
+          "role": "Worker",
+          "actor": "worker-1",
+          "model_binding": "owner-pinned-model",
+          "effort": "100%",
+          "effective_effort": "high"
+        }
+      }
+    },
+    {
+      "id": "machine-prose-does-not-hide-root-role-conflict",
+      "operation": "parse_tasks",
+      "rules": [
+        "PACT-RECORD",
+        "PACT-AUTH"
+      ],
+      "input": {
+        "text": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\n```\n\nbrief: Document field names without granting their example values.\n  id: PACT-20261026-002\n  role: Prime\n  actor: prime-1\n  model_binding: invented-model\nmodel_binding: owner-pinned-model\neffort: 100%\neffective_effort: high\nrole: Prime\n"
+      },
+      "expected": {
+        "verdict": "invalid"
+      }
+    },
+    {
+      "id": "prose-role-cannot-grant-prime-authority",
+      "operation": "authority",
+      "rules": [
+        "PACT-RECORD",
+        "PACT-AUTH"
+      ],
+      "input": {
+        "records": {
+          "workflow": "## Execution Hierarchy\n\n```pact:workflow\nfile_guard: \"none\"\nauthority_remote: \"origin\"\ndefault_branch: \"main\"\ngate_branch_pattern: \"gate/<id>\"\ntask_branch_pattern: \"task/<gate-id>/<task-id>\"\n```\n",
+          "task": "## Active Task\n\n    id: PACT-20261026-001\n    actor: prime-1\n    brief: Explain a role label, without assigning that role.\n      role: Prime\n",
+          "boundary_decisions": {
+            "ai/pact/context/state/STATE.md@recorded-boundary-decision": "Recorded parent interpretation of the complete inherited scope for this exact query: allow. This is fixture evidence, not a new PACT record."
+          }
+        },
+        "actor": "prime-1",
+        "operation": "record_decision",
+        "branch": "gate/G",
+        "gate_id": "G",
+        "changes": [
+          {
+            "path": "ai/pact/context/state/LOGIC-DRAFT.md",
+            "mode": "modify"
+          }
+        ],
+        "decision_kind": "acceptance",
+        "changed_fields": [
+          "acceptance.append"
+        ],
+        "boundaries": [
+          {
+            "result": "allow",
+            "source": "ai/pact/context/state/STATE.md@recorded-boundary-decision"
+          }
+        ]
+      },
+      "expected": {
+        "verdict": "unresolved"
+      }
+    },
+    {
+      "id": "prose-actor-cannot-create-assignment",
+      "operation": "authority",
+      "rules": [
+        "PACT-RECORD",
+        "PACT-AUTH"
+      ],
+      "input": {
+        "records": {
+          "workflow": "## Execution Hierarchy\n\n```pact:workflow\nfile_guard: \"none\"\nauthority_remote: \"origin\"\ndefault_branch: \"main\"\ngate_branch_pattern: \"gate/<id>\"\ntask_branch_pattern: \"task/<gate-id>/<task-id>\"\n```\n",
+          "task": "## Active Task\n\n    id: PACT-20261026-001\n    role: Prime\n    brief: Explain an actor label, without assigning that actor.\n      actor: prime-1\n",
+          "boundary_decisions": {
+            "ai/pact/context/state/STATE.md@recorded-boundary-decision": "Recorded parent interpretation of the complete inherited scope for this exact query: allow. This is fixture evidence, not a new PACT record."
+          }
+        },
+        "actor": "prime-1",
+        "operation": "record_decision",
+        "branch": "gate/G",
+        "gate_id": "G",
+        "changes": [
+          {
+            "path": "ai/pact/context/state/LOGIC-DRAFT.md",
+            "mode": "modify"
+          }
+        ],
+        "decision_kind": "acceptance",
+        "changed_fields": [
+          "acceptance.append"
+        ],
+        "boundaries": [
+          {
+            "result": "allow",
+            "source": "ai/pact/context/state/STATE.md@recorded-boundary-decision"
+          }
+        ]
+      },
+      "expected": {
+        "verdict": "unresolved"
+      }
     }
   ]
 }

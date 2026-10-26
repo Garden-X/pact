@@ -1,6 +1,6 @@
 # PACT semantic conformance
 
-updated: 2026-10-26 07:37:26 UTC+00:00
+updated: 2026-10-26 17:15:44 UTC+00:00
 
 This tracked corpus tests PACT decisions. It requires no PACT runtime, service,
 database, agent harness, operating-system API or shared implementation code.
@@ -116,6 +116,9 @@ It reads the complete original entry, including task-local typed model/native
 fields outside the machine fence. Parallel entries do not share those fields;
 cross-surface duplicates and unclosed task fences are invalid. Fenced examples
 are ignored when reading both task fields and File Guard table rows.
+Indented continuations of scalar prose remain opaque, including consumed-looking
+role, actor, model or id labels. Task segmentation uses the same hierarchy-aware
+field reading, so documentation examples cannot create an assignment or task.
 Legacy active objects split on same-root-indentation `id:` lines. Duplicate IDs,
 consumed keys, contradictory formats, quoted headings and unknown essential
 syntax never silently overwrite or acquire permission. Historical headings and

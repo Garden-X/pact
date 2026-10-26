@@ -125,6 +125,19 @@ function legacyScalar(value,key) {
   if(value.startsWith('"'))return strictJSON(value);
   return value;
 }
+function legacyRootFields(lines) {
+  const roots=[];let rootIndent=null;
+  for(let index=0;index<lines.length;index++){
+    const match=/^( *)([a-z][a-z0-9_]*):(?: (.*))?$/u.exec(lines[index]);
+    if(!match)continue;
+    const indent=match[1].length;
+    // A deeper label remains part of the preceding scalar continuation or
+    // mapping. It is opaque prose unless that owning field has a typed reader.
+    // A later dedented root must not discard earlier visually indented roots.
+    if(rootIndent===null||indent<=rootIndent){rootIndent=indent;roots.push({line:lines[index],index,m:match});}
+  }
+  return roots;
+}
 function scanDocument(text) {
   const lines=clean(text).split('\n'),headings=[],blocks=[],visible=[];let open=null,current=null;
   for(let i=0;i<lines.length;i++){
@@ -156,19 +169,8 @@ export function parseRecord(text,type) {
     if(blocks.length===1){for(const line of blocks[0].lines){if(!line.trim())continue;const match=/^([a-z][a-z0-9_]*): (.+)$/u.exec(line);if(!match)throw new Error('machine line');add(match[1],match[1]==='seq'?exactSequence(match[2]):strictJSON(match[2]));}}
     let legacy=doc.visible.filter(v=>v.heading?.index===owner.index&&!/^## /u.test(v.line)).map(v=>v.line);
     if(type==='workflow')for(const block of doc.blocks.filter(b=>b.heading?.index===owner.index&&b.info==='txt'))legacy.push(...block.lines);
-    const candidates=legacy.map((line,index)=>({line,index,m:/^( *)([a-z][a-z0-9_]*):(?: (.*))?$/u.exec(line)})).filter(v=>v.m);
-    if(candidates.length){
-      // Top-level labeled fields may be visually indented. Nesting is created
-      // by an actual empty mapping label, not by another scalar's indentation.
-      // This retains typed fields and still rejects their cross-surface or
-      // mixed-indent duplicates without reading nested prose as assignment data.
-      const parents=[],roots=[];
-      for(const candidate of candidates){
-        const indent=candidate.m[1].length;
-        while(parents.length&&indent<=parents.at(-1))parents.pop();
-        if(!parents.length)roots.push(candidate);
-        if(!candidate.m[3])parents.push(indent);
-      }
+    const roots=legacyRootFields(legacy);
+    if(roots.length){
       for(let n=0;n<roots.length;n++){
         const current=roots[n],key=current.m[2],scalar=current.m[3]||'';if(!consumed.has(key))continue;
         if(scalar){add(key,legacyScalar(scalar,key));continue;}
@@ -198,11 +200,10 @@ export function parseTasks(text) {
     if(doc.unclosed?.heading?.index===owner.index)return {verdict:'invalid'};
     const end=doc.headings.find(h=>h.index>owner.index)?.index??doc.lines.length;
     const lines=doc.visible.filter(v=>v.heading?.index===owner.index&&!/^## /u.test(v.line)).map(v=>v.line);
-    const idLines=lines.map((line,index)=>({index,match:/^( *)id: (.+)$/u.exec(line)})).filter(v=>v.match);
-    if(blocks.length&&idLines.length)return {verdict:'invalid'};
+    const idLines=legacyRootFields(lines).filter(field=>field.m[2]==='id').map(field=>({index:field.index,match:field.m}));
     let records=[];
     if(blocks.length)records=blocks.map((block,index)=>parseRecord('## Active Task\n'+doc.lines.slice(index?block.start:owner.index+1,blocks[index+1]?.start??end).join('\n'),'task'));
-    else if(idLines.length){const indent=Math.min(...idLines.map(v=>v.match[1].length));const starts=idLines.filter(v=>v.match[1].length===indent);records=starts.map((start,n)=>parseRecord('## Active Task\n'+lines.slice(start.index,starts[n+1]?.index).join('\n'),'task'));}
+    else if(idLines.length)records=idLines.map((start,n)=>parseRecord('## Active Task\n'+lines.slice(start.index,idLines[n+1]?.index).join('\n'),'task'));
     else if(lines.some(line=>line.trim()==='None.'))return {verdict:'valid',tasks:[]};else return {verdict:'unresolved'};
     if(records.some(r=>r.verdict!=='valid'))return {verdict:records.some(r=>r.verdict==='invalid')?'invalid':'unresolved'};
     const tasks=records.map(r=>r.fields);if(tasks.some(t=>!t.id)||new Set(tasks.map(t=>t.id)).size!==tasks.length)return {verdict:'invalid'};

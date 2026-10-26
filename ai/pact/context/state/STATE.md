@@ -10,7 +10,7 @@ active_task: PACT-20261026-006
 generated_from: /ai/pact/templates/state.tpl.md
 generated_from_version: 1.10
 content_status: current-state
-updated: 2026-10-26 07:37:26 UTC+00:00
+updated: 2026-10-26 17:15:44 UTC+00:00
 
 ## Active Task
 
@@ -25,7 +25,7 @@ requires: ["git","toolchain:node"]
 reservations: [{"path":"conformance/","mode":"modify"},{"path":"conformance/","mode":"create"}]
 task_base: "09ad97ef077e8774a7ad8e814f4d3861cb5017de"
 task_branch: "task/PACT-Semantics/PACT-20261026-006"
-task_candidate: "none"
+task_candidate: "b1676f179f7cf184fd198c6eb952ee68935def79"
 trace: "LOGIC-DRAFT.md / Owner correction and delivery authorization"
 source: {"draft":"LOGIC-DRAFT.md","tasks":"TASKS.md","review":"a19136c171cd67bc9cf1422a0080d2234cb4a0f6"}
 ```
@@ -49,7 +49,10 @@ validation: Affected self-test/corpus/source checks; Prime owns full fresh accep
 retry: identified corrections only
 validation_result: Fresh affected checks actual0: self-test21, corpus239/239, source211checks165links. Original9reviewcase input/expected deep-equality proof actual0. SystemNode24.18.0; resource gate0 battery100% freeRAM11.22GiB; sequential owned lock. No full acceptance claimed; Prime runs it on exact corrected candidate.
 contracts_verified: Existing PACT semantics only, no template/spec version or product/SPARC truth change; ai/sparc/docs/raw placeholders unchanged.
-handoff: reviewed correction validated, exact task candidate publication next
+inspector_residual: Supported indented scalar brief continuations remain opaque, including consumed-looking role/actor/model/id labels. Same active006, replacement descendant candidate required before integration; no spec change.
+resume_baseline: Eleven supported-prose regressions added before correction; reference actual1,250cases240pass10fail. Original239 case inputs/expected values preserved exactly (deep-equality proof actual0), including all original nine review cases.
+resume_validation: Fresh affected self-test21, corpus250/250 and source211checks165links each actual0 on unchanged systemNode24.18/Git2.46.2; code/prose uses shared hierarchy-aware reader and cannot infer role/actor/model/id from scalar continuations. Old own lock released after inspected foreground exits; new owned lock coordinates sequential checks.
+handoff: Same active006, reviewed replacement descendant publication next; old b1676f1 is not the corrected integration candidate.
 
 Delivery progress: Source/extracted validators each exited 0 (119 checks/185 links), source/extracted reference scenarios each exited 0 (41 checks), archive audit exited 0 (16 checks/47 files). Current ZIP SHA256 ddb7072d23ab57ecb9d126d41ddbef47978c65d73c81376e0c564936d73b8e80. Nine guarded applications exited 0; wrong-plan-hash negatives each exited 1 before mutation, after/preserved hashes checked. Six isolated publication copies, Tarot local copy and two fixtures updated; primary working copies and three duplicate copies pending. Native project acceptance checks, commits, pushes and merges pending. No service/SPARC truth change; no independent final helper review claimed.
 
