@@ -1,7 +1,7 @@
 # Protocol for Agent Coordination and Tasks
 
 > Version: 2.0
-> Updated: 2026-10-15 01:23:13 UTC+00:00
+> Updated: 2026-10-26 01:31:28 UTC+00:00
 > Status: release prepared
 > Purpose: project maintenance for AI-assisted development
 > Release title: improved workflow and project syncronization
@@ -508,7 +508,7 @@ an accepted gate is closed exactly when its answer commit is reachable from
 and wakes Prime once per handoff or incident key. Capability is selected for
 the assignment and authority by the role/function contract; tier fields are
 routing hints, so Lead, Worker, and Watchdog work may use any adequate tier.
-An optional `requires` names an assignment's minimum runtime capabilities; it
+An optional `requires` names an assignment's minimum environment prerequisites; it
 is separate from tiers and authority and grants nothing. Host adapters may
 enforce the `boundary_contract` natively, narrowing but never widening PACT
 authority. Session and evidence references may be opaque host or remote
@@ -516,7 +516,200 @@ pointers. PACT defines no transport, authentication, sandbox, artifact, or
 provider schema; those stay with adapters and harnesses.
 
 
+## Runtime Independence
+
+PACT remains usable by humans and agents with Markdown files and Git alone.
+An external implementation may enforce these rules, but no runtime, database,
+service, provider, operating system or model harness is required by PACT.
+PACT may govern development of such a project; that project's architecture
+is its project truth, never PACT specification truth.
+
+## Mechanical Interpretation
+
+These rules make existing records comparable; they do not replace prose with
+a database. Stable decision references used by the tracked
+[source conformance corpus](https://github.com/Garden-X/pact/tree/main/conformance) identify the rules below and
+WORKFLOW's Effective PACT authority. The corpus is a specification-maintenance
+asset, not a required tool for manually following PACT.
+
+### Record grammar (PACT-RECORD)
+
+Mechanical consumers read an identified committed revision and report that
+revision with their verdict. Uncommitted working notes cannot silently replace
+its authority. An explicitly evidenced current owner instruction may authorize
+work under the authority order; preserve that instruction in the responsible
+record before publishing a decision that depends on it. Git author names alone
+are not proof of a role or owner instruction.
+
+META remains unique `key: value` scalar lines under the exact `## META`
+heading. Consumed keys must occur once; duplicate consumed keys are invalid,
+even with identical values. Heading-like text inside code fences is not a
+section. Historical headings do not replace the exact current section.
+
+New mechanical blocks use a fenced info string `pact:<type>`; each nonblank
+line is `key: <single-line JSON value>` using JSON string/number/boolean/null,
+array or object syntax. Keys match `[a-z][a-z0-9_]*`; duplicate keys at any
+consumed object level are invalid. JSON numbers consumed as integers must be
+exact integers in the field's range; no coercion of strings to booleans/numbers.
+Input is UTF-8; CRLF and LF are equivalent. No YAML tags, anchors, aliases,
+implicit values or multiple documents exist. Unknown fields remain preserved
+but confer no permissions. More than one block for a singleton section is
+invalid. A task block is scoped to its task entry, not the entire file.
+
+Only these mechanical fields require structure, when their consuming rule is
+used; absent optional fields remain absent, not invented defaults:
+
+| Location / type | Consumed fields | Rule |
+|---|---|---|
+| META | status, active_task, generated_from, generated_from_version; gate_id in selected draft | state combinations, mutex, template reconciliation, selected gate |
+| workflow declaration / `pact:workflow` | default_branch, gate_branch_pattern, task_branch_pattern, authority_remote, file_guard | role/ref/path checks |
+| `pact:task` | id, role, actor, parent, lead, task_phase, ready, requires, reservations, task_base, task_branch, task_candidate, trace/source pointers | dispatch, transfer, reservations, candidate ancestry |
+| `pact:gate-handoff` | gate_id, seq, signal, candidate, branch, lead, recorded_at | current publication, immutability, acceptance |
+| `pact:acceptance` | decision, candidate, evidence | answer and delivery checks |
+| FILE-GUARD META / Entries | mode, path pattern, operations | guard enforcement |
+
+Model/effort bindings, resource limits and hook cadences retain their existing
+typed workflow contracts; this table does not turn them into authority grants.
+Briefs, all six boundary_contract fields, design decisions, validation and
+handoff explanations, shapes, ideas, souls and context remain prose. A
+mechanical reader may require their presence or compare transfer text, but
+must not invent a natural-language permission parser. If a verdict depends on
+unresolved prose, report `unresolved` with the missing interpretation; obtain
+and preserve the responsible authority's resolution before the affected action.
+
+Compatibility: legacy META, declared `txt` workflow fields, indented task and
+handoff `key: value` mappings and labeled acceptance entries remain readable.
+Read only the exact owning section/entry; indentation identifies nesting and
+lists. In a legacy Active Task section, each same-root-indentation `id:` starts
+a separate task object; task IDs must be unique. Repeated consumed keys within
+one object remain invalid. Bare booleans are only `true`/`false`, integer fields use decimal digits,
+`none` denotes absent coordinates; legacy `null` is accepted for optional
+source pointers, never as affirmative validation/authority evidence. Scalar
+prose stays opaque text.
+Duplicate consumed keys, ambiguous nesting, contradictory blocks or an unknown
+construct affecting a consumed field must not be guessed: invalid syntax is
+`invalid`; unsupported or insufficient interpretation is `unresolved`.
+An unknown template version makes only decisions dependent on its unknown
+contract unresolved; it does not erase established role/owner authority.
+Never rewrite a published handoff or acceptance decision to modernize syntax.
+
+### Repository paths and operations (PACT-PATH)
+
+A repository path uses `/` separators, one optional leading `/` meaning the
+repository root, and nonempty segments. Comparison is case-sensitive Unicode
+scalar comparison with no case folding or Unicode normalization. Backslashes,
+`.`/`..` segments, drive/URI prefixes, NUL and empty interior segments are
+invalid. A literal filename containing pattern metacharacters needs an exact
+path supplied as an operation target; it cannot be represented by a policy
+pattern that would reinterpret those characters.
+
+Policy patterns are root-anchored. `*` matches zero or more characters within
+one segment; `**` is a whole segment matching zero or more segments. No `?`,
+bracket, brace, escape or negation syntax exists; those metacharacters are
+invalid in policy patterns, rather than silently interpreted as literals.
+A trailing `/` means `/**`;
+a literal path known to be a directory in the selected revision also means
+that subtree. Thus `src/**`, `/src/**` and `src/` have the same scope.
+A nonexistent literal `src` remains an exact file path: use `src/` to reserve
+a future directory. Matching applies to potential future paths, not only files
+currently present. Two reservations overlap when their pattern languages have
+any common permitted path, including future creates. Read-only reservations
+do not claim writes; active write reservations must be pairwise disjoint.
+
+Reservation operations are `read`, `modify`, `create`, `delete`, one operation
+per entry; entries with the same path and different operations may be combined
+as a set. `modify` requires an existing path, `create` an absent path, and
+`delete` removes an existing path. Reads do not imply writes; `modify` does not
+imply creation/deletion. Legacy `write` means `modify` plus `create`, never
+`delete`; a bare legacy path with no operation is unresolved until reviewed.
+Renames/moves consume `delete` on the source and `create` on an absent
+destination or `modify` on an existing destination, regardless of Git's rename
+similarity detection. A symlink path does not grant authority to its target.
+Git metadata/ref operations are checked as ref operations, never authorized
+through a repository path reservation.
+
+For FILE-GUARD, union operations from all matching entries, then apply the
+guard mode and inherited restrictions. `aggregator` annotates a thin entry
+point; it grants no mutation operation. In strict mode unlisted paths are
+read-only, but explicit inherited read restrictions still apply. A guard
+cannot enlarge role/task authority. A scoped owner override needs explicit
+evidence of the affected guard restriction and operation; ordinary task
+approval does not disable the guard or transfer a role.
+
+### Git coordinates and remote evidence (PACT-GIT)
+
+`default_branch` and expanded gate/task branches name branch names under
+`refs/heads/`, not tags, revision expressions or remote-tracking names. They
+must be valid Git branch names; the configured patterns expand their declared
+gate/task placeholders without guessing. Candidates and task_base identify
+full immutable Git commit object IDs in that repository's object format, not
+moving refs or abbreviated hashes. The relevant commit must be available for
+ancestry/path checks; unavailable objects make the check unresolved.
+
+`authority_remote` identifies the project's configured Git remote (default
+`origin`, explicitly overridable; legacy omission uses that declared default).
+An absent/ambiguous configured remote is unresolved.
+The required remote coordinate is `(remote, refs/heads/<expanded-branch>)`.
+A local `refs/remotes/...` is an observation/cache only: its presence, absence
+or age proves neither current remote existence nor current reachability.
+
+Before a remote reachability decision, explicitly resolve that exact remote
+ref and obtain its commit and the history needed for the query. An
+implementation may fetch it into a private ref/object set; it must not depend
+on clone-wide fetch refspecs creating a tracking ref. Record the observed
+remote/ref/object ID. A confirmed absent remote ref yields false reachability;
+unavailable remote access or insufficient history yields `unresolved`, never
+false or permission to collect resources. Positive ancestry is proven by a
+parent path; negative ancestry requires complete relevant history. Fetch or
+deepen that exact ref as needed. The semantics are identical for full, shallow,
+single-branch, worktree and CI clones. No specific fetch command is mandated.
+
+Changed paths compare trees, treating every deleted and added endpoint
+separately, including renames. Integration preserves exact candidate ancestry;
+copied content from squash/cherry-pick does not prove candidate integration.
+Agents never force-push shared refs. A non-fast-forward update is denied;
+cleanup deletion is separate and requires the existing reachability/record
+conditions. Before delivery or cleanup, re-observe relevant remote tips and
+re-evaluate if they moved; stale observations never authorize overwrites.
+
+### Stored and derived facts (PACT-FACT)
+
+Store selected scope, assignments, reservations, exact candidate coordinates,
+explicit handoff publication, decisions and validation evidence in their
+existing owning PACT records. Do not add a ledger or stored boolean for:
+
+- candidate integrated: exact candidate is reachable from the observed remote
+  gate branch;
+- answer delivered / gate closed: the valid accepted answer commit is reachable
+  from the observed remote default branch; validate its delivery conditions at
+  delivery, not against unrelated later default-branch commits or later gates.
+  Subsequent normal commits do not retroactively unclose a delivered gate;
+- ready handoff unanswered: the newest valid explicit ready publication has no
+  valid answer commit for its key.
+
+Each derived fact has true/false/unresolved results as its required evidence
+permits. `ready` is an authored Lead declaration subject to checks, never
+derived from task emptiness or time. A verdict records its input revision and
+remote observation, not another canonical state file.
+
 ## Shared Keep-Alive Registry
+
+Platform audit: repository-path rules do not apply to external host paths.
+The classifications below preserve useful examples without making a host a
+PACT dependency.
+
+| Existing occurrence | Classification | Portable obligation |
+|---|---|---|
+| `C:\\...` registry/SPARC examples, PowerShell profile functions | platform-specific example | Resolve the actual project's binding; preserve its launcher semantics. |
+| `ParseInput` in keep-alive example | platform-specific example | Validate edited launchers with their declared language parser. |
+| `w32tm`, `sntp`, HTTPS clock examples | platform-specific examples | Verify UTC read-only; report skew/unavailability. |
+| sibling KEEP-ALIVE location | portable default | Explicit existing bindings/pointers take priority; do not invent a fixed host location. |
+| heartbeat cadences/resource defaults | portable overridable defaults | Preserve actual owner settings; elapsed time never transfers authority. |
+| Git ancestry, ignore files and exact remote refs | normative PACT semantics | Prove revision identity/reachability independent of clone shape or shell. |
+
+An installed project without service work may select `keep_alive_registry: none`;
+the protocol does not require service infrastructure or a particular parent
+directory arrangement.
 
 [templates/keep-alive.tpl.md](templates/keep-alive.tpl.md) governs a host-local
 `KEEP-ALIVE.md`, generated one directory above the working project. Sibling

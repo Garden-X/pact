@@ -10,7 +10,7 @@ status: canonical
 generated_from: /ai/pact/templates/hook.tpl.md
 generated_from_version: 1.4
 content_status: current-data
-updated: 2026-10-18 02:28:25 UTC+00:00
+updated: 2026-10-26 01:31:28 UTC+00:00
 
 ## TRIGGER
 
@@ -49,7 +49,8 @@ None. The installed project's WORKFLOW supplies its acceptance commands.
 Durable decision precedes delivery, and accepted is not delivered. Use this
 order; never merge first and record the answer later.
 
-1. Fetch the gate branch and confirm its newest published Gate Handoff
+1. Explicitly resolve/fetch the configured authority remote's exact gate ref
+   under PACT-GIT (a missing local tracking ref is not remote absence), and confirm its newest published Gate Handoff
    revision is `ready`, unanswered, and names `candidate`. Verify scope, task
    evidence, and records. The handoff `candidate` is the implementation
    revision under acceptance; tests cannot be attributed to a commit when
@@ -91,10 +92,12 @@ order; never merge first and record the answer later.
    force-push, or rebase or merge unseen cross-harness changes.
 8. Merge in a separate later action: fast-forward `default_branch` exactly to
    that verified delivery tip and push it; do not combine result inspection
-   with merge in one shell command.
-9. Closure check: fetch and test whether the answer commit is reachable from
-   remote `default_branch` (for example
-   `git merge-base --is-ancestor <answer> origin/<default_branch>`). Reachable
+   with merge in one action.
+9. Closure check: explicitly resolve the authority remote's exact default
+   ref and obtain sufficient history under PACT-GIT. Test whether the valid
+   answer commit is reachable from that observed tip. Missing remote access or
+   incomplete history is unresolved; a missing tracking ref is not a negative.
+   Reachable
    means the gate is closed; nothing else is written to prove it. Branch and
    cache cleanup happens only after closure, following WORKFLOW Cleanup
    (Durability order).
@@ -110,7 +113,7 @@ session, failed push, or missing authorization. It resumes from the recorded
 accepted candidate and evidence and does not rerun the acceptance suite
 automatically.
 
-1. Fetch the gate and default branches.
+1. Explicitly resolve/fetch both exact remote branch refs under PACT-GIT.
 2. Verify the durable accepted entry (`decision: accepted`, `candidate`, and
    its evidence pointer) in the `PACT-Answers` commit.
 3. Verify that no Gate Handoff revision newer than the answered `seq` exists.
@@ -123,6 +126,11 @@ automatically.
    non-record path, or `default_branch` no longer an ancestor), do not
    deliver: stop and re-evaluate through entry path A or return the gate to
    Lead with a durable answer to the newest revision.
+
+A delivered gate remains historically closed when later ordinary default-branch
+commits or later gates appear. The delivery conditions above are checked for
+the answered publication and verified delivery tip, never retroactively against
+an unrelated later default tip.
 
 ## OUTPUT
 

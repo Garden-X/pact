@@ -5,8 +5,8 @@
 name: keep-alive.tpl.md
 type: pact maintenance template
 for: KEEP-ALIVE.md
-updated: 2026-10-10 22:06:34 UTC+00:00
-version: 1.1
+updated: 2026-10-26 01:31:28 UTC+00:00
+version: 1.2
 
 ## WHAT
 
@@ -122,9 +122,11 @@ folder honestly; an index edit does not authorize removing its reservations.
 
 ### Verification
 
-- Parse every PowerShell fenced block with
-  `System.Management.Automation.Language.Parser.ParseInput` after editing
-  a registry, and report any pre-existing errors separately.
+- Validate edited launcher/profile blocks with the parser for their declared
+  shell/language, without executing them. For example, PowerShell uses
+  `System.Management.Automation.Language.Parser.ParseInput`; this example
+  does not require that shell on another host. Report pre-existing errors
+  separately.
 - Check reference resolution, service entry preservation, port conflicts,
   and local Git exclusion. Do not execute profile functions just to parse
   them.
@@ -135,6 +137,10 @@ folder honestly; an index edit does not authorize removing its reservations.
 
 ## EXAMPLE
 
+The host paths, PowerShell profile and launchers below are illustrative; the
+portable requirements are registry resolution, unique service coordinates,
+startup dependencies and preservation. They impose no operating system.
+
 ````md
 # KEEP-ALIVE.md
 
@@ -144,7 +150,7 @@ name: KEEP-ALIVE.md
 canonical_location: C:\workspace\KEEP-ALIVE.md
 port_scope: shared local host services
 generated_from: /ai/pact/templates/keep-alive.tpl.md
-generated_from_version: 1.1
+generated_from_version: 1.2
 updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 
 ## FOR

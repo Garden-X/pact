@@ -5,8 +5,8 @@
 name: logic-draft.tpl.md
 type: pact maintenance template
 for: LOGIC-DRAFT.md
-updated: 2026-10-14 19:55:32 UTC+00:00
-version: 1.6
+updated: 2026-10-26 01:31:28 UTC+00:00
+version: 1.7
 
 ## WHAT
 
@@ -69,6 +69,10 @@ with a scope, acceptance conditions, and dependencies. It is a bounded lookahead
 (normally one to three gates), not a worker task list. Empty lookahead means no
 next gate has been selected; agents must not invent one during a stall.
 
+New decisions use PACT-RECORD `pact:acceptance` blocks for decision, candidate
+and evidence under `## Acceptance`; the explanation remains prose. Legacy
+labeled decisions remain readable and immutable.
+
 `## Acceptance` also holds Prime's durable acceptance decisions for the gate:
 one entry per answered handoff key, committed alone with the trailer
 `PACT-Answers: <gate_id>#<seq>`. An entry records `decision` (`accepted` or
@@ -107,7 +111,7 @@ canonical_location: /ai/pact/context/state/LOGIC-DRAFT.md
 layer: PACT / context / state
 status: selected
 generated_from: /ai/pact/templates/logic-draft.tpl.md
-generated_from_version: 1.6
+generated_from_version: 1.7
 content_status: current-state
 owner_role: Prime
 gate_id: <project-specific gate id>
@@ -158,10 +162,10 @@ None.
 
 An acceptance decision entry in `## Acceptance`:
 
-```txt
-decision: accepted
-candidate: <full accepted implementation revision>
-evidence: <acceptance evidence path>
+```pact:acceptance
+decision: "accepted"
+candidate: "<full accepted implementation revision>"
+evidence: "<acceptance evidence path>"
 ```
 
 It is committed alone on the gate branch with

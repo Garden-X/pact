@@ -5,16 +5,51 @@
 name: STATE.md
 canonical_location: /ai/pact/context/state/STATE.md
 layer: PACT / context / state
-status: clear
-active_task: none
+status: active
+active_task: PACT-20261026-002
 generated_from: /ai/pact/templates/state.tpl.md
-generated_from_version: 1.9
+generated_from_version: 1.10
 content_status: current-state
-updated: 2026-10-18 09:00:47 UTC+00:00
+updated: 2026-10-26 01:31:28 UTC+00:00
 
 ## Active Task
 
-None.
+```pact:task
+id: "PACT-20261026-002"
+role: "Worker"
+actor: "/root/lead_semantics as bounded executor"
+parent: "/root/lead_semantics"
+lead: "/root/lead_semantics"
+task_phase: "validating"
+requires: ["git","toolchain:node"]
+reservations: [{"path":"ai/pact/PACT.md","mode":"modify"},{"path":"ai/pact/PACT-MANIFEST.md","mode":"modify"},{"path":"ai/pact/INSTALL.md","mode":"modify"},{"path":"ai/pact/RELEASE-NOTES.md","mode":"modify"},{"path":"ai/pact/workflow/WORKFLOW.md","mode":"modify"},{"path":"ai/pact/templates/workflow.tpl.md","mode":"modify"},{"path":"ai/pact/templates/state.tpl.md","mode":"modify"},{"path":"ai/pact/templates/tasks.tpl.md","mode":"modify"},{"path":"ai/pact/templates/logic-draft.tpl.md","mode":"modify"},{"path":"ai/pact/templates/file-guard.tpl.md","mode":"modify"},{"path":"ai/pact/templates/keep-alive.tpl.md","mode":"modify"},{"path":"ai/pact/agents/hooks/GateClose.md","mode":"modify"},{"path":"ai/pact/agents/hooks/PrimeWatch.md","mode":"modify"},{"path":"ai/pact/agents/skills/Time-Normalization.md","mode":"modify"}]
+task_base: "54369fc795e2ecae3a2315e95ed28fdc2a4eb181"
+task_branch: "task/PACT-Semantics/PACT-20261026-002"
+task_candidate: "none"
+trace: "LOGIC-DRAFT.md / Selected Logic"
+source: {"idea":null,"shape":"origin/shape/2026-10-26-Pact-Runtime-Spec-Delta (research only)","draft":"LOGIC-DRAFT.md","tasks":"TASKS.md"}
+```
+
+brief: Implement selected PACT authority, records/path/ref grammar and platform/migration clarifications in existing contracts, synchronize examples/targets/versions, preserve published history. No runtime or main delivery. Validate source consistency and targeted semantics, record actual exits.
+boundary_contract:
+  task_scope: Implement selected PACT authority, records/path/ref grammar and platform/migration clarifications in existing contracts, synchronize examples/targets/versions, preserve published history. No runtime or main delivery. Validate source consistency and targeted semantics, record actual exits.
+  permitted_area: Read PACT/cache evidence; write only listed reservations.
+  protected_area: main/default ref, host/external installations/services, unrelated files and immutable published decisions.
+  unchanged_contracts: Three roles/lifecycle, manual Markdown+Git validity, one canonical records model, owner model/native efforts.
+  allowed_side_effects: Reserved edits; Lead executor publishes assigned task candidate, Lead integrator gate; no force/services/dependencies/messages.
+  escalation: Report ambiguity or required widening to Lead, then Prime before affected action.
+model_tier: High
+model_binding: inherited owner-configured model, no override
+effort: 100%
+effective_effort: inherited explicit native setting preserved; exact host enum unavailable
+resource_rule: No starts below20% battery even AC; measured resource gate and sequential heavy lock.
+tests: none - specification contracts; proportionate source/example/link checks.
+baseline: not applicable to documentation-only contracts
+validation: node conformance/source-check.mjs plus diff/contract inspection; Prime runs full gate acceptance once.
+retry: attempts0; identified correction only
+validation_result: source-check actual exit0, 199 checks/163 relative links; git diff --check actual exit0; powerspy gate0 battery100% freeRAM13.99GiB Node24.18.0. Source checker authored under task004; SHA256 bcd3d4f3353f2512398b9bfaa0f9e26db2d111e93aca8bb2593031e0b5a63d05. Separate Prime full acceptance remains pending.
+contracts_verified: ai/sparc, ai/docs and ai/raw placeholders; no attached SPARC product contracts or truth update. Runtime-free/platform/manual review completed by Lead.
+handoff: authoring completed; exact task candidate publication next
 
 Delivery progress: Source/extracted validators each exited 0 (119 checks/185 links), source/extracted reference scenarios each exited 0 (41 checks), archive audit exited 0 (16 checks/47 files). Current ZIP SHA256 ddb7072d23ab57ecb9d126d41ddbef47978c65d73c81376e0c564936d73b8e80. Nine guarded applications exited 0; wrong-plan-hash negatives each exited 1 before mutation, after/preserved hashes checked. Six isolated publication copies, Tarot local copy and two fixtures updated; primary working copies and three duplicate copies pending. Native project acceptance checks, commits, pushes and merges pending. No service/SPARC truth change; no independent final helper review claimed.
 
@@ -65,7 +100,7 @@ Historical delivery continuation (superseded by the owner scope recorded in TASK
 
 Owner clarification: add bounded committed-source update discovery for local/GitHub repositories and user agreement before a newly offered update. Prime reports newly observed external pushes (not merely its own pushes); preserve existing sync automation and never infer pusher identity from commit authorship. Merge of this reviewed PACT source is explicitly authorized.
 
-## Gate Handoff
+## Historical PACT-Maintenance Gate Handoff
 
     gate_id: PACT-Maintenance
     seq: 1

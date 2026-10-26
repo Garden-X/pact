@@ -2,8 +2,17 @@
 
 Title: improved workflow and project syncronization
 
-updated: 2026-10-18 08:51:00 UTC+00:00
+updated: 2026-10-26 01:31:28 UTC+00:00
 status: prepared for release
+
+This maintenance delta adds deterministic effective PACT authority, portable
+path/reservation and prerequisite grammar, exact remote-ref observations,
+minimal consumed record blocks with immutable legacy compatibility, and tracked
+language-neutral semantic conformance assets. No runtime, lease, host-state or
+journal subsystem is introduced; manual Markdown/Git use remains valid.
+Changed templates: workflow 3.8, state 1.10, tasks 1.13, logic-draft 1.7,
+file-guard 1.1, keep-alive 1.2. Plan-only reviewed hash/revision-guarded migration
+preserves actual project records; no installed-project rollout or archive refresh.
 
 PACT 2.0 makes coordination policy portable through template RULES and full
 EXAMPLE sections, with synchronized installed entry files and migration guidance.

@@ -4,7 +4,7 @@
 > Version: 2.0
 > Status: canonical package manifest
 > Purpose: describe the installed PACT maintenance environment
-> Updated: 2026-10-18 02:28:25 UTC+00:00
+> Updated: 2026-10-26 01:31:28 UTC+00:00
 
 ## Purpose
 
@@ -235,6 +235,7 @@ Core package files:
 - [PACT-MANIFEST.md](PACT-MANIFEST.md)
 - [INSTALL.md](INSTALL.md)
 - [RELEASE-NOTES.md](RELEASE-NOTES.md)
+- [Source semantic conformance corpus](https://github.com/Garden-X/pact/tree/main/conformance) (optional source asset, not installed state)
 - [workflow/WORKFLOW.md](workflow/WORKFLOW.md)
 - [agents/AGENTS.md](agents/AGENTS.md)
 - [agents/NICKNAMES.md](agents/NICKNAMES.md)

@@ -5,8 +5,8 @@
 name: tasks.tpl.md
 type: pact maintenance template
 for: TASKS.md
-updated: 2026-10-16 05:11:21 UTC+00:00
-version: 1.12
+updated: 2026-10-26 01:31:28 UTC+00:00
+version: 1.13
 
 ## WHAT
 
@@ -79,6 +79,11 @@ PACT-YYYYMMDD-NNN
 ```
 
 `NNN` is a zero-padded sequence number for that date.
+
+Mechanical task fields use PACT-RECORD `pact:task` blocks scoped to their
+entry. Brief/constraints/validation and boundaries remain prose. Reservations
+use PACT-PATH operations and grammar; use an explicit empty array for no claims.
+The legacy compatibility path never guesses an operation from a bare path.
 
 ### Ready pool
 
@@ -154,7 +159,7 @@ The illustrative `ValidateBeforeCompletion.md` filename comes from
 [hook.tpl.md](hook.tpl.md)'s example. It names a generated hook target, not a
 shipped hook or a missing template. Use the requested target name in real work.
 
-```md
+````md
 # TASKS.md
 
 ## META
@@ -164,7 +169,7 @@ canonical_location: /ai/pact/context/state/TASKS.md
 layer: PACT / context / state
 status: active-draft
 generated_from: /ai/pact/templates/tasks.tpl.md
-generated_from_version: 1.12
+generated_from_version: 1.13
 content_status: current-state
 updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 
@@ -172,13 +177,18 @@ updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 ## Pending
 
 - [ ] PACT-YYYYMMDD-001 - Create the requested hook file.
-  trace: LOGIC-DRAFT.md / Decisions
   outcome: Hook file exists at the selected path.
   files: /ai/pact/agents/hooks/ValidateBeforeCompletion.md, /ai/pact/workflow/WORKFLOW.md
-  reservations: /ai/pact/agents/hooks/ValidateBeforeCompletion.md, /ai/pact/workflow/WORKFLOW.md
-  ready: true
-  parent: <responsible Lead agent/session>
-  role: Worker
+
+```pact:task
+id: "PACT-YYYYMMDD-001"
+role: "Worker"
+parent: "<responsible Lead agent/session>"
+ready: true
+requires: ["git"]
+reservations: [{"path":"ai/pact/agents/hooks/ValidateBeforeCompletion.md","mode":"create"},{"path":"ai/pact/workflow/WORKFLOW.md","mode":"modify"}]
+trace: "LOGIC-DRAFT.md / Decisions"
+```
   boundary_contract:
     task_scope: Create and register the selected completion-check hook.
     permitted_area: Read governing PACT contracts; write only the two reserved files.
@@ -189,18 +199,22 @@ updated: YYYY-MM-DD HH:mm:ss UTC+00:00
   specialty: documentation
   model_tier: Light
   model_binding: <owner-approved local binding, resolved before dispatch>
-  requires: [repo-write]
   effort: 50%
-  brief: Create ValidateBeforeCompletion.md from hook.tpl.md for the selected completion check;
-    register its trigger and failure action in WORKFLOW. Do not bind a runtime.
+  effective_effort: <native setting or unsupported>
+  brief: Create ValidateBeforeCompletion.md from hook.tpl.md for the selected completion check; register its trigger and failure action in WORKFLOW. Do not bind a runtime.
   tests: none - documentation-only task; inspect its governing contract.
   validation: Inspect hook file and confirm workflow registration.
 - [ ] PACT-YYYYMMDD-002 - Validate template consistency.
-  trace: LOGIC-DRAFT.md / Constraints
   outcome: Target files match their governing templates.
   files: /ai/pact/templates, /ai/pact/agents/hooks/ValidateBeforeCompletion.md
-  reservations: none
-  ready: false - depends on PACT-YYYYMMDD-001.
+
+```pact:task
+id: "PACT-YYYYMMDD-002"
+ready: false
+reservations: []
+trace: "LOGIC-DRAFT.md / Constraints"
+```
+  dependency: PACT-YYYYMMDD-001.
   validation: Run `git diff --check` and inspect generated_from versions.
 
 ## Done
@@ -213,7 +227,7 @@ Related:
 
 - [LOGIC-DRAFT.md](LOGIC-DRAFT.md)
 - [STATE.md](STATE.md)
-```
+````
 
 An invariant task uses the same entry fields, with its actual id, reserved
 implementation/test paths, binding and trace. For example, its bounded fields

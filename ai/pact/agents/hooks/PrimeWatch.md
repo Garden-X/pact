@@ -10,7 +10,7 @@ status: canonical
 generated_from: /ai/pact/templates/hook.tpl.md
 generated_from_version: 1.4
 content_status: current-data
-updated: 2026-10-14 23:22:03 UTC+00:00
+updated: 2026-10-26 01:31:28 UTC+00:00
 
 ## TRIGGER
 
@@ -26,6 +26,10 @@ authority. Capability is selected for the observation, not by this function:
 a deterministic non-model script or a Light model for mechanical state checks,
 Middle or High when ambiguous failures, stale evidence, or complex recovery
 conditions must be interpreted. Any capability keeps the same contract.
+
+Remote reachability follows PACT-GIT: explicitly resolve the configured remote
+and exact branch ref, independent of tracking-ref existence/fetch refspec.
+Unavailability or incomplete history is unresolved, not absence or closure.
 
 ## INPUTS
 

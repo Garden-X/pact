@@ -9,7 +9,7 @@ status: selected
 owner_role: Prime
 gate_id: PACT-Semantics
 generated_from: /ai/pact/templates/logic-draft.tpl.md
-generated_from_version: 1.6
+generated_from_version: 1.7
 content_status: current-state
 updated: 2026-10-26 01:09:07 UTC+00:00
 

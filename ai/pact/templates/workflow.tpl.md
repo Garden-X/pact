@@ -5,8 +5,8 @@
 name: workflow.tpl.md
 type: pact maintenance template
 for: WORKFLOW.md
-updated: 2026-10-18 08:51:00 UTC+00:00
-version: 3.7
+updated: 2026-10-26 01:31:28 UTC+00:00
+version: 3.8
 
 ## WHAT
 
@@ -27,6 +27,10 @@ Use this template when creating or changing the canonical PACT workflow.
 ## RULES
 
 `WORKFLOW.md` must:
+
+- define effective PACT authority under PACT-AUTH, preserving role powers separately from inherited scope;
+- use PACT-RECORD/PATH/GIT for consumed fields, reservations and exact remote observations;
+- keep environment prerequisite results separate from authority under PACT-REQUIRES;
 
 - preserve the distinction between SPARC project truth and PACT project maintenance;
 - define standalone owner command aliases with surrounding-whitespace tolerance,
@@ -154,7 +158,7 @@ canonical_location: /ai/pact/workflow/WORKFLOW.md
 layer: PACT / workflow
 status: canonical
 generated_from: /ai/pact/templates/workflow.tpl.md
-generated_from_version: 3.7
+generated_from_version: 3.8
 content_status: current-data
 purpose: Define how agents maintain project work without bypassing SPARC project truth.
 updated: YYYY-MM-DD HH:mm:ss UTC+00:00
@@ -336,6 +340,7 @@ heartbeat_prime: 2h
 heartbeat_lead: 11m
 heartbeat_watch: none
 default_branch: main
+authority_remote: origin
 gate_branch_pattern: gate/<id>
 task_branch_pattern: task/<gate-id>/<task-id>
 keep_alive_registry: ../KEEP-ALIVE.md
@@ -345,6 +350,9 @@ worker_fix_target: none
 ready_pool_target: 2-4
 prime_stall_policy: ready-only
 ```
+
+`authority_remote` binds the exact remote used by PACT-GIT reachability checks;
+a local remote-tracking ref is never the remote authority.
 
 Roles and model tiers are separate. The capability tiers are
 `Light < Middle < High`; their names are exactly `Light`, `Middle`, and
@@ -531,17 +539,72 @@ role, reporting framework, host hook, or runtime enforcement is required.
 
 Principle: Parent defines the fence. Child chooses how to work inside it.
 
-Runtime requirements and host adapters:
+### Effective PACT authority (PACT-AUTH)
 
-- An assignment may declare `requires`: host-resolved identifiers of the
-  minimum runtime capabilities it needs before it starts (for example `shell`,
-  `repo-write`, `browser`, `mcp:<server>`). There is no capability registry.
+For records at an identified revision, actor, assigned role, task/gate,
+operation and its affected paths/refs, determine authority in this order.
+This is a decision procedure, not a lease, token, ACL or executable policy.
+Use [PACT's record/path/Git grammar](../PACT.md#mechanical-interpretation).
+
+1. Identify the current owner instruction, selected gate and actor's recorded
+   assignment. Model identity, native process parenthood, tools, prerequisites
+   and elapsed time confer no role. Missing facts give `unresolved`; conflicting
+   or malformed mechanical records give `invalid`, which permits no action.
+2. Apply the role's operation below. A role-forbidden operation is `deny` even
+   if the environment can perform it. A higher capability grants no exception.
+3. Intersect task scope/reservations with every inherited boundary, protected
+   area, unchanged contract and allowed-side-effect restriction. A child inherits
+   scope limits, not its parent's role powers: a Lead may dispatch a Worker
+   without acquiring Prime powers or restricting that Worker to Lead record
+   edits. Narrowing is valid; widening needs recorded approval from an authority
+   whose own inherited scope permits it, before dispatch/action. Unresolved
+   semantic boundary text means `unresolved`, not an inferred grant.
+4. For each path operation apply reservations and the enabled File Guard using
+   PACT-PATH. Matching guard entries union their allowed operations; then strict
+   mode narrows writes, warn records violations without adding authority, off
+   adds no constraint. Inherited read restrictions still apply. General task
+   approval is not a scoped guard override or role transfer.
+5. Apply task/ref/transition invariants and required evidence. Every affected
+   endpoint must pass; a definite prohibition gives `deny`, otherwise a missing
+   required fact gives `unresolved`, and only all satisfied conditions give
+   `allow`. Invalid records remain invalid regardless of other conditions.
+
+| Actor / operation | Existing authority and bounds |
+|---|---|
+| Worker, task mutation/publication | Only reserved operations inside the complete effective brief on its assigned task branch, from exact task_base; no gate/default/other-task ref updates. Protocol template maintenance requires owner source-maintainer authorization. |
+| Worker, read-only task | Reads/inspection within inherited read limits; no artificial task branch or repository mutation. |
+| Lead, execution records | TASKS decomposition and STATE transfer/progress/reservations/Gate Handoff for its selected gate, preserving Prime decisions. |
+| Lead, task execution | Same task-candidate and reservation rules as executor; material implementation/correction cannot bypass them. |
+| Lead, integration (PACT-INTEGRATION) | Reviewed exact candidates and default-branch updates through ancestry-preserving integration on its gate. Mechanical resolution stays inside paths changed by the sides since their merge base plus Lead records; this is necessary, not sufficient: material behavior/design changes even within those paths need a task candidate. Unresolved mechanical-versus-material classification holds integration. |
+| Prime, selection/decision | Selected scope/acceptance in LOGIC-DRAFT; minimum appended decision in the owning artifact, including a boundary approval in its affected task. No unrelated STATE progress, handoff, reservation or product mutation. |
+| Prime, acceptance/delivery | Newest published handoff; complete evidence on exact candidate; durable record-only answer before separately authorized default fast-forward. |
+| role none / Watchdog | Observe/classify/wake within read limits; no mutation or authority transfer. |
+
+Owner overrides/transfers must state their scope and be evidenced, not inferred
+from a general request. Native permissions may further restrict execution but
+never expand PACT authority. Lack of a runtime does not affect this procedure.
+
+Environment prerequisites and optional host adapters (PACT-REQUIRES):
+
+- An assignment may declare `requires`: identifiers of minimum environment
+  prerequisites, with grammar `<namespace>[:<qualifier>]`. Namespace matches
+  `[a-z][a-z0-9-]*`; a qualifier matches `[A-Za-z0-9][A-Za-z0-9._/-]*`.
+  Identifiers are case-sensitive opaque strings; duplicates form a set.
+  Examples: `git`, `exec:test-unit`, `toolchain:node`, `model:Light`,
+  `browser`, `mcp:server`. Namespaces are open; no registry, probe API or
+  provider schema. Legacy `shell` and `repo-write` remain opaque prerequisites,
+  never write or execution permissions.
   `role` answers who has authority, `model_tier` the reasoning capability,
-  `requires` what runtime the work needs, and `boundary_contract` what the actor
+  `requires` what environment the work needs, and `boundary_contract` what the actor
   may do. None implies another; `requires` grants nothing.
-- The dispatching parent or its adapter checks `requires` before transfer. An
-  unmet requirement keeps the task pending with `ready: false`, or is escalated;
-  one discovered after transfer makes the task `blocked`, or is escalated. Never silently switch harness or
+- The dispatching parent checks each requirement as `satisfied`, `unavailable`
+  or `unresolved`, with its environment/evidence basis. No requirements means
+  no extra prerequisite. All must be satisfied before transfer; unavailable
+  or unresolved keeps the task pending with `ready: false` and the distinct
+  reason, or is escalated. One discovered after transfer makes the task
+  `blocked`, or is escalated. Neither supplies partial authority. A satisfied
+  `exec:<name>` identifies an available check, never grants its execution.
+  Never silently switch harness or
   provider, widen permissions, lower requirements, or start partial work outside
   the brief; the parent may choose another already authorized assignment.
 - Where a host offers native permission or sandbox controls, the adapter SHOULD
@@ -617,9 +680,11 @@ Task candidates:
   Lead orders integration and resolves conflicts. A task branch adds
   durability and isolation, not authority: reservations, `requires` and
   `boundary_contract` still apply to parallel Workers.
-- Integration is derived from Git. After `git fetch`,
-  `git merge-base --is-ancestor <task-candidate> origin/gate/<gate-id>`
-  exiting 0 means the candidate is reachable from the remote gate branch, so
+- Integration is derived from Git (PACT-CANDIDATE). Explicitly resolve the
+  configured authority_remote's exact `refs/heads/<gate-branch>` and obtain
+  sufficient history under PACT-GIT; do not rely on a local remote-tracking ref
+  or the clone's default fetch refspec. Proven ancestry from task_candidate to
+  that observed remote tip means the candidate is reachable, so
   the task is integrated; no `integrated` field is stored. A mutating task
   moves to Done only after its exact candidate is reachable from the remote
   gate branch; until then it stays in the existing active, validating or
@@ -673,6 +738,13 @@ Conformance:
   records is not accepted, regardless of test results.
 
 ### Validation scope and evidence reuse
+
+Each selected acceptance check has a stable case-sensitive name and a
+resolvable command/procedure, input scope and environment in the selected
+LOGIC-DRAFT or its declared WORKFLOW evidence. A name such as `test-unit`
+identifies a check, not permission to execute it. Names must be unique in the
+required set; missing/ambiguous procedures block acceptance. Commands may differ
+by environment while the selected semantic obligation remains the same.
 
 Prime defines the complete required acceptance checks from selected scope,
 changed contracts and risk before execution. Lead selects task checks within
@@ -774,8 +846,9 @@ Keep-alive:
 - Services use registered ports and launchers that outlive the agent session;
   no ad-hoc verification ports. Preserve owner-running services: a down service
   may be started through its registered launcher when authorized, while stops
-  and restarts require owner authorization. Validate edited PowerShell blocks
-  without executing them. `keep_alive_registry: none` opts out.
+  and restarts require owner authorization. Validate edited launcher blocks with
+  their declared shell/language parser without executing them; PowerShell
+  parsing is the platform example, not a protocol dependency. `keep_alive_registry: none` opts out.
 
 ### Functions, Harnesses, And Wake Routing
 
@@ -855,9 +928,17 @@ Prime writes only a record file that holds no uncommitted Lead edits. Lead
 reads and integrates Prime decision commits without altering their entries and
 acts only on their durable records.
 
-Answer marker and closure. A Prime decision commit carries exactly one
-canonical trailer, `PACT-Answers: <gate_id>#<seq>`, naming the gate and the
-handoff revision it answers. The trailer is the answer's identity; STATE,
+Answer marker and closure (PACT-ANSWER / PACT-CLOSURE). A Prime decision commit carries exactly one
+canonical trailer in the commit message's final trailer/footer paragraph,
+`PACT-Answers: <gate_id>#<seq>`, naming the gate and the
+handoff revision it answers. The gate ID is the selected identifier and seq is
+a positive decimal integer, without leading zeroes. Distinct answer commits
+for the same key are conflicting and invalid; the same commit reached through
+several ancestry paths is counted once. Exactly one canonical trailer and its
+matching owning decision entry are required; author metadata never proves Prime
+authority. An answer applies only to the newest publication at decision and
+delivery time; a newer revision before delivery requires re-evaluation.
+The trailer is the answer's identity; STATE,
 TASKS and other records do not repeat it.
 After an `accepted` answer, the Git graph is the delivery truth:
 

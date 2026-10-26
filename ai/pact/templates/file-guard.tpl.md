@@ -5,8 +5,8 @@
 name: file-guard.tpl.md
 type: pact maintenance template
 for: FILE-GUARD.md
-updated: 2026-07-11 10:13:59 UTC+00:00
-version: 1.0
+updated: 2026-10-26 01:31:28 UTC+00:00
+version: 1.1
 
 ## WHAT
 
@@ -54,6 +54,14 @@ declare it in its `## File Guard` section before agents enforce it.
   claim a listed file for one active task;
 - be registered in `/ai/pact/workflow/WORKFLOW.md` under `## File Guard`;
 - link related invariant PACT files with relative Markdown links.
+
+Entry paths and operations follow [PACT-PATH](../PACT.md#repository-paths-and-operations-pact-path).
+The Entries table has one path/pattern in its first column and a comma-separated
+set of operations in its second; optional code ticks wrap the whole path.
+Union operations from all matching entries before applying the guard mode and
+inherited restrictions. `aggregator` is a thin-entry-point annotation and grants
+no modify/create/delete permission; list each needed mutation explicitly.
+Unknown operation names are invalid, never implicit permissions.
 
 Mode meanings:
 
@@ -105,7 +113,7 @@ updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 | Path or pattern | Operations | Notes |
 |---|---|---|
 | `backend/models.py` | read, modify | SCHEMA.ts mirror; contract changes first. |
-| `backend/main.py` | read, aggregator | Thin entry point; wire modules only. |
+| `backend/main.py` | read, modify, aggregator | Thin entry point; wire modules only. |
 | `backend/services/*.py` | read, modify, create | Service layer. |
 | `frontend/src/schema.ts` | read, modify | SCHEMA.ts mirror. |
 | `migrations/*` | read, create | Never modify or delete an applied migration. |

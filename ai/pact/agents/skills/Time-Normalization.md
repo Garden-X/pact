@@ -9,7 +9,7 @@ status: canonical
 generated_from: /ai/pact/templates/skill.tpl.md
 generated_from_version: 1.0
 content_status: current-data
-updated: 2026-07-12 18:15:00 UTC+00:00
+updated: 2026-10-26 01:31:28 UTC+00:00
 
 ## PURPOSE
 
@@ -36,7 +36,7 @@ sleeps/reboots mid-session.
 
 - Local clock converted to UTC.
 - One trusted network time source, tried in order:
-  1. an HTTPS time API returning UTC (for example
+  1. a verified UTC source supplied by the host, or an HTTPS time API returning UTC (for example
      `https://worldtimeapi.org/api/timezone/Etc/UTC`);
   2. the `Date` response header of an HTTPS HEAD request to a major host;
   3. the platform time service query (`w32tm /stripchart` on Windows,
@@ -60,6 +60,9 @@ sleeps/reboots mid-session.
 
 - Normalized `UTC+00:00` stamps in all maintained files.
 - A skew report to the owner when step 3 triggered.
+
+Platform commands are examples of read-only verification, not required tools.
+The portable obligation is verified UTC and honest unavailable/skew reporting.
 
 ## BOUNDARIES
 

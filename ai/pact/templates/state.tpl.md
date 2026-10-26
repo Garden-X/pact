@@ -5,8 +5,8 @@
 name: state.tpl.md
 type: pact maintenance template
 for: STATE.md
-updated: 2026-10-16 05:11:21 UTC+00:00
-version: 1.9
+updated: 2026-10-26 01:31:28 UTC+00:00
+version: 1.10
 
 ## WHAT
 
@@ -189,18 +189,31 @@ that validates or recovers the work can resolve them.
 
 Retry must record attempt count and retry policy.
 
-Reservations must identify claimed files or paths and access mode.
+Reservations use PACT-PATH operations `read`, `modify`, `create`, `delete`.
+Legacy `write` means modify plus create only; bare paths with no mode are
+unresolved until reviewed. Read claims are not write reservations. New task
+and handoff mechanical fields use PACT-RECORD `pact:task` and
+`pact:gate-handoff` blocks; the complete brief and boundary fields stay prose.
+PACT-TRANSFER requires exact preservation of the brief, constraints, source,
+reservations, validation, applicable tests/baseline and bindings; losing any
+required field or leaving a Pending duplicate makes transfer invalid.
+PACT-STATE uses the status table and aggregate mapping above, not elapsed time.
 
 Handoff must record status and notes needed by the next agent or session;
 candidate identity lives in the task coordinates, not in handoff notes.
 
-### Gate Handoff
+### Gate Handoff (PACT-HANDOFF)
 
 An optional `## Gate Handoff` block is the durable Lead -> Prime record for the
 current gate, in both harness topologies. It reuses STATE instead of adding a
 file type; wake messages only point to it. Absent means `signal: working` with
 no Prime-facing publication. It is independent of the task status above:
 `ready` normally coexists with `clear`, and `escalation` with any status.
+
+Only the exact current `## Gate Handoff` section is consumed; historical
+headings are narrative. The mechanical block and its owning narrative together
+form the immutable publication. Duplicated current sections/blocks or conflicting
+legacy/new fields are invalid.
 
 Lead is the only writer of this block. It shows the newest published revision;
 earlier revisions remain in Git history. `gate_id` + `seq` identifies one
@@ -216,7 +229,7 @@ one. Unpublished local drafts may change freely.
 Fields:
 
 - `gate_id`: the gate selected in `LOGIC-DRAFT.md`;
-- `seq`: integer revision number, incremented for every published material
+- `seq`: positive integer starting at 1 for a gate, incremented by one for every published material
   change; `gate_id#seq` is the notification key;
 - `signal`: `working`, `escalation`, or `ready`;
 - `candidate`: for `ready`, the exact implementation revision Lead validated
@@ -275,7 +288,7 @@ The illustrative `ValidateBeforeCompletion.md` target comes from
 [hook.tpl.md](hook.tpl.md)'s example; it is not a shipped hook or a missing
 template. Keep the actual task's selected target name on transfer.
 
-```md
+````md
 # STATE.md
 
 ## META
@@ -286,68 +299,56 @@ layer: PACT / context / state
 status: active
 active_task: PACT-YYYYMMDD-001
 generated_from: /ai/pact/templates/state.tpl.md
-generated_from_version: 1.9
+generated_from_version: 1.10
 content_status: current-state
 updated: YYYY-MM-DD HH:mm:ss UTC+00:00
 
 ## Active Task
 
-    id: PACT-YYYYMMDD-001
-    request: Create the requested hook file.
-    brief: Create ValidateBeforeCompletion.md from hook.tpl.md for the selected completion check;
-      register its trigger and failure action in WORKFLOW. Do not bind a runtime.
-    task_phase: working
-    actor: <assigned agent/session>
-    role: Worker
-    lead: <responsible Lead agent/session>
-    parent: <responsible Lead agent/session>
-    boundary_contract:
-      task_scope: Create and register the selected completion-check hook.
-      permitted_area: Read governing PACT contracts; write only the two reserved files.
-      protected_area: No template edits, product code, SPARC truth, host configuration or other state writes.
-      unchanged_contracts: Preserve PACT/SPARC authority and all existing hook interfaces.
-      allowed_side_effects: Reserved Markdown edits; commit and push only task/<gate-id>/PACT-YYYYMMDD-001; no other Git write, runtime binding, services or external messages.
-      escalation: Report missing/conflicting limits or needed scope/interface/side-effect expansion to parent before acting.
-    specialty: documentation
-    model_tier: Light
-    model_binding: <resolved owner-approved provider/model>
-    requires: [repo-write]
-    effort: 50%
-    effective_effort: <native setting or unsupported>
-    created_at: YYYY-MM-DD HH:mm:ss UTC+00:00
-    source:
-      idea: null
-      shape: null
-      draft: LOGIC-DRAFT.md
-      tasks: TASKS.md
-    affected_files:
-      - /ai/pact/agents/hooks/ValidateBeforeCompletion.md
-      - /ai/pact/workflow/WORKFLOW.md
-    reservations:
-      - path: /ai/pact/agents/hooks/ValidateBeforeCompletion.md
-        mode: write
-      - path: /ai/pact/workflow/WORKFLOW.md
-        mode: write
-    task_base: <exact gate/<gate-id> revision at dispatch>
-    task_branch: task/<gate-id>/PACT-YYYYMMDD-001
-    task_candidate: none
-    tests: none - documentation-only task; inspect its governing contract.
-    validation:
-      method: Inspect hook file and confirm workflow registration.
-      result: Pending
-      evidence: null
-    retry:
-      attempts: 0
-      policy: explicit correction only
-    handoff:
-      status: none
-      notes: null
+```pact:task
+id: "PACT-YYYYMMDD-001"
+role: "Worker"
+actor: "<assigned agent/session>"
+parent: "<responsible Lead agent/session>"
+lead: "<responsible Lead agent/session>"
+task_phase: "working"
+requires: ["git"]
+reservations: [{"path":"ai/pact/agents/hooks/ValidateBeforeCompletion.md","mode":"create"},{"path":"ai/pact/workflow/WORKFLOW.md","mode":"modify"}]
+task_base: "<full gate revision at dispatch>"
+task_branch: "task/<gate-id>/PACT-YYYYMMDD-001"
+task_candidate: "none"
+trace: "LOGIC-DRAFT.md / Decisions"
+source: {"idea":null,"shape":null,"draft":"LOGIC-DRAFT.md","tasks":"TASKS.md"}
+```
+
+request: Create the requested hook file.
+brief: Create ValidateBeforeCompletion.md from hook.tpl.md for the selected completion check; register its trigger and failure action in WORKFLOW. Do not bind a runtime.
+boundary_contract:
+  task_scope: Create and register the selected completion-check hook.
+  permitted_area: Read governing PACT contracts; write only the two reserved files.
+  protected_area: No template edits, product code, SPARC truth, host configuration or other state writes.
+  unchanged_contracts: Preserve PACT/SPARC authority and all existing hook interfaces.
+  allowed_side_effects: Reserved Markdown edits; commit and push only task/<gate-id>/PACT-YYYYMMDD-001; no other Git write, runtime binding, services or external messages.
+  escalation: Report missing/conflicting limits or needed scope/interface/side-effect expansion to parent before acting.
+specialty: documentation
+model_tier: Light
+model_binding: <resolved owner-approved provider/model>
+effort: 50%
+effective_effort: <native setting or unsupported>
+created_at: YYYY-MM-DD HH:mm:ss UTC+00:00
+affected_files: the two reserved paths
+tests: none - documentation-only task; inspect its governing contract.
+validation: Inspect hook file and confirm workflow registration.
+validation_result: Pending
+validation_evidence: null
+retry: attempts 0; explicit correction only
+handoff: status none; notes none
 
 Related:
 
 - [TASKS.md](TASKS.md)
 - [LOGIC-DRAFT.md](LOGIC-DRAFT.md)
-```
+````
 
 For a code-invariant assignment, use the same active object with the task's
 actual id, scope, reservations, binding and source. Copy its instructions and
@@ -378,22 +379,25 @@ Lead publishes readiness in the same file. This block is the durable record a
 native wake, `PrimeWatch`, or Prime's fallback heartbeat points to; the earlier
 active object is not part of this later snapshot:
 
-```txt
+````md
 ## Gate Handoff
 
-    gate_id: <selected gate id>
-    seq: 4
-    signal: ready
-    candidate: <full revision Lead validated>
-    branch: gate/<selected gate id>
-    lead: <Lead actor; harness/session in multi topology>
-    slices: all selected slices integrated and pushed; see TASKS Done
-    validation: Lead fast non-browser checks exited 0 on candidate; <evidence path>
-    records: SliceRecordsCheck pass on every outgoing slice
-    blockers: none
-    escalation: none
-    recorded_at: YYYY-MM-DD HH:mm:ss UTC+00:00
+```pact:gate-handoff
+gate_id: "<selected gate id>"
+seq: 4
+signal: "ready"
+candidate: "<full revision Lead validated>"
+branch: "gate/<selected gate id>"
+lead: "<Lead actor; harness/session in multi topology>"
+recorded_at: "YYYY-MM-DD HH:mm:ss UTC+00:00"
 ```
+
+slices: all selected slices integrated and pushed; see TASKS Done
+validation: Lead fast non-browser checks exited 0 on candidate; <evidence path>
+records: SliceRecordsCheck pass on every outgoing slice
+blockers: none
+escalation: none
+````
 
 An escalation is a new revision of the same block with `signal: escalation`,
 `candidate: none`, and an exact `escalation:` such as `Required scope expansion:

@@ -2,7 +2,7 @@
 
 > For: PACT 2.0
 > Purpose: install or verify the PACT project-maintenance layer
-> Updated: 2026-10-18 08:51:00 UTC+00:00
+> Updated: 2026-10-26 01:31:28 UTC+00:00
 
 ## Purpose
 
@@ -227,7 +227,7 @@ explicit owner model/effort bindings do not change.
   only under `/ai/pact/context/state/`. GateClose commits the acceptance
   answer on the gate branch, re-verifies the tip, and only then fast-forwards
   the default branch.
-- Refresh LOGIC-DRAFT from logic-draft.tpl.md 1.6: `## Acceptance` entries
+- Refresh LOGIC-DRAFT from logic-draft.tpl.md 1.7: `## Acceptance` entries
   record `decision`, `candidate` and evidence in a `PACT-Answers` commit;
   delivery is derived from whether that commit is reachable from the default
   branch. Existing acceptance prose stays; do not backfill invented entries
@@ -394,8 +394,9 @@ exclusion; a local exclude does not remove an already tracked file. Do not
 exclude the template or change tracked ignore rules for host-only files.
 
 Register aliases, paths, raw commands, unique ports, dependencies, profile
-functions, and actual check status. Parse edited PowerShell blocks/profile
-before declaring completion. Registry migration does not authorize restarting
+functions, and actual check status. Validate edited launcher/profile blocks
+with their declared shell/language parser before declaring completion;
+PowerShell is an example. Registry migration does not authorize restarting
 services or rewriting working launch commands.
 
 ## Validation Checklist
@@ -446,7 +447,7 @@ services or rewriting working launch commands.
 - [ ] `keep-alive.tpl.md` is tracked, and `keep_alive_registry` resolves the
       parent-level `KEEP-ALIVE.md` or the existing shared pointer/binding.
 - [ ] Live registries/pointers remain host-local, service entries and startup
-      dependencies are preserved, and edited PowerShell blocks parse.
+      dependencies are preserved, and edited launcher blocks pass their declared shell/language syntax parser.
 - [ ] `/ai/pact/agents/AGENTS.md` contains an `## Execution Hierarchy` pointer
       section to `WORKFLOW.md`.
 - [ ] Agents treat `/ai/pact/agents/AGENTS.md` as a binding agent rules file
@@ -525,6 +526,26 @@ Validation follows WORKFLOW Validation scope and evidence reuse. Existing
 mandatory host gates remain in force until their adapter is explicitly updated
 and verified; copying these templates does not optimize native hooks by itself.
 
+## Semantic record migration (PACT-MIGRATION)
+
+Existing files remain canonical. First produce a read-only plan at identified
+source/target revisions with per-file content hashes, proposed field mappings,
+preserved text/value hashes, conflicts and snapshots. Review the concrete plan
+under explicit owner agreement before any apply. Recheck every revision/hash
+before the first mutation; any mismatch aborts without writes and requires a
+new plan. Apply non-destructively with recoverable snapshots; no template seed
+may replace project content. This is a procedure, not a required migration tool.
+
+Preserve active/pending tasks, exact briefs/constraints/reservations, current
+draft, validation references, model bindings and explicit native efforts, custom
+hooks and File Guard. Compare extracted before/after values and preserved prose;
+report each conflict rather than guessing. Legacy reservation write maps only
+to modify/create; deletion needs explicit reviewed authority. Bare paths are
+unresolved, not implicit write. Never rewrite published Gate Handoffs or
+acceptance decisions for new syntax: read legacy forms; the next publication
+or decision uses the new mechanical block. No STATE.json, tasks database or
+second execution ledger is introduced. Detection alone never authorizes apply.
+
 ## Sync Existing Installations
 
 Compare each target's generated_from_version with its template's version.
@@ -532,7 +553,7 @@ Upgrade the contract and complete example structure, then reapply the target's
 actual settings and state. PACT 2.0 is the package version; do not reset template
 versions to 2.0 or overwrite target files with this repository's operational data.
 
-1. Synchronize WORKFLOW from workflow.tpl.md 3.7 and AGENTS from agents.tpl.md
+1. Synchronize WORKFLOW from workflow.tpl.md 3.8 and AGENTS from agents.tpl.md
    3.5. Preserve local hooks, file_guard, skill_log, resource limits, owner
    bindings, and project-specific rules. Preserve an existing enabled
    `worker_fix_target` percentage; `none` disables the diagnostic and is the
@@ -585,8 +606,8 @@ versions to 2.0 or overwrite target files with this repository's operational dat
    preserve it and mark the mapping fixed/unsupported until a requested
    percentage is chosen. Retire the old native-effort keys after preservation.
 5. Refresh reusable profiles from sub-agent.tpl.md 2.3, drafts from
-   logic-draft.tpl.md 1.6, task lists from tasks.tpl.md 1.12, and active objects
-   from state.tpl.md 1.9. Preserve selected scope, completed evidence, active
+   logic-draft.tpl.md 1.7, task lists from tasks.tpl.md 1.13, and active objects
+   from state.tpl.md 1.10. Preserve selected scope, completed evidence, active
    actors/reservations, and pending work. Add specialty/binding/effort details to
    actual Worker assignments; do not fabricate hires or measurements.
    Preserve the exact bounded `brief`, scope, reservations, validation, and
@@ -605,7 +626,7 @@ versions to 2.0 or overwrite target files with this repository's operational dat
    including failures masked by later commands. Merge separately after reading
    results, only when authorized. Bind/verify host execution separately;
    copying Markdown is not activation. Keep actual host trust and config local.
-7. Resolve the shared external KEEP-ALIVE.md using keep-alive.tpl.md 1.1 as
+7. Resolve the shared external KEEP-ALIVE.md using keep-alive.tpl.md 1.2 as
    described above. Preserve launch commands, ports, startup dependencies,
    pointers, and local Git exclusions. Never duplicate the host port registry.
    The external registry follows its own template metadata, not installed
