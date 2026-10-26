@@ -5,17 +5,19 @@
 name: TASKS.md
 canonical_location: /ai/pact/context/state/TASKS.md
 layer: PACT / context / state
-status: active-draft
+status: complete
 generated_from: /ai/pact/templates/tasks.tpl.md
 generated_from_version: 1.13
 content_status: current-state
-updated: 2026-10-26 07:22:08 UTC+00:00
+updated: 2026-10-26 17:17:38 UTC+00:00
 
 ## Pending
 
 None.
 
 ## Done
+
+- PACT-20261026-006 - Correct independent review findings under existing PACT. Exact replacement candidate021a51d084523585b2bdda89b564ca2784f267c9 published on its assigned task branch and proven reachable from an explicitly fetched remote gate/PACT-Semantics (ancestry actual0). Previous b1676f179f7cf184fd198c6eb952ee68935def79 is preserved ancestor; no force or history rewrite. Original9review cases promoted unchanged: first red190cases/9fail; adjacent red239/32fail plus4full-template binding failures. Original239 inputs/expectations remain unchanged; follow-up supported-prose red250/10fail led to shared hierarchy-aware scalar/task reader. Fresh owning self-test21, corpus250/250, source211checks165links all actual0; original9 and prior239 deep-equality proofs0; diff/nativecommit/nativepush0. Delivery uses exact configured remote/ref/tip and inherited restrictions, guard ignores examples, full task entries retain bindings, seq validates exact decimal tokens, prose cannot create role/actor/model/id grants. Independent Inspector and Root final exact review found no actionable residual. Node24.18.0/Git2.46.2; resource gates0; sequential owned lock, stopped and resumed same Lead across usage limits. No specification/template version, runtime, dependency, host installation or product/SPARC truth changed; placeholders verified. Prime full fresh acceptance and main delivery remain separate.
 
 - PACT-20261026-005 - Inspector residual correction. Exact candidate5329cb194e08cb4e5d0b544fcbc502079cd677c7 published and proven reachable from explicitly fetched remote gate/PACT-Semantics (ancestry actual0). Red reference181cases/23fail and selftestNBSP1 inspected before implementation; fresh owning selftest21, corpus181/181 and source207checks165links all actual0, diff/nativecommit/nativepush0. Preserves preassigned actors/nativebindings, resolves only absent dispatch coordinates, enforces whole immutable handoff/noop/materiality/delivery freshness, strict JSON whitespace, portable seq1..9007199254740991 and consistent task counts. All three earlier candidates also remain exact reachable ancestors. SPARC/docs/raw placeholders verified; no product live contract or external installation changed.
 
