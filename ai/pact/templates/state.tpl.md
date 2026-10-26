@@ -5,7 +5,7 @@
 name: state.tpl.md
 type: pact maintenance template
 for: STATE.md
-updated: 2026-10-26 01:31:28 UTC+00:00
+updated: 2026-10-26 01:43:31 UTC+00:00
 version: 1.10
 
 ## WHAT
@@ -83,7 +83,8 @@ task blocks may be present only under the parallel-worker rule of the
 - exactly one active task block must be present per listed id;
 - every block records `lead`, the one Lead that owns the set,
   and `actor`, the distinct worker that holds the task;
-- reservations across all blocks must be pairwise disjoint;
+- write reservations across all blocks must be pairwise disjoint; read claims
+  do not reserve writes;
 - no task in the set builds or runs tests;
 - the top-level status is `active` while any task is in `transferred`,
   `working`, or `validating`; otherwise `blocked` while any task is in

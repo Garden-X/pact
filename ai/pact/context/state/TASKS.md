@@ -9,50 +9,15 @@ status: active-draft
 generated_from: /ai/pact/templates/tasks.tpl.md
 generated_from_version: 1.13
 content_status: current-state
-updated: 2026-10-26 01:31:28 UTC+00:00
+updated: 2026-10-26 01:43:31 UTC+00:00
 
 ## Pending
 
-- [ ] PACT-20261026-004 - Source consistency and guarded migration fixtures.
-
-```pact:task
-id: "PACT-20261026-004"
-role: "Worker"
-actor: "/root/lead_semantics/validation_assets"
-parent: "/root/lead_semantics"
-lead: "/root/lead_semantics"
-ready: true
-requires: ["git","toolchain:node"]
-reservations: [{"path":"conformance/source-check.mjs","mode":"create"},{"path":"conformance/migration-check.mjs","mode":"create"},{"path":"conformance/migration-fixtures.json","mode":"create"},{"path":"ai/pact/PACT.md","mode":"modify"},{"path":"ai/pact/workflow/WORKFLOW.md","mode":"modify"},{"path":"ai/pact/templates/workflow.tpl.md","mode":"modify"},{"path":"ai/pact/templates/state.tpl.md","mode":"modify"}]
-task_base: "54369fc795e2ecae3a2315e95ed28fdc2a4eb181"
-task_branch: "task/PACT-Semantics/PACT-20261026-004"
-task_candidate: "none"
-trace: "LOGIC-DRAFT.md / Selected Logic"
-source: {"idea":null,"shape":"origin/shape/2026-10-26-Pact-Runtime-Spec-Delta (research only)","draft":"LOGIC-DRAFT.md","tasks":"TASKS.md"}
-```
-
-brief: Author only conformance/source-check.mjs, migration-check.mjs and migration-fixtures.json. Check complete workflow/transfer examples, current record parsing, links/versions and synthetic reviewed-plan migration guards/preservation. Prime-approved bounded source clarification: literal ! has no negation semantics; parallel disjointness covers write claims; status tuples are necessary but task counts must agree; Git OIDs use full lowercase hex. Synchronize only the listed owning contracts/examples and add source assertions. No real installation apply, other source edits, new runtime or dependencies. Lead owns Git publication.
-boundary_contract:
-  task_scope: Author only conformance/source-check.mjs, migration-check.mjs and migration-fixtures.json. Check complete workflow/transfer examples, current record parsing, links/versions and synthetic reviewed-plan migration guards/preservation. No real installation apply, other source edits, new runtime or dependencies. Lead owns Git publication.
-  permitted_area: Read PACT/cache evidence; write only listed reservations.
-  protected_area: main/default ref, host/external installations/services, unrelated files and immutable published decisions.
-  unchanged_contracts: Three roles/lifecycle, manual Markdown+Git validity, one canonical records model, owner model/native efforts.
-  allowed_side_effects: Reserved edits; Lead executor publishes assigned task candidate, Lead integrator gate; no force/services/dependencies/messages.
-  escalation: Report ambiguity or required widening to Lead, then Prime before affected action.
-model_tier: High
-model_binding: inherited owner-configured model, no override
-effort: 100%
-effective_effort: inherited explicit native setting preserved; exact host enum unavailable
-resource_rule: No starts below20% battery even AC; measured resource gate and sequential heavy lock.
-tests: conformance/migration-check.mjs
-baseline: node conformance/migration-check.mjs actual1 Missing expected exception stale source revision must fail before writes, line30; before guard implementation.
-validation: source-check and migration-check on final integrated source; stale plan/hash/revision/review negatives must fail before any writer callback.
-retry: attempts0; identified correction only
-handoff: authoring completed; final validation/publication sequential
-
-scope_approval: Prime /root approved this bounded004 expansion within selected path/state/source consistency on2026-10-26 before any affected edit; task003 retains exact separate conformance evaluator/corpus reservations.
+None.
 
 ## Done
+
+- PACT-20261026-003 - Exact task candidate 119e8f1787c941ba0b9af1fc2992f725dc93b943 published and proven reachable from explicitly fetched remote gate/PACT-Semantics (ancestry actual0). Owning tests actual0: selftest18, corpus148/148, realGit15. Expected reds inspected and corrected; nativeEOFhookfailure corrected without bypass. Tracked neutral cases replace disposable validation-only policy inputs. Native commit/push hygiene0. No main/SPARC product truth change.
 
 - PACT-20261026-002 - Exact task candidate dc5a18875dac0eb7dd9a2d10572df840fb5a542b published and proven reachable from explicitly fetched remote gate/PACT-Semantics (ancestry actual0). Source-contracts199/163links0; diff0; portable authority/record/path/ref/prerequisite/migration contracts synchronized, package2.0 retained. Native commit/push hygiene0. No main/SPARC product truth change.
 

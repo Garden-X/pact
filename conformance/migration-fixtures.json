@@ -1,0 +1,26 @@
+{
+  "format": "pact-migration-preservation-1",
+  "sourceRevision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "targetRevision": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "files": {
+    "STATE.md": "# STATE.md\n\n## META\nstatus: active\nactive_task: PACT-20261026-001\n\n## Active Task\n\n    id: PACT-20261026-001\n    role: Worker\n    actor: worker-fixture\n    parent: lead-fixture\n    lead: lead-fixture\n    task_phase: working\n    brief: Preserve project-specific constraints and exact quoted text: do not touch production.\n    reservations:\n      - path: src/**\n        mode: write\n    model_binding: owner/model-id\n    effort: 75%\n    effective_effort: native-existing-setting\n    validation: Inspect the original fixture; evidence: durable/run-17\n\n## Gate Handoff\n\n    gate_id: Prior-Gate\n    seq: 1\n    signal: ready\n    candidate: cccccccccccccccccccccccccccccccccccccccc\n    branch: gate/Prior-Gate\n    lead: lead-fixture\n    validation: Historical published evidence must stay verbatim.\n",
+    "TASKS.md": "# TASKS.md\n\n## META\nstatus: active-draft\n\n## Pending\n\n- [ ] PACT-20261026-002 - Preserve this pending task.\n  brief: Retain the exact pending instructions.\n  validation: Run the project-specific procedure.\n\n## Done\n\nPrior completed evidence: durable/run-3\n",
+    "LOGIC-DRAFT.md": "# LOGIC-DRAFT.md\n\n## META\nstatus: selected\ngate_id: Fixture-Gate\n\n## Selected Logic\n\nRetain selected project scope.\n\n## Acceptance\n\ndecision: accepted\ncandidate: cccccccccccccccccccccccccccccccccccccccc\nevidence: immutable/accepted-run\n",
+    "WORKFLOW.md": "# WORKFLOW.md\n\n## Execution Hierarchy\n\n```txt\ndefault_branch: trunk\nauthority_remote: upstream\nprime_effort: 75%\n```\n\n## Hooks\n\n| CustomCheck | host_hook | local-owner-hook | owner-trigger | None | verified |\n\n## File Guard\n\nfile_guard: ai/pact/workflow/FILE-GUARD.md\n",
+    "FILE-GUARD.md": "# FILE-GUARD.md\n\n## META\nmode: strict\n\n## Entries\n\n| Path or pattern | Operations | Notes |\n|---|---|---|\n| src/** | read, modify, create | Owner-specific scope. |\n",
+    "CustomCheck.md": "# CustomCheck\n\nOwner-customized hook body, preserved verbatim.\n"
+  },
+  "preserved": [
+    {"file": "STATE.md", "text": "brief: Preserve project-specific constraints and exact quoted text: do not touch production."},
+    {"file": "STATE.md", "text": "model_binding: owner/model-id"},
+    {"file": "STATE.md", "text": "effective_effort: native-existing-setting"},
+    {"file": "STATE.md", "text": "validation: Inspect the original fixture; evidence: durable/run-17"},
+    {"file": "STATE.md", "section": "Gate Handoff"},
+    {"file": "TASKS.md", "section": "Pending"},
+    {"file": "LOGIC-DRAFT.md", "section": "Acceptance"},
+    {"file": "WORKFLOW.md", "section": "Hooks"},
+    {"file": "WORKFLOW.md", "section": "File Guard"},
+    {"file": "FILE-GUARD.md", "whole": true},
+    {"file": "CustomCheck.md", "whole": true}
+  ]
+}

@@ -1,7 +1,7 @@
 # Protocol for Agent Coordination and Tasks
 
 > Version: 2.0
-> Updated: 2026-10-26 01:31:28 UTC+00:00
+> Updated: 2026-10-26 01:43:31 UTC+00:00
 > Status: release prepared
 > Purpose: project maintenance for AI-assisted development
 > Release title: improved workflow and project syncronization
@@ -362,6 +362,12 @@ Valid state combinations:
 | `selected` | `complete` | `clear` | Draft tasks are complete. |
 | `superseded` | `no-active-draft` | `clear` | Old draft is retained as a replaced record. |
 
+These tuples are necessary, not sufficient: `active-draft` requires at least
+one pending or active task; `complete` permits neither. `clear` requires no
+active object, and a selected/active-draft/clear tuple therefore requires a
+nonempty Pending pool. Stored status labels never override contradictory task
+records. Canceled tasks do not remain Pending.
+
 Invalid combinations include:
 
 - `STATE.md` active, blocked, or handoff without `TASKS.md` set to
@@ -389,7 +395,7 @@ below.
 exist in `TASKS.md`, but only one task may be transferred into `STATE.md` at a
 time. The one exception is a parallel worker set under the Execution Hierarchy:
 several tasks may be active together only when one Lead owns them, each
-is held by a distinct worker, their reservations are pairwise disjoint, and
+is held by a distinct worker, their write reservations are pairwise disjoint, and
 none builds or runs tests. The set as a whole holds the mutex. A second agent
 outside the set must wait, help unblock an active task, or receive owner
 approval for a separate coordination scope.
@@ -573,9 +579,12 @@ typed workflow contracts; this table does not turn them into authority grants.
 Briefs, all six boundary_contract fields, design decisions, validation and
 handoff explanations, shapes, ideas, souls and context remain prose. A
 mechanical reader may require their presence or compare transfer text, but
-must not invent a natural-language permission parser. If a verdict depends on
-unresolved prose, report `unresolved` with the missing interpretation; obtain
-and preserve the responsible authority's resolution before the affected action.
+must not interpret prose into permission. It consumes the responsible authority's
+evidenced resolution for the queried operation in the existing owning
+task/boundary decision record. Without that interpretation both mechanical
+readers given the same facts/query return `unresolved`; obtain and preserve the
+resolution before the affected action. This adds no grant ledger or structured
+reasoning requirement.
 
 Compatibility: legacy META, declared `txt` workflow fields, indented task and
 handoff `key: value` mappings and labeled acceptance entries remain readable.
@@ -599,14 +608,16 @@ A repository path uses `/` separators, one optional leading `/` meaning the
 repository root, and nonempty segments. Comparison is case-sensitive Unicode
 scalar comparison with no case folding or Unicode normalization. Backslashes,
 `.`/`..` segments, drive/URI prefixes, NUL and empty interior segments are
-invalid. A literal filename containing pattern metacharacters needs an exact
+invalid, as are ASCII control characters U+0000 through U+001F and U+007F.
+A literal filename containing pattern metacharacters needs an exact
 path supplied as an operation target; it cannot be represented by a policy
 pattern that would reinterpret those characters.
 
 Policy patterns are root-anchored. `*` matches zero or more characters within
-one segment; `**` is a whole segment matching zero or more segments. No `?`,
-bracket, brace, escape or negation syntax exists; those metacharacters are
-invalid in policy patterns, rather than silently interpreted as literals.
+one segment; `**` is a whole segment matching zero or more segments. The
+characters `?`, `[`, `]`, `{`, `}` and backslash are invalid in policy patterns;
+no bracket, brace or escape syntax exists. `!` is an ordinary literal
+character, never a negation operator.
 A trailing `/` means `/**`;
 a literal path known to be a directory in the selected revision also means
 that subtree. Thus `src/**`, `/src/**` and `src/` have the same scope.
@@ -642,7 +653,7 @@ approval does not disable the guard or transfer a role.
 `refs/heads/`, not tags, revision expressions or remote-tracking names. They
 must be valid Git branch names; the configured patterns expand their declared
 gate/task placeholders without guessing. Candidates and task_base identify
-full immutable Git commit object IDs in that repository's object format, not
+full lowercase hexadecimal immutable Git commit object IDs in that repository's object format, not
 moving refs or abbreviated hashes. The relevant commit must be available for
 ancestry/path checks; unavailable objects make the check unresolved.
 

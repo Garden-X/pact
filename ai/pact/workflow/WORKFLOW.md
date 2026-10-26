@@ -10,7 +10,7 @@ generated_from: /ai/pact/templates/workflow.tpl.md
 generated_from_version: 3.8
 content_status: current-data
 purpose: Define how agents maintain project work without bypassing SPARC project truth.
-updated: 2026-10-26 01:31:28 UTC+00:00
+updated: 2026-10-26 01:43:31 UTC+00:00
 
 ## Lifecycle
 
@@ -567,7 +567,8 @@ Parallel workers:
 
 - Several `STATE.md` tasks may be active at once only when all of these hold:
   one Lead owns the set; each task is held by a distinct worker; the
-  tasks' `reservations` are pairwise disjoint; no task in the set builds or
+  tasks' write `reservations` are pairwise disjoint; read claims do not reserve
+  writes; no task in the set builds or
   runs tests.
 - A task that builds or tests, or whose reservations overlap another active
   task, runs alone.
