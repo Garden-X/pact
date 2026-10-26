@@ -11,7 +11,7 @@ gate_id: PACT-Semantics
 generated_from: /ai/pact/templates/logic-draft.tpl.md
 generated_from_version: 1.7
 content_status: current-state
-updated: 2026-10-26 01:09:07 UTC+00:00
+updated: 2026-10-26 06:18:23 UTC+00:00
 
 ## Selected Logic
 
@@ -99,6 +99,52 @@ Prime inspects these complete required checks on the exact candidate:
 
 Acceptance is separate from merge. An accepted answer may remain delivery
 pending; never claim closure or change main under this selection.
+
+### Prime acceptance
+
+```pact:acceptance
+decision: "accepted"
+candidate: "84b2c03b33969b8ce693807684dabe5613196d1c"
+evidence: "Prime fresh exact-candidate results below; TASKS Done PACT-20261026-001 through 005; tracked conformance inputs, expected verdicts and checks."
+```
+
+Prime Inspector /root inspected the complete selected delta and published ready
+handoff. Fresh checks ran sequentially in a detached checkout of exactly the
+candidate above, with matching tracked working files, system Node v24.18.0 and
+Git 2.46.2.windows.1. Battery 98%, free RAM 12.95 GiB and the owned heavy-work
+lock satisfied the existing resource policy. Every actual exit was inspected:
+
+| Command | Result | Exit |
+|---|---|---|
+| node conformance/self-test.mjs | 21 invariant assertions | 0 |
+| node conformance/reference.mjs | 181 of 181 semantic cases | 0 |
+| node conformance/source-check.mjs | 207 checks, 165 relative links, no failures | 0 |
+| node conformance/check-git.mjs | 15 real-Git assertions | 0 |
+| node conformance/migration-check.mjs | 30 checks, 11 preservation items; real three-file plan only, applied false | 0 |
+| git diff --check | clean candidate diff | 0 |
+
+All four exact mutating task candidates and this candidate were independently
+proven ancestors of the explicitly fetched remote gate tip (each actual exit
+0). The published ready revision changes only STATE after the candidate.
+TASKS is complete, Pending is empty, STATE is clear, and readiness is explicit.
+No old local command result substitutes for this fresh acceptance run.
+
+Independent read-only Inspector review of correction 5329cb194e08cb4e5d0b544fcbc502079cd677c7
+resolved all identified transfer, handoff and JSON defects with no remaining
+actionable issue in its bounded review. Only TASKS/STATE records differ between
+that reviewed correction and the tested candidate. Root separately inspected
+the scope classification, platform audit, complete examples, migration procedure,
+record provenance and manual Markdown/Git use. No runtime/OS mechanism, second
+ledger, new role or lifecycle stage was introduced. Prose judgments require the
+responsible authority's evidenced resolution; missing facts have the defined
+unresolved verdict rather than invented permissions.
+
+No attached product SPARC binding or live project-truth contract exists here;
+the package separation was verified and no product truth edit was justified.
+Historical records, owner bindings and external installations were preserved.
+These are specification/conformance checks on this host, not an execution of
+two independent implementations on two operating systems. The corpus is bounded.
+Acceptance does not authorize a main merge, external rollout or release archive.
 
 ## Next
 
