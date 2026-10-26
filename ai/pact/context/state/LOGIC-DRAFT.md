@@ -11,7 +11,7 @@ gate_id: PACT-Semantics
 generated_from: /ai/pact/templates/logic-draft.tpl.md
 generated_from_version: 1.7
 content_status: current-state
-updated: 2026-10-26 06:18:23 UTC+00:00
+updated: 2026-10-26 07:18:17 UTC+00:00
 
 ## Selected Logic
 
@@ -74,6 +74,37 @@ lock and sequential heavy checks. No services, dependencies, infrastructure,
 external installation edits, archive refresh, force push, main writes or deploy.
 Bump changed templates only; synchronize RULES/full EXAMPLE/active targets.
 Keep package 2.0 unless demonstrated compatibility break requires reconsideration.
+
+## Owner correction and delivery authorization
+
+Owner instruction 2026-10-26: correct the reviewed defects and merge the result.
+This explicitly authorizes task/gate publication and Prime's separate default
+branch fast-forward after successful acceptance. It supersedes the earlier
+no-main-delivery scope for this gate; other scope/resource constraints remain.
+The previous accepted answer remains immutable history, but its candidate is
+not the corrected delivery candidate. Lead must publish a new handoff revision.
+
+Selected correction: make the non-normative evaluator and corpus agree with
+existing PACT rules for authoritative remote-tip delivery, inherited delivery
+restrictions, fenced guard examples, complete active-task parsing and exact
+integer seq validation. Reuse conformance/reference.mjs and cases.json; promote
+the nine proven counterexamples from the review into tracked fixtures and add
+proportionate adjacent positive/boundary cases. No runtime architecture, external
+rollout, host configuration, new dependencies or unrelated redesign.
+
+Review basis: a19136c171cd67bc9cf1422a0080d2234cb4a0f6; nine counterexamples
+at ai/pact/cache/runs/2026-10-26T06-29-00Z--semantic-review/validation/counterexamples.json
+ran through the tracked runner with actual exit 1 (nine failures). Preserve
+their semantic expectations. Also validate complete generated task examples,
+not only synthetic block fragments. Any necessary adjacent correction must
+have a demonstrated failing case and stay inside the same existing contracts.
+
+Prime retains selection/acceptance/delivery; Lead owns task006 records and its
+candidate publication/integration. Owner-configured models/native efforts remain
+unchanged. Fresh exact-candidate acceptance requires self-test, full corpus,
+source checks, real-Git scenarios, migration preservation and diff hygiene,
+with each actual exit inspected sequentially under the existing resource policy.
+Independent Inspector reviews the correction diff before Prime acceptance.
 
 ## Acceptance
 
