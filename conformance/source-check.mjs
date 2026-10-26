@@ -75,6 +75,7 @@ let pending,active;
 check('complete TASKS example parses',()=>{pending=parsePendingTasks(pendingExample);assert.equal(pending.verdict,'valid');assert.equal(pending.tasks.length,2);});
 check('complete STATE example parses',()=>{active=parseTasks(activeExample);assert.equal(active.verdict,'valid');assert.equal(active.tasks.length,1);});
 for(const key of ['id','role','parent','requires','reservations','trace']) check('exact transferred mechanical '+key,()=>assert.deepEqual(active.tasks[0][key],pending.tasks[0][key]));
+for(const key of ['model_tier','model_binding','effort','effective_effort']) check('parsed complete STATE preserves typed '+key,()=>assert.equal(active.tasks[0][key],field(activeExample,key)));
 const firstPending=pendingExample.slice(pendingExample.indexOf('- [ ] PACT-YYYYMMDD-001'),pendingExample.indexOf('- [ ] PACT-YYYYMMDD-002'));
 for(const key of ['brief','task_scope','permitted_area','protected_area','unchanged_contracts','allowed_side_effects','escalation','model_tier','effort','effective_effort','tests','validation']){
   check('exact transferred prose/binding '+key,()=>assert.equal(field(activeExample,key),field(firstPending,key)));

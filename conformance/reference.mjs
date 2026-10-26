@@ -95,10 +95,32 @@ export function strictJSON(text) {
   };
   const result=value();ws();if(i!==text.length)throw new Error('trailing JSON');return result;
 }
+// Validate this consumed integer from its decimal token before IEEE754 can
+// round a noninteger into an integer. Other JSON numbers retain JSON semantics.
+function exactSequence(text) {
+  const match=/^[ \t\r\n]*(-?)(0|[1-9]\d*)(?:\.(\d+))?(?:[eE]([+-]?\d+))?[ \t\r\n]*$/u.exec(text);
+  if(!match||match[1])throw new Error('sequence number');
+  let digits=(match[2]+(match[3]||'')).replace(/^0+/u,'');
+  if(!digits)throw new Error('positive sequence');
+  const scale=BigInt(match[4]||'0')-BigInt((match[3]||'').length);
+  if(scale<0n){
+    const remove=-scale;
+    if(remove>BigInt(digits.length))throw new Error('fractional sequence');
+    const count=Number(remove);
+    if(!/^0+$/u.test(digits.slice(-count)))throw new Error('fractional sequence');
+    digits=digits.slice(0,-count);
+  }else{
+    if(BigInt(digits.length)+scale>16n)throw new Error('sequence range');
+    digits+='0'.repeat(Number(scale));
+  }
+  const exact=BigInt(digits);
+  if(exact<1n||exact>9007199254740991n)throw new Error('sequence range');
+  return Number(exact);
+}
 function legacyScalar(value,key) {
   if(value==='none'||value==='null')return value;
   if(value==='true')return true;if(value==='false')return false;
-  if(key==='seq'){if(!/^[1-9]\d*$/u.test(value))throw new Error('seq');return Number(value);}
+  if(key==='seq'){if(!/^[1-9]\d*$/u.test(value))throw new Error('seq');return exactSequence(value);}
   if(value.startsWith('[')&&value.endsWith(']'))return value.slice(1,-1).trim()?value.slice(1,-1).split(',').map(v=>v.trim().replace(/^"(.*)"$/u,'$1')):[];
   if(value.startsWith('"'))return strictJSON(value);
   return value;
@@ -131,12 +153,22 @@ export function parseRecord(text,type) {
     if(blocks.length>1)throw new Error('duplicate block');
     if(doc.unclosed?.heading?.index===owner.index)return {verdict:'invalid'};
     const fields={},add=(key,value)=>{if(consumed.has(key)&&Object.hasOwn(fields,key))throw new Error('duplicate consumed field');Object.defineProperty(fields,key,{value,writable:true,enumerable:true,configurable:true});};
-    if(blocks.length===1){for(const line of blocks[0].lines){if(!line.trim())continue;const match=/^([a-z][a-z0-9_]*): (.+)$/u.exec(line);if(!match)throw new Error('machine line');add(match[1],strictJSON(match[2]));}}
+    if(blocks.length===1){for(const line of blocks[0].lines){if(!line.trim())continue;const match=/^([a-z][a-z0-9_]*): (.+)$/u.exec(line);if(!match)throw new Error('machine line');add(match[1],match[1]==='seq'?exactSequence(match[2]):strictJSON(match[2]));}}
     let legacy=doc.visible.filter(v=>v.heading?.index===owner.index&&!/^## /u.test(v.line)).map(v=>v.line);
     if(type==='workflow')for(const block of doc.blocks.filter(b=>b.heading?.index===owner.index&&b.info==='txt'))legacy.push(...block.lines);
     const candidates=legacy.map((line,index)=>({line,index,m:/^( *)([a-z][a-z0-9_]*):(?: (.*))?$/u.exec(line)})).filter(v=>v.m);
     if(candidates.length){
-      const indent=Math.min(...candidates.map(v=>v.m[1].length)),roots=candidates.filter(v=>v.m[1].length===indent);
+      // Top-level labeled fields may be visually indented. Nesting is created
+      // by an actual empty mapping label, not by another scalar's indentation.
+      // This retains typed fields and still rejects their cross-surface or
+      // mixed-indent duplicates without reading nested prose as assignment data.
+      const parents=[],roots=[];
+      for(const candidate of candidates){
+        const indent=candidate.m[1].length;
+        while(parents.length&&indent<=parents.at(-1))parents.pop();
+        if(!parents.length)roots.push(candidate);
+        if(!candidate.m[3])parents.push(indent);
+      }
       for(let n=0;n<roots.length;n++){
         const current=roots[n],key=current.m[2],scalar=current.m[3]||'';if(!consumed.has(key))continue;
         if(scalar){add(key,legacyScalar(scalar,key));continue;}
@@ -163,11 +195,13 @@ export function parseTasks(text) {
     const doc=scanDocument(text),owners=doc.headings.filter(h=>h.name==='Active Task');
     if(owners.length>1)return {verdict:'invalid'};if(!owners.length)return {verdict:'unresolved'};
     const owner=owners[0],blocks=doc.blocks.filter(b=>b.heading?.index===owner.index&&b.info==='pact:task');
+    if(doc.unclosed?.heading?.index===owner.index)return {verdict:'invalid'};
+    const end=doc.headings.find(h=>h.index>owner.index)?.index??doc.lines.length;
     const lines=doc.visible.filter(v=>v.heading?.index===owner.index&&!/^## /u.test(v.line)).map(v=>v.line);
     const idLines=lines.map((line,index)=>({index,match:/^( *)id: (.+)$/u.exec(line)})).filter(v=>v.match);
     if(blocks.length&&idLines.length)return {verdict:'invalid'};
     let records=[];
-    if(blocks.length)records=blocks.map(b=>parseRecord('## Active Task\n\n```pact:task\n'+b.lines.join('\n')+'\n```','task'));
+    if(blocks.length)records=blocks.map((block,index)=>parseRecord('## Active Task\n'+doc.lines.slice(index?block.start:owner.index+1,blocks[index+1]?.start??end).join('\n'),'task'));
     else if(idLines.length){const indent=Math.min(...idLines.map(v=>v.match[1].length));const starts=idLines.filter(v=>v.match[1].length===indent);records=starts.map((start,n)=>parseRecord('## Active Task\n'+lines.slice(start.index,starts[n+1]?.index).join('\n'),'task'));}
     else if(lines.some(line=>line.trim()==='None.'))return {verdict:'valid',tasks:[]};else return {verdict:'unresolved'};
     if(records.some(r=>r.verdict!=='valid'))return {verdict:records.some(r=>r.verdict==='invalid')?'invalid':'unresolved'};
@@ -218,7 +252,9 @@ function guardDecision(markdown,changes) {
   const meta=parseRecord(markdown,'meta');if(meta.verdict!=='valid')return {unresolved:true};
   const mode=meta.fields.mode;if(!['strict','warn','off'].includes(mode))return {denied:false,warnings:['file-guard-mode-gap']};
   if(mode==='off')return {denied:false,warnings:[]};
-  const entries=[];for(const line of (section(markdown,'Entries')||'').split('\n')){
+  section(markdown,'Entries'); // Preserve duplicate-owning-heading rejection.
+  const document=scanDocument(markdown),entryOwner=document.headings.find(h=>h.name==='Entries');
+  const entries=[];for(const {line} of document.visible.filter(v=>entryOwner&&v.heading?.index===entryOwner.index)){
     if(!line.startsWith('|'))continue;const cells=line.split('|').slice(1,-1).map(s=>s.trim());if(cells[0]==='Path or pattern'||/^[-: ]+$/u.test(cells[0]))continue;
     const pattern=cells[0].replace(/^`|`$/gu,'');const operations=cells[1].split(',').map(s=>s.trim());
     if(operations.some(op=>!['read','modify','create','delete','aggregator'].includes(op)))return {unresolved:true};normalizePath(pattern);entries.push({pattern,operations});
@@ -264,7 +300,6 @@ function authority(input) {
     if(!field||input.changed_fields.some(changed=>changed!==field)||changes.some(change=>normalizeTarget(change.path)!==path||change.mode!=='modify'))return verdict('deny');
   }else if(input.operation==='deliver'){
     if(role!=='Prime'||input.branch!==workflow.default_branch)return verdict('deny');
-    return delivery(input.delivery||{});
   }else return verdict('unresolved');
   const boundaryInputs=input.boundaries||[];
   if(assignment.parent&&assignment.parent!=='none'){
@@ -275,6 +310,12 @@ function authority(input) {
   if(workflow.file_guard===undefined)return verdict('unresolved');
   if(workflow.file_guard!=='none'&&!input.records?.file_guard)return verdict('unresolved');
   const guard=guardDecision(workflow.file_guard==='none'?null:input.records?.file_guard,changes);if(guard.denied)return verdict('deny');if(guard.unresolved)return verdict('unresolved');
+  if(input.operation==='deliver'){
+    const authorityRemote=workflow.authority_remote??'origin';
+    if(typeof authorityRemote!=='string'||!authorityRemote)return verdict('unresolved');
+    const result=delivery({...input.delivery,expected_remote:authorityRemote,expected_ref:'refs/heads/'+workflow.default_branch});
+    if(result.verdict!=='allow')return result;
+  }
   return guard.warnings?.length?{verdict:'allow',warnings:guard.warnings}:verdict('allow');
 }
 function observeRemote(input,expectedRef) {
@@ -316,7 +357,12 @@ function delivery(input) {
   const acceptance=parseRequired(input.answer.record,'acceptance');if(acceptance.decision!=='accepted')return verdict('deny');
   if(input.newest_handoff){parseRequired(input.newest_handoff,'gate-handoff');if(section(input.newest_handoff,'Gate Handoff')!==section(input.handoff,'Gate Handoff'))return verdict('deny');}
   if(!Array.isArray(input.changes_after_candidate)||input.changes_after_candidate.some(path=>!stateRecordPath(path)))return verdict('deny');
-  const candidate=ancestry(input.graph,acceptance.candidate,input.delivery_tip,input.history_complete),answer=ancestry(input.graph,input.answer.commit,input.delivery_tip,input.history_complete),ff=ancestry(input.graph,input.current_default,input.delivery_tip,input.history_complete);
+  const expectedRemote=input.expected_remote??'origin',expectedRef=input.expected_ref??'refs/heads/main';
+  if(typeof expectedRemote!=='string'||!expectedRemote||typeof expectedRef!=='string'||!expectedRef.startsWith('refs/heads/'))return verdict('unresolved');
+  const observed=observeRemote({...input,expected_remote:expectedRemote},expectedRef);
+  if(observed==='unresolved')return verdict('unresolved');if(observed===false)return verdict('deny');
+  if(!fullOid(observed))return verdict('unresolved');
+  const candidate=ancestry(input.graph,acceptance.candidate,input.delivery_tip,input.history_complete),answer=ancestry(input.graph,input.answer.commit,input.delivery_tip,input.history_complete),ff=ancestry(input.graph,observed,input.delivery_tip,input.history_complete);
   if([candidate,answer,ff].includes(false))return verdict('deny');if([candidate,answer,ff].includes('unresolved'))return verdict('unresolved');return verdict('allow');
 }
 function handoffNarrative(text) {

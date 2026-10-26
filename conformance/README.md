@@ -1,6 +1,6 @@
 # PACT semantic conformance
 
-updated: 2026-10-26 01:52:14 UTC+00:00
+updated: 2026-10-26 07:37:26 UTC+00:00
 
 This tracked corpus tests PACT decisions. It requires no PACT runtime, service,
 database, agent harness, operating-system API or shared implementation code.
@@ -103,12 +103,28 @@ an exact remote/ref and observed tip; local tracking refs are cache inputs only.
 Closure fixtures include the handoff and complete candidate-to-answer path diff
 at delivery. Later ordinary commits or gates do not retroactively reopen a gate.
 
+Delivery queries use the exact configured remote/ref observation and its tip
+for fast-forward ancestry. `current_default` is a legacy cache hint, never the
+authority. Standalone queries default to `origin` and `refs/heads/main`;
+authority queries bind these coordinates to WORKFLOW's remote/default branch,
+so a nested caller hint cannot replace them. Delivery still passes inherited
+boundaries and File Guard, retaining warn-mode diagnostics. A ref operation
+does not invent a repository-path reservation requirement.
+
 `parse_tasks` scopes new blocks to their exact Active Task or Pending entry.
+It reads the complete original entry, including task-local typed model/native
+fields outside the machine fence. Parallel entries do not share those fields;
+cross-surface duplicates and unclosed task fences are invalid. Fenced examples
+are ignored when reading both task fields and File Guard table rows.
 Legacy active objects split on same-root-indentation `id:` lines. Duplicate IDs,
 consumed keys, contradictory formats, quoted headings and unknown essential
 syntax never silently overwrite or acquire permission. Historical headings and
 code examples do not become current state. New block lines are key + one JSON
 value, not YAML; duplicate nested JSON keys are invalid.
+Consumed `seq` values are validated from their exact numeric token before
+floating-point conversion. Mathematically integral JSON decimal/exponent forms
+within the selected range remain valid; rounded fractions do not become valid
+integers. This does not prohibit fractional JSON values in unrelated fields.
 
 The reference evaluator covers the operations and projections above. Passing it
 is evidence for this corpus, not a claim to implement all human PACT reasoning,
@@ -167,3 +183,11 @@ All selected inputs and expected decisions needed by this corpus are tracked
 here. Cache-only cleanup/recovery policy models were declined as implementation
 code; existing normative cleanup remains in WORKFLOW and can gain further
 fixtures without making disposable cache authoritative.
+
+The nine `review-*` correction cases were promoted unchanged from the
+owner-reviewed nine-failure counterexample set against `a19136c`. Adjacent
+positive/boundary cases and complete generated STATE-example assertions protect
+the same invariants. The earlier fast-forward positive had a contradictory
+remote tip; its observation was corrected while retaining its allow result,
+and that original divergence is preserved as an explicit deny regression.
+The original review cache is no longer required to run these tracked cases.
