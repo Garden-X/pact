@@ -5,11 +5,11 @@
 name: TASKS.md
 canonical_location: /ai/pact/context/state/TASKS.md
 layer: PACT / context / state
-status: complete
+status: active-draft
 generated_from: /ai/pact/templates/tasks.tpl.md
 generated_from_version: 1.13
 content_status: current-state
-updated: 2026-10-26 01:53:54 UTC+00:00
+updated: 2026-10-26 07:22:08 UTC+00:00
 
 ## Pending
 
