@@ -11,7 +11,7 @@ gate_id: PACT-Semantics
 generated_from: /ai/pact/templates/logic-draft.tpl.md
 generated_from_version: 1.7
 content_status: current-state
-updated: 2026-10-26 07:18:17 UTC+00:00
+updated: 2026-10-26 17:22:59 UTC+00:00
 
 ## Selected Logic
 
@@ -176,6 +176,61 @@ Historical records, owner bindings and external installations were preserved.
 These are specification/conformance checks on this host, not an execution of
 two independent implementations on two operating systems. The corpus is bounded.
 Acceptance does not authorize a main merge, external rollout or release archive.
+
+### Corrected acceptance — PACT-Semantics#3
+
+```pact:acceptance
+decision: "accepted"
+candidate: "74cc1222881385f1d6e3d2369ddb2557a90fe0be"
+evidence: "Fresh exact-candidate results below; TASKS Done PACT-20261026-006; tracked conformance corpus and source/Git/migration checks."
+```
+
+Prime Inspector /root reviewed the new published ready handoff at
+cdc9c898e3aeff9e6ee8a54e75e556fffd8f7689 and ran the complete required checks
+in a detached checkout of exactly 74cc1222881385f1d6e3d2369ddb2557a90fe0be.
+Tracked files matched that commit. System Node v24.18.0 and Git
+2.46.2.windows.1 were used on this Windows host. Battery 100%, free RAM
+18.15 GiB, each resource gate exit 0 and an owned sequential HEAVY-LOCK
+satisfied host policy; the lock was released after inspected foreground exits.
+
+| Command | Fresh result | Actual exit |
+|---|---|---|
+| node conformance/self-test.mjs | 21 invariant assertions | 0 |
+| node conformance/reference.mjs | 250 of 250 semantic cases | 0 |
+| node conformance/source-check.mjs | 211 checks, 165 links, no failures | 0 |
+| node conformance/check-git.mjs | 15 real-Git assertions | 0 |
+| node conformance/migration-check.mjs | 30 checks, 11 preservation items; three-file plan only, applied false | 0 |
+| git diff --check 7aec582761ff7bc398687c147203e22892c2f92b 74cc1222881385f1d6e3d2369ddb2557a90fe0be | complete gate diff clean | 0 |
+
+The migration plan hash was
+289c73ef31de5374b0b7e99992c3e93d1c15eb8b366ce13019b35a80238d2c20.
+Every process exit was inspected individually. No prior green suite substitutes
+for these fresh results. The original nine review counterexamples are tracked
+unchanged; the later 239-case set was preserved while adding eleven supported
+scalar-prose regressions. Red baselines and exact correction candidates remain
+in TASKS/history.
+
+Independent Prime Inspector reviewed exact correction
+021a51d084523585b2bdda89b564ca2784f267c9 and found no remaining actionable issue
+within the bounded correction scope. Root separately inspected the correction.
+Only TASKS/STATE completion records differ between that reviewed correction and
+the tested candidate; only STATE ready-publication records follow the candidate.
+Remote gate/default refs were explicitly fetched again after validation; the
+gate still matches the reviewed ready publication, with no prior answer for #3,
+and remote main remains 7aec582761ff7bc398687c147203e22892c2f92b. Candidate,
+task006 and current default ancestry checks each exited 0 with complete history.
+
+All five reviewed defects and the discovered multiline-prose regression are
+resolved under existing PACT semantics. No new template/spec version, dependency,
+runtime mechanism, host installation or product/SPARC truth was introduced by
+the correction. The SPARC/docs/raw placeholders remain unchanged. These checks
+and the independent review are bounded evidence, not execution of two independent
+implementations on two operating systems.
+
+This new decision answers #3; earlier published decisions remain historical.
+The owner's explicit merge authorization is recorded above. Delivery follows
+as a separate fast-forward action after this answer is committed, published and
+its exact remote reachability/freshness verified. Closure remains derived.
 
 ## Next
 
