@@ -10,7 +10,7 @@ active_task: none
 generated_from: /ai/pact/templates/state.tpl.md
 generated_from_version: 1.10
 content_status: current-state
-updated: 2026-10-26 17:17:38 UTC+00:00
+updated: 2026-10-26 17:20:28 UTC+00:00
 
 ## Active Task
 
@@ -84,16 +84,16 @@ Owner clarification: add bounded committed-source update discovery for local/Git
 
 ```pact:gate-handoff
 gate_id: "PACT-Semantics"
-seq: 2
-signal: "working"
-candidate: "none"
+seq: 3
+signal: "ready"
+candidate: "74cc1222881385f1d6e3d2369ddb2557a90fe0be"
 branch: "gate/PACT-Semantics"
 lead: "/root/lead_semantics"
-recorded_at: "2026-10-26 07:22:08 UTC+00:00"
+recorded_at: "2026-10-26 17:20:28 UTC+00:00"
 ```
 
-slices: Task006 dispatched from exact selected gate09ad97e; previous candidates/acceptance remain immutable Git history.
-validation: Reviewed nine proven failures; exact tracked regression promotion and red run precede implementation.
-records: Owner authorizes corrections and Prime merge; Lead owns execution/publication only.
+slices: Corrected006 exact021a51d084523585b2bdda89b564ca2784f267c9 published and proven ancestor of explicitly fetched remote gate; earlier b1676f1 preserved ancestor. Prior selected slices remain reachable and recorded in TASKS Done. Complete candidate74cc122 differs from reviewed correction only in TASKS/STATE completion records.
+validation: Affected self-test21, corpus250/250 and source211checks165links each actual0; fast source check211/165links actual0 on exact74cc122. Original9 and prior239 case inputs/expectations unchanged; demonstrated red baselines preserved in task evidence. Independent exact Inspector review and Root read found no actionable residual. Prime owns fresh complete acceptance and separately authorized merge.
+records: SliceRecordsCheck pass; TASKS complete/Pending none, STATE clear/no reservations. Same Lead resumed after usage stops; local owned HEAVY-LOCK removed after checked foreground exits. No template/spec version, dependency, host installation or product/SPARC truth change; all normative fixtures/evidence tracked. Previous handoff/answer preserved in Git history.
 blockers: none
 escalation: none
