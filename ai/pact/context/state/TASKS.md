@@ -13,43 +13,6 @@ updated: 2026-10-26 01:31:28 UTC+00:00
 
 ## Pending
 
-- [ ] PACT-20261026-003 - Semantic corpus and reference checks.
-
-```pact:task
-id: "PACT-20261026-003"
-role: "Worker"
-actor: "/root/lead_semantics/conformance"
-parent: "/root/lead_semantics"
-lead: "/root/lead_semantics"
-ready: true
-requires: ["git","toolchain:node"]
-reservations: [{"path":"conformance/README.md","mode":"create"},{"path":"conformance/cases.json","mode":"create"},{"path":"conformance/reference.mjs","mode":"create"},{"path":"conformance/self-test.mjs","mode":"create"},{"path":"conformance/check-git.mjs","mode":"create"}]
-task_base: "54369fc795e2ecae3a2315e95ed28fdc2a4eb181"
-task_branch: "task/PACT-Semantics/PACT-20261026-003"
-task_candidate: "none"
-trace: "LOGIC-DRAFT.md / Selected Logic"
-source: {"idea":null,"shape":"origin/shape/2026-10-26-Pact-Runtime-Spec-Delta (research only)","draft":"LOGIC-DRAFT.md","tasks":"TASKS.md"}
-```
-
-brief: Author neutral JSON semantic inputs/results and nonnormative Node24 reference, tests and real-Git scenarios in the five reserved conformance files only. Distill October17 cache behavior; do not copy regex models or invent runtime policy. Lead owns shared Git publication.
-boundary_contract:
-  task_scope: Author neutral JSON semantic inputs/results and nonnormative Node24 reference, tests and real-Git scenarios in the five reserved conformance files only. Distill October17 cache behavior; do not copy regex models or invent runtime policy. Lead owns shared Git publication.
-  permitted_area: Read PACT/cache evidence; write only listed reservations.
-  protected_area: main/default ref, host/external installations/services, unrelated files and immutable published decisions.
-  unchanged_contracts: Three roles/lifecycle, manual Markdown+Git validity, one canonical records model, owner model/native efforts.
-  allowed_side_effects: Reserved edits; Lead executor publishes assigned task candidate, Lead integrator gate; no force/services/dependencies/messages.
-  escalation: Report ambiguity or required widening to Lead, then Prime before affected action.
-model_tier: High
-model_binding: inherited owner-configured model, no override
-effort: 100%
-effective_effort: inherited explicit native setting preserved; exact host enum unavailable
-resource_rule: No starts below20% battery even AC; measured resource gate and sequential heavy lock.
-tests: conformance/self-test.mjs
-baseline: node conformance/self-test.mjs actual1 missing reference module, then actual1 targeted unresolved-requires readiness assertion undefined versus false at line19; before evaluator implementation, Node24.18.0.
-validation: self-test/reference/check-git targeted owning checks after parallel authoring ends; actual exits required.
-retry: attempts0; identified correction only
-handoff: authoring completed; final validation/publication sequential
-
 - [ ] PACT-20261026-004 - Source consistency and guarded migration fixtures.
 
 ```pact:task
@@ -60,7 +23,7 @@ parent: "/root/lead_semantics"
 lead: "/root/lead_semantics"
 ready: true
 requires: ["git","toolchain:node"]
-reservations: [{"path":"conformance/source-check.mjs","mode":"create"},{"path":"conformance/migration-check.mjs","mode":"create"},{"path":"conformance/migration-fixtures.json","mode":"create"}]
+reservations: [{"path":"conformance/source-check.mjs","mode":"create"},{"path":"conformance/migration-check.mjs","mode":"create"},{"path":"conformance/migration-fixtures.json","mode":"create"},{"path":"ai/pact/PACT.md","mode":"modify"},{"path":"ai/pact/workflow/WORKFLOW.md","mode":"modify"},{"path":"ai/pact/templates/workflow.tpl.md","mode":"modify"},{"path":"ai/pact/templates/state.tpl.md","mode":"modify"}]
 task_base: "54369fc795e2ecae3a2315e95ed28fdc2a4eb181"
 task_branch: "task/PACT-Semantics/PACT-20261026-004"
 task_candidate: "none"
@@ -68,7 +31,7 @@ trace: "LOGIC-DRAFT.md / Selected Logic"
 source: {"idea":null,"shape":"origin/shape/2026-10-26-Pact-Runtime-Spec-Delta (research only)","draft":"LOGIC-DRAFT.md","tasks":"TASKS.md"}
 ```
 
-brief: Author only conformance/source-check.mjs, migration-check.mjs and migration-fixtures.json. Check complete workflow/transfer examples, current record parsing, links/versions and synthetic reviewed-plan migration guards/preservation. No real installation apply, other source edits, new runtime or dependencies. Lead owns Git publication.
+brief: Author only conformance/source-check.mjs, migration-check.mjs and migration-fixtures.json. Check complete workflow/transfer examples, current record parsing, links/versions and synthetic reviewed-plan migration guards/preservation. Prime-approved bounded source clarification: literal ! has no negation semantics; parallel disjointness covers write claims; status tuples are necessary but task counts must agree; Git OIDs use full lowercase hex. Synchronize only the listed owning contracts/examples and add source assertions. No real installation apply, other source edits, new runtime or dependencies. Lead owns Git publication.
 boundary_contract:
   task_scope: Author only conformance/source-check.mjs, migration-check.mjs and migration-fixtures.json. Check complete workflow/transfer examples, current record parsing, links/versions and synthetic reviewed-plan migration guards/preservation. No real installation apply, other source edits, new runtime or dependencies. Lead owns Git publication.
   permitted_area: Read PACT/cache evidence; write only listed reservations.
@@ -87,7 +50,11 @@ validation: source-check and migration-check on final integrated source; stale p
 retry: attempts0; identified correction only
 handoff: authoring completed; final validation/publication sequential
 
+scope_approval: Prime /root approved this bounded004 expansion within selected path/state/source consistency on2026-10-26 before any affected edit; task003 retains exact separate conformance evaluator/corpus reservations.
+
 ## Done
+
+- PACT-20261026-002 - Exact task candidate dc5a18875dac0eb7dd9a2d10572df840fb5a542b published and proven reachable from explicitly fetched remote gate/PACT-Semantics (ancestry actual0). Source-contracts199/163links0; diff0; portable authority/record/path/ref/prerequisite/migration contracts synchronized, package2.0 retained. Native commit/push hygiene0. No main/SPARC product truth change.
 
 - PACT-20261026-001 - Read-only semantic/cache audit by /root/semantic_audit. Identified reservation/path/ref/parser gaps and distilled October17 cases; evidence supplied to Prime selection and Lead briefs. No writes/tests/Git mutations; no candidate required. SPARC/docs/raw placeholders verified; no live product contract update.
 

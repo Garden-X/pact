@@ -6,7 +6,7 @@ name: STATE.md
 canonical_location: /ai/pact/context/state/STATE.md
 layer: PACT / context / state
 status: active
-active_task: PACT-20261026-002
+active_task: PACT-20261026-003
 generated_from: /ai/pact/templates/state.tpl.md
 generated_from_version: 1.10
 content_status: current-state
@@ -15,24 +15,24 @@ updated: 2026-10-26 01:31:28 UTC+00:00
 ## Active Task
 
 ```pact:task
-id: "PACT-20261026-002"
+id: "PACT-20261026-003"
 role: "Worker"
-actor: "/root/lead_semantics as bounded executor"
+actor: "/root/lead_semantics/conformance"
 parent: "/root/lead_semantics"
 lead: "/root/lead_semantics"
 task_phase: "validating"
 requires: ["git","toolchain:node"]
-reservations: [{"path":"ai/pact/PACT.md","mode":"modify"},{"path":"ai/pact/PACT-MANIFEST.md","mode":"modify"},{"path":"ai/pact/INSTALL.md","mode":"modify"},{"path":"ai/pact/RELEASE-NOTES.md","mode":"modify"},{"path":"ai/pact/workflow/WORKFLOW.md","mode":"modify"},{"path":"ai/pact/templates/workflow.tpl.md","mode":"modify"},{"path":"ai/pact/templates/state.tpl.md","mode":"modify"},{"path":"ai/pact/templates/tasks.tpl.md","mode":"modify"},{"path":"ai/pact/templates/logic-draft.tpl.md","mode":"modify"},{"path":"ai/pact/templates/file-guard.tpl.md","mode":"modify"},{"path":"ai/pact/templates/keep-alive.tpl.md","mode":"modify"},{"path":"ai/pact/agents/hooks/GateClose.md","mode":"modify"},{"path":"ai/pact/agents/hooks/PrimeWatch.md","mode":"modify"},{"path":"ai/pact/agents/skills/Time-Normalization.md","mode":"modify"}]
-task_base: "54369fc795e2ecae3a2315e95ed28fdc2a4eb181"
-task_branch: "task/PACT-Semantics/PACT-20261026-002"
+reservations: [{"path":"conformance/README.md","mode":"create"},{"path":"conformance/cases.json","mode":"create"},{"path":"conformance/reference.mjs","mode":"create"},{"path":"conformance/self-test.mjs","mode":"create"},{"path":"conformance/check-git.mjs","mode":"create"}]
+task_base: "dc5a18875dac0eb7dd9a2d10572df840fb5a542b"
+task_branch: "task/PACT-Semantics/PACT-20261026-003"
 task_candidate: "none"
 trace: "LOGIC-DRAFT.md / Selected Logic"
 source: {"idea":null,"shape":"origin/shape/2026-10-26-Pact-Runtime-Spec-Delta (research only)","draft":"LOGIC-DRAFT.md","tasks":"TASKS.md"}
 ```
 
-brief: Implement selected PACT authority, records/path/ref grammar and platform/migration clarifications in existing contracts, synchronize examples/targets/versions, preserve published history. No runtime or main delivery. Validate source consistency and targeted semantics, record actual exits.
+brief: Author neutral JSON semantic inputs/results and nonnormative Node24 reference, tests and real-Git scenarios in the five reserved conformance files only. Distill October17 cache behavior; do not copy regex models or invent runtime policy. Lead owns shared Git publication.
 boundary_contract:
-  task_scope: Implement selected PACT authority, records/path/ref grammar and platform/migration clarifications in existing contracts, synchronize examples/targets/versions, preserve published history. No runtime or main delivery. Validate source consistency and targeted semantics, record actual exits.
+  task_scope: Author neutral JSON semantic inputs/results and nonnormative Node24 reference, tests and real-Git scenarios in the five reserved conformance files only. Distill October17 cache behavior; do not copy regex models or invent runtime policy. Lead owns shared Git publication.
   permitted_area: Read PACT/cache evidence; write only listed reservations.
   protected_area: main/default ref, host/external installations/services, unrelated files and immutable published decisions.
   unchanged_contracts: Three roles/lifecycle, manual Markdown+Git validity, one canonical records model, owner model/native efforts.
@@ -43,13 +43,15 @@ model_binding: inherited owner-configured model, no override
 effort: 100%
 effective_effort: inherited explicit native setting preserved; exact host enum unavailable
 resource_rule: No starts below20% battery even AC; measured resource gate and sequential heavy lock.
-tests: none - specification contracts; proportionate source/example/link checks.
-baseline: not applicable to documentation-only contracts
-validation: node conformance/source-check.mjs plus diff/contract inspection; Prime runs full gate acceptance once.
+tests: conformance/self-test.mjs
+baseline: node conformance/self-test.mjs actual1 missing reference module, then actual1 targeted unresolved-requires readiness assertion undefined versus false at line19; before evaluator implementation, Node24.18.0.
+validation: self-test/reference/check-git targeted owning checks after parallel authoring ends; actual exits required.
 retry: attempts0; identified correction only
-validation_result: source-check actual exit0, 199 checks/163 relative links; git diff --check actual exit0; powerspy gate0 battery100% freeRAM13.99GiB Node24.18.0. Source checker authored under task004; SHA256 bcd3d4f3353f2512398b9bfaa0f9e26db2d111e93aca8bb2593031e0b5a63d05. Separate Prime full acceptance remains pending.
-contracts_verified: ai/sparc, ai/docs and ai/raw placeholders; no attached SPARC product contracts or truth update. Runtime-free/platform/manual review completed by Lead.
-handoff: authoring completed; exact task candidate publication next
+validation_result: self-test actual0 (18 assertions), reference actual0 (148/148 cases), real-Git check actual0 (15 assertions) on system Node24.18.0/Git2.46.2. Initial Git fixture spawn returned EPERM, then authorized identical checker passed; no failure hidden. Expected semantic red runs131cases/3fail and142cases/5fail inspected before fixes.
+contracts_verified: No attached product SPARC contracts; accepted protocol only.
+publication_check: Native commit and subsequent push both rejected an extra EOF blank line in reference.mjs before publication; corrected formatting, no hook bypass or remote candidate created.
+handoff: validated exact file content; candidate publication next
+redispatch: Final candidate dispatched at exact current gate dc5a18875dac0eb7dd9a2d10572df840fb5a542b; earlier parallel authoring draft and red evidence preserved above; no earlier unpublished candidate identity inferred.
 
 Delivery progress: Source/extracted validators each exited 0 (119 checks/185 links), source/extracted reference scenarios each exited 0 (41 checks), archive audit exited 0 (16 checks/47 files). Current ZIP SHA256 ddb7072d23ab57ecb9d126d41ddbef47978c65d73c81376e0c564936d73b8e80. Nine guarded applications exited 0; wrong-plan-hash negatives each exited 1 before mutation, after/preserved hashes checked. Six isolated publication copies, Tarot local copy and two fixtures updated; primary working copies and three duplicate copies pending. Native project acceptance checks, commits, pushes and merges pending. No service/SPARC truth change; no independent final helper review claimed.
 

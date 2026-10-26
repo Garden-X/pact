@@ -1,0 +1,148 @@
+# PACT semantic conformance
+
+updated: 2026-10-26 01:09:07 UTC+00:00
+
+This tracked corpus tests PACT decisions. It requires no PACT runtime, service,
+database, agent harness, operating-system API or shared implementation code.
+Humans can inspect each input and expected result against the cited rule.
+
+The normative rules remain in [PACT](../ai/pact/PACT.md),
+[WORKFLOW](../ai/pact/workflow/WORKFLOW.md), the state/task templates and
+[GateClose](../ai/pact/agents/hooks/GateClose.md). A contradiction is a protocol
+maintenance defect to report; a reference implementation cannot redefine PACT.
+
+## Corpus contract
+
+[cases.json](cases.json) is UTF-8 JSON with `format: pact-semantic-cases-1`
+and a `cases` array. Every case has:
+
+- `id`: unique stable case identity;
+- `operation`: the semantic query;
+- `rules`: governing PACT rule references;
+- `input`: records and observations needed by that query;
+- `expected`: the normalized semantic result.
+
+An independent implementation consumes these inputs and returns `expected` for
+that case. Compare JSON values, ignoring object-member order; preserve array
+order, exact strings, numbers, booleans and the literal string `unresolved`.
+There is no machine, filesystem or programming-language-specific expected text.
+Explanatory diagnostics may cite rule IDs and are outside the compared result.
+
+Query vocabulary:
+
+| Operation | Input projection | Compared output |
+|---|---|---|
+| path / overlap | policy pattern, literal target / two patterns, known directories | valid/invalid; normalization and match/overlap |
+| parse / parse_tasks | Markdown record, owning record type / current task section | valid/invalid/unresolved and consumed fields |
+| authority | assignment/workflow/guard records, queried operation and complete changed-path facts | allow/deny/unresolved; guard warnings when applicable |
+| requires | prerequisite identifiers and availability observations, pending/active stage | satisfied/unavailable/unresolved; readiness hold or blocked state |
+| candidate | revision graph, base and exact candidate, history completeness | valid/invalid/unresolved ancestry |
+| derive | revision graph and exact remote-ref observation | integrated true/false/unresolved |
+| handoff | previous and proposed publication, authorized writer role | valid/invalid/unresolved |
+| answer | ready publication, Prime acceptance decision record and commit message/path facts | valid/invalid/unresolved |
+| closure / delivery | accepted answer, Git graph, exact remote/default observation and delivery facts | closed true/false/unresolved / allow/deny/unresolved |
+| state / transfer | consumed state metadata and task records / before-and-after task projections | valid/invalid/unresolved |
+
+## Input premises and limits
+
+These are bounded semantic projections of a repository snapshot, not a second
+canonical record format. Fields omitted from a projection are outside that
+query; fixtures do not assert that a partial record is sufficient for every
+PACT operation. A `parse` success means the consumed syntax was read, not that
+the whole project, brief, authorization or lifecycle is valid. Parsing and
+semantic validity are deliberately separate queries.
+
+Authority cases include actual Markdown assignment coordinates, role/actor,
+reservations, workflow guard binding and six boundary fields. Unknown required
+scope stays unresolved. A boundary interpretation is supplied only as a
+recorded parent/owner decision with its fixture-local source and evidence text
+in `records.boundary_decisions`. That wrapper is a repository-evidence input,
+not a new PACT file or authored grant field. The evaluator does not infer
+permissions from arbitrary prose. A responsible authority supplies the human
+semantic judgment in the existing owning task/boundary decision record; without
+that evidenced interpretation both mechanical readers return unresolved for the
+same queried operation. This is an explicit evidence boundary, not permission
+for either implementation to invent missing PACT policy. Missing decision evidence cannot authorize
+action. Native tools, capability identifiers and model tiers confer nothing.
+For these bounded cases the authenticated assignment and decision provenance
+are premises; implementations must establish them from their own given records,
+not infer role authenticity from Git author names.
+
+`changes`, `changed_fields`, integration-review classification and candidate
+path deltas are complete observations of the queried Git/record diff. They are
+not permissions. A mechanically unresolved review remains unresolved. Integration
+path containment does not authorize material changes within an existing path;
+the material-versus-mechanical classification is separately evidenced.
+
+Graph node names in static cases are synthetic, syntactically full object IDs.
+The graph is the case's supplied immutable Git history; it is not a claim those
+objects exist in this source repository. `history_complete: false` never turns
+failure to find an ancestor into proof of non-ancestry. Remote observations name
+an exact remote/ref and observed tip; local tracking refs are cache inputs only.
+Closure fixtures include the handoff and complete candidate-to-answer path diff
+at delivery. Later ordinary commits or gates do not retroactively reopen a gate.
+
+`parse_tasks` scopes new blocks to their exact Active Task or Pending entry.
+Legacy active objects split on same-root-indentation `id:` lines. Duplicate IDs,
+consumed keys, contradictory formats, quoted headings and unknown essential
+syntax never silently overwrite or acquire permission. Historical headings and
+code examples do not become current state. New block lines are key + one JSON
+value, not YAML; duplicate nested JSON keys are invalid.
+
+The reference evaluator covers the operations and projections above. Passing it
+is evidence for this corpus, not a claim to implement all human PACT reasoning,
+host enforcement, identity authentication or every legacy narrative dialect.
+Unsupported essential legacy constructs require explicit review and an unresolved
+result; historical immutable records are not rewritten to placate this runner.
+
+## Running the non-normative checks
+
+Use the installed Node.js and Git; no dependency installation is needed.
+
+```text
+node conformance/self-test.mjs
+node conformance/reference.mjs
+node conformance/check-git.mjs
+node conformance/source-check.mjs
+node conformance/migration-check.mjs
+```
+
+[reference.mjs](reference.mjs) exports the evaluator for another runner or can
+compare the complete corpus. [self-test.mjs](self-test.mjs) was authored before
+the evaluator; the recorded red baseline first lacked the module, then failed
+specifically on unresolved prerequisites incorrectly lacking `ready: false`.
+[check-git.mjs](check-git.mjs) constructs tiny disposable Git repositories using
+Git plumbing and exercises full, shallow, single-branch and worktree contexts,
+explicit remote resolution/fetch/deepening, absent refs and copied-commit
+non-ancestry. It creates no project refs, invokes no network service, and
+verifies its own temporary cleanup target before removing it. These commands are
+maintainer aids, not required PACT execution mechanisms or normative code.
+[source-check.mjs](source-check.mjs) verifies complete contract examples/targets,
+transfer preservation, record ownership, versions and links.
+[migration-check.mjs](migration-check.mjs) tests a deliberately bounded synthetic
+fixture mapping and all guards before its test writer, plus a read-only current
+record plan. It never applies changes to an installed project and is not a
+general-purpose Markdown migrator.
+
+## Recovered evidence
+
+The corpus distills these earlier disposable scenarios; it does not copy their
+regex assertions, implementation classes, doc-gated policy models or scratch
+force-update operations:
+
+| Cache evidence | Durable scenario families |
+|---|---|
+| October 17 `tmp/scenarios.mjs` | exact transfer; lost brief, reservations and baseline; Pending/Active duplication |
+| October 17 `tmp/check-task-candidates.mjs`, A-G and RA-RE | own task publication, role integration separation, base ancestry, copied candidates |
+| October 17 `tmp/check-close.mjs` and `check-delivery.mjs` | answer before delivery, stale handoff, record-only delivery, historical closure |
+| October 17 `tmp/check-harness.mjs`, A-L | immutable publication, newest revision, narrow Prime decision writes |
+| October 17 `tmp/check-interop.mjs` and `check-boundaries.mjs` | prerequisite holds, no capability grants, inherited scope restrictions |
+| Owner-reported shallow single-branch failure | missing tracking ref versus explicitly observed remote ref; incomplete history |
+
+The common local source prefix was
+`ai/pact/cache/runs/2026-10-17T20-50-41Z--tier-routing-forge-closeout/`.
+Those paths document provenance, not required future evidence dependencies.
+All selected inputs and expected decisions needed by this corpus are tracked
+here. Cache-only cleanup/recovery policy models were declined as implementation
+code; existing normative cleanup remains in WORKFLOW and can gain further
+fixtures without making disposable cache authoritative.
