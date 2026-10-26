@@ -5,17 +5,19 @@
 name: TASKS.md
 canonical_location: /ai/pact/context/state/TASKS.md
 layer: PACT / context / state
-status: active-draft
+status: complete
 generated_from: /ai/pact/templates/tasks.tpl.md
 generated_from_version: 1.13
 content_status: current-state
-updated: 2026-10-26 01:52:14 UTC+00:00
+updated: 2026-10-26 01:53:54 UTC+00:00
 
 ## Pending
 
 None.
 
 ## Done
+
+- PACT-20261026-005 - Inspector residual correction. Exact candidate5329cb194e08cb4e5d0b544fcbc502079cd677c7 published and proven reachable from explicitly fetched remote gate/PACT-Semantics (ancestry actual0). Red reference181cases/23fail and selftestNBSP1 inspected before implementation; fresh owning selftest21, corpus181/181 and source207checks165links all actual0, diff/nativecommit/nativepush0. Preserves preassigned actors/nativebindings, resolves only absent dispatch coordinates, enforces whole immutable handoff/noop/materiality/delivery freshness, strict JSON whitespace, portable seq1..9007199254740991 and consistent task counts. All three earlier candidates also remain exact reachable ancestors. SPARC/docs/raw placeholders verified; no product live contract or external installation changed.
 
 - PACT-20261026-004 - Exact task candidate 977d7adb54182ec1a0442a4e769e592f1b6e45a2 published and proven reachable from explicitly fetched remote gate/PACT-Semantics (ancestry actual0). Source205/165links0; migration30/11preservation0; current3fileplanonly appliedfalse. Nativecommit/push0; no external installation writes. Native commit/push hygiene0. No main/SPARC product truth change.
 
