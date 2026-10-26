@@ -1,7 +1,7 @@
 # Protocol for Agent Coordination and Tasks
 
 > Version: 2.0
-> Updated: 2026-10-26 01:43:31 UTC+00:00
+> Updated: 2026-10-26 01:52:14 UTC+00:00
 > Status: release prepared
 > Purpose: project maintenance for AI-assisted development
 > Release title: improved workflow and project syncronization
@@ -363,7 +363,7 @@ Valid state combinations:
 | `superseded` | `no-active-draft` | `clear` | Old draft is retained as a replaced record. |
 
 These tuples are necessary, not sufficient: `active-draft` requires at least
-one pending or active task; `complete` permits neither. `clear` requires no
+one pending or active task; `complete` and `no-active-draft` permit neither. `clear` requires no
 active object, and a selected/active-draft/clear tuple therefore requires a
 nonempty Pending pool. Stored status labels never override contradictory task
 records. Canceled tasks do not remain Pending.
@@ -557,6 +557,10 @@ line is `key: <single-line JSON value>` using JSON string/number/boolean/null,
 array or object syntax. Keys match `[a-z][a-z0-9_]*`; duplicate keys at any
 consumed object level are invalid. JSON numbers consumed as integers must be
 exact integers in the field's range; no coercion of strings to booleans/numbers.
+JSON whitespace is only space, tab, carriage return and line feed; other Unicode
+space characters are not JSON whitespace. Handoff `seq` has the portable range
+1 through 9007199254740991 inclusive, serialized without a leading zero in its
+answer key. This range is a protocol limit, independent of implementation types.
 Input is UTF-8; CRLF and LF are equivalent. No YAML tags, anchors, aliases,
 implicit values or multiple documents exist. Unknown fields remain preserved
 but confer no permissions. More than one block for a singleton section is
@@ -569,13 +573,15 @@ used; absent optional fields remain absent, not invented defaults:
 |---|---|---|
 | META | status, active_task, generated_from, generated_from_version; gate_id in selected draft | state combinations, mutex, template reconciliation, selected gate |
 | workflow declaration / `pact:workflow` | default_branch, gate_branch_pattern, task_branch_pattern, authority_remote, file_guard | role/ref/path checks |
-| `pact:task` | id, role, actor, parent, lead, task_phase, ready, requires, reservations, task_base, task_branch, task_candidate, trace/source pointers | dispatch, transfer, reservations, candidate ancestry |
+| `pact:task` | id, role, actor, parent, lead, task_phase, ready, requires, reservations, task_base, task_branch, task_candidate, trace/source pointers, explicit model_tier/model_binding/effort/effective_effort | dispatch, exact binding transfer/resume, reservations, candidate ancestry |
 | `pact:gate-handoff` | gate_id, seq, signal, candidate, branch, lead, recorded_at | current publication, immutability, acceptance |
 | `pact:acceptance` | decision, candidate, evidence | answer and delivery checks |
 | FILE-GUARD META / Entries | mode, path pattern, operations | guard enforcement |
 
 Model/effort bindings, resource limits and hook cadences retain their existing
 typed workflow contracts; this table does not turn them into authority grants.
+A task block may coexist with existing labeled typed model/effort declarations;
+those retain their workflow grammar and must be unique across both surfaces.
 Briefs, all six boundary_contract fields, design decisions, validation and
 handoff explanations, shapes, ideas, souls and context remain prose. A
 mechanical reader may require their presence or compare transfer text, but

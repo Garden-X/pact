@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { evaluate, normalizePath, matchesPath, parseRecord, ancestry } from './reference.mjs';
+import { evaluate, normalizePath, matchesPath, parseRecord, ancestry, strictJSON } from './reference.mjs';
 
 // Written before the reference implementation: material runner invariants.
 assert.equal(normalizePath('/src/'), 'src/**');
@@ -20,4 +20,7 @@ assert.equal(evaluate({ operation: 'requires', input: { stage: 'pending', requir
 assert.equal(evaluate({ operation: 'requires', input: { stage: 'active', requirements: [{ id: 'git', status: 'unavailable' }] } }).status, 'blocked');
 assert.equal(evaluate({ operation: 'authority', input: { role: 'Worker', operation: 'force_push' } }).verdict, 'deny');
 assert.equal(evaluate({ operation: 'derive', input: { graph: { a: [] }, history_complete: true, candidate: 'a', remote: { status: 'unresolved' } } }).integrated, 'unresolved');
-console.log('runner-invariants: 18 assertions passed');
+assert.throws(() => strictJSON('\u00a01'));
+assert.throws(() => strictJSON('1\u00a0'));
+assert.equal(strictJSON(' \t1\r\n'), 1);
+console.log('runner-invariants: 21 assertions passed');

@@ -9,13 +9,15 @@ status: active-draft
 generated_from: /ai/pact/templates/tasks.tpl.md
 generated_from_version: 1.13
 content_status: current-state
-updated: 2026-10-26 01:43:31 UTC+00:00
+updated: 2026-10-26 01:52:14 UTC+00:00
 
 ## Pending
 
 None.
 
 ## Done
+
+- PACT-20261026-004 - Exact task candidate 977d7adb54182ec1a0442a4e769e592f1b6e45a2 published and proven reachable from explicitly fetched remote gate/PACT-Semantics (ancestry actual0). Source205/165links0; migration30/11preservation0; current3fileplanonly appliedfalse. Nativecommit/push0; no external installation writes. Native commit/push hygiene0. No main/SPARC product truth change.
 
 - PACT-20261026-003 - Exact task candidate 119e8f1787c941ba0b9af1fc2992f725dc93b943 published and proven reachable from explicitly fetched remote gate/PACT-Semantics (ancestry actual0). Owning tests actual0: selftest18, corpus148/148, realGit15. Expected reds inspected and corrected; nativeEOFhookfailure corrected without bypass. Tracked neutral cases replace disposable validation-only policy inputs. Native commit/push hygiene0. No main/SPARC product truth change.
 

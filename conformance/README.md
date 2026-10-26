@@ -1,6 +1,6 @@
 # PACT semantic conformance
 
-updated: 2026-10-26 01:09:07 UTC+00:00
+updated: 2026-10-26 01:52:14 UTC+00:00
 
 This tracked corpus tests PACT decisions. It requires no PACT runtime, service,
 database, agent harness, operating-system API or shared implementation code.
@@ -27,6 +27,10 @@ that case. Compare JSON values, ignoring object-member order; preserve array
 order, exact strings, numbers, booleans and the literal string `unresolved`.
 There is no machine, filesystem or programming-language-specific expected text.
 Explanatory diagnostics may cite rule IDs and are outside the compared result.
+
+The `answer` query here specifically checks GateClose acceptance answers to a
+ready publication. Other Prime authority decisions remain in their existing
+owning contracts and are not silently treated as acceptance answers.
 
 Query vocabulary:
 
@@ -67,6 +71,23 @@ action. Native tools, capability identifiers and model tiers confer nothing.
 For these bounded cases the authenticated assignment and decision provenance
 are premises; implementations must establish them from their own given records,
 not infer role authenticity from Git author names.
+
+Handoff materiality compares stable mechanical payload plus the raw owning
+narrative; it does not parse natural-language meaning. An unchanged payload or
+a timestamp-only change cannot create a new sequence. A same-sequence owning
+narrative edit is invalid. Where only narrative changed and materiality is not
+mechanically evident, `materiality` is a fixture projection of Lead's existing
+owning-record interpretation with `result`, `source` and `evidence`. Missing
+interpretation remains unresolved. It is not a new canonical state field.
+Delivery freshness compares the entire owning publication, including narrative.
+Sequence values are integers from 1 through 9007199254740991 inclusive.
+
+Transfer compares every already explicit actor, coordinate and model/native
+effort binding without alteration or loss. An absent pending actor, local
+binding, lead/source or task coordinate may resolve at dispatch; absence is not
+an instruction to overwrite an already assigned value. Brief and boundary prose
+remain preserved as prose. JSON token whitespace is only space, tab, LF and CR;
+non-ASCII whitespace inside quoted JSON strings remains ordinary string data.
 
 `changes`, `changed_fields`, integration-review classification and candidate
 path deltas are complete observations of the queried Git/record diff. They are

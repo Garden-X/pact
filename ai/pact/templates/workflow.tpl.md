@@ -5,7 +5,7 @@
 name: workflow.tpl.md
 type: pact maintenance template
 for: WORKFLOW.md
-updated: 2026-10-26 01:43:31 UTC+00:00
+updated: 2026-10-26 01:52:14 UTC+00:00
 version: 3.8
 
 ## WHAT
@@ -933,7 +933,7 @@ Answer marker and closure (PACT-ANSWER / PACT-CLOSURE). A Prime decision commit 
 canonical trailer in the commit message's final trailer/footer paragraph,
 `PACT-Answers: <gate_id>#<seq>`, naming the gate and the
 handoff revision it answers. The gate ID is the selected identifier and seq is
-a positive decimal integer, without leading zeroes. Distinct answer commits
+a decimal integer from 1 through 9007199254740991, without leading zeroes. Distinct answer commits
 for the same key are conflicting and invalid; the same commit reached through
 several ancestry paths is counted once. Exactly one canonical trailer and its
 matching owning decision entry are required; author metadata never proves Prime

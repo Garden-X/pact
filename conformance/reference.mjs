@@ -2,7 +2,7 @@
 import fs from 'node:fs';
 import { pathToFileURL } from 'node:url';
 
-const consumed = new Set(['file_guard','status','active_task','generated_from','generated_from_version','default_branch','authority_remote','gate_branch_pattern','task_branch_pattern','gate_id','seq','signal','candidate','branch','lead','recorded_at','id','role','actor','parent','task_phase','ready','requires','reservations','task_base','task_branch','task_candidate','source','trace','decision','evidence','mode']);
+const consumed = new Set(['file_guard','status','active_task','generated_from','generated_from_version','default_branch','authority_remote','gate_branch_pattern','task_branch_pattern','gate_id','seq','signal','candidate','branch','lead','recorded_at','id','role','actor','parent','task_phase','ready','requires','reservations','task_base','task_branch','task_candidate','source','trace','model_tier','model_binding','effort','effective_effort','decision','evidence','mode']);
 const types = new Set(['meta','workflow','task','gate-handoff','acceptance']);
 const clean = text => String(text).replaceAll('\r\n','\n');
 const canonical = value => Array.isArray(value) ? value.map(canonical) : value && typeof value === 'object' ? Object.fromEntries(Object.keys(value).sort().map(key => [key, canonical(value[key])])) : value;
@@ -77,7 +77,7 @@ export function patternsOverlap(left,right,directories=[]) {
 // JSON.parse alone accepts duplicate object keys. This reader rejects them.
 export function strictJSON(text) {
   let i=0;
-  const ws=()=>{while(/\s/u.test(text[i]||'')&&i<text.length)i++;};
+  const ws=()=>{while(i<text.length&&/[ \t\r\n]/u.test(text[i]))i++;};
   const string=()=>{
     const start=i++;let escaped=false;
     while(i<text.length){const c=text[i++];if(c==='"'&&!escaped)return JSON.parse(text.slice(start,i));if(c==='\\'&&!escaped)escaped=true;else escaped=false;}
@@ -308,16 +308,29 @@ function closure(input) {
   const reach=ancestry(input.graph,input.answer.commit,tip,input.history_complete);if(reach!==true)return {closed:reach};
   const candidateReach=ancestry(input.graph,acceptance.candidate,input.answer.commit,input.history_complete);
   if(candidateReach!==true||!Array.isArray(input.candidate_to_answer_paths)||!input.delivery_handoff)return {closed:'unresolved'};
-  if(input.candidate_to_answer_paths.some(path=>!stateRecordPath(path))||!same(parseRequired(input.delivery_handoff,'gate-handoff'),parseRequired(input.handoff,'gate-handoff')))return {closed:'unresolved'};
+  if(input.candidate_to_answer_paths.some(path=>!stateRecordPath(path))||section(input.delivery_handoff,'Gate Handoff')!==section(input.handoff,'Gate Handoff'))return {closed:'unresolved'};
   return {closed:true};
 }
 function delivery(input) {
   if(answerCheck(input).verdict!=='valid')return verdict('deny');
   const acceptance=parseRequired(input.answer.record,'acceptance');if(acceptance.decision!=='accepted')return verdict('deny');
-  if(input.newest_handoff&& !same(parseRequired(input.newest_handoff,'gate-handoff'),parseRequired(input.handoff,'gate-handoff')))return verdict('deny');
+  if(input.newest_handoff){parseRequired(input.newest_handoff,'gate-handoff');if(section(input.newest_handoff,'Gate Handoff')!==section(input.handoff,'Gate Handoff'))return verdict('deny');}
   if(!Array.isArray(input.changes_after_candidate)||input.changes_after_candidate.some(path=>!stateRecordPath(path)))return verdict('deny');
   const candidate=ancestry(input.graph,acceptance.candidate,input.delivery_tip,input.history_complete),answer=ancestry(input.graph,input.answer.commit,input.delivery_tip,input.history_complete),ff=ancestry(input.graph,input.current_default,input.delivery_tip,input.history_complete);
   if([candidate,answer,ff].includes(false))return verdict('deny');if([candidate,answer,ff].includes('unresolved'))return verdict('unresolved');return verdict('allow');
+}
+function handoffNarrative(text) {
+  const doc=scanDocument(text),owners=doc.headings.filter(h=>h.name==='Gate Handoff');
+  if(owners.length!==1)throw new Error('handoff owning section');
+  const owner=owners[0],end=doc.headings.find(h=>h.index>owner.index)?.index??doc.lines.length;
+  const skipped=new Set();
+  for(const block of doc.blocks.filter(b=>b.heading?.index===owner.index&&b.info==='pact:gate-handoff'))for(let i=block.start;i<=block.end;i++)skipped.add(i);
+  const mechanical=new Set(['gate_id','seq','signal','candidate','branch','lead','recorded_at']);
+  return doc.lines.slice(owner.index+1,end).filter((line,index)=>{
+    if(skipped.has(owner.index+1+index))return false;
+    const field=/^ *([a-z][a-z0-9_]*):(?: |$)/u.exec(line);
+    return !field||!mechanical.has(field[1]);
+  }).join('\n');
 }
 function handoffChange(input) {
   if(input.writer_role!=='Lead')return verdict('invalid');
@@ -326,9 +339,16 @@ function handoffChange(input) {
   if(!['working','ready','escalation'].includes(next.fields.signal)||!validBranch(next.fields.branch)||!/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} UTC\+00:00$/u.test(next.fields.recorded_at)||next.fields.signal==='ready'&&!fullOid(next.fields.candidate)||next.fields.signal!=='ready'&&next.fields.candidate!=='none')return verdict('invalid');
   if(input.previous===null)return verdict(next.fields.seq===1?'valid':'invalid');
   const previous=parseRecord(input.previous,'gate-handoff');if(previous.verdict!=='valid')return verdict('unresolved');
-  if(clean(input.previous)===clean(input.next))return verdict('valid');
+  if(section(input.previous,'Gate Handoff')===section(input.next,'Gate Handoff'))return verdict('valid');
   if(next.fields.gate_id!==previous.fields.gate_id||next.fields.seq!==previous.fields.seq+1)return verdict('invalid');
-  return verdict('valid');
+  const payload=fields=>Object.fromEntries(Object.entries(fields).filter(([key])=>!['seq','recorded_at'].includes(key)));
+  if(!same(payload(previous.fields),payload(next.fields)))return verdict('valid');
+  if(handoffNarrative(input.previous)===handoffNarrative(input.next))return verdict('invalid');
+  const interpretation=input.materiality;
+  if(!interpretation||typeof interpretation.source!=='string'||!interpretation.source.trim()||typeof interpretation.evidence!=='string'||!interpretation.evidence.trim())return verdict('unresolved');
+  if(interpretation.result==='material')return verdict('valid');
+  if(interpretation.result==='non-material')return verdict('invalid');
+  return verdict('unresolved');
 }
 function stateCheck(input) {
   let draft,tasks,state,active;try{draft=parseRequired(input.draft,'meta');tasks=parseRequired(input.tasks,'meta');state=parseRequired(input.state,'meta');active=(input.active||[]).map(record=>parseRequired(record,'task'));}catch{return verdict('unresolved');}
@@ -337,7 +357,7 @@ function stateCheck(input) {
   const ids=state.active_task==='none'||!state.active_task?[]:String(state.active_task).split(',').map(id=>id.trim());
   if(!same([...ids].sort(),active.map(t=>t.id).sort())||new Set(ids).size!==ids.length||ids.some(id=>(input.pending_ids||[]).includes(id)))return verdict('invalid');
   if(tasks.status==='active-draft'&&active.length===0&&(input.pending_ids||[]).length===0)return verdict('invalid');
-  if(tasks.status==='complete'&&(active.length>0||(input.pending_ids||[]).length>0))return verdict('invalid');
+  if(['complete','no-active-draft'].includes(tasks.status)&&(active.length>0||(input.pending_ids||[]).length>0))return verdict('invalid');
   if(state.status==='clear')return verdict(active.length===0?'valid':'invalid');
   if(!active.length)return verdict('invalid');
   for(const task of active){
@@ -364,7 +384,8 @@ function stateCheck(input) {
 }
 function transfer(input) {
   const pending=parseRecord(input.pending,'task'),active=parseRecord(input.active,'task');if(pending.verdict!=='valid'||active.verdict!=='valid')return verdict('unresolved');
-  for(const key of ['id','role','parent','lead','requires','reservations','task_base','task_branch','source','trace'])if(!same(pending.fields[key],active.fields[key]))return verdict('invalid');
+  for(const key of ['id','role','requires','reservations'])if(!Object.hasOwn(pending.fields,key)||!Object.hasOwn(active.fields,key))return verdict('unresolved');
+  for(const key of ['id','role','parent','actor','lead','requires','reservations','task_base','task_branch','source','trace','model_tier','model_binding','effort','effective_effort'])if(Object.hasOwn(pending.fields,key)&&!same(pending.fields[key],active.fields[key]))return verdict('invalid');
   if((input.remaining_pending_ids||[]).includes(active.fields.id))return verdict('invalid');
   for(const label of ['Brief','Boundary Contract','Validation','Tests / Baseline']){
     const before=section(input.pending,label),after=section(input.active,label);if(!before?.trim()||!after?.trim()||before!==after)return verdict('invalid');

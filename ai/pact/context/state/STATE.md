@@ -6,53 +6,50 @@ name: STATE.md
 canonical_location: /ai/pact/context/state/STATE.md
 layer: PACT / context / state
 status: active
-active_task: PACT-20261026-004
+active_task: PACT-20261026-005
 generated_from: /ai/pact/templates/state.tpl.md
 generated_from_version: 1.10
 content_status: current-state
-updated: 2026-10-26 01:43:31 UTC+00:00
+updated: 2026-10-26 01:52:14 UTC+00:00
 
 ## Active Task
 
 ```pact:task
-id: "PACT-20261026-004"
+id: "PACT-20261026-005"
 role: "Worker"
-actor: "/root/lead_semantics/validation_assets"
+actor: "/root/lead_semantics as executor with conformance specialist"
 parent: "/root/lead_semantics"
 lead: "/root/lead_semantics"
 task_phase: "validating"
 requires: ["git","toolchain:node"]
-reservations: [{"path":"conformance/source-check.mjs","mode":"create"},{"path":"conformance/migration-check.mjs","mode":"create"},{"path":"conformance/migration-fixtures.json","mode":"create"},{"path":"ai/pact/PACT.md","mode":"modify"},{"path":"ai/pact/workflow/WORKFLOW.md","mode":"modify"},{"path":"ai/pact/templates/workflow.tpl.md","mode":"modify"},{"path":"ai/pact/templates/state.tpl.md","mode":"modify"}]
-task_base: "119e8f1787c941ba0b9af1fc2992f725dc93b943"
-task_branch: "task/PACT-Semantics/PACT-20261026-004"
+reservations: [{"path":"conformance/reference.mjs","mode":"modify"},{"path":"conformance/cases.json","mode":"modify"},{"path":"conformance/self-test.mjs","mode":"modify"},{"path":"conformance/README.md","mode":"modify"},{"path":"conformance/source-check.mjs","mode":"modify"},{"path":"ai/pact/PACT.md","mode":"modify"},{"path":"ai/pact/templates/state.tpl.md","mode":"modify"},{"path":"ai/pact/workflow/WORKFLOW.md","mode":"modify"},{"path":"ai/pact/templates/workflow.tpl.md","mode":"modify"}]
+task_base: "977d7adb54182ec1a0442a4e769e592f1b6e45a2"
+task_branch: "task/PACT-Semantics/PACT-20261026-005"
 task_candidate: "none"
-trace: "LOGIC-DRAFT.md / Selected Logic"
-source: {"idea":null,"shape":"origin/shape/2026-10-26-Pact-Runtime-Spec-Delta (research only)","draft":"LOGIC-DRAFT.md","tasks":"TASKS.md"}
+trace: "LOGIC-DRAFT.md / Acceptance; Prime Inspector residual findings"
 ```
 
-brief: Author only conformance/source-check.mjs, migration-check.mjs and migration-fixtures.json. Check complete workflow/transfer examples, current record parsing, links/versions and synthetic reviewed-plan migration guards/preservation. Prime-approved bounded source clarification: literal ! has no negation semantics; parallel disjointness covers write claims; status tuples are necessary but task counts must agree; Git OIDs use full lowercase hex. Synchronize only the listed owning contracts/examples and add source assertions. No real installation apply, other source edits, new runtime or dependencies. Lead owns Git publication.
+brief: Correct evidenced Inspector residuals in exact transfer binding preservation, immutable handoff semantic/no-op and narrative freshness, strict JSON whitespace/portable seq range, and no-active-draft count checks. Add red regressions before code fixes, synchronize minimal owning PACT/template clauses, no new runtime or state.
 boundary_contract:
-  task_scope: Author only conformance/source-check.mjs, migration-check.mjs and migration-fixtures.json. Check complete workflow/transfer examples, current record parsing, links/versions and synthetic reviewed-plan migration guards/preservation. No real installation apply, other source edits, new runtime or dependencies. Lead owns Git publication.
-  permitted_area: Read PACT/cache evidence; write only listed reservations.
-  protected_area: main/default ref, host/external installations/services, unrelated files and immutable published decisions.
-  unchanged_contracts: Three roles/lifecycle, manual Markdown+Git validity, one canonical records model, owner model/native efforts.
-  allowed_side_effects: Reserved edits; Lead executor publishes assigned task candidate, Lead integrator gate; no force/services/dependencies/messages.
-  escalation: Report ambiguity or required widening to Lead, then Prime before affected action.
+  task_scope: The bounded residual correction brief above, selected by Prime.
+  permitted_area: Only listed reservations; read existing contracts/evidence.
+  protected_area: main/default, host/external installations, other tasks and immutable historical records.
+  unchanged_contracts: Three roles/lifecycle, one canonical Markdown/Git authority, requires grants nothing, owner model/native settings.
+  allowed_side_effects: Reserved edits and own task candidate publication; Lead gate integration separately, no force/services/dependencies/messages.
+  escalation: Missing facts or needed widening to Lead then Prime before action.
 model_tier: High
-model_binding: inherited owner-configured model, no override
+model_binding: inherited configured owner model, no override
 effort: 100%
-effective_effort: inherited explicit native setting preserved; exact host enum unavailable
-resource_rule: No starts below20% battery even AC; measured resource gate and sequential heavy lock.
-tests: conformance/migration-check.mjs
-baseline: node conformance/migration-check.mjs actual1 Missing expected exception stale source revision must fail before writes, line30; before guard implementation.
-validation: source-check and migration-check on final integrated source; stale plan/hash/revision/review negatives must fail before any writer callback.
-retry: attempts0; identified correction only
-validation_result: source-check actual0 (205 checks/165 links); migration-check actual0 (30 checks/11 preservation items), real-project3files plan-only at base119e8f1 appliedfalse. Baseline stale-source guard actual1 before implementation; initial read-only Git spawn EPERM then identical authorized check0; intermediate template-example mismatch1 corrected and owning source-check0. Source-only !/read-claim/state-count/full-lowercaseOID clarifications match selected corpus.
-contracts_verified: SPARC/docs/raw placeholders; no installed project, product truth, runtime or host configuration changed.
-handoff: own checks passed; exact task candidate publication next
-
-scope_approval: Prime /root approved this bounded004 expansion within selected path/state/source consistency on2026-10-26 before any affected edit; task003 retains exact separate conformance evaluator/corpus reservations.
-redispatch: Final candidate dispatched at exact current gate 119e8f1787c941ba0b9af1fc2992f725dc93b943; earlier parallel authoring draft and red evidence preserved above; no earlier unpublished candidate identity inferred.
+effective_effort: explicit inherited native setting preserved; host enum unavailable
+resource_rule: No starts below20% battery evenAC; heavy checks sequential under lock.
+tests: conformance/cases.json and self-test.mjs
+baseline: reference actual1 before fixes,181cases158pass23fail; self-testactual1 JSONNBSP line23 before strict whitespace fix. Lead inspected both actual outputs; no checks weakened.
+validation: Owning reference/self-test/source checks, actual exits; Prime full acceptance remains separate.
+retry: identified residual fixes only
+validation_result: Fresh owning checks actual0: self-test21 assertions, corpus181/181, source207checks165links; diff hygiene0. Prime Inspector residuals now have regression coverage for explicit bindings, no-op/narrative handoffs, delivery freshness, JSONwhitespace/seqrange and task counts.
+contracts_verified: PACT source only; SPARC/docs/raw placeholders, no attached live product contract update.
+handoff: bounded correction validated; publish exact task candidate then Lead integrate.
+redispatch: Final candidate dispatched at exact current gate 977d7adb54182ec1a0442a4e769e592f1b6e45a2; earlier parallel authoring draft and red evidence preserved above; no earlier unpublished candidate identity inferred.
 
 Delivery progress: Source/extracted validators each exited 0 (119 checks/185 links), source/extracted reference scenarios each exited 0 (41 checks), archive audit exited 0 (16 checks/47 files). Current ZIP SHA256 ddb7072d23ab57ecb9d126d41ddbef47978c65d73c81376e0c564936d73b8e80. Nine guarded applications exited 0; wrong-plan-hash negatives each exited 1 before mutation, after/preserved hashes checked. Six isolated publication copies, Tarot local copy and two fixtures updated; primary working copies and three duplicate copies pending. Native project acceptance checks, commits, pushes and merges pending. No service/SPARC truth change; no independent final helper review claimed.
 

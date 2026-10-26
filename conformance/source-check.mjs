@@ -44,6 +44,16 @@ check('prose interpretation requires existing evidenced decision',()=>{
   assert.match(read('PACT.md'),/task\/boundary decision record/u);
   assert.match(read('PACT.md'),/same facts\/query return `unresolved`/u);
 });
+check('portable JSON whitespace and sequence range',()=>{
+  assert.match(read('PACT.md'),/JSON whitespace is only space, tab, carriage return and line feed/u);
+  assert.match(read('PACT.md'),/1 through 9007199254740991 inclusive/u);
+  assert.match(read('templates/state.tpl.md'),/integer from 1 through 9007199254740991/u);
+});
+check('transfer bindings and handoff owning narrative remain authoritative',()=>{
+  assert.match(read('templates/state.tpl.md'),/already explicit Pending actor, model tier, local model binding, effort/u);
+  assert.match(read('templates/state.tpl.md'),/Compare the whole owning publication, including material narrative/u);
+  assert.match(read('templates/state.tpl.md'),/seq bump\s+without a material payload change is invalid/u);
+});
 check('workflow full example matches active target',()=>assert.equal(stripStamp(example('templates/workflow.tpl.md')),stripStamp(read('workflow/WORKFLOW.md'))));
 
 for(const [file,version] of [['workflow','3.8'],['state','1.10'],['tasks','1.13'],['logic-draft','1.7'],['file-guard','1.1'],['keep-alive','1.2']]){

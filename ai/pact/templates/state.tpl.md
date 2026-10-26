@@ -5,7 +5,7 @@
 name: state.tpl.md
 type: pact maintenance template
 for: STATE.md
-updated: 2026-10-26 01:43:31 UTC+00:00
+updated: 2026-10-26 01:52:14 UTC+00:00
 version: 1.10
 
 ## WHAT
@@ -172,6 +172,12 @@ validation expectation, with applicable tests and baseline evidence, into the
 active object before removing its Pending entry. STATE must suffice to resume
 without the deleted entry or chat history. Preserve explicit actor/model/effort
 bindings, parent/role/tier context and the complete effective boundary_contract.
+An already explicit Pending actor, model tier, local model binding, effort or
+effective native setting must remain unchanged on transfer unless an authorized
+recorded change precedes dispatch. Previously unassigned actor/local binding,
+Lead/source or exact task branch/base coordinates may be resolved at dispatch;
+absence is not an explicit binding to overwrite. Record that resolution without
+inventing a different owner setting. Preserve every explicitly supplied value.
 Approved changes retain their parent approval evidence; a descendant may not
 silently widen inherited limits. Keep large evidence at its existing path and
 retain its relevant references; do not copy transcripts or long-form reasoning into STATE.
@@ -227,10 +233,20 @@ and the next `seq`. Non-semantic differences (timestamp, formatting, a re-read
 of the same pointer) create no revision and are not edited into a published
 one. Unpublished local drafts may change freely.
 
+Compare the whole owning publication, including material narrative, not only
+its mechanical block. A repeated identical observation is a no-op. A seq bump
+without a material payload change is invalid, including timestamp-only changes.
+Changed material prose at the same seq violates immutability. Where changed
+prose could be semantically equivalent, consume the Lead's evidenced materiality
+resolution in the existing owning record; absent that interpretation the
+comparison is unresolved. Delivery freshness uses the same complete publication
+comparison, so changed blockers/validation cannot hide behind unchanged fields.
+
 Fields:
 
 - `gate_id`: the gate selected in `LOGIC-DRAFT.md`;
-- `seq`: positive integer starting at 1 for a gate, incremented by one for every published material
+- `seq`: integer from 1 through 9007199254740991, starting at 1 for a gate,
+  incremented by one for every published material
   change; `gate_id#seq` is the notification key;
 - `signal`: `working`, `escalation`, or `ready`;
 - `candidate`: for `ready`, the exact implementation revision Lead validated
