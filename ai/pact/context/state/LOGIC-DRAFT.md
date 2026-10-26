@@ -7,165 +7,98 @@ canonical_location: /ai/pact/context/state/LOGIC-DRAFT.md
 layer: PACT / context / state
 status: selected
 owner_role: Prime
-gate_id: PACT-Maintenance
+gate_id: PACT-Semantics
 generated_from: /ai/pact/templates/logic-draft.tpl.md
 generated_from_version: 1.6
 content_status: current-state
-updated: 2026-10-18 09:01:28 UTC+00:00
+updated: 2026-10-26 01:09:07 UTC+00:00
 
 ## Selected Logic
 
-Owner approved scope/risk-based validation and proven evidence reuse, with a read-only startup reminder for deferred template activation. Update PACT itself and distribute templates only. Preserve mandatory checks, Prime acceptance, explicit owner bindings, active project work and existing authority boundaries. Existing global Git gates are not changed by this protocol pass. Check owner-selected committed local/GitHub sources, offer upgrades for user agreement, and have Prime report newly observed external pushes during normal repository inspection. Preserve existing sync automation. Acceptance requires source consistency, negative reuse/migration cases and verified read-only reminder behavior. The owner authorizes source merge; installed projects receive templates only.
+Prime selects the owner's implementation request: deterministic PACT authority,
+transitions and acceptance with manual humans + agents + Markdown + Git use.
+Implement only the reduced delta below through task candidates and this gate.
+No runtime, new role, lifecycle stage or canonical state file. Main delivery is
+not selected; acceptance and delivery remain separate.
 
 ## Source / Evidence
 
-- Owner's release correction request and continuation on October 10, 2026.
-- Audited existing template RULES/EXAMPLEs, installed entry files, hooks,
-  package manifest/install notes, and host startup reminder. Reuse the existing
-  lifecycle, recovery, acceptance, and shared-registry contracts where valid.
-- The preceding maintenance pass found useful acceptance/record gaps, but its
-  naming, tiers, fixed profiles, and incomplete example coverage were rejected
-  by the owner. Its task outcomes remain summarized in TASKS History.
-- Two read-only audits confirmed stale state fields, role/tier mixing, fixed
-  profile installation, conditional-log mismatch, and incomplete hook examples.
+- Owner attachment, 2026-10-26, and subsequent instruction to execute the task.
+- Baseline: 7aec582761ff7bc398687c147203e22892c2f92b.
+- Proposal branch shape/2026-10-26-Pact-Runtime-Spec-Delta, shape blob
+  9f94c26c3d4e26e763fe68574b2d26ebba9e7f62: research, not authority.
+- Reuse WORKFLOW roles, Spawn Boundaries, task candidates, validation, cleanup;
+  state/tasks/logic-draft/file-guard templates; GateClose and PrimeWatch.
+- Distill October 14/16/17/18 cache scenarios, not scratch regex policy models.
+- ai/sparc, ai/docs and ai/raw are package placeholders; no attached product
+  SPARC binding/live contract or REFERENCE-INDEX. No product truth change.
 
 ## Decisions
 
-- Prime owns architecture and inspection; both functions share High with same
-  or different models. Lead hires bounded specialist Workers as required.
-- Use High/Middle/Light and percentage efforts with explicit local mapping.
-- Keep model bindings and authority separate; preserve configured owner models.
-- Keep package manifest as stable index; task/state files own current hires.
-- Update RULES and EXAMPLEs before synchronizing generated entry targets.
-- Preserve repository maintenance history; fresh archives initialize empty state.
-- Keep shared parent KEEP-ALIVE structure and existing launch semantics.
-- Prepare local release files/archive; publishing, tags, and Git delivery are
-  separate. No product-truth change or SPARC edit is required.
+Pre-edit classification: A normative semantics; B minimum consumed machine
+representation; C rejected implementation concern; D rejected platform norm.
+
+| Shape item | Class | Selected disposition |
+|---|---|---|
+| authority derivation | A | One effective PACT authority procedure; role powers and inherited scope are distinct. |
+| runtime lease | C | Reject lease/token/expiry and capability-derived authority objects. |
+| machine blocks | B | Only consumed mechanical inputs; brief, boundaries, explanations remain prose; preserve legacy history. |
+| AuthorityRepository | A/C | Keep exact Git revisions, ancestry, changed paths and explicit remote observations; reject store interface, author-based trust and service requirements. |
+| Host state | C | No subsystem; external restrictions never grant PACT authority. |
+| Operational journal | C | Reject subsystem and append-only journal requirement. |
+| requires grammar | A/B | Portable identifiers and satisfied/unavailable/unresolved results; grants no authority, including execution. |
+| path grammar | A/B | One repository-relative interpretation of slash, directories, patterns, case and rename effects. |
+| reservation operations | A/B | read/modify/create/delete; explicit legacy write compatibility; aggregator is annotation, not mutation permission. |
+| named checks | A/B | Stable selected check identities and resolvable command/environment evidence; no command-authority registry. |
+| rule IDs | B | Only stable references needed for conformance. |
+| conformance/ | A/B | Tracked language-neutral inputs/results; non-normative runner, no runtime dependency. |
+| platform-neutral KEEP-ALIVE | A/D | Generalize launcher validation; retain portable default and useful platform examples. |
+| legacy migration | A/B | Plan-only, reviewed, hash/revision guarded, non-destructive; no installation rollout. |
+
+Reject shape-specific blanket Worker template-write prohibition (owner permits
+source template maintenance), parent-role power intersection (inherit scope,
+not parent role powers), subject-did-not-author revision rule, capability-based
+permissions and journal/recovery APIs. Unknown/conflicting mechanical inputs
+produce unresolved/invalid verdicts, never inferred permission. Arbitrary prose
+boundaries require recorded authority resolution when mechanically unresolved;
+do not structure reasoning or pretend natural language is decidable.
 
 ## Constraints
 
-Follow AGENTS/WORKFLOW within owner-authorized protocol maintenance. Preserve
-unrelated work, existing explicit bindings, shared host services, and actual
-validation evidence. No invented gates, hires, metrics, or timestamps.
+Preserve owner model/native effort, project data and immutable historical
+handoffs/answers. Prime Architect/Inspector and Lead execution remain separate.
+Inherited model, High capability, requested effort 100% mapped to supported
+maximum unless explicit native setting is preserved; no model override.
+No starts below 20% battery even on AC; measured resource gate/shared heavy
+lock and sequential heavy checks. No services, dependencies, infrastructure,
+external installation edits, archive refresh, force push, main writes or deploy.
+Bump changed templates only; synchronize RULES/full EXAMPLE/active targets.
+Keep package 2.0 unless demonstrated compatibility break requires reconsideration.
 
 ## Acceptance
 
-PACT-Maintenance decision: accepted
-candidate: c6571438d82d6b76adf0732e466af2bb75bdc655
-evidence: TASKS Done PACT-20261018-002 and local validation/maintenance-final/exits.json in cache run 2026-10-18T02-06-19Z--routing-delivery. Root in Prime Inspector pass reviewed the complete source patch, candidate identity, all nine actual zero exits (353 checks, 203 links), 41 host-helper checks, 15 contract walkthrough cases, and preservation hashes for 12 template-only copies. The later Lead records change only TASKS/STATE and passed the fresh 122-check/203-link validator. Native commit/push hygiene passed. Existing acceptance authority, mandatory hooks, project data and owner bindings are preserved. Host event trust/delivery remains unverified; protocol rules and manual CLI results do not prove runtime enforcement. No product/SPARC truth changed. Source fast-forward delivery is separately authorized; project active migration and publication are outside this task.
+Prime inspects these complete required checks on the exact candidate:
 
-PACT-Routing decision: accepted
-candidate: 50caccbcfab0dff2c292c363cf6b34f0677d8931
-evidence: TASKS Done PACT-20261018-001, nine actual validation exits 0 (353 checks, 203 links), manual routing/authority review, native commit and task/gate push hygiene 0. Root in Prime Inspector pass reviewed the full source diff and actual outputs. Documentation/reference and Git-fixture coverage only; no host scheduler enforcement or independent reviewer claimed. Installed-project failures/delivery stay under preserved task 009, outside this source acceptance.
+- semantic-conformance: positive/negative language-neutral fixtures for roles,
+  reservations, guard, inherited narrowing, transfer/state combinations, task
+  ancestry/reachability, integration, handoff/answer/closure, force push,
+  unavailable/unresolved requires, remote refs and legacy parsing. New material
+  runner invariants have failing tests before implementation.
+- source-contracts: RULES/full EXAMPLE/target equality, versions, links, consumed
+  grammar and runtime-free policy consistency.
+- git-remote-scenarios: real synthetic full/shallow/single-branch/worktree cases;
+  missing tracking ref is not remote absence; copied commits are not ancestry;
+  incomplete history remains unresolved.
+- migration-preservation: read-only plan and extracted-value preservation for
+  active/pending state, immutable handoffs/answers, guards/hooks and explicit
+  native bindings; stale hash/revision fails before mutation. No external apply.
+- scope-and-platform: portable rule/default/platform-example audit and manual
+  use walkthrough; no second authority ledger or runtime subsystem.
+- record-hygiene: actual exits, candidate evidence, SliceRecordsCheck, intended
+  diff and task-to-remote-gate reachability; native hooks remain mandatory.
 
-
-- All affected RULES and EXAMPLE sections use coherent roles/tiers/efforts.
-- Generated entry targets match their governing examples; versions and links
-  resolve, and migration preserves real target data.
-- Host reminder/global guidance no longer inject obsolete terminology.
-- A fresh release archive contains empty state, no maintainer host/history data,
-  and the complete protocol; checksum and validation are recorded.
-
-## Recovery And Reporting Correction
-
-Correction selected by Prime under the owner's explicit implementation request:
-preserve full bounded briefs and relevant test/baseline evidence in active
-STATE; allow planning only for Next during Prime absence; generalize portable
-record checks; exempt external KEEP-ALIVE from installed PACT target META; and
-make correction tracking optional with preserved enabled upgrade values.
-
-Acceptance: documentation/invariant transfer and restart, rejected incomplete
-and duplicate transfers, populated/empty Next planning preserving the current
-candidate, optional metric/retry/empty-denominator cases, fresh-install/upgrade
-preservation, source and extracted archive checks, rebuilt ZIP/checksum.
-Set state/tasks/workflow templates to 1.5/1.9/3.1. Keep unrelated template
-versions and PACT 2.0 identity; add no role, state file, framework or scheduler.
-This is a correction of the current selected release cycle, not a Next gate.
-No SPARC truth is attached or changed. The prior archive will be superseded;
-its structural checks did not establish the missing semantic guarantees.
-
-## Owner Clarifications
-
-The subsequent owner request additionally selects recovery of existing Forge
-shortcuts, clearer hook example naming, a shared KEEP-ALIVE FOR project index
-with per-project metadata blocks, and verification of cache/handoff and the
-IDEAS -> optional shape -> selected draft -> TASKS -> STATE chain.
-Reuse existing workflow recognition rather than adding a runtime prehook.
-Correct the populated IDEAS example (ideas 1.2), extend the external registry
-contract (keep-alive 1.1), preserve every host service command/port, and group
-hook contracts separately in the stable manifest index. No SPARC truth change.
-
-## Delivery And Synchronization
-
-Prime selects the owner-authorized publication and all installed-project rollout as the remaining PACT 2.0 gate work. Publish and fast-forward merge the accepted PACT 2.0 source, then upgrade every existing PACT installation under C:/!DEV/2026 and C:/!DEV/dev-tools; commit and push every Git project upgrade. Preserve active briefs, history, owner models/native efforts, enabled metrics, custom hooks, guards, product work, local caches and shared registry services. Use isolated update branches based on each remote default branch; do not merge unrelated feature changes. Align demonstrated stale shared Claude guidance. Reuse existing release validators with target-aware preservation checks and actual exit statuses. No deployment, new runtime, scheduler, SPARC truth change or unrelated bootstrap. Formal tag/release publication remains separate.
-
-Acceptance: source/extracted protocol checks pass; target preservation checks pass; actual native Git gates are inspected on outgoing revisions; source and project updates reach their remote default branches through separate fast-forward acceptance actions. Non-Git fixtures are updated locally; duplicate worktrees are preserved without unrelated branch merges.
-
-Owner clarification: Tarot stays local; do not publish its empty remote or database/product ancestry. Commit its PACT update locally. Other six project updates remain authorized for commit/push/merge.
-
-## Spawn Boundaries Update
-
-Owner adds explicit parent-issued boundaries to every spawn and requires each
-agent to understand its role and level. Keep the six boundary fields and
-role/parent/tier context in existing briefs/STATE; preserve inherited limits
-and autonomy of method. Root Prime is exempt from a parent-issued contract.
-No new role/file/runtime. Update matching RULES/examples/targets and release
-artifact; verify preservation and existing role authority. Prior installed-
-project rollout remains outstanding; this correction does not close it.
-
-## Harness Topology Update
-
-Owner selects a PACT 2 extension so the unchanged Prime -> Lead -> Worker
-authority works in single- and multi-harness deployments. Separate authority
-roles from operational functions (Watchdog is a function); keep Lead and its
-Watchdog function in a single harness; route wakes event-first with heartbeat
-fallback; publish Prime-facing Lead signals durably in existing STATE before
-notification; require an explicit Lead `ready` candidate; add an optional
-role-less Prime-side observer hook with key-based duplicate suppression. No new
-role, state-file type, runtime, scheduler or SPARC change. Preserve owner
-bindings and Spawn Boundaries. Owner reviews the result before it is pushed to
-a separate branch; the owner merges it. Commits carry no assistant attribution.
-
-Acceptance: scenarios A-K hold by contract walkthrough; templates, examples and
-generated targets agree; existing source validators and reference scenarios
-pass with actual exits; lightweight checks cover the new semantics.
-
-## Harness Topology Correction
-
-Owner review of gate/PACT-Harness selects corrections without redesign: tier
-fields become routing hints (capability is selected for the assignment,
-authority by the role/function contract; Lead, Worker and Watchdog may use any
-adequate tier); each published Gate Handoff `gate_id#seq` is immutable with
-Lead as its single writer; Prime records decisions in the artifact that owns
-the affected authority through record-only, non-force `PACT-Answers` commits;
-acceptance names the exact candidate and the delivered tip may differ only in
-PACT state records; unavailability wakes dedup by stable incident key. Work only
-on gate/PACT-Harness; do not merge to main. Acceptance: owner scenarios A-L in
-the harness checks, which must also fail on the pre-correction revision.
-
-Final owner correction: GateClose records the durable acceptance answer
-(`answers:` + `PACT-Answers`) on the gate branch before re-verifying the
-delivery tip and fast-forwarding the default branch; a not-accepted answer is
-pushed before Lead is notified and nothing merges; a newer handoff before the
-fast-forward voids the earlier close. Lead owns mutable execution state;
-Prime's writes are a narrow authority-decision exception. No redesign.
-
-Delivery-state correction: accepted is not delivered. LOGIC-DRAFT Acceptance
-entries carry the decision (logic-draft 1.6); delivery is derived: a gate
-closes only when the answer commit is reachable from the default branch;
-PrimeWatch and the Prime heartbeat recover an unreachable `accepted` answer
-once per key. Owner simplification: no completion record, trailer only.
-
-## Residual Work Routing And Forge Recovery
-
-Owner selects explicit evidence-based child-tier routing: prefer bounded safe
-parent correction when the foundation is sound, clarify context at the same
-adequate tier, and raise capability only for a demonstrated gap or verified
-complexity/risk. No numeric80% threshold or acceptance relaxation. Finish the
-delivered Forge U4 lifecycle records, refresh its active PACT while preserving
-local bindings/contracts, and distribute current templates to installed
-projects with preservation evidence. Preserve Tarot local-only and the owner
-decision dropping ZIP refresh. Do not start U5 implementation in this rollout.
+Acceptance is separate from merge. An accepted answer may remain delivery
+pending; never claim closure or change main under this selection.
 
 ## Next
 
@@ -173,6 +106,7 @@ None.
 
 ## History
 
-Previous maintenance draft superseded by these explicit owner corrections.
-
-Owner clarification: add bounded committed-source update discovery for local/GitHub repositories and user agreement before a newly offered update. Prime reports newly observed external pushes (not merely its own pushes); preserve existing sync automation and never infer pusher identity from commit authorship. Merge of this reviewed PACT source is explicitly authorized.
+Previous PACT-Maintenance selection/decisions are preserved at
+7aec582761ff7bc398687c147203e22892c2f92b:ai/pact/context/state/LOGIC-DRAFT.md.
+Its accepted answer is on main. Existing TASKS Done/STATE historical records
+remain intact. Installed-project rollout is outside this gate.
