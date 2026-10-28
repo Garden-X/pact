@@ -5,56 +5,16 @@
 name: STATE.md
 canonical_location: /ai/pact/context/state/STATE.md
 layer: PACT / context / state
-status: active
-active_task: PACT-20261028-003
+status: clear
+active_task: none
 generated_from: /ai/pact/templates/state.tpl.md
 generated_from_version: 1.10
 content_status: current-state
-updated: 2026-10-28 22:19:20 UTC+00:00
+updated: 2026-10-28 22:20:02 UTC+00:00
 
 ## Active Task
 
-```pact:task
-id: "PACT-20261028-003"
-role: "Lead"
-actor: "/root/config_plan_docs"
-parent: "/root"
-lead: "/root/config_plan_docs"
-task_phase: "validating"
-requires: ["git","toolchain:node"]
-reservations: [{"path":"conformance/reference.mjs","mode":"modify"},{"path":"conformance/cases.json","mode":"modify"}]
-task_base: "ec55f696e4ea8d03d1eec08dcffd114555ceca7b"
-task_branch: "task/PACT-Review-20261028/PACT-20261028-003"
-task_candidate: "d5ec7db6dc430db5c8eab3a18fe6652112396bad"
-trace: "LOGIC-DRAFT.md / Decisions; Prime exact-c009 review correction"
-source: {"idea":null,"shape":null,"draft":"LOGIC-DRAFT.md","tasks":"TASKS.md"}
-```
-
-brief: Add tracked authority-delivery cases for explicit null, empty and numeric workflow authority_remote plus legacy omitted default. Inspect actual red before replacing the wrapper nullish default with absence-only defaulting. Explicit invalid workflow configuration remains unresolved; omitted configuration still defaults origin. Preserve published task001, all original250 and task001's added46 expectations, and all normative/template/version contracts. Publish an exact task/PACT-Review-20261028/PACT-20261028-003 candidate before separate gate integration.
-files: conformance/reference.mjs; conformance/cases.json
-boundary_contract:
-  task_scope: Correct the exact-c009 review residual in the same selected remote-binding invariant.
-  permitted_area: Modify only the two reserved conformance files; Lead owns TASKS/STATE records and ignored validation cache.
-  protected_area: Original source checkout except shared lock, LOGIC-DRAFT, other code, normative/contracts/templates, dependencies, host/services and default_branch.
-  unchanged_contracts: All PACT authority and versions; all original250 and already published task001 expectations; no history rewrite or broad parser changes.
-  allowed_side_effects: Commit/push only assigned task003 candidate branch; Lead separately reviews/integrates/pushes selected gate; no force/main/deploy/services/installs.
-  escalation: Report scope/rule changes, uncertain evidence, Git conflict or failed native check to Prime before affected action.
-parent_approval: Prime /root exact-c009 review explicitly authorized task003 on 2026-10-28 after observing workflow.authority_remote nullish-default residual; no selected-scope expansion.
-specialty: semantic authority wrapper correctness
-model_tier: High
-model_binding: Inherited owner-configured binding; concrete provider/model metadata is not exposed by this host.
-effort: 100%
-effective_effort: Requested percentage maps to highest supported provider level; preserve inherited explicit native setting whose value is not exposed.
-tests: Append four configured-remote/legacy-default cases to conformance/cases.json before evaluator edit.
-baseline: Exact-c009 reviewer identified authority delivery null config falling back to origin; reproduce tracked null case actual red before wrapper correction. Other malformed config and omitted controls protect the boundary.
-validation: Affected self-test/reference only, original250 and first296 deep equality, exact task_base ancestry and git diff hygiene; inspect all actual exits. Heavy steps require shared source lock and PowerSpy gate minRAM5/battery20 evenAC.
-
-request: Preserve explicit invalid workflow authority remote before delivery.
-created_at: 2026-10-28 22:17:35 UTC+00:00
-validation_result: Four tracked cases added first; reference300/1fail actual1 specifically explicit null workflow remote actualallow versus expectedunresolved. One-line absence-only wrapper default corrected; selftest24/reference300of300 each0, original250 and published001 first296 deepStrictEqual0, diff hygiene0.
-validation_evidence: Tracked conformance/cases.json final four authority-wrapper cases and one-line reference.mjs change; actual red command node conformance/reference.mjs exit1 before evaluator edit, affected green self-test/reference each0. Full inputs/expectations of baselineac431f0(250) and task001c009fb9(296) preserved by Git-object deepStrictEqual0. Local wrapper-reference-red/green and wrapper-self-test-green logs are optional same-host details. No normative/template/version/product/SPARC truth change.
-retry: attempts0; identified correction only
-handoff: status candidate-reviewed; published exact task003 ref fetched equald5ec7db, task_base ancestry0, diff0 and native commit/push0. Lead separately inspected one-line authority wrapper and four cases before fast-forward integration; Done awaits exact authoritative gate reachability. Earlier001/002 remain unchanged ancestors.
+None.
 
 ## Historical Maintenance Notes
 

@@ -5,17 +5,19 @@
 name: TASKS.md
 canonical_location: /ai/pact/context/state/TASKS.md
 layer: PACT / context / state
-status: active-draft
+status: complete
 generated_from: /ai/pact/templates/tasks.tpl.md
 generated_from_version: 1.13
 content_status: current-state
-updated: 2026-10-28 22:17:35 UTC+00:00
+updated: 2026-10-28 22:20:02 UTC+00:00
 
 ## Pending
 
 None.
 
 ## Done
+
+- PACT-20261028-003 - Preserve explicit invalid workflow authority_remote through authority delivery wrapper. Prime exact-c009 review authorized the bounded follow-up; Lead executor /root/config_plan_docs, parent /root, inherited High model/native binding unchanged. Exact candidate d5ec7db6dc430db5c8eab3a18fe6652112396bad built on ec55f696e4ea8d03d1eec08dcffd114555ceca7b, published assigned task branch, fetched equal exact candidate and task_base ancestry0; reviewed one-line wrapper/four cases separately before fast-forward integration. Explicit remote origin refs/heads/gate/PACT-Review-20261028 fetched at1cd7e78ee07f369c0e2a72af8876409f7e1f64f0; task reachability actual0 before Done. Tracked tests-first reference300/1fail exit1 proved configurednull incorrectly allowed; empty/numeric/legacyomitted controls preserved. After absence-only default: selftest24/reference300of300 each0, baseline250 and published001 first296 complete input/expectation deepStrictEqual each0, diff/native commit/native push0. Earlier task001 and task002 remain exact reachable ancestors; no amend/force/history rewrite. Governing PACT authority/template/version and SPARC/product contracts verified unchanged. Lead final source/record check and Prime complete acceptance remain separate.
 
 - PACT-20261028-002 - Align release template table and add owning source assertion. Lead executor /root/config_plan_docs, parent Prime /root; inherited High model/native binding unchanged. Exact candidate146fa9e5f1b3137e229a66dd59407b8dc80a09c3 built on2a5b0d0fb7149c46da9a90b8ddf3b2feebe22d95, published assigned task branch, fetched equal exact candidate and reviewed separately before fast-forward integration. Explicit remote origin refs/heads/gate/PACT-Review-20261028 fetched atec55f696e4ea8d03d1eec08dcffd114555ceca7b; candidate reachability actual0 before Done. Added source-check before release edit: actualred1 (owning table workflow3.7 versus actual3.8); corrected source-check217checks170links0. All listed rows now match template metadata and six selected changed templates are covered; only five stale version values corrected and missing file-guard1.1 row added. Original250 deepStrictEqual0, diff/native commit/native push0 on systemNode24.18.0. Governing protocol/template versions, other release content and product/SPARC truth unchanged; no migration or release publication performed. Prime full acceptance remains separate.
 
