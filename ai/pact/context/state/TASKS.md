@@ -5,15 +5,48 @@
 name: TASKS.md
 canonical_location: /ai/pact/context/state/TASKS.md
 layer: PACT / context / state
-status: complete
+status: active-draft
 generated_from: /ai/pact/templates/tasks.tpl.md
 generated_from_version: 1.13
 content_status: current-state
-updated: 2026-10-26 17:17:38 UTC+00:00
+updated: 2026-10-28 22:06:05 UTC+00:00
 
 ## Pending
 
-None.
+- [ ] PACT-20261028-002 Align release template versions and enforce agreement.
+
+```pact:task
+id: "PACT-20261028-002"
+role: "Lead"
+actor: "/root/config_plan_docs"
+parent: "/root"
+lead: "/root/config_plan_docs"
+ready: false
+requires: ["git","toolchain:node"]
+reservations: [{"path":"conformance/source-check.mjs","mode":"modify"},{"path":"ai/pact/RELEASE-NOTES.md","mode":"modify"}]
+trace: "LOGIC-DRAFT.md / Decisions"
+source: {"idea":null,"shape":null,"draft":"LOGIC-DRAFT.md","tasks":"TASKS.md"}
+```
+
+brief: Add a meaningful source-check assertion comparing the owning RELEASE-NOTES Template Versions table with actual template metadata, inspect its failing baseline, then correct only the six stale/missing selected rows. Preserve every protocol/template version and other release content. Publish one exact candidate on task/PACT-Review-20261028/PACT-20261028-002 before Lead integration.
+files: conformance/source-check.mjs; ai/pact/RELEASE-NOTES.md
+boundary_contract:
+  task_scope: Correct release-version reporting and guard that report against drift.
+  permitted_area: Modify only the two reserved files in this isolated worktree; Lead owns TASKS/STATE records.
+  protected_area: Original source checkout, LOGIC-DRAFT, normative files/templates, dependencies, host/services, default_branch and all other implementation paths.
+  unchanged_contracts: Preserve actual versions, PACT authority, all original 250 corpus inputs/expectations and historical records.
+  allowed_side_effects: Commit/push only assigned task candidate branch; Lead may separately integrate and push the selected gate; no force, main, deployment, services or installs.
+  escalation: Report needed scope/rule change, conflicting branch state or failed native checks to Prime before the affected action.
+specialty: release documentation and source-contract validation
+model_tier: High
+model_binding: Inherited owner-configured binding; concrete provider/model metadata is not exposed by this host.
+effort: 100%
+effective_effort: Requested percentage maps to the highest supported provider level; preserve inherited explicit native setting, whose value is not exposed.
+tests: conformance/source-check.mjs owning release-table/template-metadata comparison.
+baseline: Root inspected six mismatched/missing table versions; tracked source-check red will be recorded before release edits. No protocol invariant changes.
+validation: Run affected source-check and git diff --check, inspect actual exits, compare all original 250 inputs/expectations to ac431f05c2f00836d7632244751d96f5daabf29d, review unchanged normative files.
+
+PACT-20261028-001 is transferred to STATE with its complete evaluator brief and inherited boundaries. Lead is /root/config_plan_docs, parent /root Prime Architect/Inspector; no current hire is added to package manifest or project MAP.
 
 ## Done
 

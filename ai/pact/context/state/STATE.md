@@ -5,16 +5,56 @@
 name: STATE.md
 canonical_location: /ai/pact/context/state/STATE.md
 layer: PACT / context / state
-status: clear
-active_task: none
+status: active
+active_task: PACT-20261028-001
 generated_from: /ai/pact/templates/state.tpl.md
 generated_from_version: 1.10
 content_status: current-state
-updated: 2026-10-26 17:20:28 UTC+00:00
+updated: 2026-10-28 22:06:05 UTC+00:00
 
 ## Active Task
 
-None.
+```pact:task
+id: "PACT-20261028-001"
+role: "Worker"
+actor: "/root/config_plan_docs/evaluator"
+parent: "/root/config_plan_docs"
+lead: "/root/config_plan_docs"
+task_phase: "transferred"
+requires: ["git","toolchain:node"]
+reservations: [{"path":"conformance/reference.mjs","mode":"modify"},{"path":"conformance/cases.json","mode":"modify"},{"path":"conformance/self-test.mjs","mode":"modify"},{"path":"conformance/README.md","mode":"modify"}]
+task_base: "c183f33e44d3ab956976a822af0f4378cc0e7c7a"
+task_branch: "task/PACT-Review-20261028/PACT-20261028-001"
+task_candidate: "none"
+trace: "LOGIC-DRAFT.md / Decisions"
+source: {"idea":null,"shape":null,"draft":"LOGIC-DRAFT.md","tasks":"TASKS.md"}
+```
+
+request: Restore existing PACT semantics for six independently demonstrated evaluator defects.
+brief: Promote the six selected counterexamples and adjacent positive/incomplete-history scenarios to tracked tests before implementation. Correct Pending task fence recognition and visible None handling using the structural scanner; bind closure/derive to explicit or default origin remote while preserving derive's selected gate-ref projection; retain nested/fenced mechanical-looking handoff prose; require candidate ancestry of an accepted answer before delivery. Use a distinct delivery-tip commit and a real acyclic DAG. Preserve all original 250 inputs/expectations. Document corrected projection behavior only if necessary. Run only affected self-test/reference checks, inspect actual red/green exits and publish the exact candidate on the assigned task branch without integrating it.
+boundary_contract:
+  task_scope: Correct the six selected non-normative evaluator decisions with tracked red/green coverage.
+  permitted_area: Read this isolated worktree and root reproduction evidence; modify only conformance/reference.mjs, cases.json, self-test.mjs and README.md, plus task-local ignored cache.
+  protected_area: Original source checkout except shared heavy-work lock, all other files including TASKS/STATE/LOGIC-DRAFT, normative contracts/templates, release/source-check, dependencies, host/services, gate/default/other-task refs.
+  unchanged_contracts: Existing PACT semantics, protocol/template versions, all original 250 corpus inputs/expectations and complete-document selected-entry projection scope.
+  allowed_side_effects: Create/check out, commit and push only task/PACT-Review-20261028/PACT-20261028-001; use shared lock and run affected checks sequentially; no merge/integration, force, main, services or installs.
+  escalation: Report scope/rule changes, uncertain evidence, conflicting Git state, failed native checks or missing boundaries to Lead before the affected action.
+specialty: semantic evaluator correctness and regression testing
+model_tier: High
+model_binding: Inherited owner-configured binding; concrete provider/model metadata is not exposed by this host.
+effort: 100%
+effective_effort: Requested percentage maps to the highest supported provider level; preserve inherited explicit native setting, whose value is not exposed.
+created_at: 2026-10-28 22:06:05 UTC+00:00
+affected_files: the four reserved conformance files only
+tests: conformance/cases.json and self-test.mjs additions first; do not alter original expectations.
+baseline: Root baseline ac431f05c2f00836d7632244751d96f5daabf29d passes original250; review-regressions and corrected extra-regressions-valid-dag-red each expose3failures with actual exit1 before implementation. The corrected distinct-tip DAG supersedes the malformed temporary self-parent graph; tracked real-DAG red/green remains required.
+validation: Run affected self-test/reference checks and git diff --check with actual exit inspection; prove original250 deep equality against baseline Git object before publication. Heavy steps require PowerSpy --gate --min-ram5, battery>=20 evenAC, and source-shared HEAVY-LOCK. Lead reviews exact diff and integrates only the published exact candidate.
+validation_result: Pending
+validation_evidence: Governing selected draft and root local review cache; tracked tests and final TASKS outcome will promote durable evidence.
+retry: attempts0; identified corrections only, no weakening tests
+handoff: status working; Lead maintains records; Worker returns exact candidate and command evidence
+
+## Historical Maintenance Notes
 
 Delivery progress: Source/extracted validators each exited 0 (119 checks/185 links), source/extracted reference scenarios each exited 0 (41 checks), archive audit exited 0 (16 checks/47 files). Current ZIP SHA256 ddb7072d23ab57ecb9d126d41ddbef47978c65d73c81376e0c564936d73b8e80. Nine guarded applications exited 0; wrong-plan-hash negatives each exited 1 before mutation, after/preserved hashes checked. Six isolated publication copies, Tarot local copy and two fixtures updated; primary working copies and three duplicate copies pending. Native project acceptance checks, commits, pushes and merges pending. No service/SPARC truth change; no independent final helper review claimed.
 
@@ -80,7 +120,7 @@ Owner clarification: add bounded committed-source update discovery for local/Git
     escalation: none
     recorded_at: 2026-10-18 09:00:47 UTC+00:00
 
-## Gate Handoff
+## Historical PACT Semantics Gate Handoff
 
 ```pact:gate-handoff
 gate_id: "PACT-Semantics"
