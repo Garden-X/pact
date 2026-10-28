@@ -6,53 +6,53 @@ name: STATE.md
 canonical_location: /ai/pact/context/state/STATE.md
 layer: PACT / context / state
 status: active
-active_task: PACT-20261028-001
+active_task: PACT-20261028-002
 generated_from: /ai/pact/templates/state.tpl.md
 generated_from_version: 1.10
 content_status: current-state
-updated: 2026-10-28 22:13:26 UTC+00:00
+updated: 2026-10-28 22:14:28 UTC+00:00
 
 ## Active Task
 
 ```pact:task
-id: "PACT-20261028-001"
-role: "Worker"
-actor: "/root/config_plan_docs/evaluator"
-parent: "/root/config_plan_docs"
+id: "PACT-20261028-002"
+role: "Lead"
+actor: "/root/config_plan_docs"
+parent: "/root"
 lead: "/root/config_plan_docs"
-task_phase: "validating"
+task_phase: "working"
 requires: ["git","toolchain:node"]
-reservations: [{"path":"conformance/reference.mjs","mode":"modify"},{"path":"conformance/cases.json","mode":"modify"},{"path":"conformance/self-test.mjs","mode":"modify"},{"path":"conformance/README.md","mode":"modify"}]
-task_base: "c183f33e44d3ab956976a822af0f4378cc0e7c7a"
-task_branch: "task/PACT-Review-20261028/PACT-20261028-001"
-task_candidate: "c009fb9ba481d84f8aac1cd9090b9eab3b1ed448"
+reservations: [{"path":"conformance/source-check.mjs","mode":"modify"},{"path":"ai/pact/RELEASE-NOTES.md","mode":"modify"}]
+task_base: "2a5b0d0fb7149c46da9a90b8ddf3b2feebe22d95"
+task_branch: "task/PACT-Review-20261028/PACT-20261028-002"
+task_candidate: "none"
 trace: "LOGIC-DRAFT.md / Decisions"
 source: {"idea":null,"shape":null,"draft":"LOGIC-DRAFT.md","tasks":"TASKS.md"}
 ```
 
-request: Restore existing PACT semantics for six independently demonstrated evaluator defects.
-brief: Promote the six selected counterexamples and adjacent positive/incomplete-history scenarios to tracked tests before implementation. Correct Pending task fence recognition and visible None handling using the structural scanner; bind closure/derive to explicit or default origin remote while preserving derive's selected gate-ref projection; retain nested/fenced mechanical-looking handoff prose; require candidate ancestry of an accepted answer before delivery. Use a distinct delivery-tip commit and a real acyclic DAG. Preserve all original 250 inputs/expectations. Document corrected projection behavior only if necessary. Run only affected self-test/reference checks, inspect actual red/green exits and publish the exact candidate on the assigned task branch without integrating it.
+brief: Add a meaningful source-check assertion comparing the owning RELEASE-NOTES Template Versions table with actual template metadata, inspect its failing baseline, then correct only the six stale/missing selected rows. Preserve every protocol/template version and other release content. Publish one exact candidate on task/PACT-Review-20261028/PACT-20261028-002 before Lead integration.
+files: conformance/source-check.mjs; ai/pact/RELEASE-NOTES.md
 boundary_contract:
-  task_scope: Correct the six selected non-normative evaluator decisions with tracked red/green coverage.
-  permitted_area: Read this isolated worktree and root reproduction evidence; modify only conformance/reference.mjs, cases.json, self-test.mjs and README.md, plus task-local ignored cache.
-  protected_area: Original source checkout except shared heavy-work lock, all other files including TASKS/STATE/LOGIC-DRAFT, normative contracts/templates, release/source-check, dependencies, host/services, gate/default/other-task refs.
-  unchanged_contracts: Existing PACT semantics, protocol/template versions, all original 250 corpus inputs/expectations and complete-document selected-entry projection scope.
-  allowed_side_effects: Create/check out, commit and push only task/PACT-Review-20261028/PACT-20261028-001; use shared lock and run affected checks sequentially; no merge/integration, force, main, services or installs.
-  escalation: Report scope/rule changes, uncertain evidence, conflicting Git state, failed native checks or missing boundaries to Lead before the affected action.
-specialty: semantic evaluator correctness and regression testing
+  task_scope: Correct release-version reporting and guard that report against drift.
+  permitted_area: Modify only the two reserved files in this isolated worktree; Lead owns TASKS/STATE records.
+  protected_area: Original source checkout, LOGIC-DRAFT, normative files/templates, dependencies, host/services, default_branch and all other implementation paths.
+  unchanged_contracts: Preserve actual versions, PACT authority, all original 250 corpus inputs/expectations and historical records.
+  allowed_side_effects: Commit/push only assigned task candidate branch; Lead may separately integrate and push the selected gate; no force, main, deployment, services or installs.
+  escalation: Report needed scope/rule change, conflicting branch state or failed native checks to Prime before the affected action.
+specialty: release documentation and source-contract validation
 model_tier: High
 model_binding: Inherited owner-configured binding; concrete provider/model metadata is not exposed by this host.
 effort: 100%
 effective_effort: Requested percentage maps to the highest supported provider level; preserve inherited explicit native setting, whose value is not exposed.
-created_at: 2026-10-28 22:06:05 UTC+00:00
-affected_files: the four reserved conformance files only
-tests: conformance/cases.json and self-test.mjs additions first; do not alter original expectations.
-baseline: Root baseline ac431f05c2f00836d7632244751d96f5daabf29d passes original250; review-regressions and corrected extra-regressions-valid-dag-red each expose3failures with actual exit1 before implementation. The corrected distinct-tip DAG supersedes the malformed temporary self-parent graph; tracked real-DAG red/green remains required.
-validation: Run affected self-test/reference checks and git diff --check with actual exit inspection; prove original250 deep equality against baseline Git object before publication. Heavy steps require PowerSpy --gate --min-ram5, battery>=20 evenAC, and source-shared HEAVY-LOCK. Lead reviews exact diff and integrates only the published exact candidate.
-validation_result: Worker affected self-test24 and corpus296/296 actual0; original250 deep equality0; three distinct-tip delivery DAGs acyclic0; git diff hygiene0. Lead reviewed exact source/README diff and all46 added cases; explicitly fetched assigned task ref equal exact candidate and verified task_base ancestry0. Gate integration is pending authoritative remote reachability.
-validation_evidence: Tracked conformance/cases.json additions after original250 and conformance/self-test.mjs at candidate c009fb9ba481d84f8aac1cd9090b9eab3b1ed448. Tracked tests-first red285/21fail and selftest1; extra coordinate red296/8fail1; green296/296 and selftest24 each0. Original250 deepStrictEqual against ac431f05c2f00836d7632244751d96f5daabf29d0. Local evaluator-*-red/final logs are optional same-host details, not a cross-harness dependency. Malformed temporary root self-parent graph superseded by tracked valid acyclic distinct-tip cases.
-retry: attempts0; identified corrections only, no weakening tests
-handoff: status candidate-reviewed; Worker candidate published and native commit/push hooks0; Lead integrates now and will derive Done only after exact candidate is reachable from explicitly fetched remote gate. No normative/template/version/product/SPARC contract change; existing contracts verified against focused diff.
+tests: conformance/source-check.mjs owning release-table/template-metadata comparison.
+baseline: Root inspected six mismatched/missing table versions; tracked source-check red will be recorded before release edits. No protocol invariant changes.
+validation: Run affected source-check and git diff --check, inspect actual exits, compare all original 250 inputs/expectations to ac431f05c2f00836d7632244751d96f5daabf29d, review unchanged normative files.
+request: Align release template versions and enforce agreement.
+created_at: 2026-10-28 22:14:28 UTC+00:00
+validation_result: Pending; add owning source-check and inspect red before release edits.
+validation_evidence: Tracked source-check and exact task candidate outcome will be recorded before publication.
+retry: attempts0; identified correction only
+handoff: status working; Lead executes bounded task and publishes its own exact task candidate before integration
 
 ## Historical Maintenance Notes
 
