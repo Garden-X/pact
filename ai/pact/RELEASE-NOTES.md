@@ -2,7 +2,7 @@
 
 Title: improved workflow and project syncronization
 
-updated: 2026-10-26 01:31:28 UTC+00:00
+updated: 2026-10-28 22:15:35 UTC+00:00
 status: prepared for release
 
 This maintenance delta adds deterministic effective PACT authority, portable
@@ -130,14 +130,15 @@ existing versions; no unrelated contract change is required for this release.
 
 | Template | Version |
 |---|---|
-| workflow.tpl.md | 3.7 |
+| workflow.tpl.md | 3.8 |
 | agents.tpl.md | 3.5 |
 | sub-agent.tpl.md | 2.3 |
-| state.tpl.md | 1.9 |
-| tasks.tpl.md | 1.12 |
-| logic-draft.tpl.md | 1.6 |
+| state.tpl.md | 1.10 |
+| tasks.tpl.md | 1.13 |
+| logic-draft.tpl.md | 1.7 |
 | hook.tpl.md | 1.4 |
-| keep-alive.tpl.md | 1.1 |
+| file-guard.tpl.md | 1.1 |
+| keep-alive.tpl.md | 1.2 |
 | ideas.tpl.md | 1.2 |
 | cache-run.tpl.md | 1.1 |
 

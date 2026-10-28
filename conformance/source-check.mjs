@@ -59,6 +59,17 @@ check('workflow full example matches active target',()=>assert.equal(stripStamp(
 for(const [file,version] of [['workflow','3.8'],['state','1.10'],['tasks','1.13'],['logic-draft','1.7'],['file-guard','1.1'],['keep-alive','1.2']]){
   check(file+' template version',()=>assert.equal(field(read('templates/'+file+'.tpl.md').split('## WHAT')[0],'version'),version));
 }
+check('release version table agrees with source template metadata',()=>{
+  const release=read('RELEASE-NOTES.md'),heading='## Template Versions\n',start=release.indexOf(heading);
+  assert.ok(start>=0,'owning Template Versions section');
+  const table=release.slice(start+heading.length).split('\n## ')[0];
+  const rows=[...table.matchAll(/^\|\s*([a-z][a-z-]*\.tpl\.md)\s*\|\s*([^|]+?)\s*\|$/gmu)];
+  assert.ok(rows.length,'template version rows');
+  const listed=new Set(rows.map(row=>row[1]));
+  assert.equal(listed.size,rows.length,'unique release template rows');
+  for(const row of rows)assert.equal(row[2],field(read('templates/'+row[1]).split('## WHAT')[0],'version'),row[1]);
+  for(const name of ['workflow','state','tasks','logic-draft','file-guard','keep-alive'])assert.ok(listed.has(name+'.tpl.md'),'changed template listed: '+name);
+});
 for(const [file,version] of [['workflow/WORKFLOW.md','3.8'],['context/state/STATE.md','1.10'],['context/state/TASKS.md','1.13'],['context/state/LOGIC-DRAFT.md','1.7']]){
   check(file+' active drift marker',()=>{
     const parsed=parseRecord(read(file),'meta');assert.equal(parsed.verdict,'valid');assert.equal(parsed.fields.generated_from_version,version);

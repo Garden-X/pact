@@ -10,7 +10,7 @@ active_task: PACT-20261028-002
 generated_from: /ai/pact/templates/state.tpl.md
 generated_from_version: 1.10
 content_status: current-state
-updated: 2026-10-28 22:14:28 UTC+00:00
+updated: 2026-10-28 22:16:08 UTC+00:00
 
 ## Active Task
 
@@ -49,10 +49,10 @@ baseline: Root inspected six mismatched/missing table versions; tracked source-c
 validation: Run affected source-check and git diff --check, inspect actual exits, compare all original 250 inputs/expectations to ac431f05c2f00836d7632244751d96f5daabf29d, review unchanged normative files.
 request: Align release template versions and enforce agreement.
 created_at: 2026-10-28 22:14:28 UTC+00:00
-validation_result: Pending; add owning source-check and inspect red before release edits.
-validation_evidence: Tracked source-check and exact task candidate outcome will be recorded before publication.
+validation_result: Owning source-check added before table changes; actual red exit1 specifically workflow table3.7 versus metadata3.8. Corrected table matches all listed template metadata and includes six selected changed templates; source-check green217checks170links exit0. Original250 deepStrictEqual0, git diff hygiene0, Node24.18.0. Existing protocol/template versions unchanged.
+validation_evidence: Tracked conformance/source-check.mjs owning release version table check and RELEASE-NOTES table at this task candidate; red command node conformance/source-check.mjs exit1 before table edit, same command green217/170 exit0. TASKS outcome will promote exact candidate/reachability; local release-source-red/green.log are optional details. No SPARC/product truth binding exists or changed; normative/template contracts verified unchanged.
 retry: attempts0; identified correction only
-handoff: status working; Lead executes bounded task and publishes its own exact task candidate before integration
+handoff: status candidate-prepared; Lead executor publishes exact task candidate next, then separately reviews/integrates on selected gate; task remains active until authoritative remote gate reachability
 
 ## Historical Maintenance Notes
 
