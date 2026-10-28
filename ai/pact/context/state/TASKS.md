@@ -9,45 +9,15 @@ status: active-draft
 generated_from: /ai/pact/templates/tasks.tpl.md
 generated_from_version: 1.13
 content_status: current-state
-updated: 2026-10-28 22:17:06 UTC+00:00
+updated: 2026-10-28 22:17:35 UTC+00:00
 
 ## Pending
 
-- [ ] PACT-20261028-003 Preserve explicit invalid authority remote in delivery wrapper.
-
-```pact:task
-id: "PACT-20261028-003"
-role: "Lead"
-actor: "/root/config_plan_docs"
-parent: "/root"
-lead: "/root/config_plan_docs"
-ready: false
-requires: ["git","toolchain:node"]
-reservations: [{"path":"conformance/reference.mjs","mode":"modify"},{"path":"conformance/cases.json","mode":"modify"}]
-trace: "LOGIC-DRAFT.md / Decisions; Prime exact-c009 review correction"
-source: {"idea":null,"shape":null,"draft":"LOGIC-DRAFT.md","tasks":"TASKS.md"}
-```
-
-brief: Add tracked authority-delivery cases for explicit null, empty and numeric workflow authority_remote plus legacy omitted default. Inspect actual red before replacing the wrapper nullish default with absence-only defaulting. Explicit invalid workflow configuration remains unresolved; omitted configuration still defaults origin. Preserve published task001, all original250 and task001's added46 expectations, and all normative/template/version contracts. Publish an exact task/PACT-Review-20261028/PACT-20261028-003 candidate before separate gate integration.
-files: conformance/reference.mjs; conformance/cases.json
-boundary_contract:
-  task_scope: Correct the exact-c009 review residual in the same selected remote-binding invariant.
-  permitted_area: Modify only the two reserved conformance files; Lead owns TASKS/STATE records and ignored validation cache.
-  protected_area: Original source checkout except shared lock, LOGIC-DRAFT, other code, normative/contracts/templates, dependencies, host/services and default_branch.
-  unchanged_contracts: All PACT authority and versions; all original250 and already published task001 expectations; no history rewrite or broad parser changes.
-  allowed_side_effects: Commit/push only assigned task003 candidate branch; Lead separately reviews/integrates/pushes selected gate; no force/main/deploy/services/installs.
-  escalation: Report scope/rule changes, uncertain evidence, Git conflict or failed native check to Prime before affected action.
-parent_approval: Prime /root exact-c009 review explicitly authorized task003 on 2026-10-28 after observing workflow.authority_remote nullish-default residual; no selected-scope expansion.
-specialty: semantic authority wrapper correctness
-model_tier: High
-model_binding: Inherited owner-configured binding; concrete provider/model metadata is not exposed by this host.
-effort: 100%
-effective_effort: Requested percentage maps to highest supported provider level; preserve inherited explicit native setting whose value is not exposed.
-tests: Append four configured-remote/legacy-default cases to conformance/cases.json before evaluator edit.
-baseline: Exact-c009 reviewer identified authority delivery null config falling back to origin; reproduce tracked null case actual red before wrapper correction. Other malformed config and omitted controls protect the boundary.
-validation: Affected self-test/reference only, original250 and first296 deep equality, exact task_base ancestry and git diff hygiene; inspect all actual exits. Heavy steps require shared source lock and PowerSpy gate minRAM5/battery20 evenAC.
+None.
 
 ## Done
+
+- PACT-20261028-002 - Align release template table and add owning source assertion. Lead executor /root/config_plan_docs, parent Prime /root; inherited High model/native binding unchanged. Exact candidate146fa9e5f1b3137e229a66dd59407b8dc80a09c3 built on2a5b0d0fb7149c46da9a90b8ddf3b2feebe22d95, published assigned task branch, fetched equal exact candidate and reviewed separately before fast-forward integration. Explicit remote origin refs/heads/gate/PACT-Review-20261028 fetched atec55f696e4ea8d03d1eec08dcffd114555ceca7b; candidate reachability actual0 before Done. Added source-check before release edit: actualred1 (owning table workflow3.7 versus actual3.8); corrected source-check217checks170links0. All listed rows now match template metadata and six selected changed templates are covered; only five stale version values corrected and missing file-guard1.1 row added. Original250 deepStrictEqual0, diff/native commit/native push0 on systemNode24.18.0. Governing protocol/template versions, other release content and product/SPARC truth unchanged; no migration or release publication performed. Prime full acceptance remains separate.
 
 - PACT-20261028-001 - Correct six bounded evaluator defects. Worker /root/config_plan_docs/evaluator, parent Lead /root/config_plan_docs, inherited High model/native binding unchanged. Exact candidate c009fb9ba481d84f8aac1cd9090b9eab3b1ed448 built on c183f33e44d3ab956976a822af0f4378cc0e7c7a, published on assigned task branch; Lead explicitly fetched that ref equal candidate, reviewed diff and integrated with ancestry-preserving merge2a5b0d0fb7149c46da9a90b8ddf3b2feebe22d95. Explicit remote origin refs/heads/gate/PACT-Review-20261028 fetched at2a5b0d0; task-candidate reachability actual0 before Done. Tests-first selftest24 exit1 and corpus285/21fail exit1, added coordinate baseline296/8fail exit1; corrected selftest24/corpus296of296 each0. All46 new cases tracked; original250 inputs/expectations deepStrictEqual against ac431f05c2f00836d7632244751d96f5daabf29d exit0; three delivery graphs acyclic/distinct-tip0; diff/native commit/native push0. Nested/fenced handoff prose, real Pending fences/visible None, exact remote defaults/invalid coordinates and candidate-to-answer ancestry now follow existing contracts. The malformed temporary root self-parent graph is superseded by tracked valid-DAG red/green evidence. No normative/template/version/product/SPARC truth changed; governing contracts verified from focused diff. Prime full acceptance remains separate.
 

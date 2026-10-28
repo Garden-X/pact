@@ -6,53 +6,55 @@ name: STATE.md
 canonical_location: /ai/pact/context/state/STATE.md
 layer: PACT / context / state
 status: active
-active_task: PACT-20261028-002
+active_task: PACT-20261028-003
 generated_from: /ai/pact/templates/state.tpl.md
 generated_from_version: 1.10
 content_status: current-state
-updated: 2026-10-28 22:17:06 UTC+00:00
+updated: 2026-10-28 22:17:35 UTC+00:00
 
 ## Active Task
 
 ```pact:task
-id: "PACT-20261028-002"
+id: "PACT-20261028-003"
 role: "Lead"
 actor: "/root/config_plan_docs"
 parent: "/root"
 lead: "/root/config_plan_docs"
-task_phase: "validating"
+task_phase: "working"
 requires: ["git","toolchain:node"]
-reservations: [{"path":"conformance/source-check.mjs","mode":"modify"},{"path":"ai/pact/RELEASE-NOTES.md","mode":"modify"}]
-task_base: "2a5b0d0fb7149c46da9a90b8ddf3b2feebe22d95"
-task_branch: "task/PACT-Review-20261028/PACT-20261028-002"
-task_candidate: "146fa9e5f1b3137e229a66dd59407b8dc80a09c3"
-trace: "LOGIC-DRAFT.md / Decisions"
+reservations: [{"path":"conformance/reference.mjs","mode":"modify"},{"path":"conformance/cases.json","mode":"modify"}]
+task_base: "ec55f696e4ea8d03d1eec08dcffd114555ceca7b"
+task_branch: "task/PACT-Review-20261028/PACT-20261028-003"
+task_candidate: "none"
+trace: "LOGIC-DRAFT.md / Decisions; Prime exact-c009 review correction"
 source: {"idea":null,"shape":null,"draft":"LOGIC-DRAFT.md","tasks":"TASKS.md"}
 ```
 
-brief: Add a meaningful source-check assertion comparing the owning RELEASE-NOTES Template Versions table with actual template metadata, inspect its failing baseline, then correct only the six stale/missing selected rows. Preserve every protocol/template version and other release content. Publish one exact candidate on task/PACT-Review-20261028/PACT-20261028-002 before Lead integration.
-files: conformance/source-check.mjs; ai/pact/RELEASE-NOTES.md
+brief: Add tracked authority-delivery cases for explicit null, empty and numeric workflow authority_remote plus legacy omitted default. Inspect actual red before replacing the wrapper nullish default with absence-only defaulting. Explicit invalid workflow configuration remains unresolved; omitted configuration still defaults origin. Preserve published task001, all original250 and task001's added46 expectations, and all normative/template/version contracts. Publish an exact task/PACT-Review-20261028/PACT-20261028-003 candidate before separate gate integration.
+files: conformance/reference.mjs; conformance/cases.json
 boundary_contract:
-  task_scope: Correct release-version reporting and guard that report against drift.
-  permitted_area: Modify only the two reserved files in this isolated worktree; Lead owns TASKS/STATE records.
-  protected_area: Original source checkout, LOGIC-DRAFT, normative files/templates, dependencies, host/services, default_branch and all other implementation paths.
-  unchanged_contracts: Preserve actual versions, PACT authority, all original 250 corpus inputs/expectations and historical records.
-  allowed_side_effects: Commit/push only assigned task candidate branch; Lead may separately integrate and push the selected gate; no force, main, deployment, services or installs.
-  escalation: Report needed scope/rule change, conflicting branch state or failed native checks to Prime before the affected action.
-specialty: release documentation and source-contract validation
+  task_scope: Correct the exact-c009 review residual in the same selected remote-binding invariant.
+  permitted_area: Modify only the two reserved conformance files; Lead owns TASKS/STATE records and ignored validation cache.
+  protected_area: Original source checkout except shared lock, LOGIC-DRAFT, other code, normative/contracts/templates, dependencies, host/services and default_branch.
+  unchanged_contracts: All PACT authority and versions; all original250 and already published task001 expectations; no history rewrite or broad parser changes.
+  allowed_side_effects: Commit/push only assigned task003 candidate branch; Lead separately reviews/integrates/pushes selected gate; no force/main/deploy/services/installs.
+  escalation: Report scope/rule changes, uncertain evidence, Git conflict or failed native check to Prime before affected action.
+parent_approval: Prime /root exact-c009 review explicitly authorized task003 on 2026-10-28 after observing workflow.authority_remote nullish-default residual; no selected-scope expansion.
+specialty: semantic authority wrapper correctness
 model_tier: High
 model_binding: Inherited owner-configured binding; concrete provider/model metadata is not exposed by this host.
 effort: 100%
-effective_effort: Requested percentage maps to the highest supported provider level; preserve inherited explicit native setting, whose value is not exposed.
-tests: conformance/source-check.mjs owning release-table/template-metadata comparison.
-baseline: Root inspected six mismatched/missing table versions; tracked source-check red will be recorded before release edits. No protocol invariant changes.
-validation: Run affected source-check and git diff --check, inspect actual exits, compare all original 250 inputs/expectations to ac431f05c2f00836d7632244751d96f5daabf29d, review unchanged normative files.
-request: Align release template versions and enforce agreement.
-created_at: 2026-10-28 22:14:28 UTC+00:00
-validation_result: Owning source-check added before table changes; actual red exit1 specifically workflow table3.7 versus metadata3.8. Corrected table matches all listed template metadata and includes six selected changed templates; source-check green217checks170links exit0. Original250 deepStrictEqual0, git diff hygiene0, Node24.18.0. Existing protocol/template versions unchanged.
-validation_evidence: Tracked conformance/source-check.mjs owning release version table check and RELEASE-NOTES table at this task candidate; red command node conformance/source-check.mjs exit1 before table edit, same command green217/170 exit0. TASKS outcome will promote exact candidate/reachability; local release-source-red/green.log are optional details. No SPARC/product truth binding exists or changed; normative/template contracts verified unchanged.
+effective_effort: Requested percentage maps to highest supported provider level; preserve inherited explicit native setting whose value is not exposed.
+tests: Append four configured-remote/legacy-default cases to conformance/cases.json before evaluator edit.
+baseline: Exact-c009 reviewer identified authority delivery null config falling back to origin; reproduce tracked null case actual red before wrapper correction. Other malformed config and omitted controls protect the boundary.
+validation: Affected self-test/reference only, original250 and first296 deep equality, exact task_base ancestry and git diff hygiene; inspect all actual exits. Heavy steps require shared source lock and PowerSpy gate minRAM5/battery20 evenAC.
+
+request: Preserve explicit invalid workflow authority remote before delivery.
+created_at: 2026-10-28 22:17:35 UTC+00:00
+validation_result: Pending tracked red before minimal wrapper change.
+validation_evidence: Tracked cases and exact task outcome; no cache-only acceptance dependency.
 retry: attempts0; identified correction only
-handoff: status candidate-reviewed; task002 exact remote ref fetched equal146fa9e; task_base ancestry0, diff0, native commit/push0. Lead separately reviewed source-table diff and integrates by fast-forward; Done waits for exact authoritative remote gate reachability.
+handoff: status working; Lead executes bounded task and will publish exact task candidate before integration
 
 ## Historical Maintenance Notes
 
