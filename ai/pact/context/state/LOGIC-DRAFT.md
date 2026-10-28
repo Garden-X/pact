@@ -11,7 +11,7 @@ gate_id: PACT-Review-20261028
 generated_from: /ai/pact/templates/logic-draft.tpl.md
 generated_from_version: 1.7
 content_status: current-state
-updated: 2026-10-28 22:03:17 UTC+00:00
+updated: 2026-10-28 22:22:55 UTC+00:00
 
 ## Selected Logic
 
@@ -52,6 +52,33 @@ Use installed system Node 24. Heavy runs are sequential under C:/!DEV/2026/pact/
 - Required complete commands: node conformance/self-test.mjs; reference.mjs; check-git.mjs; source-check.mjs; migration-check.mjs; git diff --check. Inspect every actual exit and required result on the accepted revision.
 - Release-version table agrees with actual templates; no normative policy, template-version, host-runtime or external-installation change is claimed.
 - Acceptance, gate publication and default-branch delivery stay distinct. Prepare a reviewable PR after validated gate publication; do not merge main under this selection.
+
+### Prime acceptance — PACT-Review-20261028#1
+
+```pact:acceptance
+decision: "accepted"
+candidate: "4e9b95cbff56c8c632640dc75d1647d2ebf2a810"
+evidence: "Prime fresh exact-candidate results below; tracked conformance cases/checks and TASKS Done PACT-20261028-001 through 003."
+```
+
+Prime Inspector /root reviewed the selected implementation and records, read the complete required results and accepts exactly the candidate above. A separate clean detached worktree was verified at that revision before execution. No old green result substituted for this run. System Node v24.18.0, Git 2.46.2.windows.1, battery 97%, free RAM 13.86 GiB, PowerSpy gate exit 0 and the sequential shared heavy-work lock satisfied the host policy. UTC was verified for this session. Acceptance recorded 2026-10-28 22:22:55 UTC+00:00.
+
+| Command / check | Result | Actual exit |
+|---|---|---|
+| node conformance/self-test.mjs | 24 invariant assertions | 0 |
+| node conformance/reference.mjs | 300 of 300 semantic cases | 0 |
+| node conformance/check-git.mjs | 15 real-Git assertions | 0 |
+| node conformance/source-check.mjs | 217 checks, 170 links, no failures | 0 |
+| node conformance/migration-check.mjs | 30 checks, 11 preservation items; three-file plan only, applied false | 0 |
+| git diff --check ac431f0 candidate | Complete selected diff clean | 0 |
+| Exact task-candidate ancestry, all three tasks | c009fb9, 146fa9e and d5ec7db are ancestors of candidate | 0 each |
+| Original corpus preservation and scope | First 250 complete inputs/expectations deep-equal baseline; 300 unique IDs; exactly nine allowed changed paths; clean tested revision | 0 |
+
+The read-only migration plan hash was bd4bd68a1eb1370d5d1da69ab33434f6508e884d8a5bb62934431a04f81acb41. Source and task records retain red/green evidence, including a valid distinct-tip Git DAG. Independent bounded review of c009fb9 found the remaining configured-null wrapper path; separate task003 corrected it without rewriting published history. Root separately reviewed that exact one-line correction, the source-check/table change, the final code, preserved corpus and scope before accepting.
+
+The six original evaluator defects, the configured-null wrapper follow-up and the stale release table are corrected within existing PACT semantics. No protocol/template version, dependency, host runtime, product/SPARC truth or installed-project migration changed. Full-document selection among historical acceptance entries remains outside the selected evaluator projections. These checks establish this bounded source correction, not host-runtime enforcement.
+
+This is a record-only answer based on fetched ready tip ae448b757a77d9cafa11e94e7afd80f490d0eb48. Acceptance and delivery remain separate. Review PR publication is selected; default-branch merge and gate closure are not claimed.
 
 ## Next
 
