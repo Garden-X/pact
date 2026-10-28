@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { evaluate, normalizePath, matchesPath, parseRecord, ancestry, strictJSON } from './reference.mjs';
+import { evaluate, normalizePath, matchesPath, parseRecord, parsePendingTasks, ancestry, strictJSON } from './reference.mjs';
 
 // Written before the reference implementation: material runner invariants.
 assert.equal(normalizePath('/src/'), 'src/**');
@@ -23,4 +23,7 @@ assert.equal(evaluate({ operation: 'derive', input: { graph: { a: [] }, history_
 assert.throws(() => strictJSON('\u00a01'));
 assert.throws(() => strictJSON('1\u00a0'));
 assert.equal(strictJSON(' \t1\r\n'), 1);
-console.log('runner-invariants: 21 assertions passed');
+assert.deepEqual(parsePendingTasks('## Pending\n\n- [ ] PACT-20261028-001 inspect\n\n~~~pact:task\nid: "PACT-20261028-001"\nrole: "Worker"\n~~~\n'), {verdict:'valid',tasks:[{id:'PACT-20261028-001',role:'Worker'}]});
+assert.deepEqual(parsePendingTasks('## Pending\n\n```txt\nNone.\n```\n'), {verdict:'unresolved'});
+assert.deepEqual(parsePendingTasks('## Pending\n\nNone.\n'), {verdict:'valid',tasks:[]});
+console.log('runner-invariants: 24 assertions passed');

@@ -216,12 +216,13 @@ export function parsePendingTasks(text) {
     if(owners.length!==1)return {verdict:owners.length?'invalid':'unresolved'};
     const start=owners[0].index,end=doc.headings.find(h=>h.index>start)?.index??doc.lines.length;
     const starts=doc.visible.filter(v=>v.index>start&&v.index<end&&/^- \[ \] PACT-(?:\d{8}|YYYYMMDD)-\d{3}(?: |$)/u.test(v.line));
-    if(!starts.length)return doc.lines.slice(start+1,end).some(line=>line.trim()==='None.')?{verdict:'valid',tasks:[]}:{verdict:'unresolved'};
+    if(!starts.length)return doc.visible.some(line=>line.index>start&&line.index<end&&line.line.trim()==='None.')?{verdict:'valid',tasks:[]}:{verdict:'unresolved'};
     const tasks=[];
     for(let n=0;n<starts.length;n++){
       const id=/^- \[ \] (PACT-(?:\d{8}|YYYYMMDD)-\d{3})/u.exec(starts[n].line)[1];
-      let body=doc.lines.slice(starts[n].index+1,starts[n+1]?.index??end).join('\n');
-      if(!body.includes('```pact:task'))body='  id: '+id+'\n'+body;
+      const entryEnd=starts[n+1]?.index??end;
+      let body=doc.lines.slice(starts[n].index+1,entryEnd).join('\n');
+      if(!doc.blocks.some(block=>block.start>starts[n].index&&block.start<entryEnd&&block.info==='pact:task'))body='  id: '+id+'\n'+body;
       const parsed=parseRecord('## Active Task\n\n'+body,'task');if(parsed.verdict!=='valid')return {verdict:parsed.verdict};if(parsed.fields.id!==id)return {verdict:'invalid'};tasks.push(parsed.fields);
     }
     if(new Set(tasks.map(t=>t.id)).size!==tasks.length)return {verdict:'invalid'};return {verdict:'valid',tasks};
@@ -320,9 +321,12 @@ function authority(input) {
   return guard.warnings?.length?{verdict:'allow',warnings:guard.warnings}:verdict('allow');
 }
 function observeRemote(input,expectedRef) {
+  const expectedRemote=Object.hasOwn(input,'expected_remote')?input.expected_remote:'origin';
+  if(typeof expectedRemote!=='string'||!expectedRemote)return 'unresolved';
+  if(Object.hasOwn(input,'expected_ref')&&(typeof input.expected_ref!=='string'||!input.expected_ref.startsWith('refs/heads/')))return 'unresolved';
   const remote=input.remote;if(!remote||!['resolved','absent'].includes(remote.status))return 'unresolved';
   if(typeof remote.remote!=='string'||typeof remote.ref!=='string'||!remote.ref.startsWith('refs/heads/'))return 'unresolved';
-  if(input.expected_remote&&remote.remote!==input.expected_remote||expectedRef&&remote.ref!==expectedRef)return 'unresolved';
+  if(remote.remote!==expectedRemote||expectedRef&&remote.ref!==expectedRef)return 'unresolved';
   if(remote.status==='absent')return false;
   return typeof remote.tip==='string'?remote.tip:'unresolved';
 }
@@ -346,7 +350,7 @@ function answerCheck(input) {
 function closure(input) {
   if(answerCheck(input).verdict!=='valid')return {closed:'unresolved'};
   const acceptance=parseRequired(input.answer.record,'acceptance');if(acceptance.decision!=='accepted')return {closed:false};
-  const tip=observeRemote(input,input.expected_ref||'refs/heads/main');if(tip==='unresolved')return {closed:'unresolved'};if(tip===false)return {closed:false};
+  const tip=observeRemote(input,Object.hasOwn(input,'expected_ref')?input.expected_ref:'refs/heads/main');if(tip==='unresolved')return {closed:'unresolved'};if(tip===false)return {closed:false};
   const reach=ancestry(input.graph,input.answer.commit,tip,input.history_complete);if(reach!==true)return {closed:reach};
   const candidateReach=ancestry(input.graph,acceptance.candidate,input.answer.commit,input.history_complete);
   if(candidateReach!==true||!Array.isArray(input.candidate_to_answer_paths)||!input.delivery_handoff)return {closed:'unresolved'};
@@ -358,13 +362,13 @@ function delivery(input) {
   const acceptance=parseRequired(input.answer.record,'acceptance');if(acceptance.decision!=='accepted')return verdict('deny');
   if(input.newest_handoff){parseRequired(input.newest_handoff,'gate-handoff');if(section(input.newest_handoff,'Gate Handoff')!==section(input.handoff,'Gate Handoff'))return verdict('deny');}
   if(!Array.isArray(input.changes_after_candidate)||input.changes_after_candidate.some(path=>!stateRecordPath(path)))return verdict('deny');
-  const expectedRemote=input.expected_remote??'origin',expectedRef=input.expected_ref??'refs/heads/main';
+  const expectedRemote=Object.hasOwn(input,'expected_remote')?input.expected_remote:'origin',expectedRef=Object.hasOwn(input,'expected_ref')?input.expected_ref:'refs/heads/main';
   if(typeof expectedRemote!=='string'||!expectedRemote||typeof expectedRef!=='string'||!expectedRef.startsWith('refs/heads/'))return verdict('unresolved');
   const observed=observeRemote({...input,expected_remote:expectedRemote},expectedRef);
   if(observed==='unresolved')return verdict('unresolved');if(observed===false)return verdict('deny');
   if(!fullOid(observed))return verdict('unresolved');
-  const candidate=ancestry(input.graph,acceptance.candidate,input.delivery_tip,input.history_complete),answer=ancestry(input.graph,input.answer.commit,input.delivery_tip,input.history_complete),ff=ancestry(input.graph,observed,input.delivery_tip,input.history_complete);
-  if([candidate,answer,ff].includes(false))return verdict('deny');if([candidate,answer,ff].includes('unresolved'))return verdict('unresolved');return verdict('allow');
+  const candidate=ancestry(input.graph,acceptance.candidate,input.delivery_tip,input.history_complete),answer=ancestry(input.graph,input.answer.commit,input.delivery_tip,input.history_complete),accepted=ancestry(input.graph,acceptance.candidate,input.answer.commit,input.history_complete),ff=ancestry(input.graph,observed,input.delivery_tip,input.history_complete);
+  if([candidate,answer,accepted,ff].includes(false))return verdict('deny');if([candidate,answer,accepted,ff].includes('unresolved'))return verdict('unresolved');return verdict('allow');
 }
 function handoffNarrative(text) {
   const doc=scanDocument(text),owners=doc.headings.filter(h=>h.name==='Gate Handoff');
@@ -373,11 +377,9 @@ function handoffNarrative(text) {
   const skipped=new Set();
   for(const block of doc.blocks.filter(b=>b.heading?.index===owner.index&&b.info==='pact:gate-handoff'))for(let i=block.start;i<=block.end;i++)skipped.add(i);
   const mechanical=new Set(['gate_id','seq','signal','candidate','branch','lead','recorded_at']);
-  return doc.lines.slice(owner.index+1,end).filter((line,index)=>{
-    if(skipped.has(owner.index+1+index))return false;
-    const field=/^ *([a-z][a-z0-9_]*):(?: |$)/u.exec(line);
-    return !field||!mechanical.has(field[1]);
-  }).join('\n');
+  const visible=doc.visible.filter(line=>line.heading?.index===owner.index&&line.index>owner.index);
+  for(const field of legacyRootFields(visible.map(line=>line.line)))if(mechanical.has(field.m[2]))skipped.add(visible[field.index].index);
+  return doc.lines.slice(owner.index+1,end).filter((line,index)=>!skipped.has(owner.index+1+index)).join('\n');
 }
 function handoffChange(input) {
   if(input.writer_role!=='Lead')return verdict('invalid');

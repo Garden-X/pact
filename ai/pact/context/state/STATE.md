@@ -10,7 +10,7 @@ active_task: PACT-20261028-001
 generated_from: /ai/pact/templates/state.tpl.md
 generated_from_version: 1.10
 content_status: current-state
-updated: 2026-10-28 22:06:05 UTC+00:00
+updated: 2026-10-28 22:13:26 UTC+00:00
 
 ## Active Task
 
@@ -20,12 +20,12 @@ role: "Worker"
 actor: "/root/config_plan_docs/evaluator"
 parent: "/root/config_plan_docs"
 lead: "/root/config_plan_docs"
-task_phase: "transferred"
+task_phase: "validating"
 requires: ["git","toolchain:node"]
 reservations: [{"path":"conformance/reference.mjs","mode":"modify"},{"path":"conformance/cases.json","mode":"modify"},{"path":"conformance/self-test.mjs","mode":"modify"},{"path":"conformance/README.md","mode":"modify"}]
 task_base: "c183f33e44d3ab956976a822af0f4378cc0e7c7a"
 task_branch: "task/PACT-Review-20261028/PACT-20261028-001"
-task_candidate: "none"
+task_candidate: "c009fb9ba481d84f8aac1cd9090b9eab3b1ed448"
 trace: "LOGIC-DRAFT.md / Decisions"
 source: {"idea":null,"shape":null,"draft":"LOGIC-DRAFT.md","tasks":"TASKS.md"}
 ```
@@ -49,10 +49,10 @@ affected_files: the four reserved conformance files only
 tests: conformance/cases.json and self-test.mjs additions first; do not alter original expectations.
 baseline: Root baseline ac431f05c2f00836d7632244751d96f5daabf29d passes original250; review-regressions and corrected extra-regressions-valid-dag-red each expose3failures with actual exit1 before implementation. The corrected distinct-tip DAG supersedes the malformed temporary self-parent graph; tracked real-DAG red/green remains required.
 validation: Run affected self-test/reference checks and git diff --check with actual exit inspection; prove original250 deep equality against baseline Git object before publication. Heavy steps require PowerSpy --gate --min-ram5, battery>=20 evenAC, and source-shared HEAVY-LOCK. Lead reviews exact diff and integrates only the published exact candidate.
-validation_result: Pending
-validation_evidence: Governing selected draft and root local review cache; tracked tests and final TASKS outcome will promote durable evidence.
+validation_result: Worker affected self-test24 and corpus296/296 actual0; original250 deep equality0; three distinct-tip delivery DAGs acyclic0; git diff hygiene0. Lead reviewed exact source/README diff and all46 added cases; explicitly fetched assigned task ref equal exact candidate and verified task_base ancestry0. Gate integration is pending authoritative remote reachability.
+validation_evidence: Tracked conformance/cases.json additions after original250 and conformance/self-test.mjs at candidate c009fb9ba481d84f8aac1cd9090b9eab3b1ed448. Tracked tests-first red285/21fail and selftest1; extra coordinate red296/8fail1; green296/296 and selftest24 each0. Original250 deepStrictEqual against ac431f05c2f00836d7632244751d96f5daabf29d0. Local evaluator-*-red/final logs are optional same-host details, not a cross-harness dependency. Malformed temporary root self-parent graph superseded by tracked valid acyclic distinct-tip cases.
 retry: attempts0; identified corrections only, no weakening tests
-handoff: status working; Lead maintains records; Worker returns exact candidate and command evidence
+handoff: status candidate-reviewed; Worker candidate published and native commit/push hooks0; Lead integrates now and will derive Done only after exact candidate is reachable from explicitly fetched remote gate. No normative/template/version/product/SPARC contract change; existing contracts verified against focused diff.
 
 ## Historical Maintenance Notes
 
