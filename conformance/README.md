@@ -1,6 +1,6 @@
 # PACT semantic conformance
 
-updated: 2026-10-26 17:15:44 UTC+00:00
+updated: 2026-10-28 22:10:07 UTC+00:00
 
 This tracked corpus tests PACT decisions. It requires no PACT runtime, service,
 database, agent harness, operating-system API or shared implementation code.
@@ -79,6 +79,9 @@ narrative edit is invalid. Where only narrative changed and materiality is not
 mechanically evident, `materiality` is a fixture projection of Lead's existing
 owning-record interpretation with `result`, `source` and `evidence`. Missing
 interpretation remains unresolved. It is not a new canonical state field.
+Nested continuations and ordinary fenced examples remain raw narrative even
+when they contain labels such as `candidate:`. Only actual mechanical root
+declarations and the owning machine block are excluded from that comparison.
 Delivery freshness compares the entire owning publication, including narrative.
 Sequence values are integers from 1 through 9007199254740991 inclusive.
 
@@ -105,8 +108,14 @@ at delivery. Later ordinary commits or gates do not retroactively reopen a gate.
 
 Delivery queries use the exact configured remote/ref observation and its tip
 for fast-forward ancestry. `current_default` is a legacy cache hint, never the
-authority. Standalone queries default to `origin` and `refs/heads/main`;
-authority queries bind these coordinates to WORKFLOW's remote/default branch,
+authority. Standalone closure/delivery queries default to `origin` and
+`refs/heads/main`. Integration derivation defaults to `origin`, retaining the
+selected gate-ref observation (and checking an explicit `expected_ref` when
+supplied); it never substitutes `main` for the gate. Explicitly empty or
+non-string remote/ref coordinates are unresolved. The accepted answer must descend
+from its exact candidate before delivery; separate ancestry to a later merge
+tip cannot establish that obligation. Missing history remains unresolved.
+Authority queries bind these coordinates to WORKFLOW's remote/default branch,
 so a nested caller hint cannot replace them. Delivery still passes inherited
 boundaries and File Guard, retaining warn-mode diagnostics. A ref operation
 does not invent a repository-path reservation requirement.

@@ -7244,6 +7244,1795 @@
       "expected": {
         "verdict": "unresolved"
       }
+    },
+    {
+      "id": "review-pending-machine-fence-tilde3",
+      "operation": "parse_tasks",
+      "rules": [
+        "PACT-RECORD"
+      ],
+      "input": {
+        "section": "Pending",
+        "text": "## Pending\n\n- [ ] PACT-20261028-001 inspect\n\n~~~pact:task\nid: \"PACT-20261028-001\"\nrole: \"Worker\"\n~~~\n"
+      },
+      "expected": {
+        "verdict": "valid",
+        "tasks": [
+          {
+            "id": "PACT-20261028-001",
+            "role": "Worker"
+          }
+        ]
+      }
+    },
+    {
+      "id": "review-pending-machine-fence-tilde4",
+      "operation": "parse_tasks",
+      "rules": [
+        "PACT-RECORD"
+      ],
+      "input": {
+        "section": "Pending",
+        "text": "## Pending\n\n- [ ] PACT-20261028-001 inspect\n\n~~~~pact:task\nid: \"PACT-20261028-001\"\nrole: \"Worker\"\n~~~~\n"
+      },
+      "expected": {
+        "verdict": "valid",
+        "tasks": [
+          {
+            "id": "PACT-20261028-001",
+            "role": "Worker"
+          }
+        ]
+      }
+    },
+    {
+      "id": "review-pending-machine-fence-backtick4",
+      "operation": "parse_tasks",
+      "rules": [
+        "PACT-RECORD"
+      ],
+      "input": {
+        "section": "Pending",
+        "text": "## Pending\n\n- [ ] PACT-20261028-001 inspect\n\n````pact:task\nid: \"PACT-20261028-001\"\nrole: \"Worker\"\n````\n"
+      },
+      "expected": {
+        "verdict": "valid",
+        "tasks": [
+          {
+            "id": "PACT-20261028-001",
+            "role": "Worker"
+          }
+        ]
+      }
+    },
+    {
+      "id": "review-pending-fenced-none-backtick",
+      "operation": "parse_tasks",
+      "rules": [
+        "PACT-RECORD"
+      ],
+      "input": {
+        "section": "Pending",
+        "text": "## Pending\n\n```txt\nNone.\n```\n"
+      },
+      "expected": {
+        "verdict": "unresolved"
+      }
+    },
+    {
+      "id": "review-pending-fenced-none-tilde",
+      "operation": "parse_tasks",
+      "rules": [
+        "PACT-RECORD"
+      ],
+      "input": {
+        "section": "Pending",
+        "text": "## Pending\n\n~~~txt\nNone.\n~~~\n"
+      },
+      "expected": {
+        "verdict": "unresolved"
+      }
+    },
+    {
+      "id": "review-pending-visible-none",
+      "operation": "parse_tasks",
+      "rules": [
+        "PACT-RECORD"
+      ],
+      "input": {
+        "section": "Pending",
+        "text": "## Pending\n\nNone.\n"
+      },
+      "expected": {
+        "verdict": "valid",
+        "tasks": []
+      }
+    },
+    {
+      "id": "review-pending-example-task-ignored",
+      "operation": "parse_tasks",
+      "rules": [
+        "PACT-RECORD"
+      ],
+      "input": {
+        "section": "Pending",
+        "text": "## Pending\n\n~~~md\n- [ ] PACT-20261028-001 example\n~~~\n\nNone.\n"
+      },
+      "expected": {
+        "verdict": "valid",
+        "tasks": []
+      }
+    },
+    {
+      "id": "review-pending-inline-fence-text-is-prose",
+      "operation": "parse_tasks",
+      "rules": [
+        "PACT-RECORD"
+      ],
+      "input": {
+        "section": "Pending",
+        "text": "## Pending\n\n- [ ] PACT-20261028-001 inspect\n\n  role: Worker\n  brief: Document ```pact:task as inline text.\n"
+      },
+      "expected": {
+        "verdict": "valid",
+        "tasks": [
+          {
+            "id": "PACT-20261028-001",
+            "role": "Worker"
+          }
+        ]
+      }
+    },
+    {
+      "id": "review-closure-default-origin-rejects-foreign",
+      "operation": "closure",
+      "rules": [
+        "PACT-GIT",
+        "PACT-CLOSURE"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "3333333333333333333333333333333333333333": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "4444444444444444444444444444444444444444": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "4444444444444444444444444444444444444444"
+          ],
+          "6666666666666666666666666666666666666666": [
+            "1111111111111111111111111111111111111111"
+          ]
+        },
+        "history_complete": true,
+        "handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "answer": {
+          "commit": "5555555555555555555555555555555555555555",
+          "actor": "prime-1",
+          "role": "Prime",
+          "message": "Accept\n\nPACT-Answers: G#1\n",
+          "record": "## Acceptance\n\n```pact:acceptance\ndecision: \"accepted\"\ncandidate: \"2222222222222222222222222222222222222222\"\nevidence: \"conformance/cases.json\"\n```\n",
+          "changed_paths": [
+            "ai/pact/context/state/LOGIC-DRAFT.md"
+          ]
+        },
+        "remote": {
+          "status": "resolved",
+          "remote": "fork",
+          "ref": "refs/heads/main",
+          "tip": "5555555555555555555555555555555555555555"
+        },
+        "delivery_handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "candidate_to_answer_paths": [
+          "ai/pact/context/state/STATE.md",
+          "ai/pact/context/state/LOGIC-DRAFT.md"
+        ]
+      },
+      "expected": {
+        "closed": "unresolved"
+      }
+    },
+    {
+      "id": "review-closure-explicit-foreign-authority",
+      "operation": "closure",
+      "rules": [
+        "PACT-GIT",
+        "PACT-CLOSURE"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "3333333333333333333333333333333333333333": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "4444444444444444444444444444444444444444": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "4444444444444444444444444444444444444444"
+          ],
+          "6666666666666666666666666666666666666666": [
+            "1111111111111111111111111111111111111111"
+          ]
+        },
+        "history_complete": true,
+        "handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "answer": {
+          "commit": "5555555555555555555555555555555555555555",
+          "actor": "prime-1",
+          "role": "Prime",
+          "message": "Accept\n\nPACT-Answers: G#1\n",
+          "record": "## Acceptance\n\n```pact:acceptance\ndecision: \"accepted\"\ncandidate: \"2222222222222222222222222222222222222222\"\nevidence: \"conformance/cases.json\"\n```\n",
+          "changed_paths": [
+            "ai/pact/context/state/LOGIC-DRAFT.md"
+          ]
+        },
+        "remote": {
+          "status": "resolved",
+          "remote": "fork",
+          "ref": "refs/heads/main",
+          "tip": "5555555555555555555555555555555555555555"
+        },
+        "delivery_handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "candidate_to_answer_paths": [
+          "ai/pact/context/state/STATE.md",
+          "ai/pact/context/state/LOGIC-DRAFT.md"
+        ],
+        "expected_remote": "fork"
+      },
+      "expected": {
+        "closed": true
+      }
+    },
+    {
+      "id": "review-closure-wrong-explicit-remote",
+      "operation": "closure",
+      "rules": [
+        "PACT-GIT",
+        "PACT-CLOSURE"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "3333333333333333333333333333333333333333": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "4444444444444444444444444444444444444444": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "4444444444444444444444444444444444444444"
+          ],
+          "6666666666666666666666666666666666666666": [
+            "1111111111111111111111111111111111111111"
+          ]
+        },
+        "history_complete": true,
+        "handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "answer": {
+          "commit": "5555555555555555555555555555555555555555",
+          "actor": "prime-1",
+          "role": "Prime",
+          "message": "Accept\n\nPACT-Answers: G#1\n",
+          "record": "## Acceptance\n\n```pact:acceptance\ndecision: \"accepted\"\ncandidate: \"2222222222222222222222222222222222222222\"\nevidence: \"conformance/cases.json\"\n```\n",
+          "changed_paths": [
+            "ai/pact/context/state/LOGIC-DRAFT.md"
+          ]
+        },
+        "remote": {
+          "status": "resolved",
+          "remote": "origin",
+          "ref": "refs/heads/main",
+          "tip": "5555555555555555555555555555555555555555"
+        },
+        "delivery_handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "candidate_to_answer_paths": [
+          "ai/pact/context/state/STATE.md",
+          "ai/pact/context/state/LOGIC-DRAFT.md"
+        ],
+        "expected_remote": "upstream"
+      },
+      "expected": {
+        "closed": "unresolved"
+      }
+    },
+    {
+      "id": "review-closure-foreign-absence-is-not-authority",
+      "operation": "closure",
+      "rules": [
+        "PACT-GIT",
+        "PACT-CLOSURE"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "3333333333333333333333333333333333333333": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "4444444444444444444444444444444444444444": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "4444444444444444444444444444444444444444"
+          ],
+          "6666666666666666666666666666666666666666": [
+            "1111111111111111111111111111111111111111"
+          ]
+        },
+        "history_complete": true,
+        "handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "answer": {
+          "commit": "5555555555555555555555555555555555555555",
+          "actor": "prime-1",
+          "role": "Prime",
+          "message": "Accept\n\nPACT-Answers: G#1\n",
+          "record": "## Acceptance\n\n```pact:acceptance\ndecision: \"accepted\"\ncandidate: \"2222222222222222222222222222222222222222\"\nevidence: \"conformance/cases.json\"\n```\n",
+          "changed_paths": [
+            "ai/pact/context/state/LOGIC-DRAFT.md"
+          ]
+        },
+        "remote": {
+          "status": "absent",
+          "remote": "fork",
+          "ref": "refs/heads/main"
+        },
+        "delivery_handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "candidate_to_answer_paths": [
+          "ai/pact/context/state/STATE.md",
+          "ai/pact/context/state/LOGIC-DRAFT.md"
+        ]
+      },
+      "expected": {
+        "closed": "unresolved"
+      }
+    },
+    {
+      "id": "review-closure-explicit-authority-absent",
+      "operation": "closure",
+      "rules": [
+        "PACT-GIT",
+        "PACT-CLOSURE"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "3333333333333333333333333333333333333333": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "4444444444444444444444444444444444444444": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "4444444444444444444444444444444444444444"
+          ],
+          "6666666666666666666666666666666666666666": [
+            "1111111111111111111111111111111111111111"
+          ]
+        },
+        "history_complete": true,
+        "handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "answer": {
+          "commit": "5555555555555555555555555555555555555555",
+          "actor": "prime-1",
+          "role": "Prime",
+          "message": "Accept\n\nPACT-Answers: G#1\n",
+          "record": "## Acceptance\n\n```pact:acceptance\ndecision: \"accepted\"\ncandidate: \"2222222222222222222222222222222222222222\"\nevidence: \"conformance/cases.json\"\n```\n",
+          "changed_paths": [
+            "ai/pact/context/state/LOGIC-DRAFT.md"
+          ]
+        },
+        "remote": {
+          "status": "absent",
+          "remote": "fork",
+          "ref": "refs/heads/main"
+        },
+        "delivery_handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "candidate_to_answer_paths": [
+          "ai/pact/context/state/STATE.md",
+          "ai/pact/context/state/LOGIC-DRAFT.md"
+        ],
+        "expected_remote": "fork"
+      },
+      "expected": {
+        "closed": false
+      }
+    },
+    {
+      "id": "review-closure-empty-authority-unresolved",
+      "operation": "closure",
+      "rules": [
+        "PACT-GIT",
+        "PACT-CLOSURE"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "3333333333333333333333333333333333333333": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "4444444444444444444444444444444444444444": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "4444444444444444444444444444444444444444"
+          ],
+          "6666666666666666666666666666666666666666": [
+            "1111111111111111111111111111111111111111"
+          ]
+        },
+        "history_complete": true,
+        "handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "answer": {
+          "commit": "5555555555555555555555555555555555555555",
+          "actor": "prime-1",
+          "role": "Prime",
+          "message": "Accept\n\nPACT-Answers: G#1\n",
+          "record": "## Acceptance\n\n```pact:acceptance\ndecision: \"accepted\"\ncandidate: \"2222222222222222222222222222222222222222\"\nevidence: \"conformance/cases.json\"\n```\n",
+          "changed_paths": [
+            "ai/pact/context/state/LOGIC-DRAFT.md"
+          ]
+        },
+        "remote": {
+          "status": "resolved",
+          "remote": "origin",
+          "ref": "refs/heads/main",
+          "tip": "5555555555555555555555555555555555555555"
+        },
+        "delivery_handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "candidate_to_answer_paths": [
+          "ai/pact/context/state/STATE.md",
+          "ai/pact/context/state/LOGIC-DRAFT.md"
+        ],
+        "expected_remote": ""
+      },
+      "expected": {
+        "closed": "unresolved"
+      }
+    },
+    {
+      "id": "review-closure-null-authority-unresolved",
+      "operation": "closure",
+      "rules": [
+        "PACT-GIT",
+        "PACT-CLOSURE"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "3333333333333333333333333333333333333333": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "4444444444444444444444444444444444444444": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "4444444444444444444444444444444444444444"
+          ],
+          "6666666666666666666666666666666666666666": [
+            "1111111111111111111111111111111111111111"
+          ]
+        },
+        "history_complete": true,
+        "handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "answer": {
+          "commit": "5555555555555555555555555555555555555555",
+          "actor": "prime-1",
+          "role": "Prime",
+          "message": "Accept\n\nPACT-Answers: G#1\n",
+          "record": "## Acceptance\n\n```pact:acceptance\ndecision: \"accepted\"\ncandidate: \"2222222222222222222222222222222222222222\"\nevidence: \"conformance/cases.json\"\n```\n",
+          "changed_paths": [
+            "ai/pact/context/state/LOGIC-DRAFT.md"
+          ]
+        },
+        "remote": {
+          "status": "resolved",
+          "remote": "origin",
+          "ref": "refs/heads/main",
+          "tip": "5555555555555555555555555555555555555555"
+        },
+        "delivery_handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "candidate_to_answer_paths": [
+          "ai/pact/context/state/STATE.md",
+          "ai/pact/context/state/LOGIC-DRAFT.md"
+        ],
+        "expected_remote": null
+      },
+      "expected": {
+        "closed": "unresolved"
+      }
+    },
+    {
+      "id": "review-closure-numeric-authority-unresolved",
+      "operation": "closure",
+      "rules": [
+        "PACT-GIT",
+        "PACT-CLOSURE"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "3333333333333333333333333333333333333333": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "4444444444444444444444444444444444444444": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "4444444444444444444444444444444444444444"
+          ],
+          "6666666666666666666666666666666666666666": [
+            "1111111111111111111111111111111111111111"
+          ]
+        },
+        "history_complete": true,
+        "handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "answer": {
+          "commit": "5555555555555555555555555555555555555555",
+          "actor": "prime-1",
+          "role": "Prime",
+          "message": "Accept\n\nPACT-Answers: G#1\n",
+          "record": "## Acceptance\n\n```pact:acceptance\ndecision: \"accepted\"\ncandidate: \"2222222222222222222222222222222222222222\"\nevidence: \"conformance/cases.json\"\n```\n",
+          "changed_paths": [
+            "ai/pact/context/state/LOGIC-DRAFT.md"
+          ]
+        },
+        "remote": {
+          "status": "resolved",
+          "remote": "origin",
+          "ref": "refs/heads/main",
+          "tip": "5555555555555555555555555555555555555555"
+        },
+        "delivery_handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "candidate_to_answer_paths": [
+          "ai/pact/context/state/STATE.md",
+          "ai/pact/context/state/LOGIC-DRAFT.md"
+        ],
+        "expected_remote": 0
+      },
+      "expected": {
+        "closed": "unresolved"
+      }
+    },
+    {
+      "id": "review-closure-explicit-ref-mismatch",
+      "operation": "closure",
+      "rules": [
+        "PACT-GIT",
+        "PACT-CLOSURE"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "3333333333333333333333333333333333333333": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "4444444444444444444444444444444444444444": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "4444444444444444444444444444444444444444"
+          ],
+          "6666666666666666666666666666666666666666": [
+            "1111111111111111111111111111111111111111"
+          ]
+        },
+        "history_complete": true,
+        "handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "answer": {
+          "commit": "5555555555555555555555555555555555555555",
+          "actor": "prime-1",
+          "role": "Prime",
+          "message": "Accept\n\nPACT-Answers: G#1\n",
+          "record": "## Acceptance\n\n```pact:acceptance\ndecision: \"accepted\"\ncandidate: \"2222222222222222222222222222222222222222\"\nevidence: \"conformance/cases.json\"\n```\n",
+          "changed_paths": [
+            "ai/pact/context/state/LOGIC-DRAFT.md"
+          ]
+        },
+        "remote": {
+          "status": "resolved",
+          "remote": "origin",
+          "ref": "refs/heads/unrelated",
+          "tip": "5555555555555555555555555555555555555555"
+        },
+        "delivery_handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "candidate_to_answer_paths": [
+          "ai/pact/context/state/STATE.md",
+          "ai/pact/context/state/LOGIC-DRAFT.md"
+        ],
+        "expected_ref": "refs/heads/main"
+      },
+      "expected": {
+        "closed": "unresolved"
+      }
+    },
+    {
+      "id": "review-derive-default-origin-rejects-foreign",
+      "operation": "derive",
+      "rules": [
+        "PACT-GIT",
+        "PACT-CANDIDATE"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "3333333333333333333333333333333333333333": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "4444444444444444444444444444444444444444": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "4444444444444444444444444444444444444444"
+          ],
+          "6666666666666666666666666666666666666666": [
+            "1111111111111111111111111111111111111111"
+          ]
+        },
+        "history_complete": true,
+        "candidate": "2222222222222222222222222222222222222222",
+        "remote": {
+          "status": "resolved",
+          "remote": "fork",
+          "ref": "refs/heads/gate/G",
+          "tip": "4444444444444444444444444444444444444444"
+        }
+      },
+      "expected": {
+        "integrated": "unresolved"
+      }
+    },
+    {
+      "id": "review-derive-explicit-foreign-authority",
+      "operation": "derive",
+      "rules": [
+        "PACT-GIT",
+        "PACT-CANDIDATE"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "3333333333333333333333333333333333333333": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "4444444444444444444444444444444444444444": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "4444444444444444444444444444444444444444"
+          ],
+          "6666666666666666666666666666666666666666": [
+            "1111111111111111111111111111111111111111"
+          ]
+        },
+        "history_complete": true,
+        "candidate": "2222222222222222222222222222222222222222",
+        "remote": {
+          "status": "resolved",
+          "remote": "fork",
+          "ref": "refs/heads/gate/G",
+          "tip": "4444444444444444444444444444444444444444"
+        },
+        "expected_remote": "fork"
+      },
+      "expected": {
+        "integrated": true
+      }
+    },
+    {
+      "id": "review-derive-wrong-explicit-remote",
+      "operation": "derive",
+      "rules": [
+        "PACT-GIT",
+        "PACT-CANDIDATE"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "3333333333333333333333333333333333333333": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "4444444444444444444444444444444444444444": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "4444444444444444444444444444444444444444"
+          ],
+          "6666666666666666666666666666666666666666": [
+            "1111111111111111111111111111111111111111"
+          ]
+        },
+        "history_complete": true,
+        "candidate": "2222222222222222222222222222222222222222",
+        "remote": {
+          "status": "resolved",
+          "remote": "origin",
+          "ref": "refs/heads/gate/G",
+          "tip": "4444444444444444444444444444444444444444"
+        },
+        "expected_remote": "upstream"
+      },
+      "expected": {
+        "integrated": "unresolved"
+      }
+    },
+    {
+      "id": "review-derive-foreign-absence-is-not-authority",
+      "operation": "derive",
+      "rules": [
+        "PACT-GIT",
+        "PACT-CANDIDATE"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "3333333333333333333333333333333333333333": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "4444444444444444444444444444444444444444": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "4444444444444444444444444444444444444444"
+          ],
+          "6666666666666666666666666666666666666666": [
+            "1111111111111111111111111111111111111111"
+          ]
+        },
+        "history_complete": true,
+        "candidate": "2222222222222222222222222222222222222222",
+        "remote": {
+          "status": "absent",
+          "remote": "fork",
+          "ref": "refs/heads/gate/G"
+        }
+      },
+      "expected": {
+        "integrated": "unresolved"
+      }
+    },
+    {
+      "id": "review-derive-explicit-authority-absent",
+      "operation": "derive",
+      "rules": [
+        "PACT-GIT",
+        "PACT-CANDIDATE"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "3333333333333333333333333333333333333333": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "4444444444444444444444444444444444444444": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "4444444444444444444444444444444444444444"
+          ],
+          "6666666666666666666666666666666666666666": [
+            "1111111111111111111111111111111111111111"
+          ]
+        },
+        "history_complete": true,
+        "candidate": "2222222222222222222222222222222222222222",
+        "remote": {
+          "status": "absent",
+          "remote": "fork",
+          "ref": "refs/heads/gate/G"
+        },
+        "expected_remote": "fork"
+      },
+      "expected": {
+        "integrated": false
+      }
+    },
+    {
+      "id": "review-derive-empty-authority-unresolved",
+      "operation": "derive",
+      "rules": [
+        "PACT-GIT",
+        "PACT-CANDIDATE"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "3333333333333333333333333333333333333333": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "4444444444444444444444444444444444444444": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "4444444444444444444444444444444444444444"
+          ],
+          "6666666666666666666666666666666666666666": [
+            "1111111111111111111111111111111111111111"
+          ]
+        },
+        "history_complete": true,
+        "candidate": "2222222222222222222222222222222222222222",
+        "remote": {
+          "status": "resolved",
+          "remote": "origin",
+          "ref": "refs/heads/gate/G",
+          "tip": "4444444444444444444444444444444444444444"
+        },
+        "expected_remote": ""
+      },
+      "expected": {
+        "integrated": "unresolved"
+      }
+    },
+    {
+      "id": "review-derive-null-authority-unresolved",
+      "operation": "derive",
+      "rules": [
+        "PACT-GIT",
+        "PACT-CANDIDATE"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "3333333333333333333333333333333333333333": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "4444444444444444444444444444444444444444": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "4444444444444444444444444444444444444444"
+          ],
+          "6666666666666666666666666666666666666666": [
+            "1111111111111111111111111111111111111111"
+          ]
+        },
+        "history_complete": true,
+        "candidate": "2222222222222222222222222222222222222222",
+        "remote": {
+          "status": "resolved",
+          "remote": "origin",
+          "ref": "refs/heads/gate/G",
+          "tip": "4444444444444444444444444444444444444444"
+        },
+        "expected_remote": null
+      },
+      "expected": {
+        "integrated": "unresolved"
+      }
+    },
+    {
+      "id": "review-derive-numeric-authority-unresolved",
+      "operation": "derive",
+      "rules": [
+        "PACT-GIT",
+        "PACT-CANDIDATE"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "3333333333333333333333333333333333333333": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "4444444444444444444444444444444444444444": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "4444444444444444444444444444444444444444"
+          ],
+          "6666666666666666666666666666666666666666": [
+            "1111111111111111111111111111111111111111"
+          ]
+        },
+        "history_complete": true,
+        "candidate": "2222222222222222222222222222222222222222",
+        "remote": {
+          "status": "resolved",
+          "remote": "origin",
+          "ref": "refs/heads/gate/G",
+          "tip": "4444444444444444444444444444444444444444"
+        },
+        "expected_remote": 0
+      },
+      "expected": {
+        "integrated": "unresolved"
+      }
+    },
+    {
+      "id": "review-derive-explicit-ref-mismatch",
+      "operation": "derive",
+      "rules": [
+        "PACT-GIT",
+        "PACT-CANDIDATE"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "3333333333333333333333333333333333333333": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "4444444444444444444444444444444444444444": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "4444444444444444444444444444444444444444"
+          ],
+          "6666666666666666666666666666666666666666": [
+            "1111111111111111111111111111111111111111"
+          ]
+        },
+        "history_complete": true,
+        "candidate": "2222222222222222222222222222222222222222",
+        "remote": {
+          "status": "resolved",
+          "remote": "origin",
+          "ref": "refs/heads/unrelated",
+          "tip": "4444444444444444444444444444444444444444"
+        },
+        "expected_ref": "refs/heads/gate/G"
+      },
+      "expected": {
+        "integrated": "unresolved"
+      }
+    },
+    {
+      "id": "review-handoff-continuation-material-prose",
+      "operation": "handoff",
+      "rules": [
+        "PACT-HANDOFF"
+      ],
+      "input": {
+        "previous": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n\nsummary: Inspect tool output.\n  candidate: preserves the selected scope\n",
+        "next": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 2\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n\nsummary: Inspect tool output.\n  candidate: requires a wider scope\n",
+        "writer_role": "Lead",
+        "materiality": {
+          "result": "material",
+          "source": "STATE.md@Lead-materiality-decision",
+          "evidence": "Lead recorded that the revised escalation changes the Prime decision requested."
+        }
+      },
+      "expected": {
+        "verdict": "valid"
+      }
+    },
+    {
+      "id": "review-handoff-continuation-prose-needs-interpretation",
+      "operation": "handoff",
+      "rules": [
+        "PACT-HANDOFF"
+      ],
+      "input": {
+        "previous": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n\nsummary: Inspect tool output.\n  candidate: preserves the selected scope\n",
+        "next": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 2\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n\nsummary: Inspect tool output.\n  candidate: requires a wider scope\n",
+        "writer_role": "Lead"
+      },
+      "expected": {
+        "verdict": "unresolved"
+      }
+    },
+    {
+      "id": "review-handoff-continuation-same-seq-invalid",
+      "operation": "handoff",
+      "rules": [
+        "PACT-HANDOFF"
+      ],
+      "input": {
+        "previous": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n\nsummary: Inspect tool output.\n  candidate: preserves the selected scope\n",
+        "next": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n\nsummary: Inspect tool output.\n  candidate: requires a wider scope\n",
+        "writer_role": "Lead"
+      },
+      "expected": {
+        "verdict": "invalid"
+      }
+    },
+    {
+      "id": "review-handoff-fenced-material-prose",
+      "operation": "handoff",
+      "rules": [
+        "PACT-HANDOFF"
+      ],
+      "input": {
+        "previous": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n\n~~~txt\ncandidate: preserves the selected scope\n~~~\n",
+        "next": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 2\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n\n~~~txt\ncandidate: requires a wider scope\n~~~\n",
+        "writer_role": "Lead",
+        "materiality": {
+          "result": "material",
+          "source": "STATE.md@Lead-materiality-decision",
+          "evidence": "Lead recorded that the revised escalation changes the Prime decision requested."
+        }
+      },
+      "expected": {
+        "verdict": "valid"
+      }
+    },
+    {
+      "id": "review-handoff-fenced-prose-needs-interpretation",
+      "operation": "handoff",
+      "rules": [
+        "PACT-HANDOFF"
+      ],
+      "input": {
+        "previous": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n\n~~~txt\ncandidate: preserves the selected scope\n~~~\n",
+        "next": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 2\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n\n~~~txt\ncandidate: requires a wider scope\n~~~\n",
+        "writer_role": "Lead"
+      },
+      "expected": {
+        "verdict": "unresolved"
+      }
+    },
+    {
+      "id": "review-handoff-fenced-same-seq-invalid",
+      "operation": "handoff",
+      "rules": [
+        "PACT-HANDOFF"
+      ],
+      "input": {
+        "previous": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n\n~~~txt\ncandidate: preserves the selected scope\n~~~\n",
+        "next": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n\n~~~txt\ncandidate: requires a wider scope\n~~~\n",
+        "writer_role": "Lead"
+      },
+      "expected": {
+        "verdict": "invalid"
+      }
+    },
+    {
+      "id": "review-delivery-answer-candidate-divergent",
+      "operation": "delivery",
+      "rules": [
+        "PACT-ANSWER",
+        "PACT-CLOSURE"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "7777777777777777777777777777777777777777": [
+            "2222222222222222222222222222222222222222",
+            "5555555555555555555555555555555555555555"
+          ]
+        },
+        "history_complete": true,
+        "handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "answer": {
+          "commit": "5555555555555555555555555555555555555555",
+          "actor": "prime-1",
+          "role": "Prime",
+          "message": "Accept\n\nPACT-Answers: G#1\n",
+          "record": "## Acceptance\n\n```pact:acceptance\ndecision: \"accepted\"\ncandidate: \"2222222222222222222222222222222222222222\"\nevidence: \"conformance/cases.json\"\n```\n",
+          "changed_paths": [
+            "ai/pact/context/state/LOGIC-DRAFT.md"
+          ]
+        },
+        "remote": {
+          "status": "resolved",
+          "remote": "origin",
+          "ref": "refs/heads/main",
+          "tip": "1111111111111111111111111111111111111111"
+        },
+        "delivery_tip": "7777777777777777777777777777777777777777",
+        "current_default": "1111111111111111111111111111111111111111",
+        "changes_after_candidate": [
+          "ai/pact/context/state/STATE.md",
+          "ai/pact/context/state/LOGIC-DRAFT.md"
+        ],
+        "delivery_handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "candidate_to_answer_paths": [
+          "ai/pact/context/state/STATE.md",
+          "ai/pact/context/state/LOGIC-DRAFT.md"
+        ]
+      },
+      "expected": {
+        "verdict": "deny"
+      }
+    },
+    {
+      "id": "review-delivery-answer-candidate-incomplete",
+      "operation": "delivery",
+      "rules": [
+        "PACT-ANSWER",
+        "PACT-CLOSURE"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "8888888888888888888888888888888888888888"
+          ],
+          "7777777777777777777777777777777777777777": [
+            "2222222222222222222222222222222222222222",
+            "5555555555555555555555555555555555555555"
+          ]
+        },
+        "history_complete": false,
+        "handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "answer": {
+          "commit": "5555555555555555555555555555555555555555",
+          "actor": "prime-1",
+          "role": "Prime",
+          "message": "Accept\n\nPACT-Answers: G#1\n",
+          "record": "## Acceptance\n\n```pact:acceptance\ndecision: \"accepted\"\ncandidate: \"2222222222222222222222222222222222222222\"\nevidence: \"conformance/cases.json\"\n```\n",
+          "changed_paths": [
+            "ai/pact/context/state/LOGIC-DRAFT.md"
+          ]
+        },
+        "remote": {
+          "status": "resolved",
+          "remote": "origin",
+          "ref": "refs/heads/main",
+          "tip": "1111111111111111111111111111111111111111"
+        },
+        "delivery_tip": "7777777777777777777777777777777777777777",
+        "current_default": "1111111111111111111111111111111111111111",
+        "changes_after_candidate": [
+          "ai/pact/context/state/STATE.md",
+          "ai/pact/context/state/LOGIC-DRAFT.md"
+        ],
+        "delivery_handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "candidate_to_answer_paths": [
+          "ai/pact/context/state/STATE.md",
+          "ai/pact/context/state/LOGIC-DRAFT.md"
+        ]
+      },
+      "expected": {
+        "verdict": "unresolved"
+      }
+    },
+    {
+      "id": "review-delivery-answer-candidate-descendant",
+      "operation": "delivery",
+      "rules": [
+        "PACT-ANSWER",
+        "PACT-CLOSURE"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "7777777777777777777777777777777777777777": [
+            "2222222222222222222222222222222222222222",
+            "5555555555555555555555555555555555555555"
+          ]
+        },
+        "history_complete": true,
+        "handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "answer": {
+          "commit": "5555555555555555555555555555555555555555",
+          "actor": "prime-1",
+          "role": "Prime",
+          "message": "Accept\n\nPACT-Answers: G#1\n",
+          "record": "## Acceptance\n\n```pact:acceptance\ndecision: \"accepted\"\ncandidate: \"2222222222222222222222222222222222222222\"\nevidence: \"conformance/cases.json\"\n```\n",
+          "changed_paths": [
+            "ai/pact/context/state/LOGIC-DRAFT.md"
+          ]
+        },
+        "remote": {
+          "status": "resolved",
+          "remote": "origin",
+          "ref": "refs/heads/main",
+          "tip": "1111111111111111111111111111111111111111"
+        },
+        "delivery_tip": "7777777777777777777777777777777777777777",
+        "current_default": "1111111111111111111111111111111111111111",
+        "changes_after_candidate": [
+          "ai/pact/context/state/STATE.md",
+          "ai/pact/context/state/LOGIC-DRAFT.md"
+        ],
+        "delivery_handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "candidate_to_answer_paths": [
+          "ai/pact/context/state/STATE.md",
+          "ai/pact/context/state/LOGIC-DRAFT.md"
+        ]
+      },
+      "expected": {
+        "verdict": "allow"
+      }
+    },
+    {
+      "id": "review-pending-quoted-machine-fence-is-prose",
+      "operation": "parse_tasks",
+      "rules": [
+        "PACT-RECORD"
+      ],
+      "input": {
+        "section": "Pending",
+        "text": "## Pending\n\n- [ ] PACT-20261028-001 inspect\n\n  role: Worker\n\n~~~~md\n```pact:task\nid: \"quoted-example\"\n```\n~~~~\n"
+      },
+      "expected": {
+        "verdict": "valid",
+        "tasks": [
+          {
+            "id": "PACT-20261028-001",
+            "role": "Worker"
+          }
+        ]
+      }
+    },
+    {
+      "id": "review-delivery-null-authority-unresolved",
+      "operation": "delivery",
+      "rules": [
+        "PACT-GIT"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "3333333333333333333333333333333333333333": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "4444444444444444444444444444444444444444": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "4444444444444444444444444444444444444444"
+          ],
+          "6666666666666666666666666666666666666666": [
+            "1111111111111111111111111111111111111111"
+          ]
+        },
+        "history_complete": true,
+        "handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "answer": {
+          "commit": "5555555555555555555555555555555555555555",
+          "actor": "prime-1",
+          "role": "Prime",
+          "message": "Accept\n\nPACT-Answers: G#1\n",
+          "record": "## Acceptance\n\n```pact:acceptance\ndecision: \"accepted\"\ncandidate: \"2222222222222222222222222222222222222222\"\nevidence: \"conformance/cases.json\"\n```\n",
+          "changed_paths": [
+            "ai/pact/context/state/LOGIC-DRAFT.md"
+          ]
+        },
+        "remote": {
+          "status": "resolved",
+          "remote": "origin",
+          "ref": "refs/heads/main",
+          "tip": "1111111111111111111111111111111111111111"
+        },
+        "delivery_tip": "5555555555555555555555555555555555555555",
+        "current_default": "1111111111111111111111111111111111111111",
+        "changes_after_candidate": [
+          "ai/pact/context/state/STATE.md",
+          "ai/pact/context/state/LOGIC-DRAFT.md"
+        ],
+        "delivery_handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "candidate_to_answer_paths": [
+          "ai/pact/context/state/STATE.md",
+          "ai/pact/context/state/LOGIC-DRAFT.md"
+        ],
+        "expected_remote": null
+      },
+      "expected": {
+        "verdict": "unresolved"
+      }
+    },
+    {
+      "id": "review-closure-empty-expected-ref-unresolved",
+      "operation": "closure",
+      "rules": [
+        "PACT-GIT"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "3333333333333333333333333333333333333333": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "4444444444444444444444444444444444444444": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "4444444444444444444444444444444444444444"
+          ],
+          "6666666666666666666666666666666666666666": [
+            "1111111111111111111111111111111111111111"
+          ]
+        },
+        "history_complete": true,
+        "handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "answer": {
+          "commit": "5555555555555555555555555555555555555555",
+          "actor": "prime-1",
+          "role": "Prime",
+          "message": "Accept\n\nPACT-Answers: G#1\n",
+          "record": "## Acceptance\n\n```pact:acceptance\ndecision: \"accepted\"\ncandidate: \"2222222222222222222222222222222222222222\"\nevidence: \"conformance/cases.json\"\n```\n",
+          "changed_paths": [
+            "ai/pact/context/state/LOGIC-DRAFT.md"
+          ]
+        },
+        "remote": {
+          "status": "resolved",
+          "remote": "origin",
+          "ref": "refs/heads/main",
+          "tip": "5555555555555555555555555555555555555555"
+        },
+        "delivery_handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "candidate_to_answer_paths": [
+          "ai/pact/context/state/STATE.md",
+          "ai/pact/context/state/LOGIC-DRAFT.md"
+        ],
+        "expected_ref": ""
+      },
+      "expected": {
+        "closed": "unresolved"
+      }
+    },
+    {
+      "id": "review-closure-null-expected-ref-unresolved",
+      "operation": "closure",
+      "rules": [
+        "PACT-GIT"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "3333333333333333333333333333333333333333": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "4444444444444444444444444444444444444444": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "4444444444444444444444444444444444444444"
+          ],
+          "6666666666666666666666666666666666666666": [
+            "1111111111111111111111111111111111111111"
+          ]
+        },
+        "history_complete": true,
+        "handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "answer": {
+          "commit": "5555555555555555555555555555555555555555",
+          "actor": "prime-1",
+          "role": "Prime",
+          "message": "Accept\n\nPACT-Answers: G#1\n",
+          "record": "## Acceptance\n\n```pact:acceptance\ndecision: \"accepted\"\ncandidate: \"2222222222222222222222222222222222222222\"\nevidence: \"conformance/cases.json\"\n```\n",
+          "changed_paths": [
+            "ai/pact/context/state/LOGIC-DRAFT.md"
+          ]
+        },
+        "remote": {
+          "status": "resolved",
+          "remote": "origin",
+          "ref": "refs/heads/main",
+          "tip": "5555555555555555555555555555555555555555"
+        },
+        "delivery_handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "candidate_to_answer_paths": [
+          "ai/pact/context/state/STATE.md",
+          "ai/pact/context/state/LOGIC-DRAFT.md"
+        ],
+        "expected_ref": null
+      },
+      "expected": {
+        "closed": "unresolved"
+      }
+    },
+    {
+      "id": "review-closure-numeric-expected-ref-unresolved",
+      "operation": "closure",
+      "rules": [
+        "PACT-GIT"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "3333333333333333333333333333333333333333": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "4444444444444444444444444444444444444444": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "4444444444444444444444444444444444444444"
+          ],
+          "6666666666666666666666666666666666666666": [
+            "1111111111111111111111111111111111111111"
+          ]
+        },
+        "history_complete": true,
+        "handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "answer": {
+          "commit": "5555555555555555555555555555555555555555",
+          "actor": "prime-1",
+          "role": "Prime",
+          "message": "Accept\n\nPACT-Answers: G#1\n",
+          "record": "## Acceptance\n\n```pact:acceptance\ndecision: \"accepted\"\ncandidate: \"2222222222222222222222222222222222222222\"\nevidence: \"conformance/cases.json\"\n```\n",
+          "changed_paths": [
+            "ai/pact/context/state/LOGIC-DRAFT.md"
+          ]
+        },
+        "remote": {
+          "status": "resolved",
+          "remote": "origin",
+          "ref": "refs/heads/main",
+          "tip": "5555555555555555555555555555555555555555"
+        },
+        "delivery_handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "candidate_to_answer_paths": [
+          "ai/pact/context/state/STATE.md",
+          "ai/pact/context/state/LOGIC-DRAFT.md"
+        ],
+        "expected_ref": 0
+      },
+      "expected": {
+        "closed": "unresolved"
+      }
+    },
+    {
+      "id": "review-derive-empty-expected-ref-unresolved",
+      "operation": "derive",
+      "rules": [
+        "PACT-GIT"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "3333333333333333333333333333333333333333": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "4444444444444444444444444444444444444444": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "4444444444444444444444444444444444444444"
+          ],
+          "6666666666666666666666666666666666666666": [
+            "1111111111111111111111111111111111111111"
+          ]
+        },
+        "history_complete": true,
+        "candidate": "2222222222222222222222222222222222222222",
+        "remote": {
+          "status": "resolved",
+          "remote": "origin",
+          "ref": "refs/heads/gate/G",
+          "tip": "4444444444444444444444444444444444444444"
+        },
+        "expected_ref": ""
+      },
+      "expected": {
+        "integrated": "unresolved"
+      }
+    },
+    {
+      "id": "review-derive-null-expected-ref-unresolved",
+      "operation": "derive",
+      "rules": [
+        "PACT-GIT"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "3333333333333333333333333333333333333333": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "4444444444444444444444444444444444444444": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "4444444444444444444444444444444444444444"
+          ],
+          "6666666666666666666666666666666666666666": [
+            "1111111111111111111111111111111111111111"
+          ]
+        },
+        "history_complete": true,
+        "candidate": "2222222222222222222222222222222222222222",
+        "remote": {
+          "status": "resolved",
+          "remote": "origin",
+          "ref": "refs/heads/gate/G",
+          "tip": "4444444444444444444444444444444444444444"
+        },
+        "expected_ref": null
+      },
+      "expected": {
+        "integrated": "unresolved"
+      }
+    },
+    {
+      "id": "review-derive-numeric-expected-ref-unresolved",
+      "operation": "derive",
+      "rules": [
+        "PACT-GIT"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "3333333333333333333333333333333333333333": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "4444444444444444444444444444444444444444": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "4444444444444444444444444444444444444444"
+          ],
+          "6666666666666666666666666666666666666666": [
+            "1111111111111111111111111111111111111111"
+          ]
+        },
+        "history_complete": true,
+        "candidate": "2222222222222222222222222222222222222222",
+        "remote": {
+          "status": "resolved",
+          "remote": "origin",
+          "ref": "refs/heads/gate/G",
+          "tip": "4444444444444444444444444444444444444444"
+        },
+        "expected_ref": 0
+      },
+      "expected": {
+        "integrated": "unresolved"
+      }
+    },
+    {
+      "id": "review-delivery-empty-expected-ref-unresolved",
+      "operation": "delivery",
+      "rules": [
+        "PACT-GIT"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "3333333333333333333333333333333333333333": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "4444444444444444444444444444444444444444": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "4444444444444444444444444444444444444444"
+          ],
+          "6666666666666666666666666666666666666666": [
+            "1111111111111111111111111111111111111111"
+          ]
+        },
+        "history_complete": true,
+        "handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "answer": {
+          "commit": "5555555555555555555555555555555555555555",
+          "actor": "prime-1",
+          "role": "Prime",
+          "message": "Accept\n\nPACT-Answers: G#1\n",
+          "record": "## Acceptance\n\n```pact:acceptance\ndecision: \"accepted\"\ncandidate: \"2222222222222222222222222222222222222222\"\nevidence: \"conformance/cases.json\"\n```\n",
+          "changed_paths": [
+            "ai/pact/context/state/LOGIC-DRAFT.md"
+          ]
+        },
+        "remote": {
+          "status": "resolved",
+          "remote": "origin",
+          "ref": "refs/heads/main",
+          "tip": "1111111111111111111111111111111111111111"
+        },
+        "delivery_tip": "5555555555555555555555555555555555555555",
+        "current_default": "1111111111111111111111111111111111111111",
+        "changes_after_candidate": [
+          "ai/pact/context/state/STATE.md",
+          "ai/pact/context/state/LOGIC-DRAFT.md"
+        ],
+        "delivery_handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "candidate_to_answer_paths": [
+          "ai/pact/context/state/STATE.md",
+          "ai/pact/context/state/LOGIC-DRAFT.md"
+        ],
+        "expected_ref": ""
+      },
+      "expected": {
+        "verdict": "unresolved"
+      }
+    },
+    {
+      "id": "review-delivery-null-expected-ref-unresolved",
+      "operation": "delivery",
+      "rules": [
+        "PACT-GIT"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "3333333333333333333333333333333333333333": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "4444444444444444444444444444444444444444": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "4444444444444444444444444444444444444444"
+          ],
+          "6666666666666666666666666666666666666666": [
+            "1111111111111111111111111111111111111111"
+          ]
+        },
+        "history_complete": true,
+        "handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "answer": {
+          "commit": "5555555555555555555555555555555555555555",
+          "actor": "prime-1",
+          "role": "Prime",
+          "message": "Accept\n\nPACT-Answers: G#1\n",
+          "record": "## Acceptance\n\n```pact:acceptance\ndecision: \"accepted\"\ncandidate: \"2222222222222222222222222222222222222222\"\nevidence: \"conformance/cases.json\"\n```\n",
+          "changed_paths": [
+            "ai/pact/context/state/LOGIC-DRAFT.md"
+          ]
+        },
+        "remote": {
+          "status": "resolved",
+          "remote": "origin",
+          "ref": "refs/heads/main",
+          "tip": "1111111111111111111111111111111111111111"
+        },
+        "delivery_tip": "5555555555555555555555555555555555555555",
+        "current_default": "1111111111111111111111111111111111111111",
+        "changes_after_candidate": [
+          "ai/pact/context/state/STATE.md",
+          "ai/pact/context/state/LOGIC-DRAFT.md"
+        ],
+        "delivery_handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "candidate_to_answer_paths": [
+          "ai/pact/context/state/STATE.md",
+          "ai/pact/context/state/LOGIC-DRAFT.md"
+        ],
+        "expected_ref": null
+      },
+      "expected": {
+        "verdict": "unresolved"
+      }
+    },
+    {
+      "id": "review-delivery-numeric-expected-ref-unresolved",
+      "operation": "delivery",
+      "rules": [
+        "PACT-GIT"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "3333333333333333333333333333333333333333": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "4444444444444444444444444444444444444444": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "4444444444444444444444444444444444444444"
+          ],
+          "6666666666666666666666666666666666666666": [
+            "1111111111111111111111111111111111111111"
+          ]
+        },
+        "history_complete": true,
+        "handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "answer": {
+          "commit": "5555555555555555555555555555555555555555",
+          "actor": "prime-1",
+          "role": "Prime",
+          "message": "Accept\n\nPACT-Answers: G#1\n",
+          "record": "## Acceptance\n\n```pact:acceptance\ndecision: \"accepted\"\ncandidate: \"2222222222222222222222222222222222222222\"\nevidence: \"conformance/cases.json\"\n```\n",
+          "changed_paths": [
+            "ai/pact/context/state/LOGIC-DRAFT.md"
+          ]
+        },
+        "remote": {
+          "status": "resolved",
+          "remote": "origin",
+          "ref": "refs/heads/main",
+          "tip": "1111111111111111111111111111111111111111"
+        },
+        "delivery_tip": "5555555555555555555555555555555555555555",
+        "current_default": "1111111111111111111111111111111111111111",
+        "changes_after_candidate": [
+          "ai/pact/context/state/STATE.md",
+          "ai/pact/context/state/LOGIC-DRAFT.md"
+        ],
+        "delivery_handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "candidate_to_answer_paths": [
+          "ai/pact/context/state/STATE.md",
+          "ai/pact/context/state/LOGIC-DRAFT.md"
+        ],
+        "expected_ref": 0
+      },
+      "expected": {
+        "verdict": "unresolved"
+      }
     }
   ]
 }
