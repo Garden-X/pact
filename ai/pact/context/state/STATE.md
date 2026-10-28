@@ -5,16 +5,52 @@
 name: STATE.md
 canonical_location: /ai/pact/context/state/STATE.md
 layer: PACT / context / state
-status: clear
-active_task: none
+status: active
+active_task: PACT-20261028-001
 generated_from: /ai/pact/templates/state.tpl.md
 generated_from_version: 1.10
 content_status: current-state
-updated: 2026-10-26 17:20:28 UTC+00:00
+updated: 2026-10-28 21:59:33 UTC+00:00
 
 ## Active Task
 
-None.
+```pact:task
+id: "PACT-20261028-001"
+role: "Lead"
+actor: "/root Lead pass"
+parent: "/root"
+lead: "/root Lead pass"
+task_phase: "working"
+requires: ["git","toolchain:node"]
+reservations: [{"path":"conformance/","mode":"modify"},{"path":"conformance/","mode":"create"}]
+task_base: "cd43be45a97b4bb9f336dd2239fc9eaff8d20bd0"
+task_branch: "task/PACT-Conformance/PACT-20261028-001"
+task_candidate: "none"
+trace: "LOGIC-DRAFT.md / Decisions"
+source: {"draft":"LOGIC-DRAFT.md","tasks":"TASKS.md","review":"ac431f05c2f00836d7632244751d96f5daabf29d"}
+```
+
+request: Fix the review remarks reported to the owner on 2026-10-28.
+brief: Correct the three selected review findings under existing PACT. Bind closure to the exact standalone origin + refs/heads/main coordinate and derive to remote origin plus its named gate ref, making an unnamed or mismatched coordinate unresolved. Let authority and transfer read the template entry labels boundary_contract, brief, tests, baseline and validation relative to their indentation while keeping the heading projection; two surfaces for one record are invalid. Disclose all five changed delivery inputs and every input completed here. Add the counterexamples as tracked cases and record their red run before implementation; add adjacent positive/boundary cases and complete template example assertions. Preserve every existing expectation. No spec/template change, dependency, runtime, external installation, service or main mutation.
+boundary_contract:
+  task_scope: The bounded correction brief above, selected by Prime in LOGIC-DRAFT PACT-Conformance.
+  permitted_area: conformance/** implementation, fixtures and README plus Lead-owned TASKS/STATE records; read existing contracts and evidence.
+  protected_area: main/default, LOGIC-DRAFT, templates/specs, external installations, host configuration, unrelated files and immutable published decisions.
+  unchanged_contracts: Existing PACT semantics, three roles/lifecycle, Markdown/Git authority, owner model/effort settings, no runtime or OS mechanism.
+  allowed_side_effects: Commit the exact task candidate; push only the session branch ccr-abb685be-lsyzzj unless the owner permits task/gate publication; no force, hook bypass, services, dependencies, deploy or external messages.
+  escalation: Report a demonstrated need for spec/template change, scope conflict or publication permission to Prime before the affected action.
+specialty: conformance testing
+model_tier: High
+model_binding: inherited owner-configured session model, no override
+effort: 75%
+effective_effort: host-controlled session setting preserved; no native control exercised
+created_at: 2026-10-28 21:59:33 UTC+00:00
+affected_files: conformance/reference.mjs, conformance/cases.json, conformance/source-check.mjs, conformance/README.md
+tests: New closure/derive coordinate, template boundary authority and template transfer cases; complete template example source assertions.
+baseline: New tracked cases and source assertions run against task_base before implementation; actual red counts recorded at completion.
+validation: self-test, full corpus, source-check, check-git, migration-check and git diff --check, each actual exit inspected sequentially.
+retry: identified corrections only
+handoff: preserve red baseline, report exact candidate and actual exits
 
 Delivery progress: Source/extracted validators each exited 0 (119 checks/185 links), source/extracted reference scenarios each exited 0 (41 checks), archive audit exited 0 (16 checks/47 files). Current ZIP SHA256 ddb7072d23ab57ecb9d126d41ddbef47978c65d73c81376e0c564936d73b8e80. Nine guarded applications exited 0; wrong-plan-hash negatives each exited 1 before mutation, after/preserved hashes checked. Six isolated publication copies, Tarot local copy and two fixtures updated; primary working copies and three duplicate copies pending. Native project acceptance checks, commits, pushes and merges pending. No service/SPARC truth change; no independent final helper review claimed.
 
@@ -80,7 +116,7 @@ Owner clarification: add bounded committed-source update discovery for local/Git
     escalation: none
     recorded_at: 2026-10-18 09:00:47 UTC+00:00
 
-## Gate Handoff
+## Historical PACT-Semantics Gate Handoff
 
 ```pact:gate-handoff
 gate_id: "PACT-Semantics"
@@ -95,5 +131,23 @@ recorded_at: "2026-10-26 17:20:28 UTC+00:00"
 slices: Corrected006 exact021a51d084523585b2bdda89b564ca2784f267c9 published and proven ancestor of explicitly fetched remote gate; earlier b1676f1 preserved ancestor. Prior selected slices remain reachable and recorded in TASKS Done. Complete candidate74cc122 differs from reviewed correction only in TASKS/STATE completion records.
 validation: Affected self-test21, corpus250/250 and source211checks165links each actual0; fast source check211/165links actual0 on exact74cc122. Original9 and prior239 case inputs/expectations unchanged; demonstrated red baselines preserved in task evidence. Independent exact Inspector review and Root read found no actionable residual. Prime owns fresh complete acceptance and separately authorized merge.
 records: SliceRecordsCheck pass; TASKS complete/Pending none, STATE clear/no reservations. Same Lead resumed after usage stops; local owned HEAVY-LOCK removed after checked foreground exits. No template/spec version, dependency, host installation or product/SPARC truth change; all normative fixtures/evidence tracked. Previous handoff/answer preserved in Git history.
+blockers: none
+escalation: none
+
+## Gate Handoff
+
+```pact:gate-handoff
+gate_id: "PACT-Conformance"
+seq: 1
+signal: "working"
+candidate: "none"
+branch: "gate/PACT-Conformance"
+lead: "/root Lead pass"
+recorded_at: "2026-10-28 21:59:33 UTC+00:00"
+```
+
+slices: Task PACT-20261028-001 dispatched from exact selected revision cd43be45a97b4bb9f336dd2239fc9eaff8d20bd0. PACT-Semantics#3 is answered and delivered; its publication is preserved verbatim above.
+validation: Review counterexamples were demonstrated on ac431f05c2f00836d7632244751d96f5daabf29d; tracked red cases precede implementation.
+records: Owner requested the fix; Prime selected the scope; Lead owns execution records. Session pushes are limited to ccr-abb685be-lsyzzj until the owner permits task/gate publication.
 blockers: none
 escalation: none
