@@ -7,230 +7,85 @@ canonical_location: /ai/pact/context/state/LOGIC-DRAFT.md
 layer: PACT / context / state
 status: selected
 owner_role: Prime
-gate_id: PACT-Semantics
+gate_id: PACT-Conformance
 generated_from: /ai/pact/templates/logic-draft.tpl.md
 generated_from_version: 1.7
 content_status: current-state
-updated: 2026-10-26 17:22:59 UTC+00:00
+updated: 2026-10-28 21:58:39 UTC+00:00
 
 ## Selected Logic
 
-Prime selects the owner's implementation request: deterministic PACT authority,
-transitions and acceptance with manual humans + agents + Markdown + Git use.
-Implement only the reduced delta below through task candidates and this gate.
-No runtime, new role, lifecycle stage or canonical state file. Main delivery is
-not selected; acceptance and delivery remain separate.
+Prime selects the owner's correction request after the 2026-10-28 review of
+the delivered PACT-Semantics correction diff
+a19136c171cd67bc9cf1422a0080d2234cb4a0f6..ac431f05c2f00836d7632244751d96f5daabf29d.
+Make the non-normative evaluator, corpus, source checks and conformance README
+agree with existing PACT rules where that review demonstrated a gap. Implement
+only the delta below through one bounded task candidate and this gate. No
+normative PACT/WORKFLOW/template change, runtime, dependency, role, lifecycle
+stage or canonical state file.
 
 ## Source / Evidence
 
-- Owner attachment, 2026-10-26, and subsequent instruction to execute the task.
-- Baseline: 7aec582761ff7bc398687c147203e22892c2f92b.
-- Proposal branch shape/2026-10-26-Pact-Runtime-Spec-Delta, shape blob
-  9f94c26c3d4e26e763fe68574b2d26ebba9e7f62: research, not authority.
-- Reuse WORKFLOW roles, Spawn Boundaries, task candidates, validation, cleanup;
-  state/tasks/logic-draft/file-guard templates; GateClose and PrimeWatch.
-- Distill October 14/16/17/18 cache scenarios, not scratch regex policy models.
-- ai/sparc, ai/docs and ai/raw are package placeholders; no attached product
-  SPARC binding/live contract or REFERENCE-INDEX. No product truth change.
+- Owner instruction 2026-10-28 in this session: fix the reported review
+  remarks. It authorizes this correction; it does not by itself authorize
+  task/gate branch publication outside the session branch or default-branch
+  delivery.
+- Review basis: main ac431f05c2f00836d7632244751d96f5daabf29d, where
+  PACT-Semantics#3 is accepted and its answer is reachable from origin/main.
+- Counterexamples demonstrated on that revision with the tracked evaluator:
+  1. `closure` of `accepted-delivered` with observation remote `fork` returns
+     `closed: true`; `derive` of `candidate-integrated` with observation
+     `fork` + `refs/heads/unrelated` returns `integrated: true`. PACT-GIT binds
+     reachability to `(authority_remote, refs/heads/<expanded-branch>)`.
+  2. The complete STATE template example, as a parented `publish_task`
+     authority query, returns `unresolved`; the same record plus a copied
+     `## Boundary Contract` heading returns `allow`. The exact TASKS-to-STATE
+     template example transfer returns `invalid`. The evaluator reads only
+     corpus projection headings, never the templates' entry labels
+     `boundary_contract`, `brief`, `tests`, `baseline` and `validation`.
+  3. conformance/README discloses one corrected delivery observation, while
+     five pre-existing delivery cases changed `remote.tip` in that diff.
+- Reuse conformance/reference.mjs, cases.json, source-check.mjs and README;
+  PACT.md PACT-GIT/PACT-FACT/PACT-RECORD, WORKFLOW and the state/tasks
+  templates. No cache evidence is required; all inputs become tracked cases.
+- ai/sparc, ai/docs and ai/raw remain package placeholders; no product truth.
 
 ## Decisions
 
-Pre-edit classification: A normative semantics; B minimum consumed machine
-representation; C rejected implementation concern; D rejected platform norm.
-
-| Shape item | Class | Selected disposition |
-|---|---|---|
-| authority derivation | A | One effective PACT authority procedure; role powers and inherited scope are distinct. |
-| runtime lease | C | Reject lease/token/expiry and capability-derived authority objects. |
-| machine blocks | B | Only consumed mechanical inputs; brief, boundaries, explanations remain prose; preserve legacy history. |
-| AuthorityRepository | A/C | Keep exact Git revisions, ancestry, changed paths and explicit remote observations; reject store interface, author-based trust and service requirements. |
-| Host state | C | No subsystem; external restrictions never grant PACT authority. |
-| Operational journal | C | Reject subsystem and append-only journal requirement. |
-| requires grammar | A/B | Portable identifiers and satisfied/unavailable/unresolved results; grants no authority, including execution. |
-| path grammar | A/B | One repository-relative interpretation of slash, directories, patterns, case and rename effects. |
-| reservation operations | A/B | read/modify/create/delete; explicit legacy write compatibility; aggregator is annotation, not mutation permission. |
-| named checks | A/B | Stable selected check identities and resolvable command/environment evidence; no command-authority registry. |
-| rule IDs | B | Only stable references needed for conformance. |
-| conformance/ | A/B | Tracked language-neutral inputs/results; non-normative runner, no runtime dependency. |
-| platform-neutral KEEP-ALIVE | A/D | Generalize launcher validation; retain portable default and useful platform examples. |
-| legacy migration | A/B | Plan-only, reviewed, hash/revision guarded, non-destructive; no installation rollout. |
-
-Reject shape-specific blanket Worker template-write prohibition (owner permits
-source template maintenance), parent-role power intersection (inherit scope,
-not parent role powers), subject-did-not-author revision rule, capability-based
-permissions and journal/recovery APIs. Unknown/conflicting mechanical inputs
-produce unresolved/invalid verdicts, never inferred permission. Arbitrary prose
-boundaries require recorded authority resolution when mechanically unresolved;
-do not structure reasoning or pretend natural language is decidable.
+| Review item | Disposition |
+|---|---|
+| closure/derive remote binding | Correct. Closure binds the exact standalone `origin` + `refs/heads/main` coordinate like delivery; derive binds remote `origin` by default and requires its named gate ref. An unnamed or mismatched coordinate is unresolved. |
+| template entry prose surfaces | Correct. Authority and transfer also read the owning entry's root labels relative to their indentation; the existing heading projection stays readable. Two surfaces for one record are invalid. Presence and exact comparison only; no prose interpretation. |
+| README case-change disclosure | Correct. Name all five changed delivery inputs and every input completed by this gate; expectations stay unchanged. |
+| seq integral decimal/exponent tokens | Decline. No demonstrated defect: PACT-RECORD requires exact integers and README documents the accepted spellings. A canonical-token rule needs a separate owner selection. |
 
 ## Constraints
 
-Preserve owner model/native effort, project data and immutable historical
-handoffs/answers. Prime Architect/Inspector and Lead execution remain separate.
-Inherited model, High capability, requested effort 100% mapped to supported
-maximum unless explicit native setting is preserved; no model override.
-No starts below 20% battery even on AC; measured resource gate/shared heavy
-lock and sequential heavy checks. No services, dependencies, infrastructure,
-external installation edits, archive refresh, force push, main writes or deploy.
-Bump changed templates only; synchronize RULES/full EXAMPLE/active targets.
-Keep package 2.0 unless demonstrated compatibility break requires reconsideration.
-
-## Owner correction and delivery authorization
-
-Owner instruction 2026-10-26: correct the reviewed defects and merge the result.
-This explicitly authorizes task/gate publication and Prime's separate default
-branch fast-forward after successful acceptance. It supersedes the earlier
-no-main-delivery scope for this gate; other scope/resource constraints remain.
-The previous accepted answer remains immutable history, but its candidate is
-not the corrected delivery candidate. Lead must publish a new handoff revision.
-
-Selected correction: make the non-normative evaluator and corpus agree with
-existing PACT rules for authoritative remote-tip delivery, inherited delivery
-restrictions, fenced guard examples, complete active-task parsing and exact
-integer seq validation. Reuse conformance/reference.mjs and cases.json; promote
-the nine proven counterexamples from the review into tracked fixtures and add
-proportionate adjacent positive/boundary cases. No runtime architecture, external
-rollout, host configuration, new dependencies or unrelated redesign.
-
-Review basis: a19136c171cd67bc9cf1422a0080d2234cb4a0f6; nine counterexamples
-at ai/pact/cache/runs/2026-10-26T06-29-00Z--semantic-review/validation/counterexamples.json
-ran through the tracked runner with actual exit 1 (nine failures). Preserve
-their semantic expectations. Also validate complete generated task examples,
-not only synthetic block fragments. Any necessary adjacent correction must
-have a demonstrated failing case and stay inside the same existing contracts.
-
-Prime retains selection/acceptance/delivery; Lead owns task006 records and its
-candidate publication/integration. Owner-configured models/native efforts remain
-unchanged. Fresh exact-candidate acceptance requires self-test, full corpus,
-source checks, real-Git scenarios, migration preservation and diff hygiene,
-with each actual exit inspected sequentially under the existing resource policy.
-Independent Inspector reviews the correction diff before Prime acceptance.
+This cloud session performs Prime and Lead sequentially on one host, keeping
+role boundaries and evidence checks; its same-host review is not independent.
+Preserve every existing case expectation and the owner-configured session
+model/effort; no model override. Change existing case inputs only to supply a
+coordinate that a corrected query now requires, and disclose each one. No
+services, dependencies, host configuration, external installations, archive,
+force push or template/spec version bump. The session may push only
+`ccr-abb685be-lsyzzj`; task/gate branch publication and main delivery need
+explicit owner permission and remain Prime-level follow-up until granted.
 
 ## Acceptance
 
 Prime inspects these complete required checks on the exact candidate:
 
-- semantic-conformance: positive/negative language-neutral fixtures for roles,
-  reservations, guard, inherited narrowing, transfer/state combinations, task
-  ancestry/reachability, integration, handoff/answer/closure, force push,
-  unavailable/unresolved requires, remote refs and legacy parsing. New material
-  runner invariants have failing tests before implementation.
-- source-contracts: RULES/full EXAMPLE/target equality, versions, links, consumed
-  grammar and runtime-free policy consistency.
-- git-remote-scenarios: real synthetic full/shallow/single-branch/worktree cases;
-  missing tracking ref is not remote absence; copied commits are not ancestry;
-  incomplete history remains unresolved.
-- migration-preservation: read-only plan and extracted-value preservation for
-  active/pending state, immutable handoffs/answers, guards/hooks and explicit
-  native bindings; stale hash/revision fails before mutation. No external apply.
-- scope-and-platform: portable rule/default/platform-example audit and manual
-  use walkthrough; no second authority ledger or runtime subsystem.
-- record-hygiene: actual exits, candidate evidence, SliceRecordsCheck, intended
-  diff and task-to-remote-gate reachability; native hooks remain mandatory.
+- semantic-conformance: new cases fail on the review basis before the
+  implementation, then the full corpus passes with prior expectations intact.
+- source-contracts: source-check passes, including reference authority and
+  transfer on the complete template examples.
+- runner-invariants, git-remote-scenarios and migration-preservation pass;
+  the migration stays plan-only with `applied: false`.
+- record-hygiene: `git diff --check`, intended paths only (`conformance/**`
+  and PACT state records), actual exits inspected sequentially.
 
-Acceptance is separate from merge. An accepted answer may remain delivery
-pending; never claim closure or change main under this selection.
-
-### Prime acceptance
-
-```pact:acceptance
-decision: "accepted"
-candidate: "84b2c03b33969b8ce693807684dabe5613196d1c"
-evidence: "Prime fresh exact-candidate results below; TASKS Done PACT-20261026-001 through 005; tracked conformance inputs, expected verdicts and checks."
-```
-
-Prime Inspector /root inspected the complete selected delta and published ready
-handoff. Fresh checks ran sequentially in a detached checkout of exactly the
-candidate above, with matching tracked working files, system Node v24.18.0 and
-Git 2.46.2.windows.1. Battery 98%, free RAM 12.95 GiB and the owned heavy-work
-lock satisfied the existing resource policy. Every actual exit was inspected:
-
-| Command | Result | Exit |
-|---|---|---|
-| node conformance/self-test.mjs | 21 invariant assertions | 0 |
-| node conformance/reference.mjs | 181 of 181 semantic cases | 0 |
-| node conformance/source-check.mjs | 207 checks, 165 relative links, no failures | 0 |
-| node conformance/check-git.mjs | 15 real-Git assertions | 0 |
-| node conformance/migration-check.mjs | 30 checks, 11 preservation items; real three-file plan only, applied false | 0 |
-| git diff --check | clean candidate diff | 0 |
-
-All four exact mutating task candidates and this candidate were independently
-proven ancestors of the explicitly fetched remote gate tip (each actual exit
-0). The published ready revision changes only STATE after the candidate.
-TASKS is complete, Pending is empty, STATE is clear, and readiness is explicit.
-No old local command result substitutes for this fresh acceptance run.
-
-Independent read-only Inspector review of correction 5329cb194e08cb4e5d0b544fcbc502079cd677c7
-resolved all identified transfer, handoff and JSON defects with no remaining
-actionable issue in its bounded review. Only TASKS/STATE records differ between
-that reviewed correction and the tested candidate. Root separately inspected
-the scope classification, platform audit, complete examples, migration procedure,
-record provenance and manual Markdown/Git use. No runtime/OS mechanism, second
-ledger, new role or lifecycle stage was introduced. Prose judgments require the
-responsible authority's evidenced resolution; missing facts have the defined
-unresolved verdict rather than invented permissions.
-
-No attached product SPARC binding or live project-truth contract exists here;
-the package separation was verified and no product truth edit was justified.
-Historical records, owner bindings and external installations were preserved.
-These are specification/conformance checks on this host, not an execution of
-two independent implementations on two operating systems. The corpus is bounded.
-Acceptance does not authorize a main merge, external rollout or release archive.
-
-### Corrected acceptance — PACT-Semantics#3
-
-```pact:acceptance
-decision: "accepted"
-candidate: "74cc1222881385f1d6e3d2369ddb2557a90fe0be"
-evidence: "Fresh exact-candidate results below; TASKS Done PACT-20261026-006; tracked conformance corpus and source/Git/migration checks."
-```
-
-Prime Inspector /root reviewed the new published ready handoff at
-cdc9c898e3aeff9e6ee8a54e75e556fffd8f7689 and ran the complete required checks
-in a detached checkout of exactly 74cc1222881385f1d6e3d2369ddb2557a90fe0be.
-Tracked files matched that commit. System Node v24.18.0 and Git
-2.46.2.windows.1 were used on this Windows host. Battery 100%, free RAM
-18.15 GiB, each resource gate exit 0 and an owned sequential HEAVY-LOCK
-satisfied host policy; the lock was released after inspected foreground exits.
-
-| Command | Fresh result | Actual exit |
-|---|---|---|
-| node conformance/self-test.mjs | 21 invariant assertions | 0 |
-| node conformance/reference.mjs | 250 of 250 semantic cases | 0 |
-| node conformance/source-check.mjs | 211 checks, 165 links, no failures | 0 |
-| node conformance/check-git.mjs | 15 real-Git assertions | 0 |
-| node conformance/migration-check.mjs | 30 checks, 11 preservation items; three-file plan only, applied false | 0 |
-| git diff --check 7aec582761ff7bc398687c147203e22892c2f92b 74cc1222881385f1d6e3d2369ddb2557a90fe0be | complete gate diff clean | 0 |
-
-The migration plan hash was
-289c73ef31de5374b0b7e99992c3e93d1c15eb8b366ce13019b35a80238d2c20.
-Every process exit was inspected individually. No prior green suite substitutes
-for these fresh results. The original nine review counterexamples are tracked
-unchanged; the later 239-case set was preserved while adding eleven supported
-scalar-prose regressions. Red baselines and exact correction candidates remain
-in TASKS/history.
-
-Independent Prime Inspector reviewed exact correction
-021a51d084523585b2bdda89b564ca2784f267c9 and found no remaining actionable issue
-within the bounded correction scope. Root separately inspected the correction.
-Only TASKS/STATE completion records differ between that reviewed correction and
-the tested candidate; only STATE ready-publication records follow the candidate.
-Remote gate/default refs were explicitly fetched again after validation; the
-gate still matches the reviewed ready publication, with no prior answer for #3,
-and remote main remains 7aec582761ff7bc398687c147203e22892c2f92b. Candidate,
-task006 and current default ancestry checks each exited 0 with complete history.
-
-All five reviewed defects and the discovered multiline-prose regression are
-resolved under existing PACT semantics. No new template/spec version, dependency,
-runtime mechanism, host installation or product/SPARC truth was introduced by
-the correction. The SPARC/docs/raw placeholders remain unchanged. These checks
-and the independent review are bounded evidence, not execution of two independent
-implementations on two operating systems.
-
-This new decision answers #3; earlier published decisions remain historical.
-The owner's explicit merge authorization is recorded above. Delivery follows
-as a separate fast-forward action after this answer is committed, published and
-its exact remote reachability/freshness verified. Closure remains derived.
+Acceptance is separate from delivery. Never claim closure or change main
+under this selection without the owner's explicit delivery permission.
 
 ## Next
 
@@ -238,7 +93,9 @@ None.
 
 ## History
 
-Previous PACT-Maintenance selection/decisions are preserved at
+PACT-Semantics selection, decisions and its accepted answers #1 and #3 are
+preserved at ac431f05c2f00836d7632244751d96f5daabf29d:ai/pact/context/state/LOGIC-DRAFT.md.
+Answer #3 is on main, so that gate is closed. Previous PACT-Maintenance
+selection/decisions remain preserved at
 7aec582761ff7bc398687c147203e22892c2f92b:ai/pact/context/state/LOGIC-DRAFT.md.
-Its accepted answer is on main. Existing TASKS Done/STATE historical records
-remain intact. Installed-project rollout is outside this gate.
+Existing TASKS Done/STATE historical records remain intact.
