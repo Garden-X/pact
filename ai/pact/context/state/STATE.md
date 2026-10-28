@@ -10,7 +10,7 @@ active_task: PACT-20261028-003
 generated_from: /ai/pact/templates/state.tpl.md
 generated_from_version: 1.10
 content_status: current-state
-updated: 2026-10-28 22:17:35 UTC+00:00
+updated: 2026-10-28 22:18:51 UTC+00:00
 
 ## Active Task
 
@@ -51,10 +51,10 @@ validation: Affected self-test/reference only, original250 and first296 deep equ
 
 request: Preserve explicit invalid workflow authority remote before delivery.
 created_at: 2026-10-28 22:17:35 UTC+00:00
-validation_result: Pending tracked red before minimal wrapper change.
-validation_evidence: Tracked cases and exact task outcome; no cache-only acceptance dependency.
+validation_result: Four tracked cases added first; reference300/1fail actual1 specifically explicit null workflow remote actualallow versus expectedunresolved. One-line absence-only wrapper default corrected; selftest24/reference300of300 each0, original250 and published001 first296 deepStrictEqual0, diff hygiene0.
+validation_evidence: Tracked conformance/cases.json final four authority-wrapper cases and one-line reference.mjs change; actual red command node conformance/reference.mjs exit1 before evaluator edit, affected green self-test/reference each0. Full inputs/expectations of baselineac431f0(250) and task001c009fb9(296) preserved by Git-object deepStrictEqual0. Local wrapper-reference-red/green and wrapper-self-test-green logs are optional same-host details. No normative/template/version/product/SPARC truth change.
 retry: attempts0; identified correction only
-handoff: status working; Lead executes bounded task and will publish exact task candidate before integration
+handoff: status candidate-prepared; Lead executor publishes exact task003 candidate next, then separately reviews/integrates selected gate; Done waits for authoritative remote gate reachability. Earlier published001 and002 remain unchanged ancestors.
 
 ## Historical Maintenance Notes
 

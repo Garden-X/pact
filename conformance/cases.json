@@ -9033,6 +9033,326 @@
       "expected": {
         "verdict": "unresolved"
       }
+    },
+    {
+      "id": "review-authority-delivery-null-configured-remote-unresolved",
+      "operation": "authority",
+      "rules": [
+        "PACT-AUTH",
+        "PACT-GIT"
+      ],
+      "input": {
+        "records": {
+          "workflow": "## Execution Hierarchy\n\n```pact:workflow\nfile_guard: \"none\"\nauthority_remote: null\ndefault_branch: \"main\"\ngate_branch_pattern: \"gate/<id>\"\ntask_branch_pattern: \"task/<gate-id>/<task-id>\"\n```\n",
+          "task": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Prime\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\n## Boundary Contract\n\ntask_scope: Change the assigned src files.\npermitted_area: Reserved paths and operations.\nprotected_area: Every other mutation.\nunchanged_contracts: Existing public interfaces.\nallowed_side_effects: Publish assigned task candidate only.\nescalation: Ask parent before necessary widening.\n",
+          "boundary_decisions": {
+            "ai/pact/context/state/STATE.md@scope-decision": "Recorded responsible-parent resolution for this exact query: allow."
+          }
+        },
+        "actor": "worker-1",
+        "operation": "deliver",
+        "branch": "main",
+        "gate_id": "G",
+        "changes": [],
+        "boundaries": [
+          {
+            "result": "allow",
+            "source": "ai/pact/context/state/STATE.md@scope-decision"
+          }
+        ],
+        "delivery": {
+          "graph": {
+            "1111111111111111111111111111111111111111": [],
+            "2222222222222222222222222222222222222222": [
+              "1111111111111111111111111111111111111111"
+            ],
+            "3333333333333333333333333333333333333333": [
+              "1111111111111111111111111111111111111111"
+            ],
+            "4444444444444444444444444444444444444444": [
+              "2222222222222222222222222222222222222222"
+            ],
+            "5555555555555555555555555555555555555555": [
+              "4444444444444444444444444444444444444444"
+            ],
+            "6666666666666666666666666666666666666666": [
+              "1111111111111111111111111111111111111111"
+            ]
+          },
+          "history_complete": true,
+          "handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+          "answer": {
+            "commit": "5555555555555555555555555555555555555555",
+            "actor": "prime-1",
+            "role": "Prime",
+            "message": "Accept\n\nPACT-Answers: G#1\n",
+            "record": "## Acceptance\n\n```pact:acceptance\ndecision: \"accepted\"\ncandidate: \"2222222222222222222222222222222222222222\"\nevidence: \"conformance/cases.json\"\n```\n",
+            "changed_paths": [
+              "ai/pact/context/state/LOGIC-DRAFT.md"
+            ]
+          },
+          "remote": {
+            "status": "resolved",
+            "remote": "origin",
+            "ref": "refs/heads/main",
+            "tip": "1111111111111111111111111111111111111111"
+          },
+          "delivery_tip": "5555555555555555555555555555555555555555",
+          "current_default": "1111111111111111111111111111111111111111",
+          "changes_after_candidate": [
+            "ai/pact/context/state/STATE.md",
+            "ai/pact/context/state/LOGIC-DRAFT.md"
+          ],
+          "delivery_handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+          "candidate_to_answer_paths": [
+            "ai/pact/context/state/STATE.md",
+            "ai/pact/context/state/LOGIC-DRAFT.md"
+          ]
+        }
+      },
+      "expected": {
+        "verdict": "unresolved"
+      }
+    },
+    {
+      "id": "review-authority-delivery-empty-configured-remote-unresolved",
+      "operation": "authority",
+      "rules": [
+        "PACT-AUTH",
+        "PACT-GIT"
+      ],
+      "input": {
+        "records": {
+          "workflow": "## Execution Hierarchy\n\n```pact:workflow\nfile_guard: \"none\"\nauthority_remote: \"\"\ndefault_branch: \"main\"\ngate_branch_pattern: \"gate/<id>\"\ntask_branch_pattern: \"task/<gate-id>/<task-id>\"\n```\n",
+          "task": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Prime\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\n## Boundary Contract\n\ntask_scope: Change the assigned src files.\npermitted_area: Reserved paths and operations.\nprotected_area: Every other mutation.\nunchanged_contracts: Existing public interfaces.\nallowed_side_effects: Publish assigned task candidate only.\nescalation: Ask parent before necessary widening.\n",
+          "boundary_decisions": {
+            "ai/pact/context/state/STATE.md@scope-decision": "Recorded responsible-parent resolution for this exact query: allow."
+          }
+        },
+        "actor": "worker-1",
+        "operation": "deliver",
+        "branch": "main",
+        "gate_id": "G",
+        "changes": [],
+        "boundaries": [
+          {
+            "result": "allow",
+            "source": "ai/pact/context/state/STATE.md@scope-decision"
+          }
+        ],
+        "delivery": {
+          "graph": {
+            "1111111111111111111111111111111111111111": [],
+            "2222222222222222222222222222222222222222": [
+              "1111111111111111111111111111111111111111"
+            ],
+            "3333333333333333333333333333333333333333": [
+              "1111111111111111111111111111111111111111"
+            ],
+            "4444444444444444444444444444444444444444": [
+              "2222222222222222222222222222222222222222"
+            ],
+            "5555555555555555555555555555555555555555": [
+              "4444444444444444444444444444444444444444"
+            ],
+            "6666666666666666666666666666666666666666": [
+              "1111111111111111111111111111111111111111"
+            ]
+          },
+          "history_complete": true,
+          "handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+          "answer": {
+            "commit": "5555555555555555555555555555555555555555",
+            "actor": "prime-1",
+            "role": "Prime",
+            "message": "Accept\n\nPACT-Answers: G#1\n",
+            "record": "## Acceptance\n\n```pact:acceptance\ndecision: \"accepted\"\ncandidate: \"2222222222222222222222222222222222222222\"\nevidence: \"conformance/cases.json\"\n```\n",
+            "changed_paths": [
+              "ai/pact/context/state/LOGIC-DRAFT.md"
+            ]
+          },
+          "remote": {
+            "status": "resolved",
+            "remote": "origin",
+            "ref": "refs/heads/main",
+            "tip": "1111111111111111111111111111111111111111"
+          },
+          "delivery_tip": "5555555555555555555555555555555555555555",
+          "current_default": "1111111111111111111111111111111111111111",
+          "changes_after_candidate": [
+            "ai/pact/context/state/STATE.md",
+            "ai/pact/context/state/LOGIC-DRAFT.md"
+          ],
+          "delivery_handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+          "candidate_to_answer_paths": [
+            "ai/pact/context/state/STATE.md",
+            "ai/pact/context/state/LOGIC-DRAFT.md"
+          ]
+        }
+      },
+      "expected": {
+        "verdict": "unresolved"
+      }
+    },
+    {
+      "id": "review-authority-delivery-numeric-configured-remote-unresolved",
+      "operation": "authority",
+      "rules": [
+        "PACT-AUTH",
+        "PACT-GIT"
+      ],
+      "input": {
+        "records": {
+          "workflow": "## Execution Hierarchy\n\n```pact:workflow\nfile_guard: \"none\"\nauthority_remote: 17\ndefault_branch: \"main\"\ngate_branch_pattern: \"gate/<id>\"\ntask_branch_pattern: \"task/<gate-id>/<task-id>\"\n```\n",
+          "task": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Prime\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\n## Boundary Contract\n\ntask_scope: Change the assigned src files.\npermitted_area: Reserved paths and operations.\nprotected_area: Every other mutation.\nunchanged_contracts: Existing public interfaces.\nallowed_side_effects: Publish assigned task candidate only.\nescalation: Ask parent before necessary widening.\n",
+          "boundary_decisions": {
+            "ai/pact/context/state/STATE.md@scope-decision": "Recorded responsible-parent resolution for this exact query: allow."
+          }
+        },
+        "actor": "worker-1",
+        "operation": "deliver",
+        "branch": "main",
+        "gate_id": "G",
+        "changes": [],
+        "boundaries": [
+          {
+            "result": "allow",
+            "source": "ai/pact/context/state/STATE.md@scope-decision"
+          }
+        ],
+        "delivery": {
+          "graph": {
+            "1111111111111111111111111111111111111111": [],
+            "2222222222222222222222222222222222222222": [
+              "1111111111111111111111111111111111111111"
+            ],
+            "3333333333333333333333333333333333333333": [
+              "1111111111111111111111111111111111111111"
+            ],
+            "4444444444444444444444444444444444444444": [
+              "2222222222222222222222222222222222222222"
+            ],
+            "5555555555555555555555555555555555555555": [
+              "4444444444444444444444444444444444444444"
+            ],
+            "6666666666666666666666666666666666666666": [
+              "1111111111111111111111111111111111111111"
+            ]
+          },
+          "history_complete": true,
+          "handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+          "answer": {
+            "commit": "5555555555555555555555555555555555555555",
+            "actor": "prime-1",
+            "role": "Prime",
+            "message": "Accept\n\nPACT-Answers: G#1\n",
+            "record": "## Acceptance\n\n```pact:acceptance\ndecision: \"accepted\"\ncandidate: \"2222222222222222222222222222222222222222\"\nevidence: \"conformance/cases.json\"\n```\n",
+            "changed_paths": [
+              "ai/pact/context/state/LOGIC-DRAFT.md"
+            ]
+          },
+          "remote": {
+            "status": "resolved",
+            "remote": "origin",
+            "ref": "refs/heads/main",
+            "tip": "1111111111111111111111111111111111111111"
+          },
+          "delivery_tip": "5555555555555555555555555555555555555555",
+          "current_default": "1111111111111111111111111111111111111111",
+          "changes_after_candidate": [
+            "ai/pact/context/state/STATE.md",
+            "ai/pact/context/state/LOGIC-DRAFT.md"
+          ],
+          "delivery_handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+          "candidate_to_answer_paths": [
+            "ai/pact/context/state/STATE.md",
+            "ai/pact/context/state/LOGIC-DRAFT.md"
+          ]
+        }
+      },
+      "expected": {
+        "verdict": "unresolved"
+      }
+    },
+    {
+      "id": "review-authority-delivery-omitted-configured-remote-defaults-origin",
+      "operation": "authority",
+      "rules": [
+        "PACT-AUTH",
+        "PACT-GIT"
+      ],
+      "input": {
+        "records": {
+          "workflow": "## Execution Hierarchy\n\n```pact:workflow\nfile_guard: \"none\"\ndefault_branch: \"main\"\ngate_branch_pattern: \"gate/<id>\"\ntask_branch_pattern: \"task/<gate-id>/<task-id>\"\n```\n",
+          "task": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Prime\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\n## Boundary Contract\n\ntask_scope: Change the assigned src files.\npermitted_area: Reserved paths and operations.\nprotected_area: Every other mutation.\nunchanged_contracts: Existing public interfaces.\nallowed_side_effects: Publish assigned task candidate only.\nescalation: Ask parent before necessary widening.\n",
+          "boundary_decisions": {
+            "ai/pact/context/state/STATE.md@scope-decision": "Recorded responsible-parent resolution for this exact query: allow."
+          }
+        },
+        "actor": "worker-1",
+        "operation": "deliver",
+        "branch": "main",
+        "gate_id": "G",
+        "changes": [],
+        "boundaries": [
+          {
+            "result": "allow",
+            "source": "ai/pact/context/state/STATE.md@scope-decision"
+          }
+        ],
+        "delivery": {
+          "graph": {
+            "1111111111111111111111111111111111111111": [],
+            "2222222222222222222222222222222222222222": [
+              "1111111111111111111111111111111111111111"
+            ],
+            "3333333333333333333333333333333333333333": [
+              "1111111111111111111111111111111111111111"
+            ],
+            "4444444444444444444444444444444444444444": [
+              "2222222222222222222222222222222222222222"
+            ],
+            "5555555555555555555555555555555555555555": [
+              "4444444444444444444444444444444444444444"
+            ],
+            "6666666666666666666666666666666666666666": [
+              "1111111111111111111111111111111111111111"
+            ]
+          },
+          "history_complete": true,
+          "handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+          "answer": {
+            "commit": "5555555555555555555555555555555555555555",
+            "actor": "prime-1",
+            "role": "Prime",
+            "message": "Accept\n\nPACT-Answers: G#1\n",
+            "record": "## Acceptance\n\n```pact:acceptance\ndecision: \"accepted\"\ncandidate: \"2222222222222222222222222222222222222222\"\nevidence: \"conformance/cases.json\"\n```\n",
+            "changed_paths": [
+              "ai/pact/context/state/LOGIC-DRAFT.md"
+            ]
+          },
+          "remote": {
+            "status": "resolved",
+            "remote": "origin",
+            "ref": "refs/heads/main",
+            "tip": "1111111111111111111111111111111111111111"
+          },
+          "delivery_tip": "5555555555555555555555555555555555555555",
+          "current_default": "1111111111111111111111111111111111111111",
+          "changes_after_candidate": [
+            "ai/pact/context/state/STATE.md",
+            "ai/pact/context/state/LOGIC-DRAFT.md"
+          ],
+          "delivery_handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+          "candidate_to_answer_paths": [
+            "ai/pact/context/state/STATE.md",
+            "ai/pact/context/state/LOGIC-DRAFT.md"
+          ]
+        }
+      },
+      "expected": {
+        "verdict": "allow"
+      }
     }
   ]
 }

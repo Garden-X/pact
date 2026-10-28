@@ -313,7 +313,7 @@ function authority(input) {
   if(workflow.file_guard!=='none'&&!input.records?.file_guard)return verdict('unresolved');
   const guard=guardDecision(workflow.file_guard==='none'?null:input.records?.file_guard,changes);if(guard.denied)return verdict('deny');if(guard.unresolved)return verdict('unresolved');
   if(input.operation==='deliver'){
-    const authorityRemote=workflow.authority_remote??'origin';
+    const authorityRemote=Object.hasOwn(workflow,'authority_remote')?workflow.authority_remote:'origin';
     if(typeof authorityRemote!=='string'||!authorityRemote)return verdict('unresolved');
     const result=delivery({...input.delivery,expected_remote:authorityRemote,expected_ref:'refs/heads/'+workflow.default_branch});
     if(result.verdict!=='allow')return result;
