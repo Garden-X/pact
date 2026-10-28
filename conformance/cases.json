@@ -1682,7 +1682,8 @@
           "remote": "origin",
           "ref": "refs/heads/gate/G",
           "tip": "4444444444444444444444444444444444444444"
-        }
+        },
+        "expected_ref": "refs/heads/gate/G"
       },
       "expected": {
         "integrated": true
@@ -1721,7 +1722,8 @@
           "remote": "origin",
           "ref": "refs/heads/gate/G",
           "tip": "3333333333333333333333333333333333333333"
-        }
+        },
+        "expected_ref": "refs/heads/gate/G"
       },
       "expected": {
         "integrated": false
@@ -1758,7 +1760,8 @@
         "tracking_ref": null,
         "remote": {
           "status": "unresolved"
-        }
+        },
+        "expected_ref": "refs/heads/gate/G"
       },
       "expected": {
         "integrated": "unresolved"
@@ -1798,7 +1801,8 @@
           "remote": "origin",
           "ref": "refs/heads/gate/G",
           "tip": "4444444444444444444444444444444444444444"
-        }
+        },
+        "expected_ref": "refs/heads/gate/G"
       },
       "expected": {
         "integrated": true
@@ -1836,7 +1840,8 @@
           "status": "absent",
           "remote": "origin",
           "ref": "refs/heads/gate/G"
-        }
+        },
+        "expected_ref": "refs/heads/gate/G"
       },
       "expected": {
         "integrated": false
@@ -1901,7 +1906,8 @@
           "remote": "origin",
           "ref": "refs/heads/gate/G",
           "tip": "4444444444444444444444444444444444444444"
-        }
+        },
+        "expected_ref": "refs/heads/gate/G"
       },
       "expected": {
         "integrated": "unresolved"
@@ -7243,6 +7249,1042 @@
       },
       "expected": {
         "verdict": "unresolved"
+      }
+    },
+    {
+      "id": "review-closure-binds-authority-remote",
+      "operation": "closure",
+      "rules": [
+        "PACT-GIT",
+        "PACT-CLOSURE"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "3333333333333333333333333333333333333333": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "4444444444444444444444444444444444444444": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "4444444444444444444444444444444444444444"
+          ],
+          "6666666666666666666666666666666666666666": [
+            "1111111111111111111111111111111111111111"
+          ]
+        },
+        "history_complete": true,
+        "handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "answer": {
+          "commit": "5555555555555555555555555555555555555555",
+          "actor": "prime-1",
+          "role": "Prime",
+          "message": "Accept\n\nPACT-Answers: G#1\n",
+          "record": "## Acceptance\n\n```pact:acceptance\ndecision: \"accepted\"\ncandidate: \"2222222222222222222222222222222222222222\"\nevidence: \"conformance/cases.json\"\n```\n",
+          "changed_paths": [
+            "ai/pact/context/state/LOGIC-DRAFT.md"
+          ]
+        },
+        "remote": {
+          "status": "resolved",
+          "remote": "fork",
+          "ref": "refs/heads/main",
+          "tip": "5555555555555555555555555555555555555555"
+        },
+        "delivery_handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "candidate_to_answer_paths": [
+          "ai/pact/context/state/STATE.md",
+          "ai/pact/context/state/LOGIC-DRAFT.md"
+        ]
+      },
+      "expected": {
+        "closed": "unresolved"
+      }
+    },
+    {
+      "id": "closure-wrong-default-ref-unresolved",
+      "operation": "closure",
+      "rules": [
+        "PACT-GIT",
+        "PACT-CLOSURE"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "3333333333333333333333333333333333333333": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "4444444444444444444444444444444444444444": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "4444444444444444444444444444444444444444"
+          ],
+          "6666666666666666666666666666666666666666": [
+            "1111111111111111111111111111111111111111"
+          ]
+        },
+        "history_complete": true,
+        "handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "answer": {
+          "commit": "5555555555555555555555555555555555555555",
+          "actor": "prime-1",
+          "role": "Prime",
+          "message": "Accept\n\nPACT-Answers: G#1\n",
+          "record": "## Acceptance\n\n```pact:acceptance\ndecision: \"accepted\"\ncandidate: \"2222222222222222222222222222222222222222\"\nevidence: \"conformance/cases.json\"\n```\n",
+          "changed_paths": [
+            "ai/pact/context/state/LOGIC-DRAFT.md"
+          ]
+        },
+        "remote": {
+          "status": "resolved",
+          "remote": "origin",
+          "ref": "refs/heads/gate/G",
+          "tip": "5555555555555555555555555555555555555555"
+        },
+        "delivery_handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "candidate_to_answer_paths": [
+          "ai/pact/context/state/STATE.md",
+          "ai/pact/context/state/LOGIC-DRAFT.md"
+        ]
+      },
+      "expected": {
+        "closed": "unresolved"
+      }
+    },
+    {
+      "id": "closure-configured-coordinate-closes",
+      "operation": "closure",
+      "rules": [
+        "PACT-GIT",
+        "PACT-CLOSURE"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "3333333333333333333333333333333333333333": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "4444444444444444444444444444444444444444": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "4444444444444444444444444444444444444444"
+          ],
+          "6666666666666666666666666666666666666666": [
+            "1111111111111111111111111111111111111111"
+          ]
+        },
+        "history_complete": true,
+        "handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "answer": {
+          "commit": "5555555555555555555555555555555555555555",
+          "actor": "prime-1",
+          "role": "Prime",
+          "message": "Accept\n\nPACT-Answers: G#1\n",
+          "record": "## Acceptance\n\n```pact:acceptance\ndecision: \"accepted\"\ncandidate: \"2222222222222222222222222222222222222222\"\nevidence: \"conformance/cases.json\"\n```\n",
+          "changed_paths": [
+            "ai/pact/context/state/LOGIC-DRAFT.md"
+          ]
+        },
+        "remote": {
+          "status": "resolved",
+          "remote": "upstream",
+          "ref": "refs/heads/trunk",
+          "tip": "5555555555555555555555555555555555555555"
+        },
+        "delivery_handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "candidate_to_answer_paths": [
+          "ai/pact/context/state/STATE.md",
+          "ai/pact/context/state/LOGIC-DRAFT.md"
+        ],
+        "expected_remote": "upstream",
+        "expected_ref": "refs/heads/trunk"
+      },
+      "expected": {
+        "closed": true
+      }
+    },
+    {
+      "id": "closure-configured-remote-mismatch-unresolved",
+      "operation": "closure",
+      "rules": [
+        "PACT-GIT",
+        "PACT-CLOSURE"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "3333333333333333333333333333333333333333": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "4444444444444444444444444444444444444444": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "4444444444444444444444444444444444444444"
+          ],
+          "6666666666666666666666666666666666666666": [
+            "1111111111111111111111111111111111111111"
+          ]
+        },
+        "history_complete": true,
+        "handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "answer": {
+          "commit": "5555555555555555555555555555555555555555",
+          "actor": "prime-1",
+          "role": "Prime",
+          "message": "Accept\n\nPACT-Answers: G#1\n",
+          "record": "## Acceptance\n\n```pact:acceptance\ndecision: \"accepted\"\ncandidate: \"2222222222222222222222222222222222222222\"\nevidence: \"conformance/cases.json\"\n```\n",
+          "changed_paths": [
+            "ai/pact/context/state/LOGIC-DRAFT.md"
+          ]
+        },
+        "remote": {
+          "status": "resolved",
+          "remote": "origin",
+          "ref": "refs/heads/main",
+          "tip": "5555555555555555555555555555555555555555"
+        },
+        "delivery_handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "candidate_to_answer_paths": [
+          "ai/pact/context/state/STATE.md",
+          "ai/pact/context/state/LOGIC-DRAFT.md"
+        ],
+        "expected_remote": "upstream"
+      },
+      "expected": {
+        "closed": "unresolved"
+      }
+    },
+    {
+      "id": "closure-abbreviated-remote-tip-unresolved",
+      "operation": "closure",
+      "rules": [
+        "PACT-GIT",
+        "PACT-CLOSURE"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "3333333333333333333333333333333333333333": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "4444444444444444444444444444444444444444": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "4444444444444444444444444444444444444444"
+          ],
+          "6666666666666666666666666666666666666666": [
+            "1111111111111111111111111111111111111111"
+          ]
+        },
+        "history_complete": true,
+        "handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "answer": {
+          "commit": "5555555555555555555555555555555555555555",
+          "actor": "prime-1",
+          "role": "Prime",
+          "message": "Accept\n\nPACT-Answers: G#1\n",
+          "record": "## Acceptance\n\n```pact:acceptance\ndecision: \"accepted\"\ncandidate: \"2222222222222222222222222222222222222222\"\nevidence: \"conformance/cases.json\"\n```\n",
+          "changed_paths": [
+            "ai/pact/context/state/LOGIC-DRAFT.md"
+          ]
+        },
+        "remote": {
+          "status": "resolved",
+          "remote": "origin",
+          "ref": "refs/heads/main",
+          "tip": "5555555"
+        },
+        "delivery_handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "candidate_to_answer_paths": [
+          "ai/pact/context/state/STATE.md",
+          "ai/pact/context/state/LOGIC-DRAFT.md"
+        ]
+      },
+      "expected": {
+        "closed": "unresolved"
+      }
+    },
+    {
+      "id": "closure-wrong-remote-not-negative",
+      "operation": "closure",
+      "rules": [
+        "PACT-GIT",
+        "PACT-CLOSURE"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "3333333333333333333333333333333333333333": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "4444444444444444444444444444444444444444": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "4444444444444444444444444444444444444444"
+          ],
+          "6666666666666666666666666666666666666666": [
+            "1111111111111111111111111111111111111111"
+          ]
+        },
+        "history_complete": true,
+        "handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "answer": {
+          "commit": "5555555555555555555555555555555555555555",
+          "actor": "prime-1",
+          "role": "Prime",
+          "message": "Accept\n\nPACT-Answers: G#1\n",
+          "record": "## Acceptance\n\n```pact:acceptance\ndecision: \"accepted\"\ncandidate: \"2222222222222222222222222222222222222222\"\nevidence: \"conformance/cases.json\"\n```\n",
+          "changed_paths": [
+            "ai/pact/context/state/LOGIC-DRAFT.md"
+          ]
+        },
+        "remote": {
+          "status": "resolved",
+          "remote": "fork",
+          "ref": "refs/heads/main",
+          "tip": "6666666666666666666666666666666666666666"
+        },
+        "delivery_handoff": "## Gate Handoff\n\n```pact:gate-handoff\ngate_id: \"G\"\nseq: 1\nsignal: \"ready\"\ncandidate: \"2222222222222222222222222222222222222222\"\nbranch: \"gate/G\"\nlead: \"lead-1\"\nrecorded_at: \"2026-10-26 01:09:07 UTC+00:00\"\n```\n",
+        "candidate_to_answer_paths": [
+          "ai/pact/context/state/STATE.md",
+          "ai/pact/context/state/LOGIC-DRAFT.md"
+        ]
+      },
+      "expected": {
+        "closed": "unresolved"
+      }
+    },
+    {
+      "id": "review-derive-binds-authority-coordinate",
+      "operation": "derive",
+      "rules": [
+        "PACT-GIT",
+        "PACT-FACT"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "3333333333333333333333333333333333333333": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "4444444444444444444444444444444444444444": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "4444444444444444444444444444444444444444"
+          ],
+          "6666666666666666666666666666666666666666": [
+            "1111111111111111111111111111111111111111"
+          ]
+        },
+        "history_complete": true,
+        "candidate": "2222222222222222222222222222222222222222",
+        "remote": {
+          "status": "resolved",
+          "remote": "fork",
+          "ref": "refs/heads/unrelated",
+          "tip": "4444444444444444444444444444444444444444"
+        }
+      },
+      "expected": {
+        "integrated": "unresolved"
+      }
+    },
+    {
+      "id": "derive-unnamed-gate-ref-unresolved",
+      "operation": "derive",
+      "rules": [
+        "PACT-GIT",
+        "PACT-FACT"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "3333333333333333333333333333333333333333": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "4444444444444444444444444444444444444444": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "4444444444444444444444444444444444444444"
+          ],
+          "6666666666666666666666666666666666666666": [
+            "1111111111111111111111111111111111111111"
+          ]
+        },
+        "history_complete": true,
+        "candidate": "2222222222222222222222222222222222222222",
+        "remote": {
+          "status": "resolved",
+          "remote": "origin",
+          "ref": "refs/heads/gate/G",
+          "tip": "4444444444444444444444444444444444444444"
+        }
+      },
+      "expected": {
+        "integrated": "unresolved"
+      }
+    },
+    {
+      "id": "derive-default-remote-mismatch-unresolved",
+      "operation": "derive",
+      "rules": [
+        "PACT-GIT",
+        "PACT-FACT"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "3333333333333333333333333333333333333333": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "4444444444444444444444444444444444444444": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "4444444444444444444444444444444444444444"
+          ],
+          "6666666666666666666666666666666666666666": [
+            "1111111111111111111111111111111111111111"
+          ]
+        },
+        "history_complete": true,
+        "candidate": "2222222222222222222222222222222222222222",
+        "remote": {
+          "status": "resolved",
+          "remote": "fork",
+          "ref": "refs/heads/gate/G",
+          "tip": "4444444444444444444444444444444444444444"
+        },
+        "expected_ref": "refs/heads/gate/G"
+      },
+      "expected": {
+        "integrated": "unresolved"
+      }
+    },
+    {
+      "id": "derive-configured-remote-integrated",
+      "operation": "derive",
+      "rules": [
+        "PACT-GIT",
+        "PACT-FACT"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "3333333333333333333333333333333333333333": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "4444444444444444444444444444444444444444": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "4444444444444444444444444444444444444444"
+          ],
+          "6666666666666666666666666666666666666666": [
+            "1111111111111111111111111111111111111111"
+          ]
+        },
+        "history_complete": true,
+        "candidate": "2222222222222222222222222222222222222222",
+        "remote": {
+          "status": "resolved",
+          "remote": "upstream",
+          "ref": "refs/heads/gate/G",
+          "tip": "4444444444444444444444444444444444444444"
+        },
+        "expected_ref": "refs/heads/gate/G",
+        "expected_remote": "upstream"
+      },
+      "expected": {
+        "integrated": true
+      }
+    },
+    {
+      "id": "derive-wrong-remote-absence-not-negative",
+      "operation": "derive",
+      "rules": [
+        "PACT-GIT",
+        "PACT-FACT"
+      ],
+      "input": {
+        "graph": {
+          "1111111111111111111111111111111111111111": [],
+          "2222222222222222222222222222222222222222": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "3333333333333333333333333333333333333333": [
+            "1111111111111111111111111111111111111111"
+          ],
+          "4444444444444444444444444444444444444444": [
+            "2222222222222222222222222222222222222222"
+          ],
+          "5555555555555555555555555555555555555555": [
+            "4444444444444444444444444444444444444444"
+          ],
+          "6666666666666666666666666666666666666666": [
+            "1111111111111111111111111111111111111111"
+          ]
+        },
+        "history_complete": true,
+        "candidate": "2222222222222222222222222222222222222222",
+        "remote": {
+          "status": "absent",
+          "remote": "fork",
+          "ref": "refs/heads/gate/G"
+        },
+        "expected_ref": "refs/heads/gate/G"
+      },
+      "expected": {
+        "integrated": "unresolved"
+      }
+    },
+    {
+      "id": "review-authority-template-boundary-mapping",
+      "operation": "authority",
+      "rules": [
+        "PACT-AUTH",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "records": {
+          "workflow": "## Execution Hierarchy\n\n```pact:workflow\nfile_guard: \"none\"\nauthority_remote: \"origin\"\ndefault_branch: \"main\"\ngate_branch_pattern: \"gate/<id>\"\ntask_branch_pattern: \"task/<gate-id>/<task-id>\"\n```\n",
+          "task": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nbrief: Change the assigned src files; keep their public interfaces.\nboundary_contract:\n  task_scope: Change the assigned src files.\n  permitted_area: Reserved paths and operations.\n  protected_area: Every other mutation.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish assigned task candidate only.\n  escalation: Ask parent before necessary widening.\nmodel_tier: Light\neffort: 50%\n",
+          "boundary_decisions": {
+            "ai/pact/context/state/STATE.md@recorded-boundary-decision": "Recorded parent interpretation of the complete inherited scope for this exact query: allow. This is fixture evidence, not a new PACT record."
+          }
+        },
+        "actor": "worker-1",
+        "operation": "publish_task",
+        "branch": "task/G/PACT-20261026-001",
+        "gate_id": "G",
+        "changes": [
+          {
+            "path": "src/a.js",
+            "mode": "modify"
+          }
+        ],
+        "boundaries": [
+          {
+            "result": "allow",
+            "source": "ai/pact/context/state/STATE.md@recorded-boundary-decision"
+          }
+        ]
+      },
+      "expected": {
+        "verdict": "allow"
+      }
+    },
+    {
+      "id": "authority-template-boundary-missing-field-unresolved",
+      "operation": "authority",
+      "rules": [
+        "PACT-AUTH",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "records": {
+          "workflow": "## Execution Hierarchy\n\n```pact:workflow\nfile_guard: \"none\"\nauthority_remote: \"origin\"\ndefault_branch: \"main\"\ngate_branch_pattern: \"gate/<id>\"\ntask_branch_pattern: \"task/<gate-id>/<task-id>\"\n```\n",
+          "task": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nbrief: Change the assigned src files; keep their public interfaces.\nboundary_contract:\n  task_scope: Change the assigned src files.\n  permitted_area: Reserved paths and operations.\n  protected_area: Every other mutation.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish assigned task candidate only.\nmodel_tier: Light\neffort: 50%\n",
+          "boundary_decisions": {
+            "ai/pact/context/state/STATE.md@recorded-boundary-decision": "Recorded parent interpretation of the complete inherited scope for this exact query: allow. This is fixture evidence, not a new PACT record."
+          }
+        },
+        "actor": "worker-1",
+        "operation": "publish_task",
+        "branch": "task/G/PACT-20261026-001",
+        "gate_id": "G",
+        "changes": [
+          {
+            "path": "src/a.js",
+            "mode": "modify"
+          }
+        ],
+        "boundaries": [
+          {
+            "result": "allow",
+            "source": "ai/pact/context/state/STATE.md@recorded-boundary-decision"
+          }
+        ]
+      },
+      "expected": {
+        "verdict": "unresolved"
+      }
+    },
+    {
+      "id": "authority-template-boundary-empty-field-unresolved",
+      "operation": "authority",
+      "rules": [
+        "PACT-AUTH",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "records": {
+          "workflow": "## Execution Hierarchy\n\n```pact:workflow\nfile_guard: \"none\"\nauthority_remote: \"origin\"\ndefault_branch: \"main\"\ngate_branch_pattern: \"gate/<id>\"\ntask_branch_pattern: \"task/<gate-id>/<task-id>\"\n```\n",
+          "task": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nbrief: Change the assigned src files; keep their public interfaces.\nboundary_contract:\n  task_scope: Change the assigned src files.\n  permitted_area: Reserved paths and operations.\n  protected_area: Every other mutation.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish assigned task candidate only.\n  escalation:\nmodel_tier: Light\neffort: 50%\n",
+          "boundary_decisions": {
+            "ai/pact/context/state/STATE.md@recorded-boundary-decision": "Recorded parent interpretation of the complete inherited scope for this exact query: allow. This is fixture evidence, not a new PACT record."
+          }
+        },
+        "actor": "worker-1",
+        "operation": "publish_task",
+        "branch": "task/G/PACT-20261026-001",
+        "gate_id": "G",
+        "changes": [
+          {
+            "path": "src/a.js",
+            "mode": "modify"
+          }
+        ],
+        "boundaries": [
+          {
+            "result": "allow",
+            "source": "ai/pact/context/state/STATE.md@recorded-boundary-decision"
+          }
+        ]
+      },
+      "expected": {
+        "verdict": "unresolved"
+      }
+    },
+    {
+      "id": "authority-template-boundary-duplicate-field-unresolved",
+      "operation": "authority",
+      "rules": [
+        "PACT-AUTH",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "records": {
+          "workflow": "## Execution Hierarchy\n\n```pact:workflow\nfile_guard: \"none\"\nauthority_remote: \"origin\"\ndefault_branch: \"main\"\ngate_branch_pattern: \"gate/<id>\"\ntask_branch_pattern: \"task/<gate-id>/<task-id>\"\n```\n",
+          "task": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nbrief: Change the assigned src files; keep their public interfaces.\nboundary_contract:\n  task_scope: Change the assigned src files.\n  permitted_area: Reserved paths and operations.\n  protected_area: Every other mutation.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish assigned task candidate only.\n  escalation: Ask parent before necessary widening.\n  escalation: Widen without asking.\nmodel_tier: Light\neffort: 50%\n",
+          "boundary_decisions": {
+            "ai/pact/context/state/STATE.md@recorded-boundary-decision": "Recorded parent interpretation of the complete inherited scope for this exact query: allow. This is fixture evidence, not a new PACT record."
+          }
+        },
+        "actor": "worker-1",
+        "operation": "publish_task",
+        "branch": "task/G/PACT-20261026-001",
+        "gate_id": "G",
+        "changes": [
+          {
+            "path": "src/a.js",
+            "mode": "modify"
+          }
+        ],
+        "boundaries": [
+          {
+            "result": "allow",
+            "source": "ai/pact/context/state/STATE.md@recorded-boundary-decision"
+          }
+        ]
+      },
+      "expected": {
+        "verdict": "unresolved"
+      }
+    },
+    {
+      "id": "authority-template-boundary-fenced-example-unresolved",
+      "operation": "authority",
+      "rules": [
+        "PACT-AUTH",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "records": {
+          "workflow": "## Execution Hierarchy\n\n```pact:workflow\nfile_guard: \"none\"\nauthority_remote: \"origin\"\ndefault_branch: \"main\"\ngate_branch_pattern: \"gate/<id>\"\ntask_branch_pattern: \"task/<gate-id>/<task-id>\"\n```\n",
+          "task": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nbrief: Change the assigned src files; keep their public interfaces.\n```txt\nboundary_contract:\n  task_scope: Change the assigned src files.\n  permitted_area: Reserved paths and operations.\n  protected_area: Every other mutation.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish assigned task candidate only.\n  escalation: Ask parent before necessary widening.\n```\nmodel_tier: Light\neffort: 50%\n",
+          "boundary_decisions": {
+            "ai/pact/context/state/STATE.md@recorded-boundary-decision": "Recorded parent interpretation of the complete inherited scope for this exact query: allow. This is fixture evidence, not a new PACT record."
+          }
+        },
+        "actor": "worker-1",
+        "operation": "publish_task",
+        "branch": "task/G/PACT-20261026-001",
+        "gate_id": "G",
+        "changes": [
+          {
+            "path": "src/a.js",
+            "mode": "modify"
+          }
+        ],
+        "boundaries": [
+          {
+            "result": "allow",
+            "source": "ai/pact/context/state/STATE.md@recorded-boundary-decision"
+          }
+        ]
+      },
+      "expected": {
+        "verdict": "unresolved"
+      }
+    },
+    {
+      "id": "authority-template-boundary-prose-continuation-unresolved",
+      "operation": "authority",
+      "rules": [
+        "PACT-AUTH",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "records": {
+          "workflow": "## Execution Hierarchy\n\n```pact:workflow\nfile_guard: \"none\"\nauthority_remote: \"origin\"\ndefault_branch: \"main\"\ngate_branch_pattern: \"gate/<id>\"\ntask_branch_pattern: \"task/<gate-id>/<task-id>\"\n```\n",
+          "task": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nbrief: Change the assigned src files.\n  task_scope: Change the assigned src files.\n  permitted_area: Reserved paths and operations.\n  protected_area: Every other mutation.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish assigned task candidate only.\n  escalation: Ask parent before necessary widening.\nmodel_tier: Light\n",
+          "boundary_decisions": {
+            "ai/pact/context/state/STATE.md@recorded-boundary-decision": "Recorded parent interpretation of the complete inherited scope for this exact query: allow. This is fixture evidence, not a new PACT record."
+          }
+        },
+        "actor": "worker-1",
+        "operation": "publish_task",
+        "branch": "task/G/PACT-20261026-001",
+        "gate_id": "G",
+        "changes": [
+          {
+            "path": "src/a.js",
+            "mode": "modify"
+          }
+        ],
+        "boundaries": [
+          {
+            "result": "allow",
+            "source": "ai/pact/context/state/STATE.md@recorded-boundary-decision"
+          }
+        ]
+      },
+      "expected": {
+        "verdict": "unresolved"
+      }
+    },
+    {
+      "id": "authority-boundary-two-surfaces-invalid",
+      "operation": "authority",
+      "rules": [
+        "PACT-AUTH",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "records": {
+          "workflow": "## Execution Hierarchy\n\n```pact:workflow\nfile_guard: \"none\"\nauthority_remote: \"origin\"\ndefault_branch: \"main\"\ngate_branch_pattern: \"gate/<id>\"\ntask_branch_pattern: \"task/<gate-id>/<task-id>\"\n```\n",
+          "task": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nboundary_contract:\n  task_scope: Change the assigned src files.\n  permitted_area: Reserved paths and operations.\n  protected_area: Every other mutation.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish assigned task candidate only.\n  escalation: Ask parent before necessary widening.\n\n## Boundary Contract\n\ntask_scope: Change the assigned src files.\npermitted_area: Reserved paths and operations.\nprotected_area: Every other mutation.\nunchanged_contracts: Existing public interfaces.\nallowed_side_effects: Publish assigned task candidate only.\nescalation: Ask parent before necessary widening.\n",
+          "boundary_decisions": {
+            "ai/pact/context/state/STATE.md@recorded-boundary-decision": "Recorded parent interpretation of the complete inherited scope for this exact query: allow. This is fixture evidence, not a new PACT record."
+          }
+        },
+        "actor": "worker-1",
+        "operation": "publish_task",
+        "branch": "task/G/PACT-20261026-001",
+        "gate_id": "G",
+        "changes": [
+          {
+            "path": "src/a.js",
+            "mode": "modify"
+          }
+        ],
+        "boundaries": [
+          {
+            "result": "allow",
+            "source": "ai/pact/context/state/STATE.md@recorded-boundary-decision"
+          }
+        ]
+      },
+      "expected": {
+        "verdict": "invalid"
+      }
+    },
+    {
+      "id": "authority-template-boundary-nested-continuation-allows",
+      "operation": "authority",
+      "rules": [
+        "PACT-AUTH",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "records": {
+          "workflow": "## Execution Hierarchy\n\n```pact:workflow\nfile_guard: \"none\"\nauthority_remote: \"origin\"\ndefault_branch: \"main\"\ngate_branch_pattern: \"gate/<id>\"\ntask_branch_pattern: \"task/<gate-id>/<task-id>\"\n```\n",
+          "task": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nbrief: Change the assigned src files; keep their public interfaces.\nboundary_contract:\n  task_scope: Change the assigned src files.\n  permitted_area: Reserved paths and operations.\n  protected_area: Every other mutation.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish assigned task candidate only.\n  escalation: Ask parent before necessary widening,\n    then wait for the recorded answer.\nmodel_tier: Light\neffort: 50%\n",
+          "boundary_decisions": {
+            "ai/pact/context/state/STATE.md@recorded-boundary-decision": "Recorded parent interpretation of the complete inherited scope for this exact query: allow. This is fixture evidence, not a new PACT record."
+          }
+        },
+        "actor": "worker-1",
+        "operation": "publish_task",
+        "branch": "task/G/PACT-20261026-001",
+        "gate_id": "G",
+        "changes": [
+          {
+            "path": "src/a.js",
+            "mode": "modify"
+          }
+        ],
+        "boundaries": [
+          {
+            "result": "allow",
+            "source": "ai/pact/context/state/STATE.md@recorded-boundary-decision"
+          }
+        ]
+      },
+      "expected": {
+        "verdict": "allow"
+      }
+    },
+    {
+      "id": "authority-template-boundary-needs-decision-evidence",
+      "operation": "authority",
+      "rules": [
+        "PACT-AUTH",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "records": {
+          "workflow": "## Execution Hierarchy\n\n```pact:workflow\nfile_guard: \"none\"\nauthority_remote: \"origin\"\ndefault_branch: \"main\"\ngate_branch_pattern: \"gate/<id>\"\ntask_branch_pattern: \"task/<gate-id>/<task-id>\"\n```\n",
+          "task": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nbrief: Change the assigned src files; keep their public interfaces.\nboundary_contract:\n  task_scope: Change the assigned src files.\n  permitted_area: Reserved paths and operations.\n  protected_area: Every other mutation.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish assigned task candidate only.\n  escalation: Ask parent before necessary widening.\nmodel_tier: Light\neffort: 50%\n",
+          "boundary_decisions": {
+            "ai/pact/context/state/STATE.md@recorded-boundary-decision": "Recorded parent interpretation of the complete inherited scope for this exact query: allow. This is fixture evidence, not a new PACT record."
+          }
+        },
+        "actor": "worker-1",
+        "operation": "publish_task",
+        "branch": "task/G/PACT-20261026-001",
+        "gate_id": "G",
+        "changes": [
+          {
+            "path": "src/a.js",
+            "mode": "modify"
+          }
+        ],
+        "boundaries": []
+      },
+      "expected": {
+        "verdict": "unresolved"
+      }
+    },
+    {
+      "id": "review-transfer-template-entry-labels",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n  outcome: src/a.js has the missing behavior.\n  files: src/a.js\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n  brief: Update only src/a.js. Preserve supplied invariant tests.\n  boundary_contract:\n    task_scope: Update src/a.js only.\n    permitted_area: The reserved src paths.\n    protected_area: Every other path and side effect.\n    unchanged_contracts: Existing public interfaces.\n    allowed_side_effects: Publish the assigned task candidate only.\n    escalation: Ask the parent before any widening.\n  model_tier: Light\n  effort: 50%\n  tests: unit-small\n  baseline: expected initial exit 1 on missing behavior.\n  validation: Run unit-small; evidence: conformance/cases.json.\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nrequest: Add the missing behavior.\nbrief: Update only src/a.js. Preserve supplied invariant tests.\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Every other path and side effect.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\ntests: unit-small\nbaseline: expected initial exit 1 on missing behavior.\nvalidation: Run unit-small; evidence: conformance/cases.json.\nvalidation_result: Pending\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "valid"
+      }
+    },
+    {
+      "id": "transfer-template-multiline-brief-valid",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n  outcome: src/a.js has the missing behavior.\n  files: src/a.js\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n  brief: Update only src/a.js.\n    Preserve supplied invariant tests.\n  boundary_contract:\n    task_scope: Update src/a.js only.\n    permitted_area: The reserved src paths.\n    protected_area: Every other path and side effect.\n    unchanged_contracts: Existing public interfaces.\n    allowed_side_effects: Publish the assigned task candidate only.\n    escalation: Ask the parent before any widening.\n  model_tier: Light\n  effort: 50%\n  tests: unit-small\n  baseline: expected initial exit 1 on missing behavior.\n  validation: Run unit-small; evidence: conformance/cases.json.\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nrequest: Add the missing behavior.\nbrief: Update only src/a.js.\n  Preserve supplied invariant tests.\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Every other path and side effect.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\ntests: unit-small\nbaseline: expected initial exit 1 on missing behavior.\nvalidation: Run unit-small; evidence: conformance/cases.json.\nvalidation_result: Pending\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "valid"
+      }
+    },
+    {
+      "id": "transfer-template-without-baseline-valid",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n  outcome: src/a.js has the missing behavior.\n  files: src/a.js\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n  brief: Update only src/a.js. Preserve supplied invariant tests.\n  boundary_contract:\n    task_scope: Update src/a.js only.\n    permitted_area: The reserved src paths.\n    protected_area: Every other path and side effect.\n    unchanged_contracts: Existing public interfaces.\n    allowed_side_effects: Publish the assigned task candidate only.\n    escalation: Ask the parent before any widening.\n  model_tier: Light\n  effort: 50%\n  tests: unit-small\n  validation: Run unit-small; evidence: conformance/cases.json.\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nrequest: Add the missing behavior.\nbrief: Update only src/a.js. Preserve supplied invariant tests.\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Every other path and side effect.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\ntests: unit-small\nvalidation: Run unit-small; evidence: conformance/cases.json.\nvalidation_result: Pending\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "valid"
+      }
+    },
+    {
+      "id": "transfer-template-brief-changed-invalid",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n  outcome: src/a.js has the missing behavior.\n  files: src/a.js\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n  brief: Update only src/a.js. Preserve supplied invariant tests.\n  boundary_contract:\n    task_scope: Update src/a.js only.\n    permitted_area: The reserved src paths.\n    protected_area: Every other path and side effect.\n    unchanged_contracts: Existing public interfaces.\n    allowed_side_effects: Publish the assigned task candidate only.\n    escalation: Ask the parent before any widening.\n  model_tier: Light\n  effort: 50%\n  tests: unit-small\n  baseline: expected initial exit 1 on missing behavior.\n  validation: Run unit-small; evidence: conformance/cases.json.\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nrequest: Add the missing behavior.\nbrief: Update src/a.js and its tests.\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Every other path and side effect.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\ntests: unit-small\nbaseline: expected initial exit 1 on missing behavior.\nvalidation: Run unit-small; evidence: conformance/cases.json.\nvalidation_result: Pending\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "invalid"
+      }
+    },
+    {
+      "id": "transfer-template-brief-continuation-lost-invalid",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n  outcome: src/a.js has the missing behavior.\n  files: src/a.js\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n  brief: Update only src/a.js.\n    Preserve supplied invariant tests.\n  boundary_contract:\n    task_scope: Update src/a.js only.\n    permitted_area: The reserved src paths.\n    protected_area: Every other path and side effect.\n    unchanged_contracts: Existing public interfaces.\n    allowed_side_effects: Publish the assigned task candidate only.\n    escalation: Ask the parent before any widening.\n  model_tier: Light\n  effort: 50%\n  tests: unit-small\n  baseline: expected initial exit 1 on missing behavior.\n  validation: Run unit-small; evidence: conformance/cases.json.\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nrequest: Add the missing behavior.\nbrief: Update only src/a.js.\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Every other path and side effect.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\ntests: unit-small\nbaseline: expected initial exit 1 on missing behavior.\nvalidation: Run unit-small; evidence: conformance/cases.json.\nvalidation_result: Pending\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "invalid"
+      }
+    },
+    {
+      "id": "transfer-template-boundary-field-changed-invalid",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n  outcome: src/a.js has the missing behavior.\n  files: src/a.js\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n  brief: Update only src/a.js. Preserve supplied invariant tests.\n  boundary_contract:\n    task_scope: Update src/a.js only.\n    permitted_area: The reserved src paths.\n    protected_area: Every other path and side effect.\n    unchanged_contracts: Existing public interfaces.\n    allowed_side_effects: Publish the assigned task candidate only.\n    escalation: Ask the parent before any widening.\n  model_tier: Light\n  effort: 50%\n  tests: unit-small\n  baseline: expected initial exit 1 on missing behavior.\n  validation: Run unit-small; evidence: conformance/cases.json.\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nrequest: Add the missing behavior.\nbrief: Update only src/a.js. Preserve supplied invariant tests.\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Product code outside src.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\ntests: unit-small\nbaseline: expected initial exit 1 on missing behavior.\nvalidation: Run unit-small; evidence: conformance/cases.json.\nvalidation_result: Pending\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "invalid"
+      }
+    },
+    {
+      "id": "transfer-template-baseline-lost-invalid",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n  outcome: src/a.js has the missing behavior.\n  files: src/a.js\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n  brief: Update only src/a.js. Preserve supplied invariant tests.\n  boundary_contract:\n    task_scope: Update src/a.js only.\n    permitted_area: The reserved src paths.\n    protected_area: Every other path and side effect.\n    unchanged_contracts: Existing public interfaces.\n    allowed_side_effects: Publish the assigned task candidate only.\n    escalation: Ask the parent before any widening.\n  model_tier: Light\n  effort: 50%\n  tests: unit-small\n  baseline: expected initial exit 1 on missing behavior.\n  validation: Run unit-small; evidence: conformance/cases.json.\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nrequest: Add the missing behavior.\nbrief: Update only src/a.js. Preserve supplied invariant tests.\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Every other path and side effect.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\ntests: unit-small\nvalidation: Run unit-small; evidence: conformance/cases.json.\nvalidation_result: Pending\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "invalid"
+      }
+    },
+    {
+      "id": "transfer-template-tests-missing-invalid",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n  outcome: src/a.js has the missing behavior.\n  files: src/a.js\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n  brief: Update only src/a.js. Preserve supplied invariant tests.\n  boundary_contract:\n    task_scope: Update src/a.js only.\n    permitted_area: The reserved src paths.\n    protected_area: Every other path and side effect.\n    unchanged_contracts: Existing public interfaces.\n    allowed_side_effects: Publish the assigned task candidate only.\n    escalation: Ask the parent before any widening.\n  model_tier: Light\n  effort: 50%\n  baseline: expected initial exit 1 on missing behavior.\n  validation: Run unit-small; evidence: conformance/cases.json.\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nrequest: Add the missing behavior.\nbrief: Update only src/a.js. Preserve supplied invariant tests.\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Every other path and side effect.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\nbaseline: expected initial exit 1 on missing behavior.\nvalidation: Run unit-small; evidence: conformance/cases.json.\nvalidation_result: Pending\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "invalid"
+      }
+    },
+    {
+      "id": "transfer-template-validation-lost-invalid",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n  outcome: src/a.js has the missing behavior.\n  files: src/a.js\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n  brief: Update only src/a.js. Preserve supplied invariant tests.\n  boundary_contract:\n    task_scope: Update src/a.js only.\n    permitted_area: The reserved src paths.\n    protected_area: Every other path and side effect.\n    unchanged_contracts: Existing public interfaces.\n    allowed_side_effects: Publish the assigned task candidate only.\n    escalation: Ask the parent before any widening.\n  model_tier: Light\n  effort: 50%\n  tests: unit-small\n  baseline: expected initial exit 1 on missing behavior.\n  validation: Run unit-small; evidence: conformance/cases.json.\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nrequest: Add the missing behavior.\nbrief: Update only src/a.js. Preserve supplied invariant tests.\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Every other path and side effect.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\ntests: unit-small\nbaseline: expected initial exit 1 on missing behavior.\nvalidation_result: Pending\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "invalid"
+      }
+    },
+    {
+      "id": "transfer-template-fenced-labels-invalid",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n```txt\nbrief: Update only src/a.js. Preserve supplied invariant tests.\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Every other path and side effect.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\ntests: unit-small\nbaseline: expected initial exit 1 on missing behavior.\nvalidation: Run unit-small; evidence: conformance/cases.json.\n```\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nrequest: Add the missing behavior.\nbrief: Update only src/a.js. Preserve supplied invariant tests.\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Every other path and side effect.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\ntests: unit-small\nbaseline: expected initial exit 1 on missing behavior.\nvalidation: Run unit-small; evidence: conformance/cases.json.\nvalidation_result: Pending\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "invalid"
+      }
+    },
+    {
+      "id": "transfer-surface-form-changed-invalid",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n  outcome: src/a.js has the missing behavior.\n  files: src/a.js\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n  brief: Update only src/a.js. Preserve supplied invariant tests.\n  boundary_contract:\n    task_scope: Update src/a.js only.\n    permitted_area: The reserved src paths.\n    protected_area: Every other path and side effect.\n    unchanged_contracts: Existing public interfaces.\n    allowed_side_effects: Publish the assigned task candidate only.\n    escalation: Ask the parent before any widening.\n  model_tier: Light\n  effort: 50%\n  tests: unit-small\n  baseline: expected initial exit 1 on missing behavior.\n  validation: Run unit-small; evidence: conformance/cases.json.\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\n## Brief\n\nUpdate only src/a.js. Preserve supplied invariant tests.\n\n## Boundary Contract\n\nNo writes outside src. Escalate a necessary widening.\n\n## Validation\n\nRun unit-small; evidence: conformance/cases.json.\n\n## Tests / Baseline\n\nunit-small; expected initial exit 1 on missing behavior.\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "invalid"
+      }
+    },
+    {
+      "id": "transfer-template-two-brief-surfaces-invalid",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n  outcome: src/a.js has the missing behavior.\n  files: src/a.js\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n  brief: Update only src/a.js. Preserve supplied invariant tests.\n  boundary_contract:\n    task_scope: Update src/a.js only.\n    permitted_area: The reserved src paths.\n    protected_area: Every other path and side effect.\n    unchanged_contracts: Existing public interfaces.\n    allowed_side_effects: Publish the assigned task candidate only.\n    escalation: Ask the parent before any widening.\n  model_tier: Light\n  effort: 50%\n  tests: unit-small\n  baseline: expected initial exit 1 on missing behavior.\n  validation: Run unit-small; evidence: conformance/cases.json.\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nrequest: Add the missing behavior.\nbrief: Update only src/a.js. Preserve supplied invariant tests.\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Every other path and side effect.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\ntests: unit-small\nbaseline: expected initial exit 1 on missing behavior.\nvalidation: Run unit-small; evidence: conformance/cases.json.\nvalidation_result: Pending\n\n## Brief\n\nUpdate only src/a.js. Preserve supplied invariant tests.\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "invalid"
       }
     }
   ]

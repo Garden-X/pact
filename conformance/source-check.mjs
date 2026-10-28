@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { parseRecord, parseTasks, parsePendingTasks } from './reference.mjs';
+import { evaluate, parseRecord, parseTasks, parsePendingTasks } from './reference.mjs';
 
 const root=fileURLToPath(new URL('../',import.meta.url));
 const pact=path.join(root,'ai','pact');
@@ -80,6 +80,22 @@ const firstPending=pendingExample.slice(pendingExample.indexOf('- [ ] PACT-YYYYM
 for(const key of ['brief','task_scope','permitted_area','protected_area','unchanged_contracts','allowed_side_effects','escalation','model_tier','effort','effective_effort','tests','validation']){
   check('exact transferred prose/binding '+key,()=>assert.equal(field(activeExample,key),field(firstPending,key)));
 }
+// The complete examples are the canonical record shape, so the reference
+// transfer and authority queries must accept them, not only parse them.
+const activeStart=activeExample.indexOf('## Active Task'),activeEnd=activeExample.indexOf('\n## ',activeStart+1);
+const activeRecord=activeEnd<0?activeExample.slice(activeStart):activeExample.slice(activeStart,activeEnd);
+// Dispatch resolves only the Pending placeholder binding; every other value is copied.
+const dispatchedPending=('## Active Task\n\n'+firstPending.split('\n').slice(1).join('\n')).replace(/^( *model_binding: ).*$/mu,'$1'+field(activeExample,'model_binding'));
+const transferExample=active=>evaluate({operation:'transfer',input:{pending:dispatchedPending,active,remaining_pending_ids:[]}});
+check('complete template examples transfer exactly',()=>assert.deepEqual(transferExample(activeRecord),{verdict:'valid'}));
+check('complete template transfer rejects a changed boundary field',()=>assert.deepEqual(transferExample(activeRecord.replace(/^( {2}escalation: ).*$/mu,'$1Widen first.')),{verdict:'invalid'}));
+const workflowRecord='## Execution Hierarchy\n\n```pact:workflow\ndefault_branch: "main"\nauthority_remote: "origin"\ngate_branch_pattern: "gate/<id>"\ntask_branch_pattern: "task/<gate-id>/<task-id>"\nfile_guard: "none"\n```\n';
+const assignedRecord=activeRecord.replace('"<assigned agent/session>"','"worker-1"').replace('"<full gate revision at dispatch>"','"'+'1'.repeat(40)+'"').replaceAll('<gate-id>','G');
+const publishExample=task=>evaluate({operation:'authority',input:{operation:'publish_task',actor:'worker-1',branch:'task/G/PACT-YYYYMMDD-001',gate_id:'G',
+  records:{task,workflow:workflowRecord,boundary_decisions:{'STATE.md@boundary':'Recorded parent resolution of this exact query: allow.'}},
+  boundaries:[{source:'STATE.md@boundary',result:'allow'}],changes:[{path:'ai/pact/workflow/WORKFLOW.md',mode:'modify'}]}});
+check('complete STATE example boundary_contract satisfies reference authority',()=>assert.deepEqual(publishExample(assignedRecord),{verdict:'allow'}));
+check('complete STATE example without escalation stays unresolved',()=>assert.deepEqual(publishExample(assignedRecord.replace(/^ {2}escalation: .*\n/mu,'')),{verdict:'unresolved'}));
 check('current STATE active objects parse without historical handoffs',()=>{
   const parsed=parseTasks(read('context/state/STATE.md'));assert.equal(parsed.verdict,'valid');
   const meta=parseRecord(read('context/state/STATE.md'),'meta');assert.equal(meta.verdict,'valid');
