@@ -5,17 +5,19 @@
 name: TASKS.md
 canonical_location: /ai/pact/context/state/TASKS.md
 layer: PACT / context / state
-status: active-draft
+status: complete
 generated_from: /ai/pact/templates/tasks.tpl.md
 generated_from_version: 1.13
 content_status: current-state
-updated: 2026-10-29 05:11:44 UTC+00:00
+updated: 2026-10-29 05:14:26 UTC+00:00
 
 ## Pending
 
 None.
 
 ## Done
+
+- PACT-20261029-003 - Keep the owning pact:task block out of label-form prose spans. Exact candidate 089a8fcadce06b749e3e165eb20988623e2fe8ee published on task/PACT-Prose-Span/PACT-20261029-003 and proven reachable from explicitly fetched remote gate/PACT-Prose-Span (ancestry actual0; positive parent path in a shallow clone); task_base ff646a284cf8e70fa809d7528f6063a139eb0671 is its ancestor (actual0). Prime link-only selection amendment 0fcec9e precedes the candidate. Red on the task_base evaluator: corpus371cases/4fail (counterexample plus three adjacent positives) actual1. Fresh clean detached checkout of the exact candidate: self-test24, corpus371/371, source222checks171links, realGit15, migration30/11preservation plan-only appliedfalse, git diff --check ec5b591..candidate, each actual0. All 364 earlier inputs and expectations unchanged; ordinary fenced prose stays raw; authority boundary fields stay structural. Same-host sequential Prime/Lead review, not independent. Node v22.22.0/Git 2.43.0, Linux cloud container, checks sequential, no service work. No specification/template version, dependency, runtime, host installation or product/SPARC truth changed. Task/gate publication follows the owner-accepted separate gate; main delivery is not authorized.
 
 - PACT-20261029-002 - Preserve raw fenced task-prose comparison while keeping authority structural. Worker /root/config_plan_docs/evaluator, parent Lead /root/config_plan_docs, inherited High model/native binding unchanged. Exact candidatee7548a2889a7eb3312021b857cf21a2008a57c56 built on51bd6f7ebee894fda641fb0bdabc46d8477ade52, published assigned task branch and fetched equal exactcandidate; task_base ancestry0. Lead inspected focused17line reader/authority diff and newcases, then integrated preserving ancestry in2ca32e1b4d3feaf569518a79a8403219cc2ab4c9; explicitremote origin refs/heads/gate/PACT-Review-20261028 fetched at2ca32e1 proves candidate reachability0 before Done. Tracked32 cases added first: reference364/343pass21fail actual1 before reader edit; corrected selftest24/reference364of364/source221checks170links eachactual0. Complete existing332 cases deepStrictEqual byprefix andbyID to25fd15d0, no further coordinate changes. Raw field spans are bounded by structurally visible ownership but retain full fences/info/content and remove only label indentation; unindented/root-looking payload remains compared. Authority uses separate visible/root-owned fieldmetadata in bothsection/label forms, so fenced-only missingfield staysunresolved and fencedduplicate cannot invalidate a realfield. All originalsurface-conflict/duplicate/continuation cases unchangedgreen; diff/nativecommit/nativepush0. Only reference/cases/README changed; both published histories, root5538 selection, release/source guards and normative/templates remain intact. No source/main/host/services changes or fullacceptance byLead; Prime owns fresh complete acceptance and authorized main delivery.
 
