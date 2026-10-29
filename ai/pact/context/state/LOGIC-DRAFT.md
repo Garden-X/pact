@@ -11,7 +11,7 @@ gate_id: PACT-Prose-Span
 generated_from: /ai/pact/templates/logic-draft.tpl.md
 generated_from_version: 1.7
 content_status: current-state
-updated: 2026-10-29 05:11:15 UTC+00:00
+updated: 2026-10-29 05:13:46 UTC+00:00
 
 ## Selected Logic
 
@@ -36,8 +36,12 @@ runtime, dependency, role, lifecycle stage or canonical state file.
   `valid`): the last label span ends only at a structurally visible line, so it
   swallows the raw machine block. PACT lets absent pending coordinates resolve
   at dispatch, and the owning block is mechanical, never prose.
-- Reuse conformance/reference.mjs proseSurface, cases.json and README; PACT.md
-  PACT-RECORD/PACT-TRANSFER and the state/tasks templates.
+- Reuse conformance/reference.mjs proseSurface, cases.json and the
+  [conformance README](../../../../conformance/README.md);
+  [PACT](../../PACT.md) PACT-RECORD/PACT-TRANSFER and the
+  [state](../../templates/state.tpl.md) / [tasks](../../templates/tasks.tpl.md)
+  templates, under [AGENTS](../../agents/AGENTS.md) and
+  [WORKFLOW](../../workflow/WORKFLOW.md).
 - Before selection, remote gate/task branches were fetched; none is ahead of
   main, so no concurrent gate overlaps this one.
 
