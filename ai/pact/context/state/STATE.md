@@ -10,7 +10,7 @@ active_task: none
 generated_from: /ai/pact/templates/state.tpl.md
 generated_from_version: 1.10
 content_status: current-state
-updated: 2026-10-29 03:01:13 UTC+00:00
+updated: 2026-10-29 03:01:28 UTC+00:00
 
 ## Active Task
 
@@ -102,16 +102,16 @@ escalation: none
 
 ```pact:gate-handoff
 gate_id: "PACT-Conformance"
-seq: 1
-signal: "working"
-candidate: "none"
+seq: 2
+signal: "ready"
+candidate: "e19ec9ddd14d2796acc21ffea199adac95e8fb5a"
 branch: "gate/PACT-Conformance"
 lead: "/root Lead pass"
-recorded_at: "2026-10-28 21:59:33 UTC+00:00"
+recorded_at: "2026-10-29 03:01:28 UTC+00:00"
 ```
 
-slices: Task PACT-20261028-001 dispatched from exact selected revision cd43be45a97b4bb9f336dd2239fc9eaff8d20bd0. PACT-Semantics#3 is answered and delivered; its publication is preserved verbatim above.
-validation: Review counterexamples were demonstrated on ac431f05c2f00836d7632244751d96f5daabf29d; tracked red cases precede implementation.
-records: Owner requested the fix; Prime selected the scope; Lead owns execution records. Session pushes are limited to ccr-abb685be-lsyzzj until the owner permits task/gate publication.
+slices: PACT-20261028-001 exact461a5550e68a603d8f81826cd53ff0cf7616ca4c published on its task branch and proven ancestor of explicitly fetched remote gate/PACT-Conformance (actual0). Complete candidate e19ec9d differs from it only in TASKS/STATE completion records.
+validation: Red task_base corpus282/12fail and source215/2fail actual1; fresh clean-checkout self-test21, corpus282/282, source215checks165links, realGit15, migration30/11 plan-only and diff-check each actual0 on 461a555; Lead fast source215/165links actual0 on exact e19ec9d. Prior 250 expectations unchanged; six derive inputs completed with their observed expected_ref and disclosed. Prime owns fresh complete acceptance.
+records: SliceRecordsCheck pass; TASKS complete/Pending none, STATE clear/no reservations. Same-host sequential Prime/Lead work, not independent review; worker restarted once and resumed from durable records. Owner permitted task/gate publication only; no main delivery. No template/spec version, dependency, host installation or product/SPARC truth change.
 blockers: none
 escalation: none
