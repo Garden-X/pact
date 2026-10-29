@@ -11,7 +11,7 @@ gate_id: PACT-Prose-Span
 generated_from: /ai/pact/templates/logic-draft.tpl.md
 generated_from_version: 1.7
 content_status: current-state
-updated: 2026-10-29 05:15:22 UTC+00:00
+updated: 2026-10-29 05:19:22 UTC+00:00
 
 ## Selected Logic
 
@@ -123,6 +123,12 @@ inspection sequentially; this is a separate pass, not an independent review.
 Delivery is not authorized: main remains
 ec5b591e43fe62cf2675a08c857dc1d7839b466e and this accepted answer stays a
 pending delivery until the owner permits Prime's fast-forward.
+
+Owner delivery authorization, 2026-10-29 05:19:22 UTC+00:00: after answer
+499da24172c4990bf757639fd20e4b91d3a035d3 the owner replied "так" (yes) in this
+session to Prime's question whether to fast-forward main to it. This permits
+only Prime's ordinary fast-forward of main to the verified delivery tip; no
+force, squash, hook bypass or deployment. Closure remains derived from Git.
 
 ## Next
 
