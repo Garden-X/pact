@@ -5,16 +5,52 @@
 name: STATE.md
 canonical_location: /ai/pact/context/state/STATE.md
 layer: PACT / context / state
-status: clear
-active_task: none
+status: active
+active_task: PACT-20261029-004
 generated_from: /ai/pact/templates/state.tpl.md
 generated_from_version: 1.10
 content_status: current-state
-updated: 2026-10-29 05:14:47 UTC+00:00
+updated: 2026-10-29 05:23:45 UTC+00:00
 
 ## Active Task
 
-None.
+```pact:task
+id: "PACT-20261029-004"
+role: "Lead"
+actor: "/root Lead pass"
+parent: "/root"
+lead: "/root Lead pass"
+task_phase: "working"
+requires: ["git","toolchain:node"]
+reservations: [{"path":"ai/pact/templates/workflow.tpl.md","mode":"modify"},{"path":"ai/pact/workflow/WORKFLOW.md","mode":"modify"},{"path":"ai/pact/RELEASE-NOTES.md","mode":"modify"},{"path":"ai/pact/INSTALL.md","mode":"modify"},{"path":"conformance/source-check.mjs","mode":"modify"}]
+task_base: "557eefe1546939ca4e8a4a842eb74f135d8f72b2"
+task_branch: "task/PACT-Selection-Fetch/PACT-20261029-004"
+task_candidate: "none"
+trace: "LOGIC-DRAFT.md / Decisions"
+source: {"draft":"LOGIC-DRAFT.md","tasks":"TASKS.md","review":"ec5b591e43fe62cf2675a08c857dc1d7839b466e"}
+```
+
+request: Add the rule about fetching before gate selection.
+brief: In WORKFLOW Execution Hierarchy Gate and slice, require Prime to explicitly resolve the authority remote's default and gate branches before selecting a gate, report an open gate (remote gate tip not reachable from remote default_branch) to the owner instead of starting a silent parallel gate, publish the selection on its gate branch at once, have Lead fetch again before the first dispatch, and allocate task ids unique across observed records and published task branches; unavailable remote access stays unresolved unless the owner accepts it. Mirror it in workflow.tpl.md RULES and full EXAMPLE, bump only workflow.tpl.md to 3.9 with WORKFLOW generated_from_version, and update RELEASE-NOTES, INSTALL sync step and source-check. Add the source-check assertion first and record its red run. No other contract, role, record type, runtime, service or dependency.
+boundary_contract:
+  task_scope: The bounded rule brief above, selected by Prime in LOGIC-DRAFT PACT-Selection-Fetch.
+  permitted_area: The five reserved files plus Lead-owned TASKS/STATE records; read existing contracts and evidence.
+  protected_area: main/default, LOGIC-DRAFT, PACT.md, other templates/hooks, external installations, host configuration, unrelated files and immutable published decisions.
+  unchanged_contracts: Package 2.0, three roles/lifecycle, Markdown/Git authority, PACT-GIT semantics, owner model/effort settings, no runtime or OS mechanism.
+  allowed_side_effects: Commit and push the exact task candidate to its task branch, integrate into gate/PACT-Selection-Fetch and mirror the session branch; no force, hook bypass, services, dependencies, deploy or external messages.
+  escalation: Report a demonstrated need for another contract change or scope conflict to Prime before the affected action.
+specialty: protocol documentation
+model_tier: High
+model_binding: inherited owner-configured session model, no override
+effort: 75%
+effective_effort: host-controlled session setting preserved; no native control exercised
+created_at: 2026-10-29 05:23:45 UTC+00:00
+affected_files: ai/pact/templates/workflow.tpl.md, ai/pact/workflow/WORKFLOW.md, ai/pact/RELEASE-NOTES.md, ai/pact/INSTALL.md, conformance/source-check.mjs
+tests: New source-check assertions for the rule in WORKFLOW and the template RULES, plus updated version checks.
+baseline: New assertions run against task_base before the documentation edit; actual red count recorded at completion.
+validation: self-test, full corpus, source-check, check-git, migration-check and git diff --check, each actual exit inspected sequentially.
+retry: identified corrections only
+handoff: preserve red baseline, report exact candidate and actual exits
 
 ## Historical Maintenance Notes
 
@@ -173,7 +209,7 @@ blockers: none
 escalation: none
 limits: Full-document historical-acceptance selection remains outside evaluator projection scope. Current owner instruction authorizes Prime's separate ordinary main delivery after fresh acceptance; this ready publication claims neither acceptance nor closure. Lead stops mutations for Prime acceptance/Answer/delivery and PR update.
 
-## Gate Handoff
+## Historical PACT Prose Span Gate Handoff
 
 ```pact:gate-handoff
 gate_id: "PACT-Prose-Span"
@@ -188,5 +224,23 @@ recorded_at: "2026-10-29 05:14:47 UTC+00:00"
 slices: PACT-20261029-003 exact089a8fcadce06b749e3e165eb20988623e2fe8ee published on its task branch and proven ancestor of explicitly fetched remote gate/PACT-Prose-Span (actual0). Complete candidate 65a9033 differs from it only in TASKS/STATE completion records; Prime link-only selection amendment 0fcec9e precedes the task candidate.
 validation: Red task_base corpus371/4fail actual1; fresh clean-checkout self-test24, corpus371/371, source222checks171links, realGit15, migration30/11 plan-only and diff-check each actual0 on 089a8fc; Lead fast source222/171links actual0 on exact 65a9033. All 364 earlier inputs/expectations unchanged. Prime owns fresh complete acceptance.
 records: SliceRecordsCheck pass; TASKS complete/Pending none, STATE clear/no reservations. Same-host sequential Prime/Lead work, not independent review. Task/gate publication only; no main delivery. No template/spec version, dependency, host installation or product/SPARC truth change.
+blockers: none
+escalation: none
+
+## Gate Handoff
+
+```pact:gate-handoff
+gate_id: "PACT-Selection-Fetch"
+seq: 1
+signal: "working"
+candidate: "none"
+branch: "gate/PACT-Selection-Fetch"
+lead: "/root Lead pass"
+recorded_at: "2026-10-29 05:23:45 UTC+00:00"
+```
+
+slices: Task PACT-20261029-004 dispatched from exact selected revision 557eefe1546939ca4e8a4a842eb74f135d8f72b2, published on gate/PACT-Selection-Fetch before dispatch. PACT-Prose-Span#2 is answered and delivered; its publication is preserved verbatim above.
+validation: Lead re-fetched before dispatch: only this gate is open; task id 004 follows the highest observed PACT-20261029 id.
+records: Owner requested the rule; Prime selected the scope; Lead owns execution records and task/gate publication; no main delivery.
 blockers: none
 escalation: none
