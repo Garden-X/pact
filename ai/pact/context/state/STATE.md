@@ -10,7 +10,7 @@ active_task: none
 generated_from: /ai/pact/templates/state.tpl.md
 generated_from_version: 1.10
 content_status: current-state
-updated: 2026-10-29 05:14:26 UTC+00:00
+updated: 2026-10-29 05:14:47 UTC+00:00
 
 ## Active Task
 
@@ -177,16 +177,16 @@ limits: Full-document historical-acceptance selection remains outside evaluator 
 
 ```pact:gate-handoff
 gate_id: "PACT-Prose-Span"
-seq: 1
-signal: "working"
-candidate: "none"
+seq: 2
+signal: "ready"
+candidate: "65a90338b7b86eb28077105e7f409d5270ed498b"
 branch: "gate/PACT-Prose-Span"
 lead: "/root Lead pass"
-recorded_at: "2026-10-29 05:11:44 UTC+00:00"
+recorded_at: "2026-10-29 05:14:47 UTC+00:00"
 ```
 
-slices: Task PACT-20261029-003 dispatched from exact selected revision ff646a284cf8e70fa809d7528f6063a139eb0671. PACT-Review-20261028#3 is answered and delivered; its publication is preserved verbatim above.
-validation: Counterexample demonstrated on ec5b591e43fe62cf2675a08c857dc1d7839b466e; tracked red cases precede the fix.
-records: Owner requested the fix; Prime selected the scope; Lead owns execution records and task/gate publication; no main delivery.
+slices: PACT-20261029-003 exact089a8fcadce06b749e3e165eb20988623e2fe8ee published on its task branch and proven ancestor of explicitly fetched remote gate/PACT-Prose-Span (actual0). Complete candidate 65a9033 differs from it only in TASKS/STATE completion records; Prime link-only selection amendment 0fcec9e precedes the task candidate.
+validation: Red task_base corpus371/4fail actual1; fresh clean-checkout self-test24, corpus371/371, source222checks171links, realGit15, migration30/11 plan-only and diff-check each actual0 on 089a8fc; Lead fast source222/171links actual0 on exact 65a9033. All 364 earlier inputs/expectations unchanged. Prime owns fresh complete acceptance.
+records: SliceRecordsCheck pass; TASKS complete/Pending none, STATE clear/no reservations. Same-host sequential Prime/Lead work, not independent review. Task/gate publication only; no main delivery. No template/spec version, dependency, host installation or product/SPARC truth change.
 blockers: none
 escalation: none
