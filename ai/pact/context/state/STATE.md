@@ -10,7 +10,7 @@ active_task: PACT-20261029-002
 generated_from: /ai/pact/templates/state.tpl.md
 generated_from_version: 1.10
 content_status: current-state
-updated: 2026-10-29 03:35:32 UTC+00:00
+updated: 2026-10-29 03:43:28 UTC+00:00
 
 ## Active Task
 
@@ -20,12 +20,12 @@ role: "Worker"
 actor: "/root/config_plan_docs/evaluator"
 parent: "/root/config_plan_docs"
 lead: "/root/config_plan_docs"
-task_phase: "transferred"
+task_phase: "validating"
 requires: ["git","toolchain:node"]
 reservations: [{"path":"conformance/reference.mjs","mode":"modify"},{"path":"conformance/cases.json","mode":"modify"},{"path":"conformance/self-test.mjs","mode":"modify"},{"path":"conformance/README.md","mode":"modify"}]
 task_base: "51bd6f7ebee894fda641fb0bdabc46d8477ade52"
 task_branch: "task/PACT-Review-20261028/PACT-20261029-002"
-task_candidate: "none"
+task_candidate: "e7548a2889a7eb3312021b857cf21a2008a57c56"
 trace: "LOGIC-DRAFT.md / Decisions; Claude proseSurface review"
 source: {"idea":null,"shape":null,"draft":"LOGIC-DRAFT.md","tasks":"TASKS.md"}
 ```
@@ -50,10 +50,10 @@ validation: Affected self-test/reference and source fast checks only; preserve c
 
 request: Correct raw fenced task-prose preservation without promoting examples into authority.
 created_at: 2026-10-29 03:35:32 UTC+00:00
-validation_result: Pending tracked red before reader edits.
-validation_evidence: Compare against published merge candidate25fd15d and complete332 corpus; root specified concrete fenced-brief change. Local logs are optional, new cases/results must become durable.
+validation_result: Tracked32 newcases first; reference364/343pass21fail actual1 before reader edits. Corrected selftest24/reference364of364/source221checks170links each0; complete existing332 deepStrictEqual byprefix andbyID to25fd15d0, no further coordinate edits; diff/nativecommit/nativepush0. Lead reviewed focused raw-span/structural-field diff, inspected final green/preservation logs, fetched exact task ref equal candidate and verified task_base ancestry0.
+validation_evidence: Tracked final32 cases in conformance/cases.json and focused reference/README change at exacte7548a2. Changed/deleted fenced brief/validation/tests/baseline, info strings, supported fences/indentation and unchanged controls; fenced-only boundary field remains unresolved, fenced duplicate does not override genuine root field in section orlabel forms. Local fenced-prose red/green and preservation logs optional; exact results promoted to TASKS on remote reachability.
 retry: attempts0; identified corrections only
-handoff: status working; Worker publishes exact assigned candidate only, Lead records integration/reachability
+handoff: status candidate-reviewed; exacte7548a2 taskbranch published and separately reviewed. Lead integrates with ancestry-preserving merge and validation records; Done waits for explicit authoritative remote gate reachability. All prior332 cases intact, root selection and both publication histories preserved. No main/normative/template/host mutation.
 
 ## Historical Maintenance Notes
 
