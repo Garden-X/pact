@@ -10,7 +10,7 @@ active_task: none
 generated_from: /ai/pact/templates/state.tpl.md
 generated_from_version: 1.10
 content_status: current-state
-updated: 2026-10-29 03:44:53 UTC+00:00
+updated: 2026-10-29 03:46:36 UTC+00:00
 
 ## Active Task
 
@@ -136,7 +136,7 @@ records: SliceRecordsCheck pass; TASKS complete/Pending none, STATE clear/no res
 blockers: none
 escalation: none
 
-## Gate Handoff
+## Historical PACT Review Revision 2 Gate Handoff
 
 ```pact:gate-handoff
 gate_id: "PACT-Review-20261028"
@@ -153,3 +153,22 @@ validation: Pending affected combined checks; all prior expectations and both hi
 records: TASKS active-draft, task001 active in STATE and task002 Pending; root5538 selection remains byte-identical. No main/default write or service start by Lead.
 blockers: none
 escalation: none
+
+## Gate Handoff
+
+```pact:gate-handoff
+gate_id: "PACT-Review-20261028"
+seq: 3
+signal: "ready"
+candidate: "6c71fcd301b2ae81cb859591462bd519c1b68d00"
+branch: "gate/PACT-Review-20261028"
+lead: "/root/config_plan_docs"
+recorded_at: "2026-10-29 03:46:36 UTC+00:00"
+```
+
+slices: Material integration task25fd15d4bc991ede9cb22585a032230edebc3e39 preserves both accepted review3d75f63 and Claude2602 publication ancestries. Separate reader task e7548a2889a7eb3312021b857cf21a2008a57c56 corrects raw fenced prose and structural boundary-field presence. Each exact task candidate was published, fetched/reviewed, integrated preserving ancestry and proven reachable from explicitly fetched origin refs/heads/gate/PACT-Review-20261028 before Done; see TASKS PACT-20261029-001/002. Historical ready1/answer1, working2, and qualified Claude task/handoff/accepted Git history remain intact.
+validation: Exact candidate6c71fcd301b2ae81cb859591462bd519c1b68d00 passed Lead source-check221checks170links0, complete diff hygiene0, protected root5538 draft/normative/template/release equivalence0, and all four publication/task ancestry checks0. Affected selftest24/reference364of364/source221/170 each0 on reader e7548a2; conformance inputs unchanged to candidate by git diff --quiet0. Existing332 complete cases preserved byprefix/byID0; original300 ours plus282 Claude union332 kept every prior expected verdict, only14 already-intended derive expected_ref completions listed in README and proven0, with no other prior data changes. Before integration combined332/7fail1; reader tracked364/21fail1 before edit, then allgreen. SystemNode24; battery20/RAM5 policy gates0 and sequential shared source lock observed. Prime owns fresh complete acceptance and preservation proof on this exact candidate.
+records: SliceRecordsCheck pass; TASKS complete/PendingNone, STATE clear/no active task or reservations. Both release and complete-template source probe sets retained. Root5538 selected draft and prior acceptance entries unchanged by Lead; all protocol/template versions and product/SPARC/host contracts unchanged. No dependency/install/service or default/main mutation by Lead. New commits have no attribution trailers; published Claude history preserved without rewrite. Optional cache logs retained for gate-close review; durable scenarios and actual command outcomes are tracked.
+blockers: none
+escalation: none
+limits: Full-document historical-acceptance selection remains outside evaluator projection scope. Current owner instruction authorizes Prime's separate ordinary main delivery after fresh acceptance; this ready publication claims neither acceptance nor closure. Lead stops mutations for Prime acceptance/Answer/delivery and PR update.
