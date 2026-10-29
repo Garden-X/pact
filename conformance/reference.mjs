@@ -161,15 +161,17 @@ function section(text,heading) {
 // label. Both surfaces at once are ambiguous. The prose is never interpreted.
 function proseSurface(text,heading,key) {
   const doc=scanDocument(text),owner=doc.headings.find(h=>h.name==='Active Task');
-  const lines=owner?doc.visible.filter(v=>v.heading?.index===owner.index&&!/^## /u.test(v.line)).map(v=>v.line):[];
+  const visible=owner?doc.visible.filter(v=>v.heading?.index===owner.index&&!/^## /u.test(v.line)):[],lines=visible.map(v=>v.line);
   const labels=legacyRootFields(lines).filter(field=>field.m[2]===key),projection=heading?section(text,heading):null;
   if(labels.length>1||labels.length&&projection!==null)throw new Error('duplicate prose surface');
-  if(projection!==null)return {form:'section',value:projection};
+  if(projection!==null)return {form:'section',value:projection,fields:legacyRootFields(doc.visible.filter(v=>v.heading?.name===heading&&!/^## /u.test(v.line)).map(v=>v.line))};
   if(!labels.length)return null;
-  const {index,m}=labels[0],indent=m[1].length,body=[],width=line=>/^ */u.exec(line)[0].length;
-  for(const line of lines.slice(index+1)){if(line.trim()&&width(line)<=indent)break;body.push(line);}
-  const depth=Math.min(...body.filter(line=>line.trim()).map(width));
-  return {form:'label',value:[m[3]||'',...body.map(line=>line.slice(Math.min(depth,width(line))))].join('\n').trim()};
+  const {index,m}=labels[0],indent=m[1].length,start=visible[index].index,width=line=>/^ */u.exec(line)[0].length;
+  const end=visible.slice(index+1).find(v=>v.line.trim()&&width(v.line)<=indent)?.index??doc.headings.find(h=>h.index>owner.index)?.index??doc.lines.length;
+  const body=doc.lines.slice(start+1,end),fields=legacyRootFields(visible.filter(v=>v.index>start&&v.index<end).map(v=>v.line));
+  // Structural lines delimit ownership; raw lines retain fences and their
+  // contents, including unindented/root-looking text inside ordinary fences.
+  return {form:'label',value:[m[3]||'',...body.map(line=>line.slice(Math.min(indent,width(line))))].join('\n').trim(),fields};
 }
 const boundaryFields=['task_scope','permitted_area','protected_area','unchanged_contracts','allowed_side_effects','escalation'];
 export function parseRecord(text,type) {
@@ -322,7 +324,8 @@ function authority(input) {
   const boundaryInputs=input.boundaries||[];
   if(assignment.parent&&assignment.parent!=='none'){
     const contract=proseSurface(input.records.task,'Boundary Contract','boundary_contract');
-    if(!contract||!boundaryFields.every(key=>contract.value.match(new RegExp('^'+key+': \\S.*$','gmu'))?.length===1)||!boundaryInputs.length)return verdict('unresolved');
+    const complete=contract&&boundaryFields.every(key=>{const fields=contract.fields.filter(field=>field.m[2]===key);return fields.length===1&&/^\S.*$/u.test(fields[0].m[3]||'');});
+    if(!complete||!boundaryInputs.length)return verdict('unresolved');
   }
   for(const boundary of boundaryInputs){if(!boundary.source||!input.records?.boundary_decisions?.[boundary.source])return verdict('unresolved');if(boundary.result==='deny')return verdict('deny');if(boundary.result!=='allow')return verdict('unresolved');}
   if(workflow.file_guard===undefined)return verdict('unresolved');

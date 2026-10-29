@@ -10403,6 +10403,598 @@
       "expected": {
         "verdict": "invalid"
       }
+    },
+    {
+      "id": "review-transfer-fenced-brief-backtick-unchanged",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n  outcome: src/a.js has the missing behavior.\n  files: src/a.js\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n  brief: Update only src/a.js. Preserve supplied invariant tests.\n   ```txt\n    original requirement\n   ```\n  boundary_contract:\n    task_scope: Update src/a.js only.\n    permitted_area: The reserved src paths.\n    protected_area: Every other path and side effect.\n    unchanged_contracts: Existing public interfaces.\n    allowed_side_effects: Publish the assigned task candidate only.\n    escalation: Ask the parent before any widening.\n  model_tier: Light\n  effort: 50%\n  tests: unit-small\n  baseline: expected initial exit 1 on missing behavior.\n  validation: Run unit-small; evidence: conformance/cases.json.\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nrequest: Add the missing behavior.\nbrief: Update only src/a.js. Preserve supplied invariant tests.\n ```txt\n  original requirement\n ```\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Every other path and side effect.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\ntests: unit-small\nbaseline: expected initial exit 1 on missing behavior.\nvalidation: Run unit-small; evidence: conformance/cases.json.\nvalidation_result: Pending\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "valid"
+      }
+    },
+    {
+      "id": "review-transfer-fenced-brief-backtick-changed",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n  outcome: src/a.js has the missing behavior.\n  files: src/a.js\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n  brief: Update only src/a.js. Preserve supplied invariant tests.\n   ```txt\n    original requirement\n   ```\n  boundary_contract:\n    task_scope: Update src/a.js only.\n    permitted_area: The reserved src paths.\n    protected_area: Every other path and side effect.\n    unchanged_contracts: Existing public interfaces.\n    allowed_side_effects: Publish the assigned task candidate only.\n    escalation: Ask the parent before any widening.\n  model_tier: Light\n  effort: 50%\n  tests: unit-small\n  baseline: expected initial exit 1 on missing behavior.\n  validation: Run unit-small; evidence: conformance/cases.json.\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nrequest: Add the missing behavior.\nbrief: Update only src/a.js. Preserve supplied invariant tests.\n ```txt\n  changed requirement\n ```\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Every other path and side effect.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\ntests: unit-small\nbaseline: expected initial exit 1 on missing behavior.\nvalidation: Run unit-small; evidence: conformance/cases.json.\nvalidation_result: Pending\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "invalid"
+      }
+    },
+    {
+      "id": "review-transfer-fenced-brief-backtick-removed",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n  outcome: src/a.js has the missing behavior.\n  files: src/a.js\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n  brief: Update only src/a.js. Preserve supplied invariant tests.\n   ```txt\n    original requirement\n   ```\n  boundary_contract:\n    task_scope: Update src/a.js only.\n    permitted_area: The reserved src paths.\n    protected_area: Every other path and side effect.\n    unchanged_contracts: Existing public interfaces.\n    allowed_side_effects: Publish the assigned task candidate only.\n    escalation: Ask the parent before any widening.\n  model_tier: Light\n  effort: 50%\n  tests: unit-small\n  baseline: expected initial exit 1 on missing behavior.\n  validation: Run unit-small; evidence: conformance/cases.json.\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nrequest: Add the missing behavior.\nbrief: Update only src/a.js. Preserve supplied invariant tests.\n ```txt\n ```\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Every other path and side effect.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\ntests: unit-small\nbaseline: expected initial exit 1 on missing behavior.\nvalidation: Run unit-small; evidence: conformance/cases.json.\nvalidation_result: Pending\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "invalid"
+      }
+    },
+    {
+      "id": "review-transfer-fenced-brief-tilde-unchanged",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n  outcome: src/a.js has the missing behavior.\n  files: src/a.js\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n  brief: Update only src/a.js. Preserve supplied invariant tests.\n   ~~~txt\n    original requirement\n   ~~~\n  boundary_contract:\n    task_scope: Update src/a.js only.\n    permitted_area: The reserved src paths.\n    protected_area: Every other path and side effect.\n    unchanged_contracts: Existing public interfaces.\n    allowed_side_effects: Publish the assigned task candidate only.\n    escalation: Ask the parent before any widening.\n  model_tier: Light\n  effort: 50%\n  tests: unit-small\n  baseline: expected initial exit 1 on missing behavior.\n  validation: Run unit-small; evidence: conformance/cases.json.\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nrequest: Add the missing behavior.\nbrief: Update only src/a.js. Preserve supplied invariant tests.\n ~~~txt\n  original requirement\n ~~~\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Every other path and side effect.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\ntests: unit-small\nbaseline: expected initial exit 1 on missing behavior.\nvalidation: Run unit-small; evidence: conformance/cases.json.\nvalidation_result: Pending\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "valid"
+      }
+    },
+    {
+      "id": "review-transfer-fenced-brief-tilde-changed",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n  outcome: src/a.js has the missing behavior.\n  files: src/a.js\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n  brief: Update only src/a.js. Preserve supplied invariant tests.\n   ~~~txt\n    original requirement\n   ~~~\n  boundary_contract:\n    task_scope: Update src/a.js only.\n    permitted_area: The reserved src paths.\n    protected_area: Every other path and side effect.\n    unchanged_contracts: Existing public interfaces.\n    allowed_side_effects: Publish the assigned task candidate only.\n    escalation: Ask the parent before any widening.\n  model_tier: Light\n  effort: 50%\n  tests: unit-small\n  baseline: expected initial exit 1 on missing behavior.\n  validation: Run unit-small; evidence: conformance/cases.json.\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nrequest: Add the missing behavior.\nbrief: Update only src/a.js. Preserve supplied invariant tests.\n ~~~txt\n  changed requirement\n ~~~\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Every other path and side effect.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\ntests: unit-small\nbaseline: expected initial exit 1 on missing behavior.\nvalidation: Run unit-small; evidence: conformance/cases.json.\nvalidation_result: Pending\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "invalid"
+      }
+    },
+    {
+      "id": "review-transfer-fenced-brief-tilde-removed",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n  outcome: src/a.js has the missing behavior.\n  files: src/a.js\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n  brief: Update only src/a.js. Preserve supplied invariant tests.\n   ~~~txt\n    original requirement\n   ~~~\n  boundary_contract:\n    task_scope: Update src/a.js only.\n    permitted_area: The reserved src paths.\n    protected_area: Every other path and side effect.\n    unchanged_contracts: Existing public interfaces.\n    allowed_side_effects: Publish the assigned task candidate only.\n    escalation: Ask the parent before any widening.\n  model_tier: Light\n  effort: 50%\n  tests: unit-small\n  baseline: expected initial exit 1 on missing behavior.\n  validation: Run unit-small; evidence: conformance/cases.json.\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nrequest: Add the missing behavior.\nbrief: Update only src/a.js. Preserve supplied invariant tests.\n ~~~txt\n ~~~\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Every other path and side effect.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\ntests: unit-small\nbaseline: expected initial exit 1 on missing behavior.\nvalidation: Run unit-small; evidence: conformance/cases.json.\nvalidation_result: Pending\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "invalid"
+      }
+    },
+    {
+      "id": "review-transfer-fenced-validation-backtick-unchanged",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n  outcome: src/a.js has the missing behavior.\n  files: src/a.js\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n  brief: Update only src/a.js. Preserve supplied invariant tests.\n  boundary_contract:\n    task_scope: Update src/a.js only.\n    permitted_area: The reserved src paths.\n    protected_area: Every other path and side effect.\n    unchanged_contracts: Existing public interfaces.\n    allowed_side_effects: Publish the assigned task candidate only.\n    escalation: Ask the parent before any widening.\n  model_tier: Light\n  effort: 50%\n  tests: unit-small\n  baseline: expected initial exit 1 on missing behavior.\n  validation: Run unit-small; evidence: conformance/cases.json.\n   ```txt\n    original requirement\n   ```\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nrequest: Add the missing behavior.\nbrief: Update only src/a.js. Preserve supplied invariant tests.\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Every other path and side effect.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\ntests: unit-small\nbaseline: expected initial exit 1 on missing behavior.\nvalidation: Run unit-small; evidence: conformance/cases.json.\n ```txt\n  original requirement\n ```\nvalidation_result: Pending\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "valid"
+      }
+    },
+    {
+      "id": "review-transfer-fenced-validation-backtick-changed",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n  outcome: src/a.js has the missing behavior.\n  files: src/a.js\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n  brief: Update only src/a.js. Preserve supplied invariant tests.\n  boundary_contract:\n    task_scope: Update src/a.js only.\n    permitted_area: The reserved src paths.\n    protected_area: Every other path and side effect.\n    unchanged_contracts: Existing public interfaces.\n    allowed_side_effects: Publish the assigned task candidate only.\n    escalation: Ask the parent before any widening.\n  model_tier: Light\n  effort: 50%\n  tests: unit-small\n  baseline: expected initial exit 1 on missing behavior.\n  validation: Run unit-small; evidence: conformance/cases.json.\n   ```txt\n    original requirement\n   ```\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nrequest: Add the missing behavior.\nbrief: Update only src/a.js. Preserve supplied invariant tests.\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Every other path and side effect.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\ntests: unit-small\nbaseline: expected initial exit 1 on missing behavior.\nvalidation: Run unit-small; evidence: conformance/cases.json.\n ```txt\n  changed requirement\n ```\nvalidation_result: Pending\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "invalid"
+      }
+    },
+    {
+      "id": "review-transfer-fenced-validation-backtick-removed",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n  outcome: src/a.js has the missing behavior.\n  files: src/a.js\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n  brief: Update only src/a.js. Preserve supplied invariant tests.\n  boundary_contract:\n    task_scope: Update src/a.js only.\n    permitted_area: The reserved src paths.\n    protected_area: Every other path and side effect.\n    unchanged_contracts: Existing public interfaces.\n    allowed_side_effects: Publish the assigned task candidate only.\n    escalation: Ask the parent before any widening.\n  model_tier: Light\n  effort: 50%\n  tests: unit-small\n  baseline: expected initial exit 1 on missing behavior.\n  validation: Run unit-small; evidence: conformance/cases.json.\n   ```txt\n    original requirement\n   ```\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nrequest: Add the missing behavior.\nbrief: Update only src/a.js. Preserve supplied invariant tests.\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Every other path and side effect.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\ntests: unit-small\nbaseline: expected initial exit 1 on missing behavior.\nvalidation: Run unit-small; evidence: conformance/cases.json.\n ```txt\n ```\nvalidation_result: Pending\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "invalid"
+      }
+    },
+    {
+      "id": "review-transfer-fenced-validation-tilde-unchanged",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n  outcome: src/a.js has the missing behavior.\n  files: src/a.js\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n  brief: Update only src/a.js. Preserve supplied invariant tests.\n  boundary_contract:\n    task_scope: Update src/a.js only.\n    permitted_area: The reserved src paths.\n    protected_area: Every other path and side effect.\n    unchanged_contracts: Existing public interfaces.\n    allowed_side_effects: Publish the assigned task candidate only.\n    escalation: Ask the parent before any widening.\n  model_tier: Light\n  effort: 50%\n  tests: unit-small\n  baseline: expected initial exit 1 on missing behavior.\n  validation: Run unit-small; evidence: conformance/cases.json.\n   ~~~txt\n    original requirement\n   ~~~\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nrequest: Add the missing behavior.\nbrief: Update only src/a.js. Preserve supplied invariant tests.\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Every other path and side effect.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\ntests: unit-small\nbaseline: expected initial exit 1 on missing behavior.\nvalidation: Run unit-small; evidence: conformance/cases.json.\n ~~~txt\n  original requirement\n ~~~\nvalidation_result: Pending\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "valid"
+      }
+    },
+    {
+      "id": "review-transfer-fenced-validation-tilde-changed",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n  outcome: src/a.js has the missing behavior.\n  files: src/a.js\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n  brief: Update only src/a.js. Preserve supplied invariant tests.\n  boundary_contract:\n    task_scope: Update src/a.js only.\n    permitted_area: The reserved src paths.\n    protected_area: Every other path and side effect.\n    unchanged_contracts: Existing public interfaces.\n    allowed_side_effects: Publish the assigned task candidate only.\n    escalation: Ask the parent before any widening.\n  model_tier: Light\n  effort: 50%\n  tests: unit-small\n  baseline: expected initial exit 1 on missing behavior.\n  validation: Run unit-small; evidence: conformance/cases.json.\n   ~~~txt\n    original requirement\n   ~~~\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nrequest: Add the missing behavior.\nbrief: Update only src/a.js. Preserve supplied invariant tests.\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Every other path and side effect.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\ntests: unit-small\nbaseline: expected initial exit 1 on missing behavior.\nvalidation: Run unit-small; evidence: conformance/cases.json.\n ~~~txt\n  changed requirement\n ~~~\nvalidation_result: Pending\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "invalid"
+      }
+    },
+    {
+      "id": "review-transfer-fenced-validation-tilde-removed",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n  outcome: src/a.js has the missing behavior.\n  files: src/a.js\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n  brief: Update only src/a.js. Preserve supplied invariant tests.\n  boundary_contract:\n    task_scope: Update src/a.js only.\n    permitted_area: The reserved src paths.\n    protected_area: Every other path and side effect.\n    unchanged_contracts: Existing public interfaces.\n    allowed_side_effects: Publish the assigned task candidate only.\n    escalation: Ask the parent before any widening.\n  model_tier: Light\n  effort: 50%\n  tests: unit-small\n  baseline: expected initial exit 1 on missing behavior.\n  validation: Run unit-small; evidence: conformance/cases.json.\n   ~~~txt\n    original requirement\n   ~~~\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nrequest: Add the missing behavior.\nbrief: Update only src/a.js. Preserve supplied invariant tests.\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Every other path and side effect.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\ntests: unit-small\nbaseline: expected initial exit 1 on missing behavior.\nvalidation: Run unit-small; evidence: conformance/cases.json.\n ~~~txt\n ~~~\nvalidation_result: Pending\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "invalid"
+      }
+    },
+    {
+      "id": "review-transfer-fenced-tests-backtick-unchanged",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n  outcome: src/a.js has the missing behavior.\n  files: src/a.js\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n  brief: Update only src/a.js. Preserve supplied invariant tests.\n  boundary_contract:\n    task_scope: Update src/a.js only.\n    permitted_area: The reserved src paths.\n    protected_area: Every other path and side effect.\n    unchanged_contracts: Existing public interfaces.\n    allowed_side_effects: Publish the assigned task candidate only.\n    escalation: Ask the parent before any widening.\n  model_tier: Light\n  effort: 50%\n  tests: unit-small\n   ```txt\n    original requirement\n   ```\n  baseline: expected initial exit 1 on missing behavior.\n  validation: Run unit-small; evidence: conformance/cases.json.\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nrequest: Add the missing behavior.\nbrief: Update only src/a.js. Preserve supplied invariant tests.\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Every other path and side effect.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\ntests: unit-small\n ```txt\n  original requirement\n ```\nbaseline: expected initial exit 1 on missing behavior.\nvalidation: Run unit-small; evidence: conformance/cases.json.\nvalidation_result: Pending\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "valid"
+      }
+    },
+    {
+      "id": "review-transfer-fenced-tests-backtick-changed",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n  outcome: src/a.js has the missing behavior.\n  files: src/a.js\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n  brief: Update only src/a.js. Preserve supplied invariant tests.\n  boundary_contract:\n    task_scope: Update src/a.js only.\n    permitted_area: The reserved src paths.\n    protected_area: Every other path and side effect.\n    unchanged_contracts: Existing public interfaces.\n    allowed_side_effects: Publish the assigned task candidate only.\n    escalation: Ask the parent before any widening.\n  model_tier: Light\n  effort: 50%\n  tests: unit-small\n   ```txt\n    original requirement\n   ```\n  baseline: expected initial exit 1 on missing behavior.\n  validation: Run unit-small; evidence: conformance/cases.json.\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nrequest: Add the missing behavior.\nbrief: Update only src/a.js. Preserve supplied invariant tests.\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Every other path and side effect.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\ntests: unit-small\n ```txt\n  changed requirement\n ```\nbaseline: expected initial exit 1 on missing behavior.\nvalidation: Run unit-small; evidence: conformance/cases.json.\nvalidation_result: Pending\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "invalid"
+      }
+    },
+    {
+      "id": "review-transfer-fenced-tests-backtick-removed",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n  outcome: src/a.js has the missing behavior.\n  files: src/a.js\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n  brief: Update only src/a.js. Preserve supplied invariant tests.\n  boundary_contract:\n    task_scope: Update src/a.js only.\n    permitted_area: The reserved src paths.\n    protected_area: Every other path and side effect.\n    unchanged_contracts: Existing public interfaces.\n    allowed_side_effects: Publish the assigned task candidate only.\n    escalation: Ask the parent before any widening.\n  model_tier: Light\n  effort: 50%\n  tests: unit-small\n   ```txt\n    original requirement\n   ```\n  baseline: expected initial exit 1 on missing behavior.\n  validation: Run unit-small; evidence: conformance/cases.json.\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nrequest: Add the missing behavior.\nbrief: Update only src/a.js. Preserve supplied invariant tests.\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Every other path and side effect.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\ntests: unit-small\n ```txt\n ```\nbaseline: expected initial exit 1 on missing behavior.\nvalidation: Run unit-small; evidence: conformance/cases.json.\nvalidation_result: Pending\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "invalid"
+      }
+    },
+    {
+      "id": "review-transfer-fenced-tests-tilde-unchanged",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n  outcome: src/a.js has the missing behavior.\n  files: src/a.js\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n  brief: Update only src/a.js. Preserve supplied invariant tests.\n  boundary_contract:\n    task_scope: Update src/a.js only.\n    permitted_area: The reserved src paths.\n    protected_area: Every other path and side effect.\n    unchanged_contracts: Existing public interfaces.\n    allowed_side_effects: Publish the assigned task candidate only.\n    escalation: Ask the parent before any widening.\n  model_tier: Light\n  effort: 50%\n  tests: unit-small\n   ~~~txt\n    original requirement\n   ~~~\n  baseline: expected initial exit 1 on missing behavior.\n  validation: Run unit-small; evidence: conformance/cases.json.\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nrequest: Add the missing behavior.\nbrief: Update only src/a.js. Preserve supplied invariant tests.\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Every other path and side effect.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\ntests: unit-small\n ~~~txt\n  original requirement\n ~~~\nbaseline: expected initial exit 1 on missing behavior.\nvalidation: Run unit-small; evidence: conformance/cases.json.\nvalidation_result: Pending\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "valid"
+      }
+    },
+    {
+      "id": "review-transfer-fenced-tests-tilde-changed",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n  outcome: src/a.js has the missing behavior.\n  files: src/a.js\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n  brief: Update only src/a.js. Preserve supplied invariant tests.\n  boundary_contract:\n    task_scope: Update src/a.js only.\n    permitted_area: The reserved src paths.\n    protected_area: Every other path and side effect.\n    unchanged_contracts: Existing public interfaces.\n    allowed_side_effects: Publish the assigned task candidate only.\n    escalation: Ask the parent before any widening.\n  model_tier: Light\n  effort: 50%\n  tests: unit-small\n   ~~~txt\n    original requirement\n   ~~~\n  baseline: expected initial exit 1 on missing behavior.\n  validation: Run unit-small; evidence: conformance/cases.json.\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nrequest: Add the missing behavior.\nbrief: Update only src/a.js. Preserve supplied invariant tests.\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Every other path and side effect.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\ntests: unit-small\n ~~~txt\n  changed requirement\n ~~~\nbaseline: expected initial exit 1 on missing behavior.\nvalidation: Run unit-small; evidence: conformance/cases.json.\nvalidation_result: Pending\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "invalid"
+      }
+    },
+    {
+      "id": "review-transfer-fenced-tests-tilde-removed",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n  outcome: src/a.js has the missing behavior.\n  files: src/a.js\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n  brief: Update only src/a.js. Preserve supplied invariant tests.\n  boundary_contract:\n    task_scope: Update src/a.js only.\n    permitted_area: The reserved src paths.\n    protected_area: Every other path and side effect.\n    unchanged_contracts: Existing public interfaces.\n    allowed_side_effects: Publish the assigned task candidate only.\n    escalation: Ask the parent before any widening.\n  model_tier: Light\n  effort: 50%\n  tests: unit-small\n   ~~~txt\n    original requirement\n   ~~~\n  baseline: expected initial exit 1 on missing behavior.\n  validation: Run unit-small; evidence: conformance/cases.json.\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nrequest: Add the missing behavior.\nbrief: Update only src/a.js. Preserve supplied invariant tests.\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Every other path and side effect.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\ntests: unit-small\n ~~~txt\n ~~~\nbaseline: expected initial exit 1 on missing behavior.\nvalidation: Run unit-small; evidence: conformance/cases.json.\nvalidation_result: Pending\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "invalid"
+      }
+    },
+    {
+      "id": "review-transfer-fenced-baseline-backtick-unchanged",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n  outcome: src/a.js has the missing behavior.\n  files: src/a.js\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n  brief: Update only src/a.js. Preserve supplied invariant tests.\n  boundary_contract:\n    task_scope: Update src/a.js only.\n    permitted_area: The reserved src paths.\n    protected_area: Every other path and side effect.\n    unchanged_contracts: Existing public interfaces.\n    allowed_side_effects: Publish the assigned task candidate only.\n    escalation: Ask the parent before any widening.\n  model_tier: Light\n  effort: 50%\n  tests: unit-small\n  baseline: expected initial exit 1 on missing behavior.\n   ```txt\n    original requirement\n   ```\n  validation: Run unit-small; evidence: conformance/cases.json.\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nrequest: Add the missing behavior.\nbrief: Update only src/a.js. Preserve supplied invariant tests.\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Every other path and side effect.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\ntests: unit-small\nbaseline: expected initial exit 1 on missing behavior.\n ```txt\n  original requirement\n ```\nvalidation: Run unit-small; evidence: conformance/cases.json.\nvalidation_result: Pending\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "valid"
+      }
+    },
+    {
+      "id": "review-transfer-fenced-baseline-backtick-changed",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n  outcome: src/a.js has the missing behavior.\n  files: src/a.js\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n  brief: Update only src/a.js. Preserve supplied invariant tests.\n  boundary_contract:\n    task_scope: Update src/a.js only.\n    permitted_area: The reserved src paths.\n    protected_area: Every other path and side effect.\n    unchanged_contracts: Existing public interfaces.\n    allowed_side_effects: Publish the assigned task candidate only.\n    escalation: Ask the parent before any widening.\n  model_tier: Light\n  effort: 50%\n  tests: unit-small\n  baseline: expected initial exit 1 on missing behavior.\n   ```txt\n    original requirement\n   ```\n  validation: Run unit-small; evidence: conformance/cases.json.\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nrequest: Add the missing behavior.\nbrief: Update only src/a.js. Preserve supplied invariant tests.\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Every other path and side effect.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\ntests: unit-small\nbaseline: expected initial exit 1 on missing behavior.\n ```txt\n  changed requirement\n ```\nvalidation: Run unit-small; evidence: conformance/cases.json.\nvalidation_result: Pending\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "invalid"
+      }
+    },
+    {
+      "id": "review-transfer-fenced-baseline-backtick-removed",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n  outcome: src/a.js has the missing behavior.\n  files: src/a.js\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n  brief: Update only src/a.js. Preserve supplied invariant tests.\n  boundary_contract:\n    task_scope: Update src/a.js only.\n    permitted_area: The reserved src paths.\n    protected_area: Every other path and side effect.\n    unchanged_contracts: Existing public interfaces.\n    allowed_side_effects: Publish the assigned task candidate only.\n    escalation: Ask the parent before any widening.\n  model_tier: Light\n  effort: 50%\n  tests: unit-small\n  baseline: expected initial exit 1 on missing behavior.\n   ```txt\n    original requirement\n   ```\n  validation: Run unit-small; evidence: conformance/cases.json.\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nrequest: Add the missing behavior.\nbrief: Update only src/a.js. Preserve supplied invariant tests.\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Every other path and side effect.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\ntests: unit-small\nbaseline: expected initial exit 1 on missing behavior.\n ```txt\n ```\nvalidation: Run unit-small; evidence: conformance/cases.json.\nvalidation_result: Pending\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "invalid"
+      }
+    },
+    {
+      "id": "review-transfer-fenced-baseline-tilde-unchanged",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n  outcome: src/a.js has the missing behavior.\n  files: src/a.js\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n  brief: Update only src/a.js. Preserve supplied invariant tests.\n  boundary_contract:\n    task_scope: Update src/a.js only.\n    permitted_area: The reserved src paths.\n    protected_area: Every other path and side effect.\n    unchanged_contracts: Existing public interfaces.\n    allowed_side_effects: Publish the assigned task candidate only.\n    escalation: Ask the parent before any widening.\n  model_tier: Light\n  effort: 50%\n  tests: unit-small\n  baseline: expected initial exit 1 on missing behavior.\n   ~~~txt\n    original requirement\n   ~~~\n  validation: Run unit-small; evidence: conformance/cases.json.\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nrequest: Add the missing behavior.\nbrief: Update only src/a.js. Preserve supplied invariant tests.\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Every other path and side effect.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\ntests: unit-small\nbaseline: expected initial exit 1 on missing behavior.\n ~~~txt\n  original requirement\n ~~~\nvalidation: Run unit-small; evidence: conformance/cases.json.\nvalidation_result: Pending\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "valid"
+      }
+    },
+    {
+      "id": "review-transfer-fenced-baseline-tilde-changed",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n  outcome: src/a.js has the missing behavior.\n  files: src/a.js\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n  brief: Update only src/a.js. Preserve supplied invariant tests.\n  boundary_contract:\n    task_scope: Update src/a.js only.\n    permitted_area: The reserved src paths.\n    protected_area: Every other path and side effect.\n    unchanged_contracts: Existing public interfaces.\n    allowed_side_effects: Publish the assigned task candidate only.\n    escalation: Ask the parent before any widening.\n  model_tier: Light\n  effort: 50%\n  tests: unit-small\n  baseline: expected initial exit 1 on missing behavior.\n   ~~~txt\n    original requirement\n   ~~~\n  validation: Run unit-small; evidence: conformance/cases.json.\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nrequest: Add the missing behavior.\nbrief: Update only src/a.js. Preserve supplied invariant tests.\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Every other path and side effect.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\ntests: unit-small\nbaseline: expected initial exit 1 on missing behavior.\n ~~~txt\n  changed requirement\n ~~~\nvalidation: Run unit-small; evidence: conformance/cases.json.\nvalidation_result: Pending\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "invalid"
+      }
+    },
+    {
+      "id": "review-transfer-fenced-baseline-tilde-removed",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n  outcome: src/a.js has the missing behavior.\n  files: src/a.js\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n  brief: Update only src/a.js. Preserve supplied invariant tests.\n  boundary_contract:\n    task_scope: Update src/a.js only.\n    permitted_area: The reserved src paths.\n    protected_area: Every other path and side effect.\n    unchanged_contracts: Existing public interfaces.\n    allowed_side_effects: Publish the assigned task candidate only.\n    escalation: Ask the parent before any widening.\n  model_tier: Light\n  effort: 50%\n  tests: unit-small\n  baseline: expected initial exit 1 on missing behavior.\n   ~~~txt\n    original requirement\n   ~~~\n  validation: Run unit-small; evidence: conformance/cases.json.\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nrequest: Add the missing behavior.\nbrief: Update only src/a.js. Preserve supplied invariant tests.\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Every other path and side effect.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\ntests: unit-small\nbaseline: expected initial exit 1 on missing behavior.\n ~~~txt\n ~~~\nvalidation: Run unit-small; evidence: conformance/cases.json.\nvalidation_result: Pending\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "invalid"
+      }
+    },
+    {
+      "id": "review-transfer-fenced-brief-unindented-quadruple-unchanged",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n  outcome: src/a.js has the missing behavior.\n  files: src/a.js\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n  brief: Update only src/a.js. Preserve supplied invariant tests.\n````txt\ncandidate: original requirement\n````\n  boundary_contract:\n    task_scope: Update src/a.js only.\n    permitted_area: The reserved src paths.\n    protected_area: Every other path and side effect.\n    unchanged_contracts: Existing public interfaces.\n    allowed_side_effects: Publish the assigned task candidate only.\n    escalation: Ask the parent before any widening.\n  model_tier: Light\n  effort: 50%\n  tests: unit-small\n  baseline: expected initial exit 1 on missing behavior.\n  validation: Run unit-small; evidence: conformance/cases.json.\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nrequest: Add the missing behavior.\nbrief: Update only src/a.js. Preserve supplied invariant tests.\n````txt\ncandidate: original requirement\n````\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Every other path and side effect.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\ntests: unit-small\nbaseline: expected initial exit 1 on missing behavior.\nvalidation: Run unit-small; evidence: conformance/cases.json.\nvalidation_result: Pending\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "valid"
+      }
+    },
+    {
+      "id": "review-transfer-fenced-brief-unindented-quadruple-changed",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n  outcome: src/a.js has the missing behavior.\n  files: src/a.js\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n  brief: Update only src/a.js. Preserve supplied invariant tests.\n````txt\ncandidate: original requirement\n````\n  boundary_contract:\n    task_scope: Update src/a.js only.\n    permitted_area: The reserved src paths.\n    protected_area: Every other path and side effect.\n    unchanged_contracts: Existing public interfaces.\n    allowed_side_effects: Publish the assigned task candidate only.\n    escalation: Ask the parent before any widening.\n  model_tier: Light\n  effort: 50%\n  tests: unit-small\n  baseline: expected initial exit 1 on missing behavior.\n  validation: Run unit-small; evidence: conformance/cases.json.\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nrequest: Add the missing behavior.\nbrief: Update only src/a.js. Preserve supplied invariant tests.\n````txt\ncandidate: changed requirement\n````\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Every other path and side effect.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\ntests: unit-small\nbaseline: expected initial exit 1 on missing behavior.\nvalidation: Run unit-small; evidence: conformance/cases.json.\nvalidation_result: Pending\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "invalid"
+      }
+    },
+    {
+      "id": "review-transfer-fenced-brief-unindented-quadruple-removed",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n  outcome: src/a.js has the missing behavior.\n  files: src/a.js\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n  brief: Update only src/a.js. Preserve supplied invariant tests.\n````txt\ncandidate: original requirement\n````\n  boundary_contract:\n    task_scope: Update src/a.js only.\n    permitted_area: The reserved src paths.\n    protected_area: Every other path and side effect.\n    unchanged_contracts: Existing public interfaces.\n    allowed_side_effects: Publish the assigned task candidate only.\n    escalation: Ask the parent before any widening.\n  model_tier: Light\n  effort: 50%\n  tests: unit-small\n  baseline: expected initial exit 1 on missing behavior.\n  validation: Run unit-small; evidence: conformance/cases.json.\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nrequest: Add the missing behavior.\nbrief: Update only src/a.js. Preserve supplied invariant tests.\n````txt\n````\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Every other path and side effect.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\ntests: unit-small\nbaseline: expected initial exit 1 on missing behavior.\nvalidation: Run unit-small; evidence: conformance/cases.json.\nvalidation_result: Pending\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "invalid"
+      }
+    },
+    {
+      "id": "review-transfer-fenced-brief-info-string-changed",
+      "operation": "transfer",
+      "rules": [
+        "PACT-TRANSFER",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "pending": "## Active Task\n\n  outcome: src/a.js has the missing behavior.\n  files: src/a.js\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n  brief: Update only src/a.js. Preserve supplied invariant tests.\n   ~~~txt\n    original requirement\n   ~~~\n  boundary_contract:\n    task_scope: Update src/a.js only.\n    permitted_area: The reserved src paths.\n    protected_area: Every other path and side effect.\n    unchanged_contracts: Existing public interfaces.\n    allowed_side_effects: Publish the assigned task candidate only.\n    escalation: Ask the parent before any widening.\n  model_tier: Light\n  effort: 50%\n  tests: unit-small\n  baseline: expected initial exit 1 on missing behavior.\n  validation: Run unit-small; evidence: conformance/cases.json.\n",
+        "active": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nrequest: Add the missing behavior.\nbrief: Update only src/a.js. Preserve supplied invariant tests.\n ~~~json\n  original requirement\n ~~~\nboundary_contract:\n  task_scope: Update src/a.js only.\n  permitted_area: The reserved src paths.\n  protected_area: Every other path and side effect.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish the assigned task candidate only.\n  escalation: Ask the parent before any widening.\nmodel_tier: Light\neffort: 50%\ntests: unit-small\nbaseline: expected initial exit 1 on missing behavior.\nvalidation: Run unit-small; evidence: conformance/cases.json.\nvalidation_result: Pending\n",
+        "remaining_pending_ids": []
+      },
+      "expected": {
+        "verdict": "invalid"
+      }
+    },
+    {
+      "id": "review-authority-boundary-label-fenced-missing",
+      "operation": "authority",
+      "rules": [
+        "PACT-AUTH",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "records": {
+          "workflow": "## Execution Hierarchy\n\n```pact:workflow\nfile_guard: \"none\"\nauthority_remote: \"origin\"\ndefault_branch: \"main\"\ngate_branch_pattern: \"gate/<id>\"\ntask_branch_pattern: \"task/<gate-id>/<task-id>\"\n```\n",
+          "task": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nbrief: Change the assigned src files; keep their public interfaces.\nboundary_contract:\n  task_scope: Change the assigned src files.\n  permitted_area: Reserved paths and operations.\n  protected_area: Every other mutation.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish assigned task candidate only.\n  ```txt\n  escalation: Example only; not an owning field.\n  ```\nmodel_tier: Light\neffort: 50%\n",
+          "boundary_decisions": {
+            "ai/pact/context/state/STATE.md@recorded-boundary-decision": "Recorded parent interpretation of the complete inherited scope for this exact query: allow. This is fixture evidence, not a new PACT record."
+          }
+        },
+        "actor": "worker-1",
+        "operation": "publish_task",
+        "branch": "task/G/PACT-20261026-001",
+        "gate_id": "G",
+        "changes": [
+          {
+            "path": "src/a.js",
+            "mode": "modify"
+          }
+        ],
+        "boundaries": [
+          {
+            "result": "allow",
+            "source": "ai/pact/context/state/STATE.md@recorded-boundary-decision"
+          }
+        ]
+      },
+      "expected": {
+        "verdict": "unresolved"
+      }
+    },
+    {
+      "id": "review-authority-boundary-label-fenced-duplicate",
+      "operation": "authority",
+      "rules": [
+        "PACT-AUTH",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "records": {
+          "workflow": "## Execution Hierarchy\n\n```pact:workflow\nfile_guard: \"none\"\nauthority_remote: \"origin\"\ndefault_branch: \"main\"\ngate_branch_pattern: \"gate/<id>\"\ntask_branch_pattern: \"task/<gate-id>/<task-id>\"\n```\n",
+          "task": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nbrief: Change the assigned src files; keep their public interfaces.\nboundary_contract:\n  task_scope: Change the assigned src files.\n  permitted_area: Reserved paths and operations.\n  protected_area: Every other mutation.\n  unchanged_contracts: Existing public interfaces.\n  allowed_side_effects: Publish assigned task candidate only.\n  escalation: Ask parent before necessary widening.\n  ```txt\n  escalation: Example only; not an owning field.\n  ```\nmodel_tier: Light\neffort: 50%\n",
+          "boundary_decisions": {
+            "ai/pact/context/state/STATE.md@recorded-boundary-decision": "Recorded parent interpretation of the complete inherited scope for this exact query: allow. This is fixture evidence, not a new PACT record."
+          }
+        },
+        "actor": "worker-1",
+        "operation": "publish_task",
+        "branch": "task/G/PACT-20261026-001",
+        "gate_id": "G",
+        "changes": [
+          {
+            "path": "src/a.js",
+            "mode": "modify"
+          }
+        ],
+        "boundaries": [
+          {
+            "result": "allow",
+            "source": "ai/pact/context/state/STATE.md@recorded-boundary-decision"
+          }
+        ]
+      },
+      "expected": {
+        "verdict": "allow"
+      }
+    },
+    {
+      "id": "review-authority-boundary-section-fenced-missing",
+      "operation": "authority",
+      "rules": [
+        "PACT-AUTH",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "records": {
+          "workflow": "## Execution Hierarchy\n\n```pact:workflow\nfile_guard: \"none\"\nauthority_remote: \"origin\"\ndefault_branch: \"main\"\ngate_branch_pattern: \"gate/<id>\"\ntask_branch_pattern: \"task/<gate-id>/<task-id>\"\n```\n",
+          "task": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nbrief: Change the assigned src files; keep their public interfaces.\n\n## Boundary Contract\n\ntask_scope: Change the assigned src files.\npermitted_area: Reserved paths and operations.\nprotected_area: Every other mutation.\nunchanged_contracts: Existing public interfaces.\nallowed_side_effects: Publish assigned task candidate only.\n\n~~~txt\nescalation: Example only; not an owning field.\n~~~\n\n## Assignment Metadata\n\nmodel_tier: Light\neffort: 50%\n",
+          "boundary_decisions": {
+            "ai/pact/context/state/STATE.md@recorded-boundary-decision": "Recorded parent interpretation of the complete inherited scope for this exact query: allow. This is fixture evidence, not a new PACT record."
+          }
+        },
+        "actor": "worker-1",
+        "operation": "publish_task",
+        "branch": "task/G/PACT-20261026-001",
+        "gate_id": "G",
+        "changes": [
+          {
+            "path": "src/a.js",
+            "mode": "modify"
+          }
+        ],
+        "boundaries": [
+          {
+            "result": "allow",
+            "source": "ai/pact/context/state/STATE.md@recorded-boundary-decision"
+          }
+        ]
+      },
+      "expected": {
+        "verdict": "unresolved"
+      }
+    },
+    {
+      "id": "review-authority-boundary-section-fenced-duplicate",
+      "operation": "authority",
+      "rules": [
+        "PACT-AUTH",
+        "PACT-RECORD"
+      ],
+      "input": {
+        "records": {
+          "workflow": "## Execution Hierarchy\n\n```pact:workflow\nfile_guard: \"none\"\nauthority_remote: \"origin\"\ndefault_branch: \"main\"\ngate_branch_pattern: \"gate/<id>\"\ntask_branch_pattern: \"task/<gate-id>/<task-id>\"\n```\n",
+          "task": "## Active Task\n\n```pact:task\nid: \"PACT-20261026-001\"\nrole: \"Worker\"\nactor: \"worker-1\"\nparent: \"lead-1\"\nlead: \"lead-1\"\ntask_phase: \"working\"\nrequires: [\"git\"]\nreservations: [{\"path\":\"src/**\",\"mode\":\"modify\"},{\"path\":\"src/**\",\"mode\":\"create\"}]\ntask_base: \"1111111111111111111111111111111111111111\"\ntask_branch: \"task/G/PACT-20261026-001\"\ntask_candidate: \"2222222222222222222222222222222222222222\"\n```\n\nbrief: Change the assigned src files; keep their public interfaces.\n\n## Boundary Contract\n\ntask_scope: Change the assigned src files.\npermitted_area: Reserved paths and operations.\nprotected_area: Every other mutation.\nunchanged_contracts: Existing public interfaces.\nallowed_side_effects: Publish assigned task candidate only.\nescalation: Ask parent before necessary widening.\n\n~~~txt\nescalation: Example only; not an owning field.\n~~~\n\n## Assignment Metadata\n\nmodel_tier: Light\neffort: 50%\n",
+          "boundary_decisions": {
+            "ai/pact/context/state/STATE.md@recorded-boundary-decision": "Recorded parent interpretation of the complete inherited scope for this exact query: allow. This is fixture evidence, not a new PACT record."
+          }
+        },
+        "actor": "worker-1",
+        "operation": "publish_task",
+        "branch": "task/G/PACT-20261026-001",
+        "gate_id": "G",
+        "changes": [
+          {
+            "path": "src/a.js",
+            "mode": "modify"
+          }
+        ],
+        "boundaries": [
+          {
+            "result": "allow",
+            "source": "ai/pact/context/state/STATE.md@recorded-boundary-decision"
+          }
+        ]
+      },
+      "expected": {
+        "verdict": "allow"
+      }
     }
   ]
 }

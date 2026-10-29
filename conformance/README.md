@@ -1,6 +1,6 @@
 # PACT semantic conformance
 
-updated: 2026-10-29 03:32:10 UTC+00:00
+updated: 2026-10-29 03:40:28 UTC+00:00
 
 This tracked corpus tests PACT decisions. It requires no PACT runtime, service,
 database, agent harness, operating-system API or shared implementation code.
@@ -60,7 +60,9 @@ Authority cases include actual Markdown assignment coordinates, role/actor,
 reservations, workflow guard binding and six boundary fields. These are read
 from the corpus `## Boundary Contract` projection or the template entry's
 `boundary_contract:` mapping, each exactly once with a value. Both surfaces in
-one record are invalid. Unknown required
+one record are invalid. Presence uses structurally visible root-owned fields;
+ordinary fenced examples and deeper scalar continuations cannot supply a
+missing field or duplicate an actual field. Unknown required
 scope stays unresolved. A boundary interpretation is supplied only as a
 recorded parent/owner decision with its fixture-local source and evidence text
 in `records.boundary_decisions`. That wrapper is a repository-evidence input,
@@ -96,7 +98,11 @@ remain preserved as prose: the Brief, Boundary Contract, Validation and Tests /
 Baseline projection headings, or template entry labels `brief`,
 `boundary_contract`, `validation`, `tests` and optional `baseline`, compare as
 exact text relative to their label indentation. Surface form stays the same at
-transfer; progress uses separate labels such as `validation_result`. JSON token
+transfer. Comparison retains complete raw continuations, including fence
+delimiters, info strings and contents. Structurally visible lines delimit the
+owning label's span, so unindented code inside a fence cannot end that span.
+This raw transfer comparison is separate from authority's structural field
+presence check. Progress uses separate labels such as `validation_result`. JSON token
 whitespace is only space, tab, LF and CR;
 non-ASCII whitespace inside quoted JSON strings remains ordinary string data.
 
