@@ -5,15 +5,45 @@
 name: TASKS.md
 canonical_location: /ai/pact/context/state/TASKS.md
 layer: PACT / context / state
-status: complete
+status: active-draft
 generated_from: /ai/pact/templates/tasks.tpl.md
 generated_from_version: 1.13
 content_status: current-state
-updated: 2026-10-28 22:20:02 UTC+00:00
+updated: 2026-10-29 03:25:49 UTC+00:00
 
 ## Pending
 
-None.
+- [ ] PACT-20261029-002 Preserve fenced task-prose continuations without granting example authority.
+
+```pact:task
+id: "PACT-20261029-002"
+role: "Worker"
+parent: "/root/config_plan_docs"
+lead: "/root/config_plan_docs"
+ready: false
+requires: ["git","toolchain:node"]
+reservations: [{"path":"conformance/reference.mjs","mode":"modify"},{"path":"conformance/cases.json","mode":"modify"},{"path":"conformance/self-test.mjs","mode":"modify"},{"path":"conformance/README.md","mode":"modify"}]
+trace: "LOGIC-DRAFT.md / Decisions; Claude proseSurface review"
+source: {"idea":null,"shape":null,"draft":"LOGIC-DRAFT.md","tasks":"TASKS.md"}
+```
+
+brief: After the published integration candidate is reviewed and reachable from the authoritative gate, establish tracked failing regressions for changed/deleted fenced continuations in template-label brief, validation, tests and baseline, plus unchanged controls. Preserve full raw continuation text during exact transfer comparison while using structurally visible/root-owned fields for boundary presence. A missing boundary field found only in a fenced example remains unresolved and cannot grant authority. Preserve all combined existing cases/verdicts except the separately approved explicit derive-coordinate completions. No abstract prose interpretation or broader parser redesign. Publish one exact task/PACT-Review-20261028/PACT-20261029-002 candidate before Lead integration.
+files: the four reserved conformance files only
+boundary_contract:
+  task_scope: Repair the demonstrated labeled-prose fenced-content omission and protect boundary evidence ownership.
+  permitted_area: Modify only the four reserved conformance files in this isolated worktree and ignored task cache; read governing contracts and merged history.
+  protected_area: Original source except shared lock; TASKS/STATE/LOGIC-DRAFT, other code, normative/templates, release metadata, dependencies, host/services and other refs.
+  unchanged_contracts: PACT authority and template versions; all earlier expected verdicts and all non-whitelisted input data; both published histories and root selection.
+  allowed_side_effects: Commit/push only assigned task002 branch; affected sequential checks under source-shared lock; no integration, force, main, services or installs.
+  escalation: Report scope/rule conflict, required prior expected change, Git conflict or native hook failure to Lead before the affected action.
+specialty: exact record/prose transfer and authority-boundary reader correctness
+model_tier: High
+model_binding: Inherit owner-configured model; concrete provider/model metadata is not exposed.
+effort: 100%
+effective_effort: Percentage maps to highest supported native level; preserve inherited explicit native setting whose value is not exposed.
+tests: Tracked labeled-prose fence regressions and structural-boundary negative before reader changes.
+baseline: Prime selected a concrete changed-fenced-brief counterexample; task must inspect an actual red before its code change. Existing Claude source checks establish label-shape support; integration task precedes this correction.
+validation: Affected self-test/reference and source fast checks only; preserve combined corpus with explicit coordinate whitelist, exact task-base ancestry, native hooks and diff hygiene. Battery>=20 evenAC, RAM>=5GiB and shared source HEAVY-LOCK before heavy checks.
 
 ## Done
 
