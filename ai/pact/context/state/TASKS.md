@@ -5,17 +5,19 @@
 name: TASKS.md
 canonical_location: /ai/pact/context/state/TASKS.md
 layer: PACT / context / state
-status: active-draft
+status: complete
 generated_from: /ai/pact/templates/tasks.tpl.md
 generated_from_version: 1.13
 content_status: current-state
-updated: 2026-10-29 03:35:32 UTC+00:00
+updated: 2026-10-29 03:44:53 UTC+00:00
 
 ## Pending
 
 None.
 
 ## Done
+
+- PACT-20261029-002 - Preserve raw fenced task-prose comparison while keeping authority structural. Worker /root/config_plan_docs/evaluator, parent Lead /root/config_plan_docs, inherited High model/native binding unchanged. Exact candidatee7548a2889a7eb3312021b857cf21a2008a57c56 built on51bd6f7ebee894fda641fb0bdabc46d8477ade52, published assigned task branch and fetched equal exactcandidate; task_base ancestry0. Lead inspected focused17line reader/authority diff and newcases, then integrated preserving ancestry in2ca32e1b4d3feaf569518a79a8403219cc2ab4c9; explicitremote origin refs/heads/gate/PACT-Review-20261028 fetched at2ca32e1 proves candidate reachability0 before Done. Tracked32 cases added first: reference364/343pass21fail actual1 before reader edit; corrected selftest24/reference364of364/source221checks170links eachactual0. Complete existing332 cases deepStrictEqual byprefix andbyID to25fd15d0, no further coordinate changes. Raw field spans are bounded by structurally visible ownership but retain full fences/info/content and remove only label indentation; unindented/root-looking payload remains compared. Authority uses separate visible/root-owned fieldmetadata in bothsection/label forms, so fenced-only missingfield staysunresolved and fencedduplicate cannot invalidate a realfield. All originalsurface-conflict/duplicate/continuation cases unchangedgreen; diff/nativecommit/nativepush0. Only reference/cases/README changed; both published histories, root5538 selection, release/source guards and normative/templates remain intact. No source/main/host/services changes or fullacceptance byLead; Prime owns fresh complete acceptance and authorized main delivery.
 
 - PACT-20261029-001 - Material preservation integration of Claude PACT-Conformance and accepted review work. Lead executor /root/config_plan_docs, parent Prime /root, inherited High model/native binding preserved. Exact task candidate25fd15d4bc991ede9cb22585a032230edebc3e39 has merge parentsae934c626dd66a800135600fe116537f359e08bc andClaude2602f79a17e8d7cd1644acee60468fee3194be53; includes ours3d75f63 and root5538 selection. Exact task ref fetched equal candidate; task_base5538, ours3d75 andClaude2602 ancestry each0. Separately reviewed then fast-forward-integrated; explicitly fetched remote origin refs/heads/gate/PACT-Review-20261028 at51bd6f7ebee894fda641fb0bdabc46d8477ade52 proves candidate reachable0 before Done. Combined incoming corpus before code integration red332/7fail actual1; integrated selftest24/reference332of332/source221checks170links each0. Git-object proof preserves all300 our cases and all282 Claude cases by stableID, union332 unique, every earlier expected verdict unchanged, only14 documented derive expected_ref completions (Claude6+ours8); no other earlier input or metadata changes. README lists every completed ID; intentional unnamed derive negative stays unnamed. Root5538 LOGIC-DRAFT bytes unchanged. Both source probe sets, release guard/versions and all prior fixes retained; Claude accepted task/handoff history qualified here and preserved via ancestry. Initial GitHub500 push1 was confirmed not to create the ref; ordinary retry/nativehooks0, no force/history rewrite. Reader fenced-continuation defect remains separate task002; no ready/acceptance/main-delivery claim. Normative/templates/product/SPARC/host untouched.
 

@@ -5,55 +5,16 @@
 name: STATE.md
 canonical_location: /ai/pact/context/state/STATE.md
 layer: PACT / context / state
-status: active
-active_task: PACT-20261029-002
+status: clear
+active_task: none
 generated_from: /ai/pact/templates/state.tpl.md
 generated_from_version: 1.10
 content_status: current-state
-updated: 2026-10-29 03:43:28 UTC+00:00
+updated: 2026-10-29 03:44:53 UTC+00:00
 
 ## Active Task
 
-```pact:task
-id: "PACT-20261029-002"
-role: "Worker"
-actor: "/root/config_plan_docs/evaluator"
-parent: "/root/config_plan_docs"
-lead: "/root/config_plan_docs"
-task_phase: "validating"
-requires: ["git","toolchain:node"]
-reservations: [{"path":"conformance/reference.mjs","mode":"modify"},{"path":"conformance/cases.json","mode":"modify"},{"path":"conformance/self-test.mjs","mode":"modify"},{"path":"conformance/README.md","mode":"modify"}]
-task_base: "51bd6f7ebee894fda641fb0bdabc46d8477ade52"
-task_branch: "task/PACT-Review-20261028/PACT-20261029-002"
-task_candidate: "e7548a2889a7eb3312021b857cf21a2008a57c56"
-trace: "LOGIC-DRAFT.md / Decisions; Claude proseSurface review"
-source: {"idea":null,"shape":null,"draft":"LOGIC-DRAFT.md","tasks":"TASKS.md"}
-```
-
-brief: After the published integration candidate is reviewed and reachable from the authoritative gate, establish tracked failing regressions for changed/deleted fenced continuations in template-label brief, validation, tests and baseline, plus unchanged controls. Preserve full raw continuation text during exact transfer comparison while using structurally visible/root-owned fields for boundary presence. A missing boundary field found only in a fenced example remains unresolved and cannot grant authority. Preserve all combined existing cases/verdicts except the separately approved explicit derive-coordinate completions. No abstract prose interpretation or broader parser redesign. Publish one exact task/PACT-Review-20261028/PACT-20261029-002 candidate before Lead integration.
-files: the four reserved conformance files only
-boundary_contract:
-  task_scope: Repair the demonstrated labeled-prose fenced-content omission and protect boundary evidence ownership.
-  permitted_area: Modify only the four reserved conformance files in this isolated worktree and ignored task cache; read governing contracts and merged history.
-  protected_area: Original source except shared lock; TASKS/STATE/LOGIC-DRAFT, other code, normative/templates, release metadata, dependencies, host/services and other refs.
-  unchanged_contracts: PACT authority and template versions; all earlier expected verdicts and all non-whitelisted input data; both published histories and root selection.
-  allowed_side_effects: Commit/push only assigned task002 branch; affected sequential checks under source-shared lock; no integration, force, main, services or installs.
-  escalation: Report scope/rule conflict, required prior expected change, Git conflict or native hook failure to Lead before the affected action.
-specialty: exact record/prose transfer and authority-boundary reader correctness
-model_tier: High
-model_binding: Inherit owner-configured model; concrete provider/model metadata is not exposed.
-effort: 100%
-effective_effort: Percentage maps to highest supported native level; preserve inherited explicit native setting whose value is not exposed.
-tests: Tracked labeled-prose fence regressions and structural-boundary negative before reader changes.
-baseline: Prime selected a concrete changed-fenced-brief counterexample; task must inspect an actual red before its code change. Existing Claude source checks establish label-shape support; integration task precedes this correction.
-validation: Affected self-test/reference and source fast checks only; preserve combined corpus with explicit coordinate whitelist, exact task-base ancestry, native hooks and diff hygiene. Battery>=20 evenAC, RAM>=5GiB and shared source HEAVY-LOCK before heavy checks.
-
-request: Correct raw fenced task-prose preservation without promoting examples into authority.
-created_at: 2026-10-29 03:35:32 UTC+00:00
-validation_result: Tracked32 newcases first; reference364/343pass21fail actual1 before reader edits. Corrected selftest24/reference364of364/source221checks170links each0; complete existing332 deepStrictEqual byprefix andbyID to25fd15d0, no further coordinate edits; diff/nativecommit/nativepush0. Lead reviewed focused raw-span/structural-field diff, inspected final green/preservation logs, fetched exact task ref equal candidate and verified task_base ancestry0.
-validation_evidence: Tracked final32 cases in conformance/cases.json and focused reference/README change at exacte7548a2. Changed/deleted fenced brief/validation/tests/baseline, info strings, supported fences/indentation and unchanged controls; fenced-only boundary field remains unresolved, fenced duplicate does not override genuine root field in section orlabel forms. Local fenced-prose red/green and preservation logs optional; exact results promoted to TASKS on remote reachability.
-retry: attempts0; identified corrections only
-handoff: status candidate-reviewed; exacte7548a2 taskbranch published and separately reviewed. Lead integrates with ancestry-preserving merge and validation records; Done waits for explicit authoritative remote gate reachability. All prior332 cases intact, root selection and both publication histories preserved. No main/normative/template/host mutation.
+None.
 
 ## Historical Maintenance Notes
 
