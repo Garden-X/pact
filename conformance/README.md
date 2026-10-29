@@ -1,6 +1,6 @@
 # PACT semantic conformance
 
-updated: 2026-10-28 22:10:07 UTC+00:00
+updated: 2026-10-29 03:32:10 UTC+00:00
 
 This tracked corpus tests PACT decisions. It requires no PACT runtime, service,
 database, agent harness, operating-system API or shared implementation code.
@@ -41,7 +41,7 @@ Query vocabulary:
 | authority | assignment/workflow/guard records, queried operation and complete changed-path facts | allow/deny/unresolved; guard warnings when applicable |
 | requires | prerequisite identifiers and availability observations, pending/active stage | satisfied/unavailable/unresolved; readiness hold or blocked state |
 | candidate | revision graph, base and exact candidate, history completeness | valid/invalid/unresolved ancestry |
-| derive | revision graph and exact remote-ref observation | integrated true/false/unresolved |
+| derive | revision graph, queried gate ref and exact remote-ref observation | integrated true/false/unresolved |
 | handoff | previous and proposed publication, authorized writer role | valid/invalid/unresolved |
 | answer | ready publication, Prime acceptance decision record and commit message/path facts | valid/invalid/unresolved |
 | closure / delivery | accepted answer, Git graph, exact remote/default observation and delivery facts | closed true/false/unresolved / allow/deny/unresolved |
@@ -57,7 +57,10 @@ the whole project, brief, authorization or lifecycle is valid. Parsing and
 semantic validity are deliberately separate queries.
 
 Authority cases include actual Markdown assignment coordinates, role/actor,
-reservations, workflow guard binding and six boundary fields. Unknown required
+reservations, workflow guard binding and six boundary fields. These are read
+from the corpus `## Boundary Contract` projection or the template entry's
+`boundary_contract:` mapping, each exactly once with a value. Both surfaces in
+one record are invalid. Unknown required
 scope stays unresolved. A boundary interpretation is supplied only as a
 recorded parent/owner decision with its fixture-local source and evidence text
 in `records.boundary_decisions`. That wrapper is a repository-evidence input,
@@ -89,7 +92,12 @@ Transfer compares every already explicit actor, coordinate and model/native
 effort binding without alteration or loss. An absent pending actor, local
 binding, lead/source or task coordinate may resolve at dispatch; absence is not
 an instruction to overwrite an already assigned value. Brief and boundary prose
-remain preserved as prose. JSON token whitespace is only space, tab, LF and CR;
+remain preserved as prose: the Brief, Boundary Contract, Validation and Tests /
+Baseline projection headings, or template entry labels `brief`,
+`boundary_contract`, `validation`, `tests` and optional `baseline`, compare as
+exact text relative to their label indentation. Surface form stays the same at
+transfer; progress uses separate labels such as `validation_result`. JSON token
+whitespace is only space, tab, LF and CR;
 non-ASCII whitespace inside quoted JSON strings remains ordinary string data.
 
 `changes`, `changed_fields`, integration-review classification and candidate
@@ -109,9 +117,9 @@ at delivery. Later ordinary commits or gates do not retroactively reopen a gate.
 Delivery queries use the exact configured remote/ref observation and its tip
 for fast-forward ancestry. `current_default` is a legacy cache hint, never the
 authority. Standalone closure/delivery queries default to `origin` and
-`refs/heads/main`. Integration derivation defaults to `origin`, retaining the
-selected gate-ref observation (and checking an explicit `expected_ref` when
-supplied); it never substitutes `main` for the gate. Explicitly empty or
+`refs/heads/main`. Integration derivation defaults its remote to `origin` and
+requires explicit `expected_ref`, the queried gate branch; it never obtains the
+query coordinate from the observation or substitutes `main` for the gate. Explicitly empty or
 non-string remote/ref coordinates are unresolved. The accepted answer must descend
 from its exact candidate before delivery; separate ancestry to a later merge
 tip cannot establish that obligation. Missing history remains unresolved.
@@ -196,10 +204,59 @@ here. Cache-only cleanup/recovery policy models were declined as implementation
 code; existing normative cleanup remains in WORKFLOW and can gain further
 fixtures without making disposable cache authoritative.
 
-The nine `review-*` correction cases were promoted unchanged from the
-owner-reviewed nine-failure counterexample set against `a19136c`. Adjacent
+The nine 2026-10-26 `review-*` correction cases were promoted unchanged from
+the owner-reviewed nine-failure counterexample set against `a19136c`. Adjacent
 positive/boundary cases and complete generated STATE-example assertions protect
-the same invariants. The earlier fast-forward positive had a contradictory
-remote tip; its observation was corrected while retaining its allow result,
-and that original divergence is preserved as an explicit deny regression.
+the same invariants. That correction changed only `remote.tip` in five earlier
+delivery cases, each keeping its expected result. The fast-forward positive
+`delivery-fast-forward-record-only` had a contradictory tip; its original
+divergence is preserved as `review-delivery-rejects-stale-default`.
+`delivery-product-after-candidate`, `delivery-newer-handoff` and
+`delivery-owning-prose-freshness` received the same non-diverged tip, so they
+still deny for their own reason rather than a non-fast-forward.
+`delivery-moved-default` carries its moved default in the authoritative
+observation instead of only the `current_default` cache hint.
 The original review cache is no longer required to run these tracked cases.
+
+The 2026-10-28 review of `ac431f0` added the counterexamples
+`review-closure-binds-authority-remote`, `review-derive-binds-authority-coordinate`,
+`review-authority-template-boundary-mapping` and
+`review-transfer-template-entry-labels`, with adjacent cases and source checks
+that run authority and transfer on the complete template examples. Because
+derive now requires its queried gate ref, six earlier derive cases gained
+`expected_ref: refs/heads/gate/G`, the ref each already observed. Their other
+inputs and every earlier expected result are unchanged.
+
+## Combined publication preservation
+
+The 2026-10-29 merge retains all 300 cases from accepted review tip `3d75f63`
+and all 32 unique additions from Claude publication `2602f79` (332 unique IDs).
+Every prior expected verdict is unchanged. The only earlier input completions
+add `expected_ref: refs/heads/gate/G` to the following derive queries. No other
+prior input member or case metadata changed.
+
+Claude's six earlier completions are retained:
+
+- `candidate-integrated`
+- `copied-candidate-not-integrated`
+- `tracking-ref-missing-is-unknown`
+- `tracking-ref-stale-not-truth`
+- `exact-remote-ref-absent`
+- `remote-incomplete-history`
+
+Eight remote-policy queries from our review also name their already-intended
+gate so they still test remote binding under the stricter derive projection:
+
+- `review-derive-default-origin-rejects-foreign`
+- `review-derive-explicit-foreign-authority`
+- `review-derive-wrong-explicit-remote`
+- `review-derive-foreign-absence-is-not-authority`
+- `review-derive-explicit-authority-absent`
+- `review-derive-empty-authority-unresolved`
+- `review-derive-null-authority-unresolved`
+- `review-derive-numeric-authority-unresolved`
+
+Explicit invalid-ref scenarios retain their supplied input. The deliberate
+`derive-unnamed-gate-ref-unresolved` query remains unnamed. Published Claude
+and review task/acceptance histories remain reachable through both merge
+parents; historical task IDs are qualified by gate in current records.

@@ -10,7 +10,7 @@ active_task: PACT-20261029-001
 generated_from: /ai/pact/templates/state.tpl.md
 generated_from_version: 1.10
 content_status: current-state
-updated: 2026-10-29 03:25:49 UTC+00:00
+updated: 2026-10-29 03:33:28 UTC+00:00
 
 ## Active Task
 
@@ -49,9 +49,9 @@ created_at: 2026-10-29 03:25:49 UTC+00:00
 tests: Reuse tracked300 ours,282 Claude including32 unique new scenarios and both source-check sets; establish affected baseline before code merge and exact combined preservation proofs.
 baseline: Previous accepted ours300 and Claude282 each passed separately; Prime reviewed the exact published delta and separately selected the demonstrated raw fenced-prose omission for next task. Actual affected combined baseline and integration results pending.
 validation: Affected reference/self-test/source only; compare by caseID all prior expectations and only whitelisted expected_ref completions; retain both Git parents and source/core fixes, review every actual exit. Full acceptance and main delivery remain Prime's separate work.
-validation_result: Pending
+validation_result: Before merge, incoming combined332 corpus on our prior evaluator red332/7fail actual1. Resolved preservation merge passes self-test24/reference332of332/source221checks170links each0. Git-object proof preserves all300 ours and282 Claude by stableID, all expected verdicts unchanged, only14 documented expected_ref completions, no other prior data changes. Root5538 draft bytes unchanged; both source-check sets present; staged diff hygiene0. Reader fenced-continuation defect intentionally remains for separate task002.
 retry: attempts0; identified corrections only
-handoff: status working; Lead executor publishes exact candidate before gate integration
+handoff: status integration-candidate-prepared; merge parents preserve current dispatch and Claude2602. Exact material task candidate publication next, then separate Lead gate integration and authoritative reachability before Done; task002 follows. No root/main/normative/template/release-version mutation.
 
 ## Historical Maintenance Notes
 
@@ -154,6 +154,24 @@ records: SliceRecordsCheck pass on outgoing gate slices; TASKS complete/PendingN
 blockers: none
 escalation: none
 limits: Only the selected non-normative evaluator projections and release table were corrected. Full-document multi-acceptance parser redesign remains outside scope. Prime complete acceptance, reviewable PR and any later authorized default-branch delivery are separate.
+
+## Historical Claude PACT Conformance Gate Handoff
+
+```pact:gate-handoff
+gate_id: "PACT-Conformance"
+seq: 2
+signal: "ready"
+candidate: "e19ec9ddd14d2796acc21ffea199adac95e8fb5a"
+branch: "gate/PACT-Conformance"
+lead: "/root Lead pass"
+recorded_at: "2026-10-29 03:01:28 UTC+00:00"
+```
+
+slices: PACT-20261028-001 exact461a5550e68a603d8f81826cd53ff0cf7616ca4c published on its task branch and proven ancestor of explicitly fetched remote gate/PACT-Conformance (actual0). Complete candidate e19ec9d differs from it only in TASKS/STATE completion records.
+validation: Red task_base corpus282/12fail and source215/2fail actual1; fresh clean-checkout self-test21, corpus282/282, source215checks165links, realGit15, migration30/11 plan-only and diff-check each actual0 on 461a555; Lead fast source215/165links actual0 on exact e19ec9d. Prior 250 expectations unchanged; six derive inputs completed with their observed expected_ref and disclosed. Prime owns fresh complete acceptance.
+records: SliceRecordsCheck pass; TASKS complete/Pending none, STATE clear/no reservations. Same-host sequential Prime/Lead work, not independent review; worker restarted once and resumed from durable records. Owner permitted task/gate publication only; no main delivery. No template/spec version, dependency, host installation or product/SPARC truth change.
+blockers: none
+escalation: none
 
 ## Gate Handoff
 

@@ -156,6 +156,22 @@ function section(text,heading) {
   const start=matches[0].index,end=doc.headings.find(h=>h.index>start)?.index??doc.lines.length;
   return doc.lines.slice(start+1,end).join('\n');
 }
+// A task prose surface is either a corpus projection heading or the template
+// entry's root label with its deeper continuation, read relative to that
+// label. Both surfaces at once are ambiguous. The prose is never interpreted.
+function proseSurface(text,heading,key) {
+  const doc=scanDocument(text),owner=doc.headings.find(h=>h.name==='Active Task');
+  const lines=owner?doc.visible.filter(v=>v.heading?.index===owner.index&&!/^## /u.test(v.line)).map(v=>v.line):[];
+  const labels=legacyRootFields(lines).filter(field=>field.m[2]===key),projection=heading?section(text,heading):null;
+  if(labels.length>1||labels.length&&projection!==null)throw new Error('duplicate prose surface');
+  if(projection!==null)return {form:'section',value:projection};
+  if(!labels.length)return null;
+  const {index,m}=labels[0],indent=m[1].length,body=[],width=line=>/^ */u.exec(line)[0].length;
+  for(const line of lines.slice(index+1)){if(line.trim()&&width(line)<=indent)break;body.push(line);}
+  const depth=Math.min(...body.filter(line=>line.trim()).map(width));
+  return {form:'label',value:[m[3]||'',...body.map(line=>line.slice(Math.min(depth,width(line))))].join('\n').trim()};
+}
+const boundaryFields=['task_scope','permitted_area','protected_area','unchanged_contracts','allowed_side_effects','escalation'];
 export function parseRecord(text,type) {
   if(!types.has(type)||typeof text!=='string')return {verdict:'invalid'};
   try {
@@ -305,8 +321,8 @@ function authority(input) {
   }else return verdict('unresolved');
   const boundaryInputs=input.boundaries||[];
   if(assignment.parent&&assignment.parent!=='none'){
-    const contract=section(input.records.task,'Boundary Contract');
-    if(!contract||!['task_scope','permitted_area','protected_area','unchanged_contracts','allowed_side_effects','escalation'].every(key=>new RegExp('^'+key+': .+$','mu').test(contract))||!boundaryInputs.length)return verdict('unresolved');
+    const contract=proseSurface(input.records.task,'Boundary Contract','boundary_contract');
+    if(!contract||!boundaryFields.every(key=>contract.value.match(new RegExp('^'+key+': \\S.*$','gmu'))?.length===1)||!boundaryInputs.length)return verdict('unresolved');
   }
   for(const boundary of boundaryInputs){if(!boundary.source||!input.records?.boundary_decisions?.[boundary.source])return verdict('unresolved');if(boundary.result==='deny')return verdict('deny');if(boundary.result!=='allow')return verdict('unresolved');}
   if(workflow.file_guard===undefined)return verdict('unresolved');
@@ -320,13 +336,16 @@ function authority(input) {
   }
   return guard.warnings?.length?{verdict:'allow',warnings:guard.warnings}:verdict('allow');
 }
-function observeRemote(input,expectedRef) {
-  const expectedRemote=Object.hasOwn(input,'expected_remote')?input.expected_remote:'origin';
-  if(typeof expectedRemote!=='string'||!expectedRemote)return 'unresolved';
-  if(Object.hasOwn(input,'expected_ref')&&(typeof input.expected_ref!=='string'||!input.expected_ref.startsWith('refs/heads/')))return 'unresolved';
-  const remote=input.remote;if(!remote||!['resolved','absent'].includes(remote.status))return 'unresolved';
-  if(typeof remote.remote!=='string'||typeof remote.ref!=='string'||!remote.ref.startsWith('refs/heads/'))return 'unresolved';
-  if(remote.remote!==expectedRemote||expectedRef&&remote.ref!==expectedRef)return 'unresolved';
+// The queried coordinate comes from the query, never from the observation:
+// remote defaults to the declared authority remote, a ref only where named.
+function queriedCoordinate(input,defaultRef) {
+  const remote=Object.hasOwn(input,'expected_remote')?input.expected_remote:'origin',ref=Object.hasOwn(input,'expected_ref')?input.expected_ref:defaultRef;
+  if(typeof remote!=='string'||!remote||typeof ref!=='string'||!/^refs\/heads\/./u.test(ref))return null;
+  return {remote,ref};
+}
+function observeRemote(input,coordinate) {
+  const remote=input.remote;if(!coordinate||!remote||!['resolved','absent'].includes(remote.status))return 'unresolved';
+  if(remote.remote!==coordinate.remote||remote.ref!==coordinate.ref)return 'unresolved';
   if(remote.status==='absent')return false;
   return typeof remote.tip==='string'?remote.tip:'unresolved';
 }
@@ -350,7 +369,8 @@ function answerCheck(input) {
 function closure(input) {
   if(answerCheck(input).verdict!=='valid')return {closed:'unresolved'};
   const acceptance=parseRequired(input.answer.record,'acceptance');if(acceptance.decision!=='accepted')return {closed:false};
-  const tip=observeRemote(input,Object.hasOwn(input,'expected_ref')?input.expected_ref:'refs/heads/main');if(tip==='unresolved')return {closed:'unresolved'};if(tip===false)return {closed:false};
+  const tip=observeRemote(input,queriedCoordinate(input,'refs/heads/main'));if(tip==='unresolved')return {closed:'unresolved'};if(tip===false)return {closed:false};
+  if(!fullOid(tip))return {closed:'unresolved'};
   const reach=ancestry(input.graph,input.answer.commit,tip,input.history_complete);if(reach!==true)return {closed:reach};
   const candidateReach=ancestry(input.graph,acceptance.candidate,input.answer.commit,input.history_complete);
   if(candidateReach!==true||!Array.isArray(input.candidate_to_answer_paths)||!input.delivery_handoff)return {closed:'unresolved'};
@@ -362,9 +382,7 @@ function delivery(input) {
   const acceptance=parseRequired(input.answer.record,'acceptance');if(acceptance.decision!=='accepted')return verdict('deny');
   if(input.newest_handoff){parseRequired(input.newest_handoff,'gate-handoff');if(section(input.newest_handoff,'Gate Handoff')!==section(input.handoff,'Gate Handoff'))return verdict('deny');}
   if(!Array.isArray(input.changes_after_candidate)||input.changes_after_candidate.some(path=>!stateRecordPath(path)))return verdict('deny');
-  const expectedRemote=Object.hasOwn(input,'expected_remote')?input.expected_remote:'origin',expectedRef=Object.hasOwn(input,'expected_ref')?input.expected_ref:'refs/heads/main';
-  if(typeof expectedRemote!=='string'||!expectedRemote||typeof expectedRef!=='string'||!expectedRef.startsWith('refs/heads/'))return verdict('unresolved');
-  const observed=observeRemote({...input,expected_remote:expectedRemote},expectedRef);
+  const observed=observeRemote(input,queriedCoordinate(input,'refs/heads/main'));
   if(observed==='unresolved')return verdict('unresolved');if(observed===false)return verdict('deny');
   if(!fullOid(observed))return verdict('unresolved');
   const candidate=ancestry(input.graph,acceptance.candidate,input.delivery_tip,input.history_complete),answer=ancestry(input.graph,input.answer.commit,input.delivery_tip,input.history_complete),accepted=ancestry(input.graph,acceptance.candidate,input.answer.commit,input.history_complete),ff=ancestry(input.graph,observed,input.delivery_tip,input.history_complete);
@@ -436,8 +454,10 @@ function transfer(input) {
   for(const key of ['id','role','requires','reservations'])if(!Object.hasOwn(pending.fields,key)||!Object.hasOwn(active.fields,key))return verdict('unresolved');
   for(const key of ['id','role','parent','actor','lead','requires','reservations','task_base','task_branch','source','trace','model_tier','model_binding','effort','effective_effort'])if(Object.hasOwn(pending.fields,key)&&!same(pending.fields[key],active.fields[key]))return verdict('invalid');
   if((input.remaining_pending_ids||[]).includes(active.fields.id))return verdict('invalid');
-  for(const label of ['Brief','Boundary Contract','Validation','Tests / Baseline']){
-    const before=section(input.pending,label),after=section(input.active,label);if(!before?.trim()||!after?.trim()||before!==after)return verdict('invalid');
+  for(const [heading,key] of [['Brief','brief'],['Boundary Contract','boundary_contract'],['Validation','validation'],['Tests / Baseline','tests'],[null,'baseline']]){
+    const before=proseSurface(input.pending,heading,key),after=proseSurface(input.active,heading,key);
+    if(!heading&&!before&&!after)continue;
+    if(!before?.value.trim()||!after||before.form!==after.form||before.value!==after.value)return verdict('invalid');
   }
   return verdict('valid');
 }
@@ -452,7 +472,7 @@ export function evaluate(test) {
       case 'authority':return authority(input);
       case 'requires':return requirementDecision(input);
       case 'candidate':{const value=ancestry(input.graph,input.base,input.candidate,input.history_complete);return verdict(value==='unresolved'?'unresolved':value?'valid':'invalid');}
-      case 'derive':{const tip=observeRemote(input,input.expected_ref);return {integrated:tip==='unresolved'?'unresolved':tip===false?false:ancestry(input.graph,input.candidate,tip,input.history_complete)};}
+      case 'derive':{const tip=observeRemote(input,queriedCoordinate(input));return {integrated:tip==='unresolved'?'unresolved':tip===false?false:ancestry(input.graph,input.candidate,tip,input.history_complete)};}
       case 'handoff':return handoffChange(input);
       case 'answer':return answerCheck(input);
       case 'closure':return closure(input);
