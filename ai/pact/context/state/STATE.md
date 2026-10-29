@@ -10,7 +10,7 @@ active_task: none
 generated_from: /ai/pact/templates/state.tpl.md
 generated_from_version: 1.10
 content_status: current-state
-updated: 2026-10-29 05:26:20 UTC+00:00
+updated: 2026-10-29 05:26:34 UTC+00:00
 
 ## Active Task
 
@@ -195,16 +195,16 @@ escalation: none
 
 ```pact:gate-handoff
 gate_id: "PACT-Selection-Fetch"
-seq: 1
-signal: "working"
-candidate: "none"
+seq: 2
+signal: "ready"
+candidate: "bf4855691c20c485dbd97591216087070a89bc59"
 branch: "gate/PACT-Selection-Fetch"
 lead: "/root Lead pass"
-recorded_at: "2026-10-29 05:23:45 UTC+00:00"
+recorded_at: "2026-10-29 05:26:34 UTC+00:00"
 ```
 
-slices: Task PACT-20261029-004 dispatched from exact selected revision 557eefe1546939ca4e8a4a842eb74f135d8f72b2, published on gate/PACT-Selection-Fetch before dispatch. PACT-Prose-Span#2 is answered and delivered; its publication is preserved verbatim above.
-validation: Lead re-fetched before dispatch: only this gate is open; task id 004 follows the highest observed PACT-20261029 id.
-records: Owner requested the rule; Prime selected the scope; Lead owns execution records and task/gate publication; no main delivery.
+slices: PACT-20261029-004 exact35da8a8d8cb1c95faab9a22426062a7369427a3b published on its task branch and proven ancestor of explicitly fetched remote gate/PACT-Selection-Fetch (actual0, complete history). Complete candidate bf48556 differs from it only in TASKS/STATE completion records. Selection was published on the gate branch before dispatch.
+validation: Red task_base source222/3fail actual1; fresh clean-checkout self-test24, corpus371/371, source222checks170links, realGit15, migration30/11 plan-only and diff-check each actual0 on 35da8a8; Lead fast source222/170links actual0 on exact bf48556. Prime owns fresh complete acceptance.
+records: SliceRecordsCheck pass; TASKS complete/Pending none, STATE clear/no reservations. workflow.tpl.md 3.9 and WORKFLOW target synchronized. Same-host sequential Prime/Lead work, not independent review. Task/gate publication only; no main delivery.
 blockers: none
 escalation: none
