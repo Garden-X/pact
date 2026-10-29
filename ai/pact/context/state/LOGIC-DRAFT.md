@@ -11,7 +11,7 @@ gate_id: PACT-Selection-Fetch
 generated_from: /ai/pact/templates/logic-draft.tpl.md
 generated_from_version: 1.7
 content_status: current-state
-updated: 2026-10-29 05:27:10 UTC+00:00
+updated: 2026-10-29 05:28:12 UTC+00:00
 
 ## Selected Logic
 
@@ -127,6 +127,13 @@ inspection sequentially; this is a separate pass, not an independent review.
 Delivery is not authorized: main remains
 0d3b0a1f4ac2d704ef01a5f4d2a85746e8a8b9f7 and this accepted answer stays a
 pending delivery until the owner permits Prime's fast-forward.
+
+Owner delivery authorization, 2026-10-29 05:28:12 UTC+00:00: after answer
+61c895c6ed4dbd81ec5aa9417d01e315f1f8f48c Prime asked whether to fast-forward
+main to it, and the owner replied "ьак", an adjacent-key spelling of "так"
+(yes) in this session. This permits only Prime's ordinary fast-forward of main
+to the verified delivery tip; no force, squash, hook bypass or deployment.
+Closure remains derived from Git.
 
 ## Next
 
