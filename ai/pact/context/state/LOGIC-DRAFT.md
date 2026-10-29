@@ -11,7 +11,7 @@ gate_id: PACT-Prose-Span
 generated_from: /ai/pact/templates/logic-draft.tpl.md
 generated_from_version: 1.7
 content_status: current-state
-updated: 2026-10-29 05:13:46 UTC+00:00
+updated: 2026-10-29 05:15:22 UTC+00:00
 
 ## Selected Logic
 
@@ -77,6 +77,52 @@ highest recorded ID, avoiding the earlier cross-session collision.
 
 Acceptance is separate from delivery. Never claim closure or change main
 under this selection without the owner's explicit delivery permission.
+
+### Prime acceptance — PACT-Prose-Span#2
+
+```pact:acceptance
+decision: "accepted"
+candidate: "65a90338b7b86eb28077105e7f409d5270ed498b"
+evidence: "Fresh exact-candidate results below; TASKS Done PACT-20261029-003; tracked conformance corpus and source/Git/migration checks."
+```
+
+Prime /root explicitly fetched remote gate/PACT-Prose-Span at
+115c3c016c91ce7ce7931f79c2915e9fa1e1b482: its newest Gate Handoff #2 is ready,
+unanswered and names the candidate above; only STATE changes after it. Task
+candidate 089a8fcadce06b749e3e165eb20988623e2fe8ee is an ancestor and differs
+from it only in TASKS/STATE records. The complete gate diff from
+ec5b591e43fe62cf2675a08c857dc1d7839b466e touches only conformance/** and PACT
+state records; remote main was still that revision.
+
+Fresh checks ran sequentially in a clean detached checkout of exactly the
+candidate (no tracked differences before or after), with Node v22.22.0 and Git
+2.43.0 in a Linux cloud container. No shared heavy-work registry exists in this
+container; no other heavy run competed.
+
+| Command | Fresh result | Actual exit |
+|---|---|---|
+| node conformance/self-test.mjs | 24 invariant assertions | 0 |
+| node conformance/reference.mjs | 371 of 371 semantic cases | 0 |
+| node conformance/source-check.mjs | 222 checks, 171 links, no failures | 0 |
+| node conformance/check-git.mjs | 15 real-Git assertions | 0 |
+| node conformance/migration-check.mjs | 30 checks, 11 preservation items; three-file plan only, applied false | 0 |
+| git diff --check ec5b591e43fe62cf2675a08c857dc1d7839b466e 65a90338b7b86eb28077105e7f409d5270ed498b | complete gate diff clean | 0 |
+
+The migration plan hash was
+e9d5456a88cf7d32cb707a1f646dfc5d82bdf455fe73d6f404df6d7bef28a549. The task's
+red baseline (corpus 371/4 failed, exit 1 on the task_base evaluator) precedes
+the fix. All 364 earlier inputs and expectations are unchanged.
+
+The reviewed regression is resolved under existing PACT semantics: the owning
+`pact:task` block never enters a prose span, ordinary fences stay raw, and
+authority's structural boundary-field check is unchanged. No template/spec
+version, dependency, runtime mechanism, host installation or product/SPARC
+truth changed. The same agent performed selection, Lead execution and this
+inspection sequentially; this is a separate pass, not an independent review.
+
+Delivery is not authorized: main remains
+ec5b591e43fe62cf2675a08c857dc1d7839b466e and this accepted answer stays a
+pending delivery until the owner permits Prime's fast-forward.
 
 ## Next
 
