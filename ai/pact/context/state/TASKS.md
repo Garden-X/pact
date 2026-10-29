@@ -5,17 +5,19 @@
 name: TASKS.md
 canonical_location: /ai/pact/context/state/TASKS.md
 layer: PACT / context / state
-status: active-draft
+status: complete
 generated_from: /ai/pact/templates/tasks.tpl.md
 generated_from_version: 1.13
 content_status: current-state
-updated: 2026-10-29 05:23:45 UTC+00:00
+updated: 2026-10-29 05:26:20 UTC+00:00
 
 ## Pending
 
 None.
 
 ## Done
+
+- PACT-20261029-004 - Require a remote gate check before gate selection. Exact candidate 35da8a8d8cb1c95faab9a22426062a7369427a3b published on task/PACT-Selection-Fetch/PACT-20261029-004 and proven reachable from explicitly fetched remote gate/PACT-Selection-Fetch (ancestry actual0, complete history); task_base 557eefe1546939ca4e8a4a842eb74f135d8f72b2 is its ancestor (actual0). The gate dogfoods the rule: Prime published the selection on its gate branch before dispatch, and Lead re-fetched, found only this gate open and took id 004 after the highest observed one. Red on task_base: source222checks/3fail (rule presence, workflow template version, WORKFLOW drift marker) actual1. Fresh clean detached checkout of the exact candidate: self-test24, corpus371/371, source222checks170links, realGit15, migration30/11preservation plan-only appliedfalse, git diff --check 0d3b0a1..candidate, each actual0. WORKFLOW Gate and slice and workflow.tpl.md 3.9 RULES/full EXAMPLE carry the rule; release table, release bullet, INSTALL sync step and source checks synchronized. Two own stamp slips (INSTALL format example, template EXAMPLE placeholder) were caught in diff review and restored before commit. Same-host sequential Prime/Lead review, not independent. Node v22.22.0/Git 2.43.0, Linux cloud container, checks sequential, no service work. No PACT.md, other template, package version, dependency, runtime, host installation or product/SPARC truth changed. Task/gate publication only; main delivery is not authorized.
 
 - PACT-20261029-003 - Keep the owning pact:task block out of label-form prose spans. Exact candidate 089a8fcadce06b749e3e165eb20988623e2fe8ee published on task/PACT-Prose-Span/PACT-20261029-003 and proven reachable from explicitly fetched remote gate/PACT-Prose-Span (ancestry actual0; positive parent path in a shallow clone); task_base ff646a284cf8e70fa809d7528f6063a139eb0671 is its ancestor (actual0). Prime link-only selection amendment 0fcec9e precedes the candidate. Red on the task_base evaluator: corpus371cases/4fail (counterexample plus three adjacent positives) actual1. Fresh clean detached checkout of the exact candidate: self-test24, corpus371/371, source222checks171links, realGit15, migration30/11preservation plan-only appliedfalse, git diff --check ec5b591..candidate, each actual0. All 364 earlier inputs and expectations unchanged; ordinary fenced prose stays raw; authority boundary fields stay structural. Same-host sequential Prime/Lead review, not independent. Node v22.22.0/Git 2.43.0, Linux cloud container, checks sequential, no service work. No specification/template version, dependency, runtime, host installation or product/SPARC truth changed. Task/gate publication follows the owner-accepted separate gate; main delivery is not authorized.
 

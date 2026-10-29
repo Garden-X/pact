@@ -5,52 +5,16 @@
 name: STATE.md
 canonical_location: /ai/pact/context/state/STATE.md
 layer: PACT / context / state
-status: active
-active_task: PACT-20261029-004
+status: clear
+active_task: none
 generated_from: /ai/pact/templates/state.tpl.md
 generated_from_version: 1.10
 content_status: current-state
-updated: 2026-10-29 05:23:45 UTC+00:00
+updated: 2026-10-29 05:26:20 UTC+00:00
 
 ## Active Task
 
-```pact:task
-id: "PACT-20261029-004"
-role: "Lead"
-actor: "/root Lead pass"
-parent: "/root"
-lead: "/root Lead pass"
-task_phase: "working"
-requires: ["git","toolchain:node"]
-reservations: [{"path":"ai/pact/templates/workflow.tpl.md","mode":"modify"},{"path":"ai/pact/workflow/WORKFLOW.md","mode":"modify"},{"path":"ai/pact/RELEASE-NOTES.md","mode":"modify"},{"path":"ai/pact/INSTALL.md","mode":"modify"},{"path":"conformance/source-check.mjs","mode":"modify"}]
-task_base: "557eefe1546939ca4e8a4a842eb74f135d8f72b2"
-task_branch: "task/PACT-Selection-Fetch/PACT-20261029-004"
-task_candidate: "none"
-trace: "LOGIC-DRAFT.md / Decisions"
-source: {"draft":"LOGIC-DRAFT.md","tasks":"TASKS.md","review":"ec5b591e43fe62cf2675a08c857dc1d7839b466e"}
-```
-
-request: Add the rule about fetching before gate selection.
-brief: In WORKFLOW Execution Hierarchy Gate and slice, require Prime to explicitly resolve the authority remote's default and gate branches before selecting a gate, report an open gate (remote gate tip not reachable from remote default_branch) to the owner instead of starting a silent parallel gate, publish the selection on its gate branch at once, have Lead fetch again before the first dispatch, and allocate task ids unique across observed records and published task branches; unavailable remote access stays unresolved unless the owner accepts it. Mirror it in workflow.tpl.md RULES and full EXAMPLE, bump only workflow.tpl.md to 3.9 with WORKFLOW generated_from_version, and update RELEASE-NOTES, INSTALL sync step and source-check. Add the source-check assertion first and record its red run. No other contract, role, record type, runtime, service or dependency.
-boundary_contract:
-  task_scope: The bounded rule brief above, selected by Prime in LOGIC-DRAFT PACT-Selection-Fetch.
-  permitted_area: The five reserved files plus Lead-owned TASKS/STATE records; read existing contracts and evidence.
-  protected_area: main/default, LOGIC-DRAFT, PACT.md, other templates/hooks, external installations, host configuration, unrelated files and immutable published decisions.
-  unchanged_contracts: Package 2.0, three roles/lifecycle, Markdown/Git authority, PACT-GIT semantics, owner model/effort settings, no runtime or OS mechanism.
-  allowed_side_effects: Commit and push the exact task candidate to its task branch, integrate into gate/PACT-Selection-Fetch and mirror the session branch; no force, hook bypass, services, dependencies, deploy or external messages.
-  escalation: Report a demonstrated need for another contract change or scope conflict to Prime before the affected action.
-specialty: protocol documentation
-model_tier: High
-model_binding: inherited owner-configured session model, no override
-effort: 75%
-effective_effort: host-controlled session setting preserved; no native control exercised
-created_at: 2026-10-29 05:23:45 UTC+00:00
-affected_files: ai/pact/templates/workflow.tpl.md, ai/pact/workflow/WORKFLOW.md, ai/pact/RELEASE-NOTES.md, ai/pact/INSTALL.md, conformance/source-check.mjs
-tests: New source-check assertions for the rule in WORKFLOW and the template RULES, plus updated version checks.
-baseline: New assertions run against task_base before the documentation edit; actual red count recorded at completion.
-validation: self-test, full corpus, source-check, check-git, migration-check and git diff --check, each actual exit inspected sequentially.
-retry: identified corrections only
-handoff: preserve red baseline, report exact candidate and actual exits
+None.
 
 ## Historical Maintenance Notes
 
