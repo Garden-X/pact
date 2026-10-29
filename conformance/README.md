@@ -1,6 +1,6 @@
 # PACT semantic conformance
 
-updated: 2026-10-29 03:40:28 UTC+00:00
+updated: 2026-10-29 05:13:28 UTC+00:00
 
 This tracked corpus tests PACT decisions. It requires no PACT runtime, service,
 database, agent harness, operating-system API or shared implementation code.
@@ -101,6 +101,8 @@ exact text relative to their label indentation. Surface form stays the same at
 transfer. Comparison retains complete raw continuations, including fence
 delimiters, info strings and contents. Structurally visible lines delimit the
 owning label's span, so unindented code inside a fence cannot end that span.
+The owning `pact:task` block is mechanical and never part of any span, even
+when prose labels precede it; dispatch may still add its absent coordinates.
 This raw transfer comparison is separate from authority's structural field
 presence check. Progress uses separate labels such as `validation_result`. JSON token
 whitespace is only space, tab, LF and CR;
@@ -266,3 +268,8 @@ Explicit invalid-ref scenarios retain their supplied input. The deliberate
 `derive-unnamed-gate-ref-unresolved` query remains unnamed. Published Claude
 and review task/acceptance histories remain reachable through both merge
 parents; historical task IDs are qualified by gate in current records.
+
+The 2026-10-29 PACT-Prose-Span review of `ec5b591` added
+`review-transfer-prose-before-machine-block` with adjacent transfer and
+authority cases for labels written before, after and around that block.
+No earlier case input or expected result changed.
