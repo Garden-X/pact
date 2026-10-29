@@ -11,7 +11,7 @@ gate_id: PACT-Conformance
 generated_from: /ai/pact/templates/logic-draft.tpl.md
 generated_from_version: 1.7
 content_status: current-state
-updated: 2026-10-28 21:58:39 UTC+00:00
+updated: 2026-10-29 03:02:26 UTC+00:00
 
 ## Selected Logic
 
@@ -86,6 +86,56 @@ Prime inspects these complete required checks on the exact candidate:
 
 Acceptance is separate from delivery. Never claim closure or change main
 under this selection without the owner's explicit delivery permission.
+
+### Prime acceptance — PACT-Conformance#2
+
+```pact:acceptance
+decision: "accepted"
+candidate: "e19ec9ddd14d2796acc21ffea199adac95e8fb5a"
+evidence: "Fresh exact-candidate results below; TASKS Done PACT-20261028-001; tracked conformance corpus and source/Git/migration checks."
+```
+
+Owner answer in this session to the publication question: complete the
+cycle without merge. It permits task/gate publication and this answer, not
+default-branch delivery. Prime /root explicitly fetched remote
+gate/PACT-Conformance at a3a4afb1c31b17bb4a87aec71440002e5cc238bb: its newest
+Gate Handoff #2 is ready, unanswered and names the candidate above; only STATE
+changes after it. Task candidate 461a5550e68a603d8f81826cd53ff0cf7616ca4c is an
+ancestor of the candidate and differs from it only in TASKS/STATE records. The
+complete gate diff from ac431f05c2f00836d7632244751d96f5daabf29d touches only
+conformance/** and PACT state records.
+
+Fresh checks ran sequentially in a clean detached checkout of exactly the
+candidate (no tracked differences before or after), with Node v22.22.0 and Git
+2.43.0 in a Linux cloud container with 15 GiB free RAM. No shared heavy-work
+registry exists in this container; no other heavy run competed.
+
+| Command | Fresh result | Actual exit |
+|---|---|---|
+| node conformance/self-test.mjs | 21 invariant assertions | 0 |
+| node conformance/reference.mjs | 282 of 282 semantic cases | 0 |
+| node conformance/source-check.mjs | 215 checks, 165 links, no failures | 0 |
+| node conformance/check-git.mjs | 15 real-Git assertions | 0 |
+| node conformance/migration-check.mjs | 30 checks, 11 preservation items; three-file plan only, applied false | 0 |
+| git diff --check ac431f05c2f00836d7632244751d96f5daabf29d e19ec9ddd14d2796acc21ffea199adac95e8fb5a | complete gate diff clean | 0 |
+
+The migration plan hash was
+0c6d698868b493e276d07a9d995106bbc36b352aa4002602b592ddd15496db5f. The task's
+red baselines (corpus 282/12 failed, source 215/2 failed, each exit 1 on the
+task_base evaluator) precede the implementation. All 250 earlier expectations
+are unchanged; only six derive inputs gained the `expected_ref` each already
+observed, and README discloses them with the five earlier delivery changes.
+
+All three selected review defects are resolved under existing PACT semantics;
+the seq spelling remark stays declined. No template/spec version, dependency,
+runtime mechanism, host installation or product/SPARC truth changed. The same
+agent performed selection, Lead execution and this inspection sequentially;
+this is a separate pass, not an independent review. These checks are bounded
+evidence, not two independent implementations on two operating systems.
+
+Delivery is not authorized: main remains
+ac431f05c2f00836d7632244751d96f5daabf29d and this accepted answer stays a
+pending delivery until the owner permits Prime's fast-forward.
 
 ## Next
 
