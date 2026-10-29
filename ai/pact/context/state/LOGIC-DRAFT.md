@@ -11,7 +11,7 @@ gate_id: PACT-Selection-Fetch
 generated_from: /ai/pact/templates/logic-draft.tpl.md
 generated_from_version: 1.7
 content_status: current-state
-updated: 2026-10-29 05:23:04 UTC+00:00
+updated: 2026-10-29 05:27:10 UTC+00:00
 
 ## Selected Logic
 
@@ -80,6 +80,53 @@ force push or main delivery without explicit owner permission.
 
 Acceptance is separate from delivery. Never claim closure or change main
 under this selection without the owner's explicit delivery permission.
+
+### Prime acceptance — PACT-Selection-Fetch#2
+
+```pact:acceptance
+decision: "accepted"
+candidate: "bf4855691c20c485dbd97591216087070a89bc59"
+evidence: "Fresh exact-candidate results below; TASKS Done PACT-20261029-004; WORKFLOW/workflow.tpl.md 3.9 and tracked source/conformance/Git/migration checks."
+```
+
+Prime /root explicitly fetched remote gate/PACT-Selection-Fetch at
+ec4cf989aaa8341be0c216e7bd5c9e3d494d23c1: its newest Gate Handoff #2 is ready,
+unanswered and names the candidate above; only STATE changes after it. Task
+candidate 35da8a8d8cb1c95faab9a22426062a7369427a3b is an ancestor and differs
+from it only in TASKS/STATE records. The complete gate diff from
+0d3b0a1f4ac2d704ef01a5f4d2a85746e8a8b9f7 touches only the selected allowed
+area; remote main was still that revision.
+
+Fresh checks ran sequentially in a clean detached checkout of exactly the
+candidate (no tracked differences before or after), with Node v22.22.0 and Git
+2.43.0 in a Linux cloud container with complete history. No shared heavy-work
+registry exists in this container; no other heavy run competed.
+
+| Command | Fresh result | Actual exit |
+|---|---|---|
+| node conformance/self-test.mjs | 24 invariant assertions | 0 |
+| node conformance/reference.mjs | 371 of 371 semantic cases | 0 |
+| node conformance/source-check.mjs | 222 checks, 170 links, no failures | 0 |
+| node conformance/check-git.mjs | 15 real-Git assertions | 0 |
+| node conformance/migration-check.mjs | 30 checks, 11 preservation items; three-file plan only, applied false | 0 |
+| git diff --check 0d3b0a1f4ac2d704ef01a5f4d2a85746e8a8b9f7 bf4855691c20c485dbd97591216087070a89bc59 | complete gate diff clean | 0 |
+
+The migration plan hash was
+3613dfaaecda0640469bda28a85d6da2ae8a24095b6fb1c498cd9f72575bab32. The task's
+red baseline (source 222/3 failed, exit 1 on task_base) precedes the edit.
+workflow.tpl.md 3.9 RULES and full EXAMPLE match the WORKFLOW target; the
+release table, release bullet and INSTALL sync step say 3.9. The gate itself
+followed the rule: selection published before dispatch, re-check before
+dispatch, task id after the highest observed one.
+
+The rule closes the demonstrated concurrent-gate gap without a new role,
+record type, lifecycle stage, runtime or service; PACT.md and other templates
+are unchanged. The same agent performed selection, Lead execution and this
+inspection sequentially; this is a separate pass, not an independent review.
+
+Delivery is not authorized: main remains
+0d3b0a1f4ac2d704ef01a5f4d2a85746e8a8b9f7 and this accepted answer stays a
+pending delivery until the owner permits Prime's fast-forward.
 
 ## Next
 
