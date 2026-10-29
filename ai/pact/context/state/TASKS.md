@@ -9,43 +9,15 @@ status: active-draft
 generated_from: /ai/pact/templates/tasks.tpl.md
 generated_from_version: 1.13
 content_status: current-state
-updated: 2026-10-29 03:25:49 UTC+00:00
+updated: 2026-10-29 03:35:32 UTC+00:00
 
 ## Pending
 
-- [ ] PACT-20261029-002 Preserve fenced task-prose continuations without granting example authority.
-
-```pact:task
-id: "PACT-20261029-002"
-role: "Worker"
-parent: "/root/config_plan_docs"
-lead: "/root/config_plan_docs"
-ready: false
-requires: ["git","toolchain:node"]
-reservations: [{"path":"conformance/reference.mjs","mode":"modify"},{"path":"conformance/cases.json","mode":"modify"},{"path":"conformance/self-test.mjs","mode":"modify"},{"path":"conformance/README.md","mode":"modify"}]
-trace: "LOGIC-DRAFT.md / Decisions; Claude proseSurface review"
-source: {"idea":null,"shape":null,"draft":"LOGIC-DRAFT.md","tasks":"TASKS.md"}
-```
-
-brief: After the published integration candidate is reviewed and reachable from the authoritative gate, establish tracked failing regressions for changed/deleted fenced continuations in template-label brief, validation, tests and baseline, plus unchanged controls. Preserve full raw continuation text during exact transfer comparison while using structurally visible/root-owned fields for boundary presence. A missing boundary field found only in a fenced example remains unresolved and cannot grant authority. Preserve all combined existing cases/verdicts except the separately approved explicit derive-coordinate completions. No abstract prose interpretation or broader parser redesign. Publish one exact task/PACT-Review-20261028/PACT-20261029-002 candidate before Lead integration.
-files: the four reserved conformance files only
-boundary_contract:
-  task_scope: Repair the demonstrated labeled-prose fenced-content omission and protect boundary evidence ownership.
-  permitted_area: Modify only the four reserved conformance files in this isolated worktree and ignored task cache; read governing contracts and merged history.
-  protected_area: Original source except shared lock; TASKS/STATE/LOGIC-DRAFT, other code, normative/templates, release metadata, dependencies, host/services and other refs.
-  unchanged_contracts: PACT authority and template versions; all earlier expected verdicts and all non-whitelisted input data; both published histories and root selection.
-  allowed_side_effects: Commit/push only assigned task002 branch; affected sequential checks under source-shared lock; no integration, force, main, services or installs.
-  escalation: Report scope/rule conflict, required prior expected change, Git conflict or native hook failure to Lead before the affected action.
-specialty: exact record/prose transfer and authority-boundary reader correctness
-model_tier: High
-model_binding: Inherit owner-configured model; concrete provider/model metadata is not exposed.
-effort: 100%
-effective_effort: Percentage maps to highest supported native level; preserve inherited explicit native setting whose value is not exposed.
-tests: Tracked labeled-prose fence regressions and structural-boundary negative before reader changes.
-baseline: Prime selected a concrete changed-fenced-brief counterexample; task must inspect an actual red before its code change. Existing Claude source checks establish label-shape support; integration task precedes this correction.
-validation: Affected self-test/reference and source fast checks only; preserve combined corpus with explicit coordinate whitelist, exact task-base ancestry, native hooks and diff hygiene. Battery>=20 evenAC, RAM>=5GiB and shared source HEAVY-LOCK before heavy checks.
+None.
 
 ## Done
+
+- PACT-20261029-001 - Material preservation integration of Claude PACT-Conformance and accepted review work. Lead executor /root/config_plan_docs, parent Prime /root, inherited High model/native binding preserved. Exact task candidate25fd15d4bc991ede9cb22585a032230edebc3e39 has merge parentsae934c626dd66a800135600fe116537f359e08bc andClaude2602f79a17e8d7cd1644acee60468fee3194be53; includes ours3d75f63 and root5538 selection. Exact task ref fetched equal candidate; task_base5538, ours3d75 andClaude2602 ancestry each0. Separately reviewed then fast-forward-integrated; explicitly fetched remote origin refs/heads/gate/PACT-Review-20261028 at51bd6f7ebee894fda641fb0bdabc46d8477ade52 proves candidate reachable0 before Done. Combined incoming corpus before code integration red332/7fail actual1; integrated selftest24/reference332of332/source221checks170links each0. Git-object proof preserves all300 our cases and all282 Claude cases by stableID, union332 unique, every earlier expected verdict unchanged, only14 documented derive expected_ref completions (Claude6+ours8); no other earlier input or metadata changes. README lists every completed ID; intentional unnamed derive negative stays unnamed. Root5538 LOGIC-DRAFT bytes unchanged. Both source probe sets, release guard/versions and all prior fixes retained; Claude accepted task/handoff history qualified here and preserved via ancestry. Initial GitHub500 push1 was confirmed not to create the ref; ordinary retry/nativehooks0, no force/history rewrite. Reader fenced-continuation defect remains separate task002; no ready/acceptance/main-delivery claim. Normative/templates/product/SPARC/host untouched.
 
 - Historical gate PACT-Conformance / PACT-20261028-001 - Correct the 2026-10-28 review findings under existing PACT. Exact candidate 461a5550e68a603d8f81826cd53ff0cf7616ca4c published on task/PACT-Conformance/PACT-20261028-001 and proven reachable from explicitly fetched remote gate/PACT-Conformance (ancestry actual0; positive parent path in a shallow clone); task_base cd43be45a97b4bb9f336dd2239fc9eaff8d20bd0 is its ancestor (actual0). Red on the task_base evaluator: corpus282cases/12fail (four review counterexamples plus eight adjacent) actual1; source215checks/2fail (complete template transfer and authority) actual1. Fresh clean detached checkout of the exact candidate: self-test21, corpus282/282, source215checks165links, realGit15, migration30/11preservation plan-only appliedfalse, git diff --check ac431f0..candidate, each actual0. Prior 250 expectations unchanged; only six derive inputs gained the expected_ref each already observed. Closure/derive bind the queried authority coordinate; authority/transfer read template entry labels or the heading projection, two surfaces invalid; real STATE/WORKFLOW authority probe allow/deny/unresolved as expected; README discloses every changed corpus input. Prime declined the seq spelling remark. Same-host sequential Prime/Lead review, not independent. Session worker restarted after the candidate; resumed from durable records and Git. Node v22.22.0/Git 2.43.0, Linux cloud container, free RAM 15GiB, checks sequential; keep_alive_registry ../KEEP-ALIVE.md is absent here and no service work ran. No specification/template version, dependency, runtime, host installation or product/SPARC truth changed. Owner permitted task/gate publication; main delivery is not authorized.
 

@@ -6,52 +6,54 @@ name: STATE.md
 canonical_location: /ai/pact/context/state/STATE.md
 layer: PACT / context / state
 status: active
-active_task: PACT-20261029-001
+active_task: PACT-20261029-002
 generated_from: /ai/pact/templates/state.tpl.md
 generated_from_version: 1.10
 content_status: current-state
-updated: 2026-10-29 03:34:43 UTC+00:00
+updated: 2026-10-29 03:35:32 UTC+00:00
 
 ## Active Task
 
 ```pact:task
-id: "PACT-20261029-001"
-role: "Lead"
-actor: "/root/config_plan_docs"
-parent: "/root"
+id: "PACT-20261029-002"
+role: "Worker"
+actor: "/root/config_plan_docs/evaluator"
+parent: "/root/config_plan_docs"
 lead: "/root/config_plan_docs"
-task_phase: "validating"
+task_phase: "transferred"
 requires: ["git","toolchain:node"]
-reservations: [{"path":"conformance/reference.mjs","mode":"modify"},{"path":"conformance/cases.json","mode":"modify"},{"path":"conformance/source-check.mjs","mode":"modify"},{"path":"conformance/README.md","mode":"modify"}]
-task_base: "5538f86445a5dc98045cd10ae40f6465bbe57307"
-task_branch: "task/PACT-Review-20261028/PACT-20261029-001"
-task_candidate: "25fd15d4bc991ede9cb22585a032230edebc3e39"
-trace: "LOGIC-DRAFT.md / Decisions; published Claude integration"
+reservations: [{"path":"conformance/reference.mjs","mode":"modify"},{"path":"conformance/cases.json","mode":"modify"},{"path":"conformance/self-test.mjs","mode":"modify"},{"path":"conformance/README.md","mode":"modify"}]
+task_base: "51bd6f7ebee894fda641fb0bdabc46d8477ade52"
+task_branch: "task/PACT-Review-20261028/PACT-20261029-002"
+task_candidate: "none"
+trace: "LOGIC-DRAFT.md / Decisions; Claude proseSurface review"
 source: {"idea":null,"shape":null,"draft":"LOGIC-DRAFT.md","tasks":"TASKS.md"}
 ```
 
-request: Integrate Claude PACT-Conformance publication and our accepted corrections without dropping either history or expectation.
-brief: Read exact Claude2602f79a17e8d7cd1644acee60468fee3194be53 delta, combine with our accepted3d75f63 and current root5538 selection by an ancestry-preserving material merge on the assigned task branch, preserve all300 our cases and32 unique Claude cases, all expected verdicts and existing fixes. Keep Claude explicit derive expected_ref and complete only missing already-intended gate coordinates needed by stricter derive; document exact IDs and whitelist proof. Combine Claude queriedCoordinate helper with our absence-only/null guards and candidate-to-answer check; retain Pending, raw handoff, release metadata/check and both source-check probe sets. Preserve root5538 LOGIC-DRAFT byte-for-byte per Prime's mechanical conflict approval; retain Claude accepted draft/decisions via merge-parent history. Retain qualified Claude Done/handoff history without introducing active duplicates. Publish exact task candidate before separate gate integration; reader fence correction is a separate task.
+brief: After the published integration candidate is reviewed and reachable from the authoritative gate, establish tracked failing regressions for changed/deleted fenced continuations in template-label brief, validation, tests and baseline, plus unchanged controls. Preserve full raw continuation text during exact transfer comparison while using structurally visible/root-owned fields for boundary presence. A missing boundary field found only in a fenced example remains unresolved and cannot grant authority. Preserve all combined existing cases/verdicts except the separately approved explicit derive-coordinate completions. No abstract prose interpretation or broader parser redesign. Publish one exact task/PACT-Review-20261028/PACT-20261029-002 candidate before Lead integration.
+files: the four reserved conformance files only
 boundary_contract:
-  task_scope: Material preservation merge of the two published conformance implementations and their durable records.
-  permitted_area: Reserved conformance files, Lead TASKS/STATE, ignored cache; mechanical LOGIC-DRAFT conflict resolution must restore exact root5538 bytes; preserve existing release metadata/check.
-  protected_area: Normative PACT/templates and versions, original source/foreign state, dependencies, host/services, default/main, root acceptance entries and selected requirements.
-  unchanged_contracts: All prior expected verdicts and non-coordinate input data, both ancestries and all earlier fixes; no force/squash/rebase or abstract parser redesign.
-  allowed_side_effects: Commits/push only assigned task001 branch and later selected gate preservation integration; no main delivery, force, deployment, services or installs.
-  escalation: Report unresolvable semantic conflict, required expected changes, larger scope, Git conflict not covered by mechanical approval or failed native checks to Prime before affected action.
-parent_approval: Prime explicitly authorized mechanical root-draft conflict resolution by restoring5538 exactly; Claude acceptance remains in2602 merge ancestry, no older publication-only authorization overrides current owner merge instruction.
-specialty: semantic preservation merge and Git integration
+  task_scope: Repair the demonstrated labeled-prose fenced-content omission and protect boundary evidence ownership.
+  permitted_area: Modify only the four reserved conformance files in this isolated worktree and ignored task cache; read governing contracts and merged history.
+  protected_area: Original source except shared lock; TASKS/STATE/LOGIC-DRAFT, other code, normative/templates, release metadata, dependencies, host/services and other refs.
+  unchanged_contracts: PACT authority and template versions; all earlier expected verdicts and all non-whitelisted input data; both published histories and root selection.
+  allowed_side_effects: Commit/push only assigned task002 branch; affected sequential checks under source-shared lock; no integration, force, main, services or installs.
+  escalation: Report scope/rule conflict, required prior expected change, Git conflict or native hook failure to Lead before the affected action.
+specialty: exact record/prose transfer and authority-boundary reader correctness
 model_tier: High
 model_binding: Inherit owner-configured model; concrete provider/model metadata is not exposed.
 effort: 100%
 effective_effort: Percentage maps to highest supported native level; preserve inherited explicit native setting whose value is not exposed.
-created_at: 2026-10-29 03:25:49 UTC+00:00
-tests: Reuse tracked300 ours,282 Claude including32 unique new scenarios and both source-check sets; establish affected baseline before code merge and exact combined preservation proofs.
-baseline: Previous accepted ours300 and Claude282 each passed separately; Prime reviewed the exact published delta and separately selected the demonstrated raw fenced-prose omission for next task. Actual affected combined baseline and integration results pending.
-validation: Affected reference/self-test/source only; compare by caseID all prior expectations and only whitelisted expected_ref completions; retain both Git parents and source/core fixes, review every actual exit. Full acceptance and main delivery remain Prime's separate work.
-validation_result: Before merge, incoming combined332 corpus on our prior evaluator red332/7fail actual1. Resolved preservation merge passes self-test24/reference332of332/source221checks170links each0. Git-object proof preserves all300 ours and282 Claude by stableID, all expected verdicts unchanged, only14 documented expected_ref completions, no other prior data changes. Root5538 draft bytes unchanged; both source-check sets present; staged diff hygiene0. Reader fenced-continuation defect intentionally remains for separate task002.
+tests: Tracked labeled-prose fence regressions and structural-boundary negative before reader changes.
+baseline: Prime selected a concrete changed-fenced-brief counterexample; task must inspect an actual red before its code change. Existing Claude source checks establish label-shape support; integration task precedes this correction.
+validation: Affected self-test/reference and source fast checks only; preserve combined corpus with explicit coordinate whitelist, exact task-base ancestry, native hooks and diff hygiene. Battery>=20 evenAC, RAM>=5GiB and shared source HEAVY-LOCK before heavy checks.
+
+request: Correct raw fenced task-prose preservation without promoting examples into authority.
+created_at: 2026-10-29 03:35:32 UTC+00:00
+validation_result: Pending tracked red before reader edits.
+validation_evidence: Compare against published merge candidate25fd15d and complete332 corpus; root specified concrete fenced-brief change. Local logs are optional, new cases/results must become durable.
 retry: attempts0; identified corrections only
-handoff: status candidate-reviewed; task001 exact25fd15d published after transient GitHub500 (firstpush1, exactrefconfirmedabsent, ordinaryretry0); nativehooks0. Exact task ref fetched equal candidate; task_base, ours3d75 and Claude2602 ancestry each0; reviewed preservation merge separately before fast-forward gate integration. Done awaits authoritative remote-gate reachability, then task002. No main/normative/template/release-version mutation.
+handoff: status working; Worker publishes exact assigned candidate only, Lead records integration/reachability
 
 ## Historical Maintenance Notes
 
