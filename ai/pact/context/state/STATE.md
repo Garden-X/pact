@@ -10,7 +10,7 @@ active_task: PACT-20261029-001
 generated_from: /ai/pact/templates/state.tpl.md
 generated_from_version: 1.10
 content_status: current-state
-updated: 2026-10-29 03:33:28 UTC+00:00
+updated: 2026-10-29 03:34:43 UTC+00:00
 
 ## Active Task
 
@@ -20,12 +20,12 @@ role: "Lead"
 actor: "/root/config_plan_docs"
 parent: "/root"
 lead: "/root/config_plan_docs"
-task_phase: "working"
+task_phase: "validating"
 requires: ["git","toolchain:node"]
 reservations: [{"path":"conformance/reference.mjs","mode":"modify"},{"path":"conformance/cases.json","mode":"modify"},{"path":"conformance/source-check.mjs","mode":"modify"},{"path":"conformance/README.md","mode":"modify"}]
 task_base: "5538f86445a5dc98045cd10ae40f6465bbe57307"
 task_branch: "task/PACT-Review-20261028/PACT-20261029-001"
-task_candidate: "none"
+task_candidate: "25fd15d4bc991ede9cb22585a032230edebc3e39"
 trace: "LOGIC-DRAFT.md / Decisions; published Claude integration"
 source: {"idea":null,"shape":null,"draft":"LOGIC-DRAFT.md","tasks":"TASKS.md"}
 ```
@@ -51,7 +51,7 @@ baseline: Previous accepted ours300 and Claude282 each passed separately; Prime 
 validation: Affected reference/self-test/source only; compare by caseID all prior expectations and only whitelisted expected_ref completions; retain both Git parents and source/core fixes, review every actual exit. Full acceptance and main delivery remain Prime's separate work.
 validation_result: Before merge, incoming combined332 corpus on our prior evaluator red332/7fail actual1. Resolved preservation merge passes self-test24/reference332of332/source221checks170links each0. Git-object proof preserves all300 ours and282 Claude by stableID, all expected verdicts unchanged, only14 documented expected_ref completions, no other prior data changes. Root5538 draft bytes unchanged; both source-check sets present; staged diff hygiene0. Reader fenced-continuation defect intentionally remains for separate task002.
 retry: attempts0; identified corrections only
-handoff: status integration-candidate-prepared; merge parents preserve current dispatch and Claude2602. Exact material task candidate publication next, then separate Lead gate integration and authoritative reachability before Done; task002 follows. No root/main/normative/template/release-version mutation.
+handoff: status candidate-reviewed; task001 exact25fd15d published after transient GitHub500 (firstpush1, exactrefconfirmedabsent, ordinaryretry0); nativehooks0. Exact task ref fetched equal candidate; task_base, ours3d75 and Claude2602 ancestry each0; reviewed preservation merge separately before fast-forward gate integration. Done awaits authoritative remote-gate reachability, then task002. No main/normative/template/release-version mutation.
 
 ## Historical Maintenance Notes
 
