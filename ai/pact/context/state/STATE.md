@@ -5,16 +5,52 @@
 name: STATE.md
 canonical_location: /ai/pact/context/state/STATE.md
 layer: PACT / context / state
-status: clear
-active_task: none
+status: active
+active_task: PACT-20261029-003
 generated_from: /ai/pact/templates/state.tpl.md
 generated_from_version: 1.10
 content_status: current-state
-updated: 2026-10-29 03:46:36 UTC+00:00
+updated: 2026-10-29 05:11:44 UTC+00:00
 
 ## Active Task
 
-None.
+```pact:task
+id: "PACT-20261029-003"
+role: "Lead"
+actor: "/root Lead pass"
+parent: "/root"
+lead: "/root Lead pass"
+task_phase: "working"
+requires: ["git","toolchain:node"]
+reservations: [{"path":"conformance/","mode":"modify"}]
+task_base: "ff646a284cf8e70fa809d7528f6063a139eb0671"
+task_branch: "task/PACT-Prose-Span/PACT-20261029-003"
+task_candidate: "none"
+trace: "LOGIC-DRAFT.md / Decisions"
+source: {"draft":"LOGIC-DRAFT.md","tasks":"TASKS.md","review":"ec5b591e43fe62cf2675a08c857dc1d7839b466e"}
+```
+
+request: Fix the transfer regression reported to the owner on 2026-10-29.
+brief: Exclude the owning pact:task block lines from every label-form prose span in conformance/reference.mjs proseSurface, keeping raw ordinary fences, span delimitation and the structural boundary-field presence check unchanged. Add the counterexample and adjacent positive/negative cases before the fix and record their red run. Document the rule in conformance/README.md. Preserve every earlier case input and expectation. No spec/template change, dependency, runtime, external installation, service or main mutation.
+boundary_contract:
+  task_scope: The bounded correction brief above, selected by Prime in LOGIC-DRAFT PACT-Prose-Span.
+  permitted_area: conformance/** implementation, fixtures and README plus Lead-owned TASKS/STATE records; read existing contracts and evidence.
+  protected_area: main/default, LOGIC-DRAFT, templates/specs, external installations, host configuration, unrelated files and immutable published decisions.
+  unchanged_contracts: Existing PACT semantics, three roles/lifecycle, Markdown/Git authority, owner model/effort settings, no runtime or OS mechanism.
+  allowed_side_effects: Commit and push the exact task candidate to its task branch, integrate into gate/PACT-Prose-Span and mirror the session branch; no force, hook bypass, services, dependencies, deploy or external messages.
+  escalation: Report a demonstrated need for spec/template change or scope conflict to Prime before the affected action.
+specialty: conformance testing
+model_tier: High
+model_binding: inherited owner-configured session model, no override
+effort: 75%
+effective_effort: host-controlled session setting preserved; no native control exercised
+created_at: 2026-10-29 05:11:44 UTC+00:00
+affected_files: conformance/reference.mjs, conformance/cases.json, conformance/README.md
+tests: New transfer cases with prose labels before the owning pact:task block, plus adjacent fenced-prose and changed-prose cases.
+baseline: New tracked cases run against the task_base evaluator before the fix; actual red count recorded at completion.
+validation: self-test, full corpus, source-check, check-git, migration-check and git diff --check, each actual exit inspected sequentially.
+retry: identified corrections only
+handoff: preserve red baseline, report exact candidate and actual exits
 
 ## Historical Maintenance Notes
 
@@ -154,7 +190,7 @@ records: TASKS active-draft, task001 active in STATE and task002 Pending; root55
 blockers: none
 escalation: none
 
-## Gate Handoff
+## Historical PACT Review Revision 3 Gate Handoff
 
 ```pact:gate-handoff
 gate_id: "PACT-Review-20261028"
@@ -172,3 +208,21 @@ records: SliceRecordsCheck pass; TASKS complete/PendingNone, STATE clear/no acti
 blockers: none
 escalation: none
 limits: Full-document historical-acceptance selection remains outside evaluator projection scope. Current owner instruction authorizes Prime's separate ordinary main delivery after fresh acceptance; this ready publication claims neither acceptance nor closure. Lead stops mutations for Prime acceptance/Answer/delivery and PR update.
+
+## Gate Handoff
+
+```pact:gate-handoff
+gate_id: "PACT-Prose-Span"
+seq: 1
+signal: "working"
+candidate: "none"
+branch: "gate/PACT-Prose-Span"
+lead: "/root Lead pass"
+recorded_at: "2026-10-29 05:11:44 UTC+00:00"
+```
+
+slices: Task PACT-20261029-003 dispatched from exact selected revision ff646a284cf8e70fa809d7528f6063a139eb0671. PACT-Review-20261028#3 is answered and delivered; its publication is preserved verbatim above.
+validation: Counterexample demonstrated on ec5b591e43fe62cf2675a08c857dc1d7839b466e; tracked red cases precede the fix.
+records: Owner requested the fix; Prime selected the scope; Lead owns execution records and task/gate publication; no main delivery.
+blockers: none
+escalation: none
