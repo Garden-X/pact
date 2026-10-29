@@ -2,7 +2,7 @@
 
 Title: improved workflow and project syncronization
 
-updated: 2026-10-28 22:15:35 UTC+00:00
+updated: 2026-10-29 05:24:51 UTC+00:00
 status: prepared for release
 
 This maintenance delta adds deterministic effective PACT authority, portable
@@ -10,7 +10,7 @@ path/reservation and prerequisite grammar, exact remote-ref observations,
 minimal consumed record blocks with immutable legacy compatibility, and tracked
 language-neutral semantic conformance assets. No runtime, lease, host-state or
 journal subsystem is introduced; manual Markdown/Git use remains valid.
-Changed templates: workflow 3.8, state 1.10, tasks 1.13, logic-draft 1.7,
+Changed templates: workflow 3.9, state 1.10, tasks 1.13, logic-draft 1.7,
 file-guard 1.1, keep-alive 1.2. Plan-only reviewed hash/revision-guarded migration
 preserves actual project records; no installed-project rollout or archive refresh.
 
@@ -80,6 +80,12 @@ EXAMPLE sections, with synchronized installed entry files and migration guidance
   a newly offered upgrade requires user agreement before application. Prime
   reports newly observed external pushes with revisions and impact, while
   existing repository synchronization keeps its own authorization.
+- Gate selection first resolves the authority remote's default and gate
+  branches. An open gate, whose branch is not reachable from the default
+  branch, goes to the owner instead of a silent parallel gate. Prime publishes
+  the selection on its gate branch at once, Lead fetches again before the
+  first dispatch, and task ids stay unique across the observed records and
+  published task branches.
 - Validation follows actual scope and risk; proven unchanged successful evidence
   may be reused with its original revision/environment. Mandatory checks, native
   hooks and Prime acceptance remain authoritative.
@@ -130,7 +136,7 @@ existing versions; no unrelated contract change is required for this release.
 
 | Template | Version |
 |---|---|
-| workflow.tpl.md | 3.8 |
+| workflow.tpl.md | 3.9 |
 | agents.tpl.md | 3.5 |
 | sub-agent.tpl.md | 2.3 |
 | state.tpl.md | 1.10 |

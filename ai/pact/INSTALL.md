@@ -2,7 +2,7 @@
 
 > For: PACT 2.0
 > Purpose: install or verify the PACT project-maintenance layer
-> Updated: 2026-10-26 01:31:28 UTC+00:00
+> Updated: 2026-10-29 05:25:10 UTC+00:00
 
 ## Purpose
 
@@ -553,7 +553,7 @@ Upgrade the contract and complete example structure, then reapply the target's
 actual settings and state. PACT 2.0 is the package version; do not reset template
 versions to 2.0 or overwrite target files with this repository's operational data.
 
-1. Synchronize WORKFLOW from workflow.tpl.md 3.8 and AGENTS from agents.tpl.md
+1. Synchronize WORKFLOW from workflow.tpl.md 3.9 and AGENTS from agents.tpl.md
    3.5. Preserve local hooks, file_guard, skill_log, resource limits, owner
    bindings, and project-specific rules. Preserve an existing enabled
    `worker_fix_target` percentage; `none` disables the diagnostic and is the

@@ -7,10 +7,10 @@ canonical_location: /ai/pact/workflow/WORKFLOW.md
 layer: PACT / workflow
 status: canonical
 generated_from: /ai/pact/templates/workflow.tpl.md
-generated_from_version: 3.8
+generated_from_version: 3.9
 content_status: current-data
 purpose: Define how agents maintain project work without bypassing SPARC project truth.
-updated: 2026-10-26 01:52:14 UTC+00:00
+updated: 2026-10-29 05:24:37 UTC+00:00
 
 ## Lifecycle
 
@@ -478,9 +478,23 @@ Gate and slice:
 - A slice is a coherent, validated commit that carries its own records. Each
   slice stands on its own: it is complete, tested, and pushed to
   `gate_branch_pattern`.
-- The Lead creates `gate/<id>` from `default_branch` on the first slice
-  and fetches before each slice to read new commits from the owner or other
-  agents. If `default_branch` moves, the Lead merges it into the gate
+- Before selecting a new gate, the Prime explicitly resolves the configured
+  authority_remote's `default_branch` and every remote branch matching
+  `gate_branch_pattern` under PACT-GIT. A gate whose remote branch tip
+  is not reachable from remote `default_branch` is open. The Prime reads each
+  open gate's selection, handoff and task ids and reports them to the owner
+  instead of starting a silent parallel gate; a concurrent gate needs the
+  owner's recorded approval of a separate scope. Unavailable remote access
+  leaves the check unresolved until it succeeds or the owner explicitly
+  accepts proceeding.
+- The Prime publishes the selection commit at once as `gate/<id>` from that
+  observed `default_branch`; selection work on any other branch is not
+  visible as a gate. The Lead fetches again before the first dispatch, and a
+  gate that appeared meanwhile goes to the owner the same way. Task ids are
+  allocated after that fetch and are unique across remote `default_branch`,
+  open gate branches and published task branches.
+- The Lead fetches before each slice to read new commits from the owner or
+  other agents. If `default_branch` moves, the Lead merges it into the gate
   branch instead of rewriting pushed history.
 - The Prime closes the gate through the `GateClose` hook: acceptance must
   pass on the exact handoff `candidate`, and the answer commit is then

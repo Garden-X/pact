@@ -54,9 +54,19 @@ check('transfer bindings and handoff owning narrative remain authoritative',()=>
   assert.match(read('templates/state.tpl.md'),/Compare the whole owning publication, including material narrative/u);
   assert.match(read('templates/state.tpl.md'),/seq bump\s+without a material payload change is invalid/u);
 });
+check('gate selection first observes remote gates',()=>{
+  const workflow=read('workflow/WORKFLOW.md'),rules=read('templates/workflow.tpl.md').split('## EXAMPLE')[0];
+  assert.match(workflow,/Before selecting a new gate, the Prime explicitly resolves/u);
+  assert.match(workflow,/is not reachable from remote `default_branch` is\s+open/u);
+  assert.match(workflow,/instead of\s+starting a silent parallel gate/u);
+  assert.match(workflow,/Prime publishes the selection commit at once/u);
+  assert.match(workflow,/Lead fetches again before the first dispatch/u);
+  assert.match(workflow,/Task ids are\s+allocated after that fetch/u);
+  assert.match(rules,/before selecting a gate, explicitly resolve the authority remote's\s+default and gate branches/u);
+});
 check('workflow full example matches active target',()=>assert.equal(stripStamp(example('templates/workflow.tpl.md')),stripStamp(read('workflow/WORKFLOW.md'))));
 
-for(const [file,version] of [['workflow','3.8'],['state','1.10'],['tasks','1.13'],['logic-draft','1.7'],['file-guard','1.1'],['keep-alive','1.2']]){
+for(const [file,version] of [['workflow','3.9'],['state','1.10'],['tasks','1.13'],['logic-draft','1.7'],['file-guard','1.1'],['keep-alive','1.2']]){
   check(file+' template version',()=>assert.equal(field(read('templates/'+file+'.tpl.md').split('## WHAT')[0],'version'),version));
 }
 check('release version table agrees with source template metadata',()=>{
@@ -70,7 +80,7 @@ check('release version table agrees with source template metadata',()=>{
   for(const row of rows)assert.equal(row[2],field(read('templates/'+row[1]).split('## WHAT')[0],'version'),row[1]);
   for(const name of ['workflow','state','tasks','logic-draft','file-guard','keep-alive'])assert.ok(listed.has(name+'.tpl.md'),'changed template listed: '+name);
 });
-for(const [file,version] of [['workflow/WORKFLOW.md','3.8'],['context/state/STATE.md','1.10'],['context/state/TASKS.md','1.13'],['context/state/LOGIC-DRAFT.md','1.7']]){
+for(const [file,version] of [['workflow/WORKFLOW.md','3.9'],['context/state/STATE.md','1.10'],['context/state/TASKS.md','1.13'],['context/state/LOGIC-DRAFT.md','1.7']]){
   check(file+' active drift marker',()=>{
     const parsed=parseRecord(read(file),'meta');assert.equal(parsed.verdict,'valid');assert.equal(parsed.fields.generated_from_version,version);
   });
