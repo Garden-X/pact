@@ -11,7 +11,7 @@ gate_id: PACT-Review-20261028
 generated_from: /ai/pact/templates/logic-draft.tpl.md
 generated_from_version: 1.7
 content_status: current-state
-updated: 2026-10-29 03:23:55 UTC+00:00
+updated: 2026-10-29 03:48:48 UTC+00:00
 
 ## Selected Logic
 
@@ -84,6 +84,34 @@ The read-only migration plan hash was bd4bd68a1eb1370d5d1da69ab33434f6508e884d8a
 The six original evaluator defects, the configured-null wrapper follow-up and the stale release table are corrected within existing PACT semantics. No protocol/template version, dependency, host runtime, product/SPARC truth or installed-project migration changed. Full-document selection among historical acceptance entries remains outside the selected evaluator projections. These checks establish this bounded source correction, not host-runtime enforcement.
 
 This is a record-only answer based on fetched ready tip ae448b757a77d9cafa11e94e7afd80f490d0eb48. Acceptance and delivery remain separate. Review PR publication is selected; default-branch merge and gate closure are not claimed.
+
+### Prime acceptance — PACT-Review-20261028#3
+
+```pact:acceptance
+decision: "accepted"
+candidate: "6c71fcd301b2ae81cb859591462bd519c1b68d00"
+evidence: "Fresh exact-candidate complete results below; tracked conformance cases/checks; TASKS Done PACT-20261029-001 and 002 with both published parent histories."
+```
+
+Prime Inspector /root accepts the combined candidate after inspecting the published ready#3, both source deltas, bounded independent reviews and every required actual exit. Tests ran sequentially in a clean detached worktree exactly at6c71fcd, not on a mutable gate tip. System Node24.18.0/Git2.46.2.windows.1; battery97%, freeRAM11.58GiB, PowerSpy gate0 and owned shared heavy-work lock. Host UTC was verified within one second for this session. Acceptance recorded 2026-10-29 03:48:48 UTC+00:00.
+
+| Fresh command / proof | Result | Actual exit |
+|---|---|---|
+| node conformance/self-test.mjs | 24 assertions | 0 |
+| node conformance/reference.mjs | 364 of 364 semantic cases | 0 |
+| node conformance/check-git.mjs | 15 real-Git assertions | 0 |
+| node conformance/source-check.mjs | 221 checks, 170 links, no failures | 0 |
+| node conformance/migration-check.mjs | 30 checks, 11 preservation items; real three-file plan-only, applied false | 0 |
+| git diff --check ac431f0 candidate | Complete intended diff clean | 0 |
+| Both published parent ancestries | ours3d75f63 and Claude2602f79 are exact ancestors | 0 each |
+| Both new task-candidate ancestries | material25fd15d and readere7548a2 are exact ancestors | 0 each |
+| Git-object corpus and scope proof | ours300 + Claude282 preserved as332 unique earlier cases; all expected results unchanged; exactly14 documented intended-gate coordinate completions;32 reader regressions;364 unique current cases;9 allowed changed paths; clean tested revision | 0 |
+
+The plan-only migration hash was a0dfdc1d957f6f2f249396d8ea06f3062b2dafdfc5c418442511094a613445b8. Every process exit was inspected; prior green results were not reused as this acceptance. The complete original expected results remain unchanged. Earlier derive queries gain only their disclosed intended gate coordinate, satisfying the stricter existing PACT-GIT premise; no other prior case data changed.
+
+Independent exact25fd15d review found no merge-induced defect. Independent exacte7548a2 review confirmed that raw fenced task prose survives transfer comparison, while visible root-owned boundary fields prevent fenced/nested examples from supplying grants or false duplicates. Root separately inspected both code deltas and the complete final scope. Historical acceptance#1 and Claude's accepted publication remain immutable in ancestry; the current ready#3 supersedes the earlier pending handoff for this gate. No normative/template version, dependency, host runtime, product/SPARC truth or installed-project migration changed.
+
+This record-only answer is based on explicitly fetched ready tip0f73d5c70d881bf9f127ed9e77f9ac186c31179f. The owner's later instruction explicitly authorizes main delivery after verification, as recorded in the current selection. Acceptance is complete; Prime performs the ordinary fast-forward/push and authoritative closure verification as a separate next action. Delivery is not presumed by this entry.
 
 ## Next
 
