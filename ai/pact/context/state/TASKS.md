@@ -5,17 +5,19 @@
 name: TASKS.md
 canonical_location: /ai/pact/context/state/TASKS.md
 layer: PACT / context / state
-status: active-draft
+status: complete
 generated_from: /ai/pact/templates/tasks.tpl.md
 generated_from_version: 1.13
 content_status: current-state
-updated: 2026-10-28 21:59:33 UTC+00:00
+updated: 2026-10-29 03:01:13 UTC+00:00
 
 ## Pending
 
 None.
 
 ## Done
+
+- PACT-20261028-001 - Correct the 2026-10-28 review findings under existing PACT. Exact candidate 461a5550e68a603d8f81826cd53ff0cf7616ca4c published on task/PACT-Conformance/PACT-20261028-001 and proven reachable from explicitly fetched remote gate/PACT-Conformance (ancestry actual0; positive parent path in a shallow clone); task_base cd43be45a97b4bb9f336dd2239fc9eaff8d20bd0 is its ancestor (actual0). Red on the task_base evaluator: corpus282cases/12fail (four review counterexamples plus eight adjacent) actual1; source215checks/2fail (complete template transfer and authority) actual1. Fresh clean detached checkout of the exact candidate: self-test21, corpus282/282, source215checks165links, realGit15, migration30/11preservation plan-only appliedfalse, git diff --check ac431f0..candidate, each actual0. Prior 250 expectations unchanged; only six derive inputs gained the expected_ref each already observed. Closure/derive bind the queried authority coordinate; authority/transfer read template entry labels or the heading projection, two surfaces invalid; real STATE/WORKFLOW authority probe allow/deny/unresolved as expected; README discloses every changed corpus input. Prime declined the seq spelling remark. Same-host sequential Prime/Lead review, not independent. Session worker restarted after the candidate; resumed from durable records and Git. Node v22.22.0/Git 2.43.0, Linux cloud container, free RAM 15GiB, checks sequential; keep_alive_registry ../KEEP-ALIVE.md is absent here and no service work ran. No specification/template version, dependency, runtime, host installation or product/SPARC truth changed. Owner permitted task/gate publication; main delivery is not authorized.
 
 - PACT-20261026-006 - Correct independent review findings under existing PACT. Exact replacement candidate021a51d084523585b2bdda89b564ca2784f267c9 published on its assigned task branch and proven reachable from an explicitly fetched remote gate/PACT-Semantics (ancestry actual0). Previous b1676f179f7cf184fd198c6eb952ee68935def79 is preserved ancestor; no force or history rewrite. Original9review cases promoted unchanged: first red190cases/9fail; adjacent red239/32fail plus4full-template binding failures. Original239 inputs/expectations remain unchanged; follow-up supported-prose red250/10fail led to shared hierarchy-aware scalar/task reader. Fresh owning self-test21, corpus250/250, source211checks165links all actual0; original9 and prior239 deep-equality proofs0; diff/nativecommit/nativepush0. Delivery uses exact configured remote/ref/tip and inherited restrictions, guard ignores examples, full task entries retain bindings, seq validates exact decimal tokens, prose cannot create role/actor/model/id grants. Independent Inspector and Root final exact review found no actionable residual. Node24.18.0/Git2.46.2; resource gates0; sequential owned lock, stopped and resumed same Lead across usage limits. No specification/template version, runtime, dependency, host installation or product/SPARC truth changed; placeholders verified. Prime full fresh acceptance and main delivery remain separate.
 
